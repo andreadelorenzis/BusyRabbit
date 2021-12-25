@@ -1,3 +1,4 @@
 github-key
 github-key.pub
 .~lock.github-key.pub#
+/dist/

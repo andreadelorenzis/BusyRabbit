@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTrackerController">
+   <children>
+      <AnchorPane layoutX="33.0" layoutY="28.0" prefHeight="134.0" prefWidth="623.0" style="-fx-background-color: #0E1726; -fx-background-radius: 12; -fx-border-radius: 12;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <BorderPane layoutX="18.0" layoutY="14.0" prefHeight="45.0" prefWidth="532.0" style="-fx-background-color: #1B2E4B; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="21.200000000000045">
+               <left>
+                  <TextField prefHeight="36.0" prefWidth="404.0" promptText="A cosa stai lavorando?" style="-fx-background-color: #1B2E4B; -fx-border-color: #1B2E4B; -fx-border-radius: 10; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </TextField>
+               </left>
+               <right>
+                  <HBox alignment="CENTER" prefHeight="20.0" prefWidth="90.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="15.0" fitWidth="15.0">
+                           <image>
+                              <Image url="@/main/risorse/plus.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label prefHeight="20.0" prefWidth="75.0" style="-fx-font-weight: 600;" text="Progetto" textFill="#2196f3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </right>
+            </BorderPane>
+            <BorderPane layoutY="78.0" prefHeight="56.0" prefWidth="533.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0">
+               <padding>
+                  <Insets bottom="15.0" left="20.0" right="20.0" />
+               </padding>
+               <right>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="215.0" BorderPane.alignment="TOP_RIGHT">
+                     <children>
+                        <Label text="00:00:00" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#aggiungiGiornoAttività" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800;" text="START " textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="12.0" fitWidth="12.0">
+                                 <image>
+                                    <Image url="@/main/risorse/play.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets top="2.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+               </right>
+               <left>
+                  <ChoiceBox fx:id="timeChoice" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #122C49; -fx-border-radius: 6; -fx-background-radius: 6;" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </ChoiceBox>
+               </left>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+      <Label layoutX="33.0" layoutY="202.0" text="Cronologia Attività" textFill="#374667" AnchorPane.leftAnchor="50.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="listaAttività" layoutX="33.0" layoutY="240.0" prefHeight="462.0" prefWidth="772.0" AnchorPane.bottomAnchor="19.600000000000023" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="240.0">
+         <children>
+            <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" prefHeight="462.0" prefWidth="758.0" style="-fx-background-color: #122C49;" styleClass="edge-to-edge" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <VBox fx:id="listaGiorniAttività" onContextMenuRequested="#aggiungiGiornoAttività" prefHeight="462.0" prefWidth="870.0" style="-fx-background-color: #060818;" />
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

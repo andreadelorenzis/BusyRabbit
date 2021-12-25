@@ -3,33 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/goalmanager/interfaces/IAzione.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/goalmanager/interfaces/IGoalManager.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/habittracker/interfaces/IItem.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/interfaces/IAttività.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/interfaces/ITimer.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/dashboard/classes/Dashboard.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/agenda/interfaces/IAgenda.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/goalmanager/classes/Azione.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/habittracker/classes/HabitTracker.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/classes/TimeTracker.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/interfaces/IProgetto.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/account/classes/App.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/interfaces/IOrologio.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/agenda/interfaces/IEvento.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/account/classes/Account.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/goalmanager/classes/GoalManager.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/account/interfaces/IImpostazioni.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/goalmanager/interfaces/IAzioneSessione.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/account/interfaces/IDatabase.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/account/interfaces/IAccount.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/account/classes/Impostazioni.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/goalmanager/interfaces/IAzioneSemplice.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/account/classes/Main.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/agenda/classes/Agenda.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/classes/Tracker.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/interfaces/IPomodoroTimer.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/src/app/timetracker/interfaces/ICronometro.java</file>
+            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/Globall.css</file>
+            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/main/Models/account/classes/Account.java</file>
+            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/main/Controllers/TimeTrackerController.java</file>
+            <file>file:/C:/Users/andre/Documents/NetBeansProjects/BusyRabbit/src/main/Views/TimeTracker.fxml</file>
         </group>
     </open-files>
 </project-private>

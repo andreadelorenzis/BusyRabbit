@@ -1,0 +1,32 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 25 dic 2021, 13:01:51
+    Author     : andre
+*/
+
+.choice-box .arrow {
+    -fx-background-color: #2196f3;
+}
+
+.choice-box .label {
+    -fx-text-fill: #2196f3;
+    -fx-font-weight: 800;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #374856;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #122C49;
+}
+
+/* Giorno attività */
+
+.dots {
+    -fx-width: 6;
+    -fx-height: 18;
+}

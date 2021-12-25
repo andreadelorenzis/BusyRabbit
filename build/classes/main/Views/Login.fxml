@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PageController">
+   <children>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="188.0" layoutY="38.0">
+         <image>
+            <Image url="@../../logo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="257.0" layoutY="41.0" text="BusyRabbit" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="103.0" layoutY="145.0" prefHeight="288.0" prefWidth="444.0">
+         <children>
+            <Label layoutX="111.0" layoutY="14.0" style="-fx-font-weight: 800;" text="Accedi al tuo account" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <TextField layoutY="74.0" prefHeight="26.0" prefWidth="444.0" promptText="Inserisci email" style="-fx-background-color: #1B2E4B;">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <TextField layoutY="113.0" prefHeight="26.0" prefWidth="444.0" promptText="Inserisci password" style="-fx-background-color: #1B2E4B;">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <Label layoutX="76.0" layoutY="161.0" onMouseClicked="#apriPaginaRegistrazione" style="-fx-font-weight: 900;" text="Non sei ancora registrato? Registrati." textFill="#2196f3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Button layoutX="148.0" layoutY="222.0" mnemonicParsing="false" onMouseClicked="#apriSchermataPrincipale" prefHeight="40.0" prefWidth="135.0" style="-fx-font-weight: 800; -fx-background-color: #4361EE;" text="Accedi" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
