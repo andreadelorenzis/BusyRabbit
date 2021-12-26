@@ -1,8 +1,6 @@
+package main.Controllers;
 
-
-
-
-
+import src.FxmlLoader;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

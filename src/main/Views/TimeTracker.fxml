@@ -27,7 +27,7 @@
                   </TextField>
                </left>
                <right>
-                  <HBox alignment="CENTER" prefHeight="20.0" prefWidth="90.0" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER" onMouseClicked="#toggleMenuProgetto" prefHeight="20.0" prefWidth="90.0" BorderPane.alignment="CENTER">
                      <children>
                         <ImageView fitHeight="15.0" fitWidth="15.0">
                            <image>
@@ -103,5 +103,51 @@
             </ScrollPane>
          </children>
       </AnchorPane>
+      <BorderPane fx:id="menuProgetti" layoutX="559.0" layoutY="76.0" prefHeight="314.0" prefWidth="228.0" style="-fx-background-color: #1B2E4B;" visible="false" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="76.0">
+         <center>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="136.0" prefWidth="228.0" style="-fx-background-color: #1B2E4B;">
+               <content>
+                  <VBox fx:id="listaProgetti" prefHeight="238.0" prefWidth="227.0" style="-fx-background-color: #1B2E4B;">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" onMouseClicked="#toggleFormProgetto" prefHeight="37.0" prefWidth="228.0" BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <ImageView fitHeight="15.0" fitWidth="15.0">
+                     <image>
+                        <Image url="@/main/risorse/plus.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label prefHeight="20.0" prefWidth="139.0" style="-fx-font-weight: 600;" text="Crea nuovo progetto" textFill="#2196f3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="27.0" prefWidth="207.0" style="-fx-background-color: #1B2E4B;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Progetti" textFill="#374667">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
    </children>
 </AnchorPane>

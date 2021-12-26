@@ -1,3 +1,5 @@
+package src;
+
 
 
 /*
@@ -28,15 +30,15 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             // Crea la finestra principale.
-            Parent root = FXMLLoader.load(getClass().getResource("main/Views/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Login.fxml"));
             Scene scene = new Scene(root, 650, 600);
             
             // Aggiunge l'icona.
-            Image icon = new Image("logo.png");
+            Image icon = new Image("/src/logo2.png");
             primaryStage.getIcons().add(icon);
             
             //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-            String css = this.getClass().getResource("Globall.css").toExternalForm();
+            String css = this.getClass().getResource("/src/Globall.css").toExternalForm();
             scene.getStylesheets().add(css);
             
             primaryStage.setResizable(true);

@@ -1,3 +1,7 @@
+package src;
+
+
+
 
 
 
@@ -18,9 +22,9 @@ public class FxmlLoader {
     private Pane view;
     
     public Pane getPage(String fileName) {
-        System.out.print(("Dentro! Il file è " + fileName + ".fxml"));
+        System.out.print(("Il file è " + fileName + ".fxml"));
         try {
-            URL fileUrl = Main.class.getResource("main/Views/" + fileName + ".fxml");
+            URL fileUrl = Main.class.getResource("/main/Views/" + fileName + ".fxml");
             if(fileUrl == null) {
                 throw new java.io.FileNotFoundException("FXML file can't be found");
             }
