@@ -5,6 +5,8 @@
 package main.Models.timetracker.classes;
 
 import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
 
 /**
  * Rappresenta l'entità a cui devono essere associate tutte le attività. Tali entità sono
@@ -26,6 +28,8 @@ public class Progetto {
     // anni, mesi e giorni. (Utile per dashboard)
     private Map strutturaAttività;
     
+    private String ID;
+    
     // *********************************
     //  COSTRUTTORI
     // *********************************
@@ -35,7 +39,11 @@ public class Progetto {
      * @param nome   // Nome del progetto.
      * @param colore // Colore del progetto.
      */
-    public Progetto (String nome, String colore) {};
+    public Progetto (String nome, String colore) {
+        this.nome = nome;
+        this.colore = colore;
+        this.ID = UUID.randomUUID().toString();
+    };
     
     // *********************************
     //  METODI PRIVATI
@@ -55,12 +63,28 @@ public class Progetto {
      * 
      * @param nome Nome del progetto.
      */
-    public void setNome(String nome) {};
+    public void setNome(String nome) {
+        this.nome = nome;
+    };
     
     /**
      * 
      * @param colore Colore del progetto
      */
-    public void setColore(String colore) {};
+    public void setColore(String colore) {
+        this.colore = colore;
+    };
+    
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public String getColore() {
+        return this.colore;
+    }
+    
+    public String getID() {
+        return this.ID;
+    }
     
 }

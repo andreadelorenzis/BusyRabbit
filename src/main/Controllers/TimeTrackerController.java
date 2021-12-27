@@ -5,9 +5,13 @@
 package main.Controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,13 +24,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import main.Models.timetracker.classes.Progetto;
 
 public class TimeTrackerController {
     
@@ -47,20 +51,88 @@ public class TimeTrackerController {
     @FXML
     private VBox listaProgetti;
     
-    private int conteggioGiorni;
-    private int numGiorniTotale;
-    private int numGiorniVisualizzato;
+    /**
+     * 
+     * !!!! DEMO !!!!
+     * 
+     */
+    private ArrayList<Progetto> progetti;
     
     @FXML 
     private void initialize() {
         timeChoice.setItems(this.scelteTimeTracker);
         timeChoice.setValue("Cronometro");
         this.visualizzaCronologiaAttività();
+        progetti = new ArrayList<Progetto> ();
+        
+        /**
+        * 
+        * !!!! DEMO !!!!
+        * 
+        */
+        for(int i = 0; i < 10; i++) {
+            progetti.add(new Progetto("Progetto " + i, "Verde"));
+        }
+        
+        this.visualizzaListaProgetti(progetti);
     }
     
+    /**
+     * Visualizza nella view la lista dei progetti esistenti.
+     */
+    private void visualizzaListaProgetti(ArrayList<Progetto> progetti) {
+        for(int i = 0; i < progetti.size() - 1; i++) {
+            this.visualizzaProgetto(progetti.get(i));
+        }
+    }
+    
+    /**
+     * Usa i dati di un Progetto per creare un componenete nella view.
+     */
     @FXML
-    private void toggleFormProgetto() throws IOException {
-        System.out.println("Ciaoo");
+    private void visualizzaProgetto(Progetto progetto) {
+        
+        // Crea nuovo progetto
+        BorderPane pane = new BorderPane();
+        pane.setPadding(new Insets(0, 20, 0, 10));
+        pane.setMinHeight(40);
+        Circle circle = new Circle();
+        circle.setRadius(3);
+        circle.setFill(Color.web("#D92F2B"));
+        
+        Label label1 = new Label(progetto.getNome());
+        label1.setGraphic(circle);
+        label1.setStyle("-fx-text-fill: #D92F2B;");
+        
+        ImageView edit = new ImageView();
+        edit.setFitHeight(15);
+        edit.setFitWidth(15);
+        edit.setImage(new Image(getClass().getResource("/main/risorse/edit.png").toString()));
+        
+        pane.setLeft(label1);
+        pane.setRight(edit);
+        
+        // Collega un event handler per il click del mouse
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                try {
+                    modificaProgetto(progetto);
+                } catch (IOException ex) {
+                    Logger.getLogger(TimeTrackerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        
+        listaProgetti.getChildren().add(pane);
+    }
+    
+    /**
+     * Apre il il form dei progetti, aggiunge un Progetto e aggiorna la view.
+     */
+    @FXML
+    private void aggiungiProgetto() throws IOException {
         
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -74,17 +146,73 @@ public class TimeTrackerController {
         
         // Ottiene il controller EditorProgettoController associato alla view
         EditorProgettoController editorController = fxmlLoader.getController();
-        editorController.setProgetto("Socisl Network");
+        Progetto progetto = new Progetto("", "");
+        editorController.setProgetto(progetto);
         
         // Apre dialog popup
         Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
         if(clickedButton.get() == ButtonType.FINISH) {
-            System.out.println("L'utente ha selezionato ok.");
-            this.aggiungiProgetto(editorController.getProgetto());
+            
+            // Aggiungere il progetto nella view.
+            this.visualizzaProgetto(editorController.getProgetto());
+            
+            // Aggiungere il progetto nel modello.
+            this.progetti.add(progetto);
         }
+    }
+    
+    /**
+     * Modifica un Progetto e aggiorna la view.
+     */
+    @FXML
+    private void modificaProgetto(Progetto progetto) throws IOException {
+        
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/EditorProgetto.fxml"));
+        DialogPane newProject = fxmlLoader.load();
+        newProject.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(newProject);
+        dialog.setTitle("Modifica progetto");
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        EditorProgettoController editorController = fxmlLoader.getController();
+        editorController.setProgetto(progetto);
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.FINISH) {
+            
+            // Modificare il progetto nel modello.
+            for(int i = 0; i < this.progetti.size() - 1; i++) {
+                if(progetto == this.progetti.get(i)) {
+                    
+                }
+            }
+            
+            // Visualizzare l'intera lista di progetti nella view.
+            this.listaProgetti.getChildren().clear();
+            this.visualizzaListaProgetti(this.progetti);
+            
+        }
+    }
+    
+    /**
+     * Elimina un Progetto e aggiorna la view.
+     */
+    private void eliminaProgetto() {
         
     }
     
+    /**
+     * Apre il menù a tendina della lista progetti.
+     */
     @FXML
     private void toggleMenuProgetto() {
         if(menuProgetti.isVisible()) 
@@ -93,32 +221,9 @@ public class TimeTrackerController {
             menuProgetti.setVisible(true);    
     }
     
-    @FXML
-    private void aggiungiProgetto(String nome) {
-        
-        // Crea nuovo progetto
-        BorderPane progetto = new BorderPane();
-        progetto.setPadding(new Insets(0, 20, 0, 10));
-        progetto.setMinHeight(40);
-        Circle circle = new Circle();
-        circle.setRadius(3);
-        circle.setFill(Color.web("#D92F2B"));
-        
-        Label label1 = new Label(nome);
-        label1.setGraphic(circle);
-        label1.setStyle("-fx-text-fill: #D92F2B;");
-        
-        ImageView edit = new ImageView();
-        edit.setFitHeight(15);
-        edit.setFitWidth(15);
-        edit.setImage(new Image(getClass().getResource("/main/risorse/edit.png").toString()));
-        
-        progetto.setLeft(label1);
-        progetto.setRight(edit);
-        
-        listaProgetti.getChildren().add(progetto);
-    }
-    
+    /**
+     * Crea e inserisce nella view il componente per poter cambiare pagina attività.
+     */
     @FXML
     private HBox creaFormPagine() {
         
@@ -158,21 +263,23 @@ public class TimeTrackerController {
         return form;
     }
     
+    /**
+     * Visualizza nella view le informazioni sulle attività passate.
+     */
     private void visualizzaCronologiaAttività() {
         for(int i = 0; i < 10; i++) {
-            this.aggiungiGiornoAttività();
+            this.visualizzaGiornoAttività();
         }
         HBox formPagine = this.creaFormPagine();
         listaGiorniAttività.getChildren().add(formPagine);
     }
     
+    
     /**
-     * Aggiunge alla View un giorno di attività.
+     * Usa i dati di un GiornoAttività per creare e poi inserire un componenente nella view.
      */
     @FXML
-    private void aggiungiGiornoAttività() {
-        
-        this.conteggioGiorni++;
+    private void visualizzaGiornoAttività() {
         
         // Crea un BorderPane container.
         BorderPane giornoAttivitàContainer = new BorderPane();
@@ -194,7 +301,7 @@ public class TimeTrackerController {
         header.setMinHeight(30);
         
         // Crea un'attività e la aggiunge alla lista.
-        BorderPane attività = creaAttività();
+        BorderPane attività = visualizzaAttività();
         listaAttività.getChildren().add(attività);
         attività.setMinHeight(40);
         
@@ -217,9 +324,7 @@ public class TimeTrackerController {
     }
     
     /**
-     * Crea e restituisce il pulsante di aggiunta Progetto.
-     * 
-     * @return HBox che rappresenta il pulsante di aggiunta progetto.
+     * Crea e inserisce nella view il pulsante di aggiunta progetto.
      */
     private HBox creaBtnProgetto() {
         HBox btnProgetto = new HBox();
@@ -237,9 +342,7 @@ public class TimeTrackerController {
     }
     
     /**
-     * Crea e restituisce l'header del giorno di attività.
-     * 
-     * @return BorderPane che rappresenta l'header del giorno di attività.
+     * Usa i dati di un GiornoAttività per creare l'header del componente nella view.
      */
     private BorderPane creaHeaderGiornoAttività() {
         
@@ -279,11 +382,30 @@ public class TimeTrackerController {
     }
     
     /**
-     * Crea e restituisce una nuova Attività.
-     * 
-     * @return BorderPane che rappresenta l'attività.
+     * Aggiunge una nuova Attività e aggiorna la view.
      */
-    private BorderPane creaAttività() {
+    private void aggiungiAttività() {
+    
+    }
+    
+    /**
+     * Modifica un'attività e aggiorna la view.
+     */
+    private void modificaAttività() {
+    
+    }
+    
+    /**
+     * Elimina un'attività e aggiorna la view.
+     */
+    private void eliminaAttività() {
+    
+    }
+    
+    /**
+     * Usa i dati di un'Attività per creare un componente nella view.
+     */
+    private BorderPane visualizzaAttività() {
         
         // Crea un BorderPane.
         BorderPane attività = new BorderPane();

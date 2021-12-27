@@ -61,7 +61,7 @@
                               <Insets right="30.0" />
                            </HBox.margin>
                         </Label>
-                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#aggiungiGiornoAttività" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800;" text="START " textFill="WHITE">
+                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#visualizzaGiornoAttività" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800;" text="START " textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="12.0" fitWidth="12.0">
                                  <image>
@@ -98,7 +98,7 @@
          <children>
             <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" prefHeight="462.0" prefWidth="758.0" style="-fx-background-color: #122C49;" styleClass="edge-to-edge" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <VBox fx:id="listaGiorniAttività" onContextMenuRequested="#aggiungiGiornoAttività" prefHeight="462.0" prefWidth="870.0" style="-fx-background-color: #060818;" />
+                  <VBox fx:id="listaGiorniAttività" onContextMenuRequested="#visualizzaGiornoAttività" prefHeight="462.0" prefWidth="870.0" style="-fx-background-color: #060818;" />
                </content>
             </ScrollPane>
          </children>
@@ -116,7 +116,7 @@
             </ScrollPane>
          </center>
          <bottom>
-            <HBox alignment="CENTER" onMouseClicked="#toggleFormProgetto" prefHeight="37.0" prefWidth="228.0" BorderPane.alignment="TOP_LEFT">
+            <HBox alignment="CENTER" onMouseClicked="#aggiungiProgetto" prefHeight="37.0" prefWidth="228.0" BorderPane.alignment="TOP_LEFT">
                <children>
                   <ImageView fitHeight="15.0" fitWidth="15.0">
                      <image>
