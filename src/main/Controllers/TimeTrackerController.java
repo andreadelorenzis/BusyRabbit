@@ -10,8 +10,10 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,22 +25,22 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.GiornoAttività;
 import main.Models.timetracker.classes.Progetto;
+import src.FxmlLoader;
 
 public class TimeTrackerController {
-    
-    // Scelte del menù a tendina.
-    private ObservableList<String> scelteTimeTracker = FXCollections.observableArrayList("Cronometro", "Pomodoro", "Manuale");
     
     @FXML
     private ScrollPane scroll;
@@ -53,6 +55,18 @@ public class TimeTrackerController {
     private BorderPane menuProgetti;
     @FXML
     private VBox listaProgetti;
+    
+    @FXML
+    private TextField attivitàText;
+    
+    @FXML
+    private BorderPane formTimeTracker;
+    
+    @FXML
+    private BorderPane formPomodoro;
+    
+    @FXML
+    private BorderPane formManuale;
     
     /**
      * 
@@ -70,8 +84,16 @@ public class TimeTrackerController {
     
     @FXML 
     private void initialize() {
-        timeChoice.setItems(this.scelteTimeTracker);
+        
+        ObservableList<String> list = timeChoice.getItems();
+        list.add("Cronometro");
+        list.add("Pomodoro");
+        list.add("Manuale");
         timeChoice.setValue("Cronometro");
+        timeChoice.getSelectionModel().selectedIndexProperty().addListener(
+                 (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                    this.cambiaTipoTracker((String) timeChoice.getItems().get((Integer) new_val));
+        });
         
         /**
         * 
@@ -91,9 +113,9 @@ public class TimeTrackerController {
         giorniAttività = new ArrayList<GiornoAttività>();
         for(int i = 0; i < 2; i++) {
             ArrayList<Attività> listaAttività = new ArrayList<Attività>();
-            listaAttività.add(new Attività(new Date(), 500, "Attività1"));
-            listaAttività.add(new Attività(new Date(), 500, "Attività2"));
-            listaAttività.add(new Attività(new Date(), 500, "Attività3"));
+            listaAttività.add(new Attività(new Date(), 500, "Attività1", new Progetto("Social Network", "#FEB019")));
+            listaAttività.add(new Attività(new Date(), 500, "Attività2", new Progetto("Studiare", "#00E396")));
+            listaAttività.add(new Attività(new Date(), 500, "Attività3", new Progetto("Workout", "#9C27B0")));
             
             GiornoAttività giorno = new GiornoAttività();
             giorno.setListaAttività(listaAttività);
@@ -103,6 +125,7 @@ public class TimeTrackerController {
         
         this.visualizzaListaProgetti(progetti);
         this.visualizzaCronologiaAttività(giorniAttività);
+       
     }
     
     /**
@@ -312,7 +335,7 @@ public class TimeTrackerController {
         // Crea un BorderPane container.
         BorderPane giornoAttivitàContainer = new BorderPane();
         giornoAttivitàContainer.setStyle("-fx-border-radius: 14; -fx-background-radius: 12;");
-        giornoAttivitàContainer.setPadding(new Insets(0, 0, 20, 0));
+        giornoAttivitàContainer.setPadding(new Insets(0, 0, 40, 0));
         
         // Crea un VBox da mettere nel BorderPane.
         VBox giornoAttività = new VBox();
@@ -410,35 +433,42 @@ public class TimeTrackerController {
     }
     
     /**
+     * 
+     */
+    @FXML
+    private void avviaTimeTracker(ActionEvent event) throws IOException {
+        if(this.attivitàText.getText() != "") {
+            this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText()));
+        } else {
+            System.out.println("Perfavore inserisci il nome di un'attività.");
+        }
+    }
+    
+    /**
      * Aggiunge una nuova Attività e aggiorna la view.
      */
-    private void aggiungiAttività() throws IOException {
+    @FXML
+    private void aggiungiAttività(Attività attività) throws IOException {
         
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/EditorAttività.fxml"));
-        DialogPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        // Aggiungere l'attività nel modello.
+
+        /**
+         * 
+         * !!!! DEMO !!!!
+         * 
+         */
         
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(editor);
-        dialog.setTitle("Nuova Attività");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorAttivitàController editorController = fxmlLoader.getController();
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.FINISH) {
+        // Se l'ultimo giorno della cronologia è ieri crea un nuovo giorno e aggiungi l'attività.
+        GiornoAttività giorno = new GiornoAttività();
+        ArrayList<Attività> listaAttività = new ArrayList<Attività>();
+        listaAttività.add(attività);
+        giorno.setListaAttività(listaAttività);
+        this.giorniAttività.add(0, giorno);
+
+        // Refreshare la lista attività della view
+        this.listaGiorniAttività.getChildren().clear();
+        this.visualizzaCronologiaAttività(giorniAttività);
             
-            // Aggiungere l'attività nel modello.
-            
-            // Refreshare la lista attività della view
-            
-            
-        }
     }
     
     /**
@@ -496,16 +526,40 @@ public class TimeTrackerController {
         HBox attivitàSinistra = new HBox();
         attivitàSinistra.setAlignment(Pos.CENTER);
         attivitàSinistra.setFillHeight(true);
-        Label label1 = new Label("3");
-        label1.setStyle("-fx-text-fill: #ffffff; -fx-background-color: #E7515A; ");
-        label1.setPadding(new Insets(0, 10, 0, 10));
         Label label2 = new Label(attività.getNome());
         label2.setStyle("-fx-font-size: 14; -fx-text-fill: #888EA8;");
         label2.setPadding(new Insets(0, 20, 0, 20));
-        HBox btnProgetto = creaBtnProgetto();
-        attivitàSinistra.getChildren().add(label1);
         attivitàSinistra.getChildren().add(label2);
-        attivitàSinistra.getChildren().add(btnProgetto);
+        
+        // Visualizza progetto associato ad attività.
+        Label label5;
+        if(attività.getProgetto() != null) {
+           label5 = new Label(attività.getProgetto().getNome());
+           Circle circle = new Circle();
+           circle.setRadius(3);
+           circle.setFill(Color.web(attività.getProgetto().getColore()));
+           label5.setGraphic(circle);
+           label5.setStyle("-fx-text-fill: " + attività.getProgetto().getColore() + ";");
+        } else {
+            label5 = new Label("Altro");
+            Circle circle = new Circle();
+            circle.setRadius(3);
+            circle.setFill(Color.web("#E5E5E5"));
+            label5.setGraphic(circle);
+            label5.setStyle("-fx-text-fill: #E5E5E5;");
+        }
+        attivitàSinistra.getChildren().add(label5);
+        //Circle circle = new Circle();
+        //circle.setRadius(3);
+        // progetto.getColore()
+        //circle.setFill(Color.web("#D92F2B"));
+        //label5.setGraphic(circle);
+        /*label5.setStyle("-fx-text-fill: #D92F2B;");
+        attivitàSinistra.getChildren().add(label2);
+        attivitàSinistra.getChildren().add(label5);
+        
+        attivitàSinistra.getChildren().add(label2);
+        attivitàSinistra.getChildren().add(label5);*/
         
         // Crea la parte destra del BorderPane.
         HBox attivitàDestra = new HBox();
@@ -549,5 +603,65 @@ public class TimeTrackerController {
         
         return pane;
     }
+    
+    @FXML
+    private void avviaPomodoroTimer() {
+    
+    }
+    
+    @FXML
+    private void creaAttivitàManualmente() {
+    
+    }
+    
+    @FXML private void impostaTimer() {
+    
+    }
+    
+    private void cambiaTipoTracker(String tipo) {
+           switch (tipo) {
+            case "Cronometro" -> this.cambiaInTimeTracker();
+            case "Pomodoro" -> this.cambiaInPomodoro();
+            case "Manuale" -> this.cambiaInManuale();
+            default -> {
+            }
+        }
+            
+    }
+    
+    private void cambiaInTimeTracker() {
+        
+        // Nascondi gli altri form
+        this.formManuale.setVisible(false);
+        this.formPomodoro.setVisible(false);
+        
+        // Visualizza il form del pomodoro timer
+        this.formTimeTracker.setVisible(true);
+        
+    }
+    
+    private void cambiaInPomodoro() {
+        
+        // Nascondi gli altri form
+        this.formManuale.setVisible(false);
+        this.formTimeTracker.setVisible(false);
+        
+        // Visualizza il form del pomodoro timer
+        this.formPomodoro.setVisible(true);
+        
+    }
+    
+    private void cambiaInManuale() {
+        
+        // Nascondi gli altri form
+        this.formTimeTracker.setVisible(false);
+        this.formPomodoro.setVisible(false);
+        
+        // Visualizza il form del pomodoro timer
+        this.formManuale.setVisible(true);
+        
+    }
+    
+    
     
 }

@@ -41,6 +41,7 @@ public class Attività {
         this.data = data;
         this.durata = durata;
         this.nome = nome;
+        this.progetto = null;
         this.ID = UUID.randomUUID().toString();
     };
     

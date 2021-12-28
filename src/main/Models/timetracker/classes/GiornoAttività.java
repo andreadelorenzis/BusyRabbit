@@ -40,4 +40,8 @@ public class GiornoAttività {
         this.tempoTotale = tempoTotale;
     }
     
+    public void aggiungiAttività(Attività attività) {
+        this.listaAttività.add(attività);
+    }
+    
 }
