@@ -21,6 +21,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -67,6 +68,26 @@ public class TimeTrackerController {
     
     @FXML
     private BorderPane formManuale;
+    
+    @FXML
+    private TextField orarioText1;
+    
+    @FXML
+    private TextField orarioText2;
+    
+    @FXML
+    private DatePicker dataManuale;
+    
+    @FXML
+    private TextField durataText1;
+    
+    @FXML
+    private TextField durataText2;
+    
+    @FXML
+    private TextField durataText3;
+    
+    private Progetto progettoAssociato;
     
     /**
      * 
@@ -549,17 +570,6 @@ public class TimeTrackerController {
             label5.setStyle("-fx-text-fill: #E5E5E5;");
         }
         attivitàSinistra.getChildren().add(label5);
-        //Circle circle = new Circle();
-        //circle.setRadius(3);
-        // progetto.getColore()
-        //circle.setFill(Color.web("#D92F2B"));
-        //label5.setGraphic(circle);
-        /*label5.setStyle("-fx-text-fill: #D92F2B;");
-        attivitàSinistra.getChildren().add(label2);
-        attivitàSinistra.getChildren().add(label5);
-        
-        attivitàSinistra.getChildren().add(label2);
-        attivitàSinistra.getChildren().add(label5);*/
         
         // Crea la parte destra del BorderPane.
         HBox attivitàDestra = new HBox();
@@ -605,17 +615,42 @@ public class TimeTrackerController {
     }
     
     @FXML
-    private void avviaPomodoroTimer() {
+    private void avviaPomodoroTimer() throws IOException {
+        if(this.attivitàText.getText() != "") {
+            this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText()));
+        } else {
+            System.out.println("Perfavore inserisci il nome di un'attività.");
+        }
+    }
+    
+    @FXML
+    private void sospendiPomodoroTimer() {
     
     }
     
     @FXML
-    private void creaAttivitàManualmente() {
+    private void resettaPomodoroTimer() {
     
     }
     
     @FXML private void impostaTimer() {
     
+    }
+    
+    @FXML
+    private void creaAttivitàManualmente() throws IOException {
+        if(this.attivitàText.getText() == "") {
+            System.out.println("Perfavore inserisci il nome dell'attività.");
+            return;
+        } else if (this.orarioText1.getText() == "" || this.orarioText2.getText() == "") {
+            System.out.println("Perfavore inserisci l'orario di inizio attività.");
+            return;
+        } else if (this.durataText1.getText() == "" || this.durataText2.getText() == "" || this.durataText3.getText() == "") {
+            System.out.println("Perfavore inserisci la durata dell'attività.");
+            return;
+        }
+        
+        this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText(), new Progetto("Altro", "#E5E5E5")));
     }
     
     private void cambiaTipoTracker(String tipo) {

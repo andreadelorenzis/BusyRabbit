@@ -159,7 +159,7 @@
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="orarioText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B;">
+                                    <TextField fx:id="orarioText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -172,7 +172,7 @@
                                           <Insets left="3.0" right="3.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="orarioText2" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B;" />
+                                    <TextField fx:id="orarioText2" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                     <Label text="Data:" textFill="#58698d">
                                        <HBox.margin>
                                           <Insets left="35.0" right="10.0" />
@@ -184,7 +184,7 @@
                                           <Insets left="35.0" right="20.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="durataText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B;" />
+                                    <TextField fx:id="durataText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                     <Label text=":" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
@@ -193,7 +193,7 @@
                                           <Insets left="3.0" right="3.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="durataText2" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B;" />
+                                    <TextField fx:id="durataText2" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                     <Label text=":" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
@@ -202,7 +202,7 @@
                                           <Insets left="3.0" right="3.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="durataText3" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B;" />
+                                    <TextField fx:id="durataText3" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                  </children>
                               </HBox>
                               <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#creaAttivitàManualmente" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800;" text="AGGIUNGI" textFill="WHITE">
