@@ -20,7 +20,6 @@ import main.Models.timetracker.classes.Progetto;
  */
 public class EditorProgettoController {
     
-    
     @FXML
     private ChoiceBox<String> colore;
     
@@ -43,9 +42,7 @@ public class EditorProgettoController {
     
     @FXML
     private void handleTextField(KeyEvent event) {
-        if(this.progetto != null) {
-            this.progetto.setNome(nome.getText());
-        }
+        this.progetto.setNome(nome.getText());
     }
     
     // Chiamato dal TimeTrackerController

@@ -5,7 +5,6 @@
 package main.Models.timetracker.classes;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.UUID;
 
 /**

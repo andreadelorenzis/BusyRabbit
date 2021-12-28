@@ -17,7 +17,7 @@
          <top>
             <HBox BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Crea progetto" textFill="#374667">
+                  <Label text="Editor progetto" textFill="#374667">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -35,7 +35,7 @@
                   <HBox alignment="CENTER_LEFT">
                      <children>
                         <Label text="Nome:" textFill="WHITE" />
-                        <TextField fx:id="nome" onKeyTyped="#handleTextField" prefHeight="26.0" prefWidth="174.0" promptText="Aggiungi progetto" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="nome" onKeyTyped="#handleTextField" prefHeight="26.0" prefWidth="174.0" promptText="Inserisci nome progetto" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -67,7 +67,7 @@
       </BorderPane>
    </content>
    <buttonTypes>
-      <ButtonType fx:constant="FINISH" />
+      <ButtonType fx:constant="OK" />
       <ButtonType fx:constant="CANCEL" />
    </buttonTypes>
    <padding>

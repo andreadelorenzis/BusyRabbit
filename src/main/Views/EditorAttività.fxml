@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane prefHeight="226.0" prefWidth="394.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.EditorAttivitàController">
+   <content>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="394.0">
+         <top>
+            <HBox prefHeight="33.0" prefWidth="375.0" BorderPane.alignment="CENTER_LEFT">
+               <children>
+                  <Label text="Editor attività" textFill="#374667">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+         <center>
+            <VBox alignment="CENTER_LEFT" prefHeight="123.0" prefWidth="374.0" style="-fx-border-color: #2B305B; -fx-border-width: 2 0 2 0;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="374.0">
+                     <children>
+                        <Label text="Nome:" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="18.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="nome" onKeyTyped="#handleTextField" prefHeight="31.0" prefWidth="288.0" promptText="Inserisci nome attività" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">
+                     <children>
+                        <Label text="Progetto:" textFill="WHITE" />
+                        <ChoiceBox fx:id="progetto" prefWidth="150.0" style="-fx-background-color: #1B2E4B;">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">
+                     <children>
+                        <Label text="Data:" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="35.0" />
+                           </HBox.margin>
+                        </Label>
+                        <DatePicker fx:id="data" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="3.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </content>
+   <padding>
+      <Insets left="15.0" right="15.0" />
+   </padding>
+   <buttonTypes>
+      <ButtonType fx:constant="CANCEL" />
+      <ButtonType fx:constant="OK" />
+   </buttonTypes>
+</DialogPane>

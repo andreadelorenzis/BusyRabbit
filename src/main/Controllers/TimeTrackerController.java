@@ -6,6 +6,7 @@ package main.Controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +31,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import main.Models.timetracker.classes.Attività;
+import main.Models.timetracker.classes.GiornoAttività;
 import main.Models.timetracker.classes.Progetto;
 
 public class TimeTrackerController {
@@ -58,23 +61,48 @@ public class TimeTrackerController {
      */
     private ArrayList<Progetto> progetti;
     
+    /**
+    * 
+    * !!!! DEMO !!!!
+    * 
+    */
+    private ArrayList<GiornoAttività> giorniAttività;
+    
     @FXML 
     private void initialize() {
         timeChoice.setItems(this.scelteTimeTracker);
         timeChoice.setValue("Cronometro");
-        this.visualizzaCronologiaAttività();
-        progetti = new ArrayList<Progetto> ();
         
         /**
         * 
         * !!!! DEMO !!!!
         * 
         */
+        progetti = new ArrayList<Progetto> ();
         for(int i = 0; i < 10; i++) {
             progetti.add(new Progetto("Progetto " + i, "Verde"));
         }
         
+        /**
+        * 
+        * !!!! DEMO !!!!
+        * 
+        */
+        giorniAttività = new ArrayList<GiornoAttività>();
+        for(int i = 0; i < 2; i++) {
+            ArrayList<Attività> listaAttività = new ArrayList<Attività>();
+            listaAttività.add(new Attività(new Date(), 500, "Attività1"));
+            listaAttività.add(new Attività(new Date(), 500, "Attività2"));
+            listaAttività.add(new Attività(new Date(), 500, "Attività3"));
+            
+            GiornoAttività giorno = new GiornoAttività();
+            giorno.setListaAttività(listaAttività);
+            
+            giorniAttività.add(giorno);
+        }
+        
         this.visualizzaListaProgetti(progetti);
+        this.visualizzaCronologiaAttività(giorniAttività);
     }
     
     /**
@@ -95,7 +123,7 @@ public class TimeTrackerController {
         // Crea nuovo progetto
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(0, 20, 0, 10));
-        pane.setMinHeight(40);
+        pane.setMinHeight(60);
         Circle circle = new Circle();
         circle.setRadius(3);
         circle.setFill(Color.web("#D92F2B"));
@@ -187,7 +215,7 @@ public class TimeTrackerController {
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         
         // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.FINISH) {
+        if(clickedButton.get() == ButtonType.OK) {
             
             // Modificare il progetto nel modello.
             for(int i = 0; i < this.progetti.size() - 1; i++) {
@@ -196,7 +224,7 @@ public class TimeTrackerController {
                 }
             }
             
-            // Visualizzare l'intera lista di progetti nella view.
+            // Refreshare la lista di componenti nella view
             this.listaProgetti.getChildren().clear();
             this.visualizzaListaProgetti(this.progetti);
             
@@ -266,9 +294,9 @@ public class TimeTrackerController {
     /**
      * Visualizza nella view le informazioni sulle attività passate.
      */
-    private void visualizzaCronologiaAttività() {
-        for(int i = 0; i < 10; i++) {
-            this.visualizzaGiornoAttività();
+    private void visualizzaCronologiaAttività(ArrayList<GiornoAttività> giorniAttività) {
+        for(int i = 0; i < giorniAttività.size(); i++) {
+            this.visualizzaGiornoAttività(giorniAttività.get(i));
         }
         HBox formPagine = this.creaFormPagine();
         listaGiorniAttività.getChildren().add(formPagine);
@@ -279,31 +307,31 @@ public class TimeTrackerController {
      * Usa i dati di un GiornoAttività per creare e poi inserire un componenente nella view.
      */
     @FXML
-    private void visualizzaGiornoAttività() {
+    private void visualizzaGiornoAttività(GiornoAttività giorno) {
         
         // Crea un BorderPane container.
         BorderPane giornoAttivitàContainer = new BorderPane();
-        giornoAttivitàContainer.setMinHeight(120);
         giornoAttivitàContainer.setStyle("-fx-border-radius: 14; -fx-background-radius: 12;");
         giornoAttivitàContainer.setPadding(new Insets(0, 0, 20, 0));
         
         // Crea un VBox da mettere nel BorderPane.
         VBox giornoAttività = new VBox();
         giornoAttività.setStyle("-fx-background-color: #0E1726; -fx-border-radius: 14; -fx-background-radius: 12;");
-        giornoAttività.setMinHeight(80);
         
         // Crea un BorderPane che fungerà da header.
         BorderPane header = creaHeaderGiornoAttività();
-        header.setMinHeight(40);
+        header.setMinHeight(50);
         
         // Crea un VBox come lista per le attività svolte durante il giorno.
         VBox listaAttività = new VBox();
-        header.setMinHeight(30);
         
-        // Crea un'attività e la aggiunge alla lista.
-        BorderPane attività = visualizzaAttività();
-        listaAttività.getChildren().add(attività);
-        attività.setMinHeight(40);
+        for(int i = 0; i < giorno.getListaAttività().size(); i++) {
+            Attività attività = giorno.getListaAttività().get(i);
+            
+            // Crea un'attività e la aggiunge alla lista.
+            BorderPane pane = visualizzaAttività(attività);
+            listaAttività.getChildren().add(pane);
+        }
         
         // Aggiunge header e lista attività al VBox.
         giornoAttività.getChildren().add(header);
@@ -384,15 +412,66 @@ public class TimeTrackerController {
     /**
      * Aggiunge una nuova Attività e aggiorna la view.
      */
-    private void aggiungiAttività() {
-    
+    private void aggiungiAttività() throws IOException {
+        
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/EditorAttività.fxml"));
+        DialogPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(editor);
+        dialog.setTitle("Nuova Attività");
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        EditorAttivitàController editorController = fxmlLoader.getController();
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.FINISH) {
+            
+            // Aggiungere l'attività nel modello.
+            
+            // Refreshare la lista attività della view
+            
+            
+        }
     }
     
     /**
      * Modifica un'attività e aggiorna la view.
      */
-    private void modificaAttività() {
-    
+    private void modificaAttività(Attività attività) throws IOException {
+        
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/EditorAttività.fxml"));
+        DialogPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(editor);
+        dialog.setTitle("Modifica Attività");
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        EditorAttivitàController editorController = fxmlLoader.getController();
+        editorController.setAttività(attività);
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+            
+            // Refreshare la lista attività della view
+            this.listaGiorniAttività.getChildren().clear();
+            this.visualizzaCronologiaAttività(this.giorniAttività);
+            System.out.println(attività.getNome() + " " + attività.getProgetto().getNome());
+            
+        }
     }
     
     /**
@@ -405,13 +484,13 @@ public class TimeTrackerController {
     /**
      * Usa i dati di un'Attività per creare un componente nella view.
      */
-    private BorderPane visualizzaAttività() {
+    private BorderPane visualizzaAttività(Attività attività) {
         
         // Crea un BorderPane.
-        BorderPane attività = new BorderPane();
-        attività.setStyle("-fx-border-radius: 14; -fx-background-radius: 12;");
-        attività.setPadding(new Insets(0, 20, 0, 20));
-        attività.setMinHeight(60);
+        BorderPane pane = new BorderPane();
+        pane.setStyle("-fx-border-color: #191E3A; -fx-border-width: 2 0 0 0; ");
+        pane.setPadding(new Insets(0, 20, 0, 20));
+        pane.setMinHeight(60);
         
         // Crea la parte sinistra del BorderPane.
         HBox attivitàSinistra = new HBox();
@@ -420,7 +499,7 @@ public class TimeTrackerController {
         Label label1 = new Label("3");
         label1.setStyle("-fx-text-fill: #ffffff; -fx-background-color: #E7515A; ");
         label1.setPadding(new Insets(0, 10, 0, 10));
-        Label label2 = new Label("Studiare");
+        Label label2 = new Label(attività.getNome());
         label2.setStyle("-fx-font-size: 14; -fx-text-fill: #888EA8;");
         label2.setPadding(new Insets(0, 20, 0, 20));
         HBox btnProgetto = creaBtnProgetto();
@@ -451,11 +530,24 @@ public class TimeTrackerController {
         attivitàDestra.getChildren().add(container);
         attivitàDestra.getChildren().add(dots);
         
-        // Imposta parte sinistra e destra del BorderPane.
-        attività.setLeft(attivitàSinistra);
-        attività.setRight(attivitàDestra);
+        // Collega un event handler per il click del mouse
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                try {
+                    modificaAttività(attività);
+                } catch (IOException ex) {
+                    Logger.getLogger(TimeTrackerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        dots.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);        
         
-        return attività;
+        // Imposta parte sinistra e destra del BorderPane.
+        pane.setLeft(attivitàSinistra);
+        pane.setRight(attivitàDestra);
+        
+        return pane;
     }
     
 }

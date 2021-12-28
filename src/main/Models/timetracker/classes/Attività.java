@@ -5,6 +5,7 @@
 package main.Models.timetracker.classes;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Rappresenta un'attività che è stata monitorata dall'utente.
@@ -19,19 +20,29 @@ public class Attività {
     
     private Date data;          // Data in cui è stata svolta l'attività.
     
-    private int Durata;         // Durata dell'attività.
+    private int durata;         // Durata dell'attività.
     
     private Progetto progetto;  // Progetto a cui l'attività è associato.
     
-    private int ID;             // Identificativo dell'attività.
+    private String ID;             // Identificativo dell'attività.
     
     // *********************************
     //  COSTRUTTORI
     // *********************************
     
-    public Attività(Date data, int durata, String nome, Progetto progetto) {};    
+    public Attività(Date data, int durata, String nome, Progetto progetto) {
+        this.data = data;
+        this.nome = nome;
+        this.progetto = progetto;
+        this.ID = UUID.randomUUID().toString();
+    };    
     
-    public Attività(Date data, int durata, String nome) {};
+    public Attività(Date data, int durata, String nome) {
+        this.data = data;
+        this.durata = durata;
+        this.nome = nome;
+        this.ID = UUID.randomUUID().toString();
+    };
     
     // *********************************
     //  METODI PRIVATI
@@ -45,22 +56,46 @@ public class Attività {
      * 
      * @param nome Nome dell'attività.
      */
-    public void setNome(String nome) {};
+    public void setNome(String nome) {
+        this.nome = nome;
+    };
     
     /**
      * 
      * @param durata Durata dell'attività.
      */
-    public void setDurata(int durata) {};
+    public void setDurata(int durata) {
+        this.durata = durata;
+    };
     
     /**
      * 
      * @param progetto Progetto a cui l'attività è associato.
      */
-    public void setProgettoPadre(Progetto progetto) {};
+    public void setProgettoPadre(Progetto progetto) {
+        this.progetto = progetto;
+    };
     
     public String getNome() {
-        return "";
+        return this.nome;
     };
+    
+    public String getID() {
+        return this.ID;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public int getDurata() {
+        return durata;
+    }
+
+    public Progetto getProgetto() {
+        return progetto;
+    }
+    
+    
     
 }
