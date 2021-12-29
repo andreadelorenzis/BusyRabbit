@@ -19,8 +19,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -87,6 +89,18 @@ public class TimeTrackerController {
     @FXML
     private TextField durataText3;
     
+    @FXML
+    private HBox boxProgetto;
+    
+    @FXML
+    private HBox pauseBtnContainer;
+    
+    @FXML
+    private Button resetBtn;
+            
+    @FXML
+    private Button avviaBtn;
+    
     private Progetto progettoAssociato;
     
     /**
@@ -121,18 +135,18 @@ public class TimeTrackerController {
         * !!!! DEMO !!!!
         * 
         */
-        progetti = new ArrayList<Progetto> ();
-        for(int i = 0; i < 10; i++) {
-            progetti.add(new Progetto("Progetto " + i, "Verde"));
-        }
-        
+        this.progetti = new ArrayList<Progetto> ();
+        progetti.add(new Progetto("Social Network", "#FEB019"));
+        progetti.add(new Progetto("Studiare", "#00E396"));
+        progetti.add(new Progetto("Workout", "#9C27B0"));
+
         /**
         * 
         * !!!! DEMO !!!!
         * 
         */
         giorniAttività = new ArrayList<GiornoAttività>();
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 3; i++) {
             ArrayList<Attività> listaAttività = new ArrayList<Attività>();
             listaAttività.add(new Attività(new Date(), 500, "Attività1", new Progetto("Social Network", "#FEB019")));
             listaAttività.add(new Attività(new Date(), 500, "Attività2", new Progetto("Studiare", "#00E396")));
@@ -153,7 +167,7 @@ public class TimeTrackerController {
      * Visualizza nella view la lista dei progetti esistenti.
      */
     private void visualizzaListaProgetti(ArrayList<Progetto> progetti) {
-        for(int i = 0; i < progetti.size() - 1; i++) {
+        for(int i = 0; i < progetti.size(); i++) {
             this.visualizzaProgetto(progetti.get(i));
         }
     }
@@ -170,22 +184,45 @@ public class TimeTrackerController {
         pane.setMinHeight(60);
         Circle circle = new Circle();
         circle.setRadius(3);
-        circle.setFill(Color.web("#D92F2B"));
+        circle.setFill(Color.web(progetto.getColore()));
         
+        HBox box3 = new HBox();
+        box3.setAlignment(Pos.CENTER);
         Label label1 = new Label(progetto.getNome());
         label1.setGraphic(circle);
-        label1.setStyle("-fx-text-fill: #D92F2B;");
+        label1.setStyle("-fx-text-fill: " + progetto.getColore() +";");
+        box3.getChildren().add(label1);
         
+        HBox containerBtn = new HBox();
+        containerBtn.setAlignment(Pos.CENTER);
+        //containerBtn.setStyle("-fx-background-color: red;");
+        
+        HBox box = new HBox();
+        box.setAlignment(Pos.CENTER);
         ImageView edit = new ImageView();
         edit.setFitHeight(15);
         edit.setFitWidth(15);
         edit.setImage(new Image(getClass().getResource("/main/risorse/edit.png").toString()));
+        box.getChildren().add(edit);
+        box.setPadding(new Insets(5, 5, 5, 5));
         
-        pane.setLeft(label1);
-        pane.setRight(edit);
+        HBox box2 = new HBox();
+        box2.setAlignment(Pos.CENTER);
+        ImageView trash = new ImageView();
+        trash.setFitHeight(13);
+        trash.setFitWidth(13);
+        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
+        box2.getChildren().add(trash);
+        box2.setPadding(new Insets(5, 5, 5, 5));
         
-        // Collega un event handler per il click del mouse
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        containerBtn.getChildren().add(box);
+        containerBtn.getChildren().add(box2);
+        
+        pane.setLeft(box3);
+        pane.setRight(containerBtn);
+        
+        // Event handler per la modifica del progetto
+        EventHandler<MouseEvent> eventHandlerModifica = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 try {
@@ -195,9 +232,47 @@ public class TimeTrackerController {
                 }
             }
         };
-        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+       
+        // Event handler per l'eliminazione di un progetto
+        EventHandler<MouseEvent> eventHandlerElimina = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                eliminaProgetto(progetto);
+            }
+        };
+       
+        box.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerModifica);
+        box2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerElimina);
+        
+        // Collega un event handler per la scelta del progetto
+        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                cambiaProgetto(progetto);
+            }
+        };
+        label1.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
         
         listaProgetti.getChildren().add(pane);
+    }
+    
+    /**
+     * Cambia il progett
+     */
+    private void cambiaProgetto(Progetto progetto) {
+        
+        // Crea nuovo progetto
+        Circle circle = new Circle();
+        circle.setRadius(3);
+        circle.setFill(Color.web(progetto.getColore()));
+        Label label = new Label(progetto.getNome());
+        label.setGraphic(circle);
+        label.setStyle("-fx-text-fill: " + progetto.getColore() +";");
+        
+        this.progettoAssociato = progetto;
+        this.boxProgetto.getChildren().clear(); 
+        this.boxProgetto.getChildren().add(label);
+        
     }
     
     /**
@@ -218,20 +293,20 @@ public class TimeTrackerController {
         
         // Ottiene il controller EditorProgettoController associato alla view
         EditorProgettoController editorController = fxmlLoader.getController();
-        Progetto progetto = new Progetto("", "");
-        editorController.setProgetto(progetto);
+        editorController.setProgetto(new Progetto("", ""));
         
         // Apre dialog popup
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         
         // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.FINISH) {
-            
-            // Aggiungere il progetto nella view.
-            this.visualizzaProgetto(editorController.getProgetto());
+        if(clickedButton.get() == ButtonType.OK) {
             
             // Aggiungere il progetto nel modello.
-            this.progetti.add(progetto);
+            this.progetti.add(editorController.getProgetto());
+            
+            // Aggiornare la view
+            this.listaProgetti.getChildren().clear();
+            this.visualizzaListaProgetti(this.progetti);
         }
     }
     
@@ -278,8 +353,8 @@ public class TimeTrackerController {
     /**
      * Elimina un Progetto e aggiorna la view.
      */
-    private void eliminaProgetto() {
-        
+    private void eliminaProgetto(Progetto progetto) {
+        System.out.println("Progetto: " + progetto.getNome() + " eliminato!");
     }
     
     /**
@@ -458,6 +533,7 @@ public class TimeTrackerController {
      */
     @FXML
     private void avviaTimeTracker(ActionEvent event) throws IOException {
+        
         if(this.attivitàText.getText() != "") {
             this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText()));
         } else {
@@ -482,6 +558,7 @@ public class TimeTrackerController {
         // Se l'ultimo giorno della cronologia è ieri crea un nuovo giorno e aggiungi l'attività.
         GiornoAttività giorno = new GiornoAttività();
         ArrayList<Attività> listaAttività = new ArrayList<Attività>();
+        attività.setProgettoPadre(this.progettoAssociato);
         listaAttività.add(attività);
         giorno.setListaAttività(listaAttività);
         this.giorniAttività.add(0, giorno);
@@ -509,6 +586,8 @@ public class TimeTrackerController {
         
         // Ottiene il controller EditorProgettoController associato alla view
         EditorAttivitàController editorController = fxmlLoader.getController();
+        System.out.println(this.progetti.get(1));
+        editorController.setListaProgetti(this.progetti);
         editorController.setAttività(attività);
         
         // Apre dialog popup
@@ -528,8 +607,8 @@ public class TimeTrackerController {
     /**
      * Elimina un'attività e aggiorna la view.
      */
-    private void eliminaAttività() {
-    
+    private void eliminaAttività(Attività attività) {
+        System.out.println("Attività: " + attività.getNome() + " eliminata.");
     }
     
     /**
@@ -581,21 +660,37 @@ public class TimeTrackerController {
         Label label4 = new Label("05:53:23");
         label4.setStyle("-fx-text-fill: #888ea8; -fx-font-size: 14; -fx-font-weight: 800; -fx-border-style: solid; -fx-border-color: #191E3A; -fx-border-width: 0 3 0 0;");
         label4.setPadding(new Insets(20, 25, 20, 25));
+        
+        HBox box = new HBox();
         ImageView dots = new ImageView();
-        dots.setStyle("-fx-border-style: solid; -fx-border-color: #191E3A; -fx-border-width: 0 3 0 0;");
         dots.setFitHeight(18);
         dots.setFitWidth(6);
         dots.setImage(new Image(getClass().getResource("/main/risorse/dots.png").toString()));
+        box.getChildren().add(dots);
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(5, 23, 5, 5));
+        
+        HBox box2 = new HBox();
+        ImageView trash = new ImageView();
+        box2.setStyle("-fx-border-style: solid; -fx-border-color: #191E3A; -fx-border-width: 0 0 0 3;");
+        box2.setPadding(new Insets(5, 5, 5, 20));
+        trash.setFitHeight(18);
+        trash.setFitWidth(18);
+        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
+        box2.getChildren().add(trash);
+        box2.setAlignment(Pos.CENTER);
+        
         HBox container = new HBox();
         container.setAlignment(Pos.CENTER);
         container.setPadding(new Insets(0, 25, 0, 0));
         container.getChildren().add(label3);
         container.getChildren().add(label4);
         attivitàDestra.getChildren().add(container);
-        attivitàDestra.getChildren().add(dots);
+        attivitàDestra.getChildren().add(box);
+        attivitàDestra.getChildren().add(box2);
         
-        // Collega un event handler per il click del mouse
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        // Evento per il click del menù attività
+        EventHandler<MouseEvent> eventHandlerMenu = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 try {
@@ -605,7 +700,17 @@ public class TimeTrackerController {
                 }
             }
         };
-        dots.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);        
+        
+        // Evento per il click del pulsante elimina attività.
+        EventHandler<MouseEvent> eventHandlerElimina = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                eliminaAttività(attività);
+            }
+        };
+        box.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerMenu);   
+        box2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerElimina);   
+
         
         // Imposta parte sinistra e destra del BorderPane.
         pane.setLeft(attivitàSinistra);
@@ -617,7 +722,35 @@ public class TimeTrackerController {
     @FXML
     private void avviaPomodoroTimer() throws IOException {
         if(this.attivitàText.getText() != "") {
-            this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText()));
+            
+            // Cambia pulsanti
+            this.avviaBtn.setVisible(false);
+            this.resetBtn.setVisible(true);
+            Button btn = new Button();
+            btn.setText("PAUSA");
+            ImageView pausa = new ImageView();
+            pausa.setFitHeight(13);
+            pausa.setFitWidth(13);
+            pausa.setImage(new Image(getClass().getResource("/main/risorse/pause.png").toString()));
+            btn.setGraphic(pausa);
+            btn.setContentDisplay(ContentDisplay.RIGHT);
+            btn.setStyle("-fx-background-color: #E7515A; -fx-text-fill: #ffffff; -fx-font-size: 12; -fx-font-weight: 800;");
+            btn.setPadding(new Insets(10, 20, 10, 20));
+            
+            // Event handler per il pulsante di pausa
+            EventHandler<ActionEvent> eventHandlerBtn = new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    sospendiPomodoroTimer();
+                }
+            };
+            btn.addEventHandler(ActionEvent.ACTION, eventHandlerBtn);
+            
+            this.pauseBtnContainer.getChildren().add(btn);
+            this.pauseBtnContainer.setAlignment(Pos.CENTER);
+            this.pauseBtnContainer.setMinWidth(100);
+            
+            //this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText()));
         } else {
             System.out.println("Perfavore inserisci il nome di un'attività.");
         }
@@ -625,12 +758,18 @@ public class TimeTrackerController {
     
     @FXML
     private void sospendiPomodoroTimer() {
-    
+        this.avviaBtn.setVisible(true);
+        this.resetBtn.setVisible(false);
+        this.pauseBtnContainer.getChildren().clear();
+        this.pauseBtnContainer.setMinWidth(0);
     }
     
     @FXML
     private void resettaPomodoroTimer() {
-    
+        this.avviaBtn.setVisible(true);
+        this.resetBtn.setVisible(false);
+        this.pauseBtnContainer.getChildren().clear();
+        this.pauseBtnContainer.setMinWidth(0);
     }
     
     @FXML private void impostaTimer() {
@@ -661,7 +800,6 @@ public class TimeTrackerController {
             default -> {
             }
         }
-            
     }
     
     private void cambiaInTimeTracker() {

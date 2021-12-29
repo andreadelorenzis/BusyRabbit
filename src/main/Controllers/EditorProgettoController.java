@@ -4,6 +4,8 @@
  */
 package main.Controllers;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,13 +32,22 @@ public class EditorProgettoController {
     
     @FXML
     private void initialize() {
+        Map<String, String> valoreColori = new HashMap<String, String>();
+        valoreColori.put("Rosso", "#FF4560");
+        valoreColori.put("Giallo", "#FEB019");
+        valoreColori.put("Verde", "#00E396");
+        valoreColori.put("Blu", "#008FFB");
+        valoreColori.put("Viola", "#9C27B0");
+        
         ObservableList<String> list = colore.getItems();
         list.add("Rosso");
         list.add("Verde");
         list.add("Blu");
+        list.add("Giallo");
+        list.add("Viola");
         colore.getSelectionModel().selectedIndexProperty().addListener(
                  (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-                    progetto.setColore((String) colore.getItems().get((Integer) new_val));
+                    progetto.setColore(valoreColori.get((String) colore.getItems().get((Integer) new_val)));
         });
     }
     
