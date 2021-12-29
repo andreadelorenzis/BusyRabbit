@@ -3,33 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/App.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/timetracker/classes/PomodoroTimer.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/TimeTracker/EditorAttivitàController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/HabitTracker/HabitTracker.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/PageController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/timetracker/classes/Progetto.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/goalmanager/classes/AzioneSessione.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/dashboard/classes/Dashboard.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Globall.css</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/timetracker/classes/Cronometro.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/timetracker/classes/Attività.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/timetracker/classes/TimeTracker.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Main.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/TimeTracker/TimeTracker.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/timetracker/interfaces/ITracker.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/Account/Registrazione.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/Account/Login.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/AppController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/TimeTracker/ImpostazioniTimer.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/timetracker/classes/Tracker.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Models/habittracker/classes/AbitudineSessione.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/TimeTracker/EditorAttività.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/TimeTracker/TimeTrackerController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/TimeTracker/EditorProgettoController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/TimeTracker/EditorProgetto.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/TimeTracker/ImpostazioniTimerController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/FxmlLoader.java</file>
+            <file>file:/C:/Users/39371/Desktop/BusyRabbit/src/main/Models/timetracker/classes/Cronometro.java</file>
         </group>
     </open-files>
 </project-private>
