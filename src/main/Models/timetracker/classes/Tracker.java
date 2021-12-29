@@ -13,21 +13,20 @@ import java.util.Locale;
 import java.util.Scanner;
 import main.Models.timetracker.interfaces.ITracker;
 
-/**
- * Classe astratta estesa da PomodoroTimer e TimeTracker
- */
+//Classe astratta estesa da PomodoroTimer e TimeTracker
+
 public class Tracker implements ITracker {
     //  CAMPI
 
     int lineNumber = 0;
     String nextValue  = "";
-    LinkedList listaAttività = new LinkedList<>();
-    
+    LinkedList listaAttività = new LinkedList<Attività>();
+    LinkedList listaProgetti = new LinkedList<Progetto>();
     public Tracker(){
         InizializzaDaFile();        
     }
 
-    //  METODI PUBBLICI 
+    //METODI PUBBLICI 
     @Override
     public void aggiungiAttività(String nome, LocalDate data, long durata, String progetto) {
         listaAttività.add(new Attività(nome, data, durata, progetto));
@@ -45,10 +44,6 @@ public class Tracker implements ITracker {
         }
     }
     
-    public LinkedList<Attività> getListaAttività(){
-        return listaAttività;
-    }
-    
     @Override
     public void eliminaAttività(String id) {
         int verifica = 0;
@@ -60,17 +55,21 @@ public class Tracker implements ITracker {
             }             
         }
     }
+        
+    public LinkedList<Attività> getListaAttività(){
+        return listaAttività;
+    }
     
     @Override
     public void aggiungiProgetto(String nome, String colore) {
         
     }
- 
-    @Override
-    public void modificaProgetto(String nome, String progetto){
+    
+    public void eliminaProgetto(String id){
         
     }
     
+    //METODI PRIVATI
     private void InizializzaDaFile() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
