@@ -24,8 +24,6 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
     
     private int periodo;            // Periodo dopo il quale comincia una pausa lunga.
     
-    private Timer timer;            // Timer semplice usato dal pomodoro timer
-    
     // *********************************
     //  COSTRUTTORI
     // *********************************
