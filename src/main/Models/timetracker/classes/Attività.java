@@ -4,6 +4,7 @@
  */
 package main.Models.timetracker.classes;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,62 +19,44 @@ public class Attività {
     
     private String nome;        // Nome dell'attività.
     
-    private Date data;          // Data in cui è stata svolta l'attività.
+    private LocalDate data;          // Data in cui è stata svolta l'attività.
     
-    private int durata;         // Durata dell'attività.
+    private long durata;         // Durata dell'attività.
     
-    private Progetto progetto;  // Progetto a cui l'attività è associato.
+    private String progetto;  // Progetto a cui l'attività è associato.
     
-    private String ID;             // Identificativo dell'attività.
+    private String Id;             // Identificativo dell'attività.
     
     // *********************************
     //  COSTRUTTORI
     // *********************************
     
-    public Attività(Date data, int durata, String nome, Progetto progetto) {
-        this.data = data;
+    public Attività(String nome, LocalDate data, long durata, String progetto) {
         this.nome = nome;
+        this.data = data;
+        this.durata = durata;
         this.progetto = progetto;
-        this.ID = UUID.randomUUID().toString();
+        this.Id = UUID.randomUUID().toString();
     };    
     
-    public Attività(Date data, int durata, String nome) {
+    public Attività(LocalDate data, long durata, String nome) {
         this.data = data;
         this.durata = durata;
         this.nome = nome;
         this.progetto = null;
-        this.ID = UUID.randomUUID().toString();
+        this.Id = UUID.randomUUID().toString();
     };
-    
-    // *********************************
-    //  METODI PRIVATI
-    // *********************************
-    
-    // *********************************
     //  METODI PUBBLICI
-    // *********************************
-    
-    /**
-     * 
-     * @param nome Nome dell'attività.
-     */
+ 
     public void setNome(String nome) {
         this.nome = nome;
     };
-    
-    /**
-     * 
-     * @param durata Durata dell'attività.
-     */
+   
     public void setDurata(int durata) {
         this.durata = durata;
     };
     
-    /**
-     * 
-     * @param progetto Progetto a cui l'attività è associato.
-     */
-    public void setProgettoPadre(Progetto progetto) {
+    public void setProgettoPadre(String progetto) {
         this.progetto = progetto;
     };
     
@@ -81,19 +64,19 @@ public class Attività {
         return this.nome;
     };
     
-    public String getID() {
-        return this.ID;
+    public String getId() {
+        return this.Id;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public int getDurata() {
+    public long getDurata() {
         return durata;
     }
 
-    public Progetto getProgetto() {
+    public String getProgetto() {
         return progetto;
     }
     

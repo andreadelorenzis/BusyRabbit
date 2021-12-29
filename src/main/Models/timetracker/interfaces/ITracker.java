@@ -4,54 +4,21 @@
  */
 package main.Models.timetracker.interfaces;
 
-import java.util.Date;
+import java.time.LocalDate;
 import main.Models.timetracker.classes.Progetto;
 
 public interface ITracker {
     
-    /**
-     * 
-     * @param nome Nome dell'attività.
-     * @param progetto Progetto di cui l'attività fa parte.
-     * @param data Data in cui si è iniziato a monitorare l'attività.
-     * @param durata Durata dell'attività.
-     */
-    public void aggiungiAttività(String nome, Progetto progetto, Date data, long durata);
+    public void aggiungiAttività(String nome, LocalDate data, long durata, String progetto);
     
-    /**
-     * 
-     * @param nome Nome dell'attività.
-     * @param progetto Progetto di cui l'attività fa parte.
-     * @param data Data in cui si è iniziato a monitorare l'attività.
-     * @param durata Durata dell'attività.
-     * @param ID Identificativo dell'attività.
-     */
-    public void modificaAttività(String nome, Progetto progetto, Date data, long durata, int ID);
+    public void modificaAttività(String nome, String progetto, String id);
     
-    /**
-     * 
-     * @param ID Identificativo dell'attività.
-     */
-    public void eliminaAttività(int ID);
-    
-    /**
-     * 
-     * @param nome Nome del progetto.
-     * @param colore Colore del progetto.
-     */
+    public void eliminaAttività(String id);
+  
     public void aggiungiProgetto(String nome, String colore);
-    
-    /**
-     * 
-     * @param nome Nome del progetto da modificare.
-     * @param colore Colore del progetto.
-     */
+ 
     public void modificaProgetto(String nome, String progetto);
     
-    /**
-     * 
-     * @param nome Nome del progetto da eliminare. 
-     */
-    public void eliminaProgetto(String nome);
+    
     
 }

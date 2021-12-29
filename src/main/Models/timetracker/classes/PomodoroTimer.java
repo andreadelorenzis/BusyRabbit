@@ -4,89 +4,51 @@
  */
 package main.Models.timetracker.classes;
 
-import java.util.Date;
 import main.Models.timetracker.interfaces.IPomodoroTimer;
 
-/**
- * Permette di monitorare un'attività con delle sessioni, intervallate da periodi di pausa.
- */
+ //Permette di monitorare un'attività con delle sessioni, intervallate da periodi di pausa.
+
 public class PomodoroTimer extends Tracker implements IPomodoroTimer {
-    
-    // *********************************
     //  CAMPI
-    // *********************************
-    
+
     private int durataSessione;     // Durata della sessione di lavoro.
     
     private int durataPausaBreve;   // Durata della pausa breve.
     
     private int durataPausaLunga;   // Durata della pausa lunga.
     
-    private int periodo;            // Periodo dopo il quale comincia una pausa lunga.
+    private int nCicli;            // Periodo dopo il quale comincia una pausa lunga.
     
-    private Timer timer;            // Timer semplice usato dal pomodoro timer
-    
-    // *********************************
-    //  COSTRUTTORI
-    // *********************************
-    
-    // *********************************
-    //  METODI PRIVATI
-    // *********************************
-    
-    // *********************************
+   // private Timer timer;            // Timer semplice usato dal pomodoro timer
+   
     //  METODI PUBBLICI
-    // *********************************
-
     @Override
-    public void setDurataSessione(int durata) {
+    public void setDurataSessione(int durata){
+        this.durataSessione = durata;
     }
-
     @Override
-    public void setDurataPausaBreve(int durata) {
+    public void setDurataPausaBreve(int durata){
+        this.durataPausaBreve = durata;
     }
-
-    @Override
-    public void setDurataPausaLunga(int durata) {
+  
+    public void setDurataPausaLunga(int durata){
+        this.durataPausaLunga = durata;
     }
-
-    @Override
-    public void avviaPomodoroTimer() {
+  
+    public void setCicli(int nCicli){
+        this.nCicli = nCicli;
     }
-
-    @Override
-    public void sospendiPomodoroTimer() {
+  
+    public void avviaPomodoroTimer(){
+        
     }
-
-    @Override
-    public void resettaPomodoroTimer() {
+  
+    public void sospendiPomodoroTimer(){
+        
     }
-
-    @Override
-    public void aggiungiAttività(String nome, Progetto progetto, Date data, long durata) {
+  
+    public void resettaPomodoroTimer(){
+        
     }
-
-    @Override
-    public void modificaAttività(String nome, Progetto progetto, Date data, long durata, int ID) {
-    }
-
-    @Override
-    public void eliminaAttività(int ID) {
-    }
-
-    @Override
-    public void aggiungiProgetto(String nome, String colore) {
-    }
-
-    @Override
-    public void modificaProgetto(String nome, String progetto) {
-    }
-
-    @Override
-    public void eliminaProgetto(String nome) {
-    }
-
-    @Override
-    public void setPeriodo(int periodo) {
-    }
+   
 }

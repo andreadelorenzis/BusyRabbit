@@ -4,41 +4,29 @@
  */
 package main.Models.timetracker.classes;
 
+import java.time.LocalDate;
 import java.util.Date;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
-/**
- * Permette di cronometrare un'attività.
- */
-public class TimeTracker implements ITimeTracker {
-    
-    // *********************************
+
+ //Permette di cronometrare un'attività.
+
+public class TimeTracker extends Tracker implements ITimeTracker {
+
     //  CAMPI
-    // *********************************
     
     private static TimeTracker instance = null;
     
     private Cronometro cronometro;
-    
-    // *********************************
+
     //  COSTRUTTORI
-    // *********************************
     
     // Costruttore invisibile.
     private TimeTracker() {};
-    
-    // *********************************
+
     //  METODI PRIVATI
-    // *********************************
-    
-    // *********************************
+
     //  METODI PUBBLICI
-    // *********************************
-    
-    /**
-     * 
-     * @return Istanza singleton della classe TimeTracker
-     */
     public static TimeTracker getInstance() {
         // Crea l'oggetto solo se NON esiste:
         if (instance == null) {
@@ -54,29 +42,5 @@ public class TimeTracker implements ITimeTracker {
     @Override
     public void arrestaTimeTracker() {
     }
-
-    @Override
-    public void aggiungiAttività(String nome, Progetto progetto, Date data, long durata) {
-    }
-
-    @Override
-    public void modificaAttività(String nome, Progetto progetto, Date data, long durata, int ID) {
-    }
-
-    @Override
-    public void eliminaAttività(int ID) {
-    }
-
-    @Override
-    public void aggiungiProgetto(String nome, String colore) {
-    }
-
-    @Override
-    public void modificaProgetto(String nome, String progetto) {
-    }
-
-    @Override
-    public void eliminaProgetto(String nome) {
-    }
-    
+   
 }
