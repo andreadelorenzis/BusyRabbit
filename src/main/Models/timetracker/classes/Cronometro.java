@@ -6,22 +6,14 @@ package main.Models.timetracker.classes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+ //Utilizzato da TimeTracker per cronometrare il tempo.
 
-/**
- * Utilizzato da TimeTracker per cronometrare il tempo.
- */
 public class Cronometro {
-    
     //  CAMPI
         private long inizio;
         private long fine;
         private StringProperty secondi, minuti, ore = new SimpleStringProperty();
-    
-
         
-    //  METODI PRIVATI
-
-
     //  METODI PUBBLICI
     public void avvia() {
         inizio = System.currentTimeMillis();
@@ -44,6 +36,6 @@ public class Cronometro {
         this.minuti.setValue(""+minuti);
         this.ore.setValue(""+ore);      
     }
-  
-}
+    //  METODI PRIVATI
 
+}

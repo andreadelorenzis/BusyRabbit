@@ -4,46 +4,30 @@
  */
 package main.Models.timetracker.classes;
 
-import java.util.Map;
 import java.util.UUID;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 
-/**
- * Rappresenta l'entità a cui devono essere associate tutte le attività. Tali entità sono
- * quelle effettivamente visualizzate nella Dashboard.
- */
+/* Rappresenta l'entità a cui devono essere associate tutte le attività. Tali entità sono
+   quelle effettivamente visualizzate nella Dashboard.*/
+
 public class Progetto {
-    
-    // *********************************
     //  CAMPI
-    Collection<Attività> listaAttivitàProgetto = new LinkedList<>();
-    Collection<Attività> listaAttività = new LinkedList<>();
+    LinkedList listaAttivitàProgetto = new LinkedList<Attività>();
+    LinkedList listaAttività = new LinkedList<Attività>();
     Tracker tracker = new Tracker();
     
-    // Nome del progetto.
-    private String nome;            
-    
-    // Colore del progetto.
+    private String nome;
     private String colore;          
-    
-    private String ID;
-    
-    // *********************************
+    private String id;
+    private long durata;
+
     //  COSTRUTTORI
-    // *********************************
-    
-    /**
-     * 
-     * @param nome   // Nome del progetto.
-     * @param colore // Colore del progetto.
-     */
     public Progetto (String nome, String colore) {
         this.nome = nome;
         this.colore = colore;
-        this.ID = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         
         for(Iterator<Attività> iter = tracker.getListaAttività().iterator(); (iter.hasNext());){
             Attività c = iter.next();
@@ -51,35 +35,35 @@ public class Progetto {
                 listaAttivitàProgetto.add(c);
         }
     };
-    
-    // *********************************
-    //  METODI PRIVATI
-    // *********************************
-    
-    // *********************************
     //  METODI PUBBLICI
-    // *********************************
-    
-    /**
-     * 
-     * @param attività Attività da associare al progetto.
-     */
-    public void aggiungiAttività(Attività attività) {};
-    
-    /**
-     * 
-     * @param nome Nome del progetto.
-     */
-    public void setNome(String nome) {};
-    
-    /**
-     * 
-     * @param colore Colore del progetto
-     */
-    public void setColore(String colore) {};
 
-    public String getID() {
-        return this.ID;
+    public void aggiungiAttività(Attività attività) {
+        listaAttivitàProgetto.add(attività);
+    };
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    };
+
+    public void setColore(String colore) {
+        this.colore = colore;
+    };
+
+    public String getId() {
+        return this.id;
     }
     
+    public long getDurata(){
+        calcolaDurata();
+        return this.durata;
+    }
+    
+    //  METODI PRIVATI
+    
+    private void calcolaDurata(){
+        for(Iterator<Attività> iter = this.listaAttivitàProgetto.iterator(); (iter.hasNext());){
+            Attività c = iter.next();
+            this.durata += c.getDurata();
+        }
+    }
 }
