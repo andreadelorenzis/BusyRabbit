@@ -5,7 +5,6 @@
 package main.Models.timetracker.classes;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -78,8 +77,5 @@ public class Attività {
 
     public String getProgetto() {
         return progetto;
-    }
-    
-    
-    
+    }    
 }

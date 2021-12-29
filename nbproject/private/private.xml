@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/timetracker/classes/PomodoroTimer.java</file>
-            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/timetracker/interfaces/ITracker.java</file>
-            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/timetracker/classes/Tracker.java</file>
+            <file>file:/C:/Users/39371/Desktop/BusyRabbit/src/main/Models/timetracker/classes/Progetto.java</file>
+            <file>file:/C:/Users/39371/Desktop/BusyRabbit/src/main/Models/timetracker/classes/Attività.java</file>
+            <file>file:/C:/Users/39371/Desktop/BusyRabbit/src/main/Models/timetracker/classes/Cronometro.java</file>
+            <file>file:/C:/Users/39371/Desktop/BusyRabbit/src/main/Models/timetracker/classes/TimeTracker.java</file>
         </group>
     </open-files>
 </project-private>
