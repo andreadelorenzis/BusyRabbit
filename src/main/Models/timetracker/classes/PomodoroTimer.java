@@ -20,7 +20,7 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
     private int nCicli;            // Periodo dopo il quale comincia una pausa lunga.
     
    // private Timer timer;            // Timer semplice usato dal pomodoro timer
-   
+  
     //  METODI PUBBLICI
     @Override
     public void setDurataSessione(int durata){

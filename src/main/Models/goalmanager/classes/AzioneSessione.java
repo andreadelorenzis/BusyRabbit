@@ -4,7 +4,6 @@
  */
 package main.Models.goalmanager.classes;
 
-import main.Models.timetracker.classes.Timer;
 
 /**
  * Azione associata ad un obiettivo che dura nel tempo e viene completata quando
@@ -18,13 +17,12 @@ public class AzioneSessione extends Azione {
     
     private int durata;     // Durata dell'azione prima del completamento.
     
-    private Timer timer;    // Timer da usare per tenere il tempo.
     
     // *********************************
     //  COSTRUTTORI
     // *********************************
     
-    public AzioneSessione(String nome, int[] giorni, int valore, int durata, Timer timer) {
+    public AzioneSessione(String nome, int[] giorni, int valore, int durata) {
         super(nome, giorni, valore);
     }
     

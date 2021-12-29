@@ -5,7 +5,6 @@
 package main.Models.habittracker.classes;
 
 import main.Models.habittracker.interfaces.IAbitudineSessione;
-import main.Models.timetracker.classes.Timer;
 
 /**
  * Rappresenta un abitudine da completare periodicamente nel tempo, che si 
@@ -20,8 +19,6 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione {
     
     private int durata;     // Durata dell'azione prima del completamento.
     
-    private Timer timer;    // Timer da usare per tenere il tempo.
-
     // *********************************
     //  COSTRUTTORI
     // *********************************
