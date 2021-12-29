@@ -4,17 +4,6 @@
  */
 package main.Models.timetracker.interfaces;
 
-import main.Models.timetracker.classes.Attività;
-
 public interface IProgetto {
-        
-    public void aggiungiAttività(Attività attività);
     
-    public void setNome(String nome);
-     
-    public void setColore(String colore);
-    
-    public String getId();
-    
-    public long getDurata();
 }

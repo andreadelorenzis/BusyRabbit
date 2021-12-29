@@ -10,25 +10,17 @@ import main.Models.timetracker.interfaces.IPomodoroTimer;
 
 public class PomodoroTimer extends Tracker implements IPomodoroTimer {
     //  CAMPI
-    private static PomodoroTimer instance = null;
-    private int durataSessione;     // Durata della sessione di lavoro.    
-    private int durataPausaBreve;   // Durata della pausa breve.    
-    private int durataPausaLunga;   // Durata della pausa lunga.    
-    private int nCicli;            // Periodo dopo il quale comincia una pausa lunga.    
+
+    private int durataSessione;     // Durata della sessione di lavoro.
+    
+    private int durataPausaBreve;   // Durata della pausa breve.
+    
+    private int durataPausaLunga;   // Durata della pausa lunga.
+    
+    private int nCicli;            // Periodo dopo il quale comincia una pausa lunga.
+    
    // private Timer timer;            // Timer semplice usato dal pomodoro timer
   
-    // COSTRUTTORE PRIVATO.
-    private PomodoroTimer() {};
-
-    //  METODI PUBBLICI
-    public static PomodoroTimer getInstance() {
-        // Crea l'oggetto solo se NON esiste:
-        if (instance == null) {
-            instance = new PomodoroTimer();
-        }
-        return instance;
-    };
-    
     //  METODI PUBBLICI
     @Override
     public void setDurataSessione(int durata){

@@ -11,20 +11,27 @@ import java.util.UUID;
  //Rappresenta un'attività che è stata monitorata dall'utente.
 
 public class Attività {
-    //  CAMPI
-    private String nome;        // Nome dell'attività.    
-    private LocalDate data;          // Data in cui è stata svolta l'attività.    
-    private long durata;         // Durata dell'attività.    
-    private String progetto;  // Progetto a cui l'attività è associato.    
-    private String id;             // Identificativo dell'attività.
     
-    //  COSTRUTTORI    
+    //  CAMPI
+   
+    private String nome;        // Nome dell'attività.
+    
+    private LocalDate data;          // Data in cui è stata svolta l'attività.
+    
+    private long durata;         // Durata dell'attività.
+    
+    private String progetto;  // Progetto a cui l'attività è associato.
+    
+    private String Id;             // Identificativo dell'attività.
+    
+    //  COSTRUTTORI
+    
     public Attività(String nome, LocalDate data, long durata, String progetto) {
         this.nome = nome;
         this.data = data;
         this.durata = durata;
         this.progetto = progetto;
-        this.id = UUID.randomUUID().toString();
+        this.Id = UUID.randomUUID().toString();
     }    
     
     public Attività(LocalDate data, long durata, String nome) {
@@ -32,13 +39,15 @@ public class Attività {
         this.durata = durata;
         this.nome = nome;
         this.progetto = null;
-        this.id = UUID.randomUUID().toString();
+        this.Id = UUID.randomUUID().toString();
     }
     //  METODI PUBBLICI
-     public void setNome(String nome) {
+ 
+    public void setNome(String nome) {
         this.nome = nome;
-    }    
-     
+    }
+    
+    
     public String getNome() {
         return this.nome;
     }
@@ -65,7 +74,7 @@ public class Attività {
     }
         
     public String getId() {
-        return this.id;
+        return this.Id;
     }
     
     public String getProgetto() {
