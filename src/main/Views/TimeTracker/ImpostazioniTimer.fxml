@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="242.0" prefWidth="434.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.ImpostazioniTimerController">
+<DialogPane prefHeight="242.0" prefWidth="434.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.ImpostazioniTimerController">
    <content>
       <AnchorPane id="AnchorPane" prefHeight="244.0" prefWidth="434.0" style="-fx-background-color: #0E1726;">
          <children>

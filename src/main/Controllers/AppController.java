@@ -1,7 +1,8 @@
 package main.Controllers;
 
-import src.FxmlLoader;
+import main.FxmlLoader;
 import java.io.IOException;
+import java.net.URL;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import main.Main;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -120,7 +122,8 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("TimeTracker");
+        URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/TimeTracker.fxml");
+        Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
 
     } 
@@ -134,7 +137,8 @@ public class AppController {
        
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("HabitTracker");
+        URL fileUrl = Main.class.getResource("/main/Views/HabitTracker/HabitTracker.fxml");
+        Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
     } 
     
@@ -147,7 +151,8 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("GoalManager");
+        URL fileUrl = Main.class.getResource("/main/Views/GoalManager/GoalManager.fxml");
+        Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
     } 
     
@@ -160,7 +165,8 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("Agenda");
+       URL fileUrl = Main.class.getResource("/main/Views/Agenda/Agenda.fxml");
+        Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
     } 
     
@@ -173,7 +179,8 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("Dashboard");
+        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/Dashboard.fxml");
+        Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
     } 
     
@@ -186,7 +193,8 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("Impostazioni");
+        URL fileUrl = Main.class.getResource("/main/Views/Impostazioni/Impostazioni.fxml");
+        Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
     } 
     

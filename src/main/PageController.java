@@ -1,9 +1,10 @@
-package src;
+package main;
 
 import java.io.IOException;
 import static java.lang.Thread.sleep;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /*
@@ -33,7 +35,7 @@ public class PageController {
     
     @FXML
     private void apriPaginaLogin(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/Login.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         
@@ -47,7 +49,7 @@ public class PageController {
     
     @FXML
     private void apriPaginaRegistrazione(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Registrazione.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/Registrazione.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         
@@ -61,7 +63,7 @@ public class PageController {
     
     @FXML
     private void apriSchermataPrincipale(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Schermata.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/App.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         
@@ -69,7 +71,14 @@ public class PageController {
         String css = this.getClass().getResource("Globall.css").toExternalForm();
         scene.getStylesheets().add(css);
         
+        Rectangle2D dimSchermo = Screen.getPrimary().getVisualBounds();
+        
         stage.setScene(scene);
+        stage.setWidth(dimSchermo.getWidth());
+        stage.setHeight(dimSchermo.getHeight());
+        stage.setX(0);
+        stage.setY(0);
+        stage.setResizable(true);
         stage.show();
     }
     

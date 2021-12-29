@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="226.0" prefWidth="700.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.EditorAttivitàController">
+<DialogPane prefHeight="226.0" prefWidth="700.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorAttivitàController">
    <content>
       <AnchorPane prefHeight="298.0" prefWidth="700.0">
          <children>

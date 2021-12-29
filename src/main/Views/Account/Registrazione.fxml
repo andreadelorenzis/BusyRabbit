@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="body" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: #060818;" styleClass="body" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.PageController">
+<AnchorPane id="AnchorPane" fx:id="body" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: #060818;" styleClass="body" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.PageController">
    <children>
       <ImageView fitHeight="140.0" fitWidth="140.0" layoutX="253.0" layoutY="21.0" AnchorPane.leftAnchor="253.0" AnchorPane.topAnchor="21.0">
          <image>
-            <Image url="@/main/risorse/logo2.png" />
+            <Image url="@/main/risorse/logo.png" />
          </image>
       </ImageView>
       <Label layoutX="227.0" layoutY="165.0" style="-fx-font-weight: 800;" text="BusyRabbit" textFill="WHITE" AnchorPane.leftAnchor="227.0">
@@ -58,10 +58,5 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="188.0" layoutY="38.0">
-         <image>
-            <Image url="@../../logo.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

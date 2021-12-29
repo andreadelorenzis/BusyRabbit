@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane fx:id="editorProgetto" prefHeight="140.0" prefWidth="354.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.EditorProgettoController">
+<DialogPane fx:id="editorProgetto" prefHeight="140.0" prefWidth="354.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorProgettoController">
    <content>
       <BorderPane prefHeight="144.0" prefWidth="354.0">
          <top>

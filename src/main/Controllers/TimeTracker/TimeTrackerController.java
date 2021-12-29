@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package main.Controllers;
+package main.Controllers.TimeTracker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import javafx.scene.shape.Circle;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.GiornoAttività;
 import main.Models.timetracker.classes.Progetto;
-import src.FxmlLoader;
+import main.FxmlLoader;
 
 public class TimeTrackerController {
     
@@ -293,9 +293,9 @@ public class TimeTrackerController {
         
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/EditorProgetto.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorProgetto.fxml"));
         DialogPane newProject = fxmlLoader.load();
-        newProject.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        newProject.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(newProject);
@@ -317,6 +317,7 @@ public class TimeTrackerController {
             // Aggiornare la view
             this.listaProgetti.getChildren().clear();
             this.visualizzaListaProgetti(this.progetti);
+            this.toggleMenuProgetto();
         }
     }
     
@@ -328,9 +329,9 @@ public class TimeTrackerController {
         
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/EditorProgetto.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorProgetto.fxml"));
         DialogPane newProject = fxmlLoader.load();
-        newProject.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        newProject.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(newProject);
@@ -356,6 +357,7 @@ public class TimeTrackerController {
             // Refreshare la lista di componenti nella view
             this.listaProgetti.getChildren().clear();
             this.visualizzaListaProgetti(this.progetti);
+            this.toggleMenuProgetto();
             
         }
     }
@@ -586,9 +588,9 @@ public class TimeTrackerController {
         
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/EditorAttività.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorAttività.fxml"));
         DialogPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(editor);
@@ -785,9 +787,9 @@ public class TimeTrackerController {
     @FXML private void impostaTimer() throws IOException {
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/ImpostazioniTimer.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/ImpostazioniTimer.fxml"));
         DialogPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(editor);
@@ -870,7 +872,5 @@ public class TimeTrackerController {
         this.formManuale.setVisible(true);
         
     }
-    
-    
     
 }
