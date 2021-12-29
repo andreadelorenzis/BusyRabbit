@@ -4,48 +4,94 @@
  */
 package main.Models.timetracker.classes;
 
-import java.util.Date;
+import java.io.File;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Scanner;
 import main.Models.timetracker.interfaces.ITracker;
 
 /**
- * Classe padre di TimeTracker e PomodoroTimer, contiene elementi comuni ad entrambi.
+ * Classe astratta estesa da PomodoroTimer e TimeTracker
  */
 public class Tracker implements ITracker {
-
-    // *********************************
     //  CAMPI
-    // *********************************
-    
-    // *********************************
-    //  COSTRUTTORI
-    // *********************************
-    
-    public Tracker() {
-    };
-    
-    // *********************************
-    //  METODI PRIVATI
-    // *********************************
- 
-    // *********************************
-    //  METODI PUBBLICI
-    // *********************************
-    
-    public void aggiungiAttività(String nome, Progetto progetto, Date data, long durata) {};
-    
-    public void modificaAttività(String nome, Progetto progetto, Date data, long durata, int ID) {};
-    
-    @Override
-    public void eliminaAttività(int ID) {};
-    
-    @Override
-    public void aggiungiProgetto(String nome, String colore) {};
-    
-    @Override
-    public void modificaProgetto(String nome, String progetto) {};
 
+    int lineNumber = 0;
+    String nextValue  = "";
+    LinkedList listaAttività = new LinkedList<>();
+    
+    public Tracker(){
+        InizializzaDaFile();        
+    }
+
+    //  METODI PUBBLICI 
     @Override
-    public void eliminaProgetto(String nome) {
+    public void aggiungiAttività(String nome, LocalDate data, long durata, String progetto, int id) {
+        listaAttività.add(new Attività(nome, data, durata, progetto, id));
+    }
+  
+    @Override
+    public void modificaAttività(String nome, String progetto, int id) {
+        int verifica = 0;
+        for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
+            Attività c = iter.next();
+            if(c.getId() == id)  {
+                verifica = 1;
+                c.setParametri(nome, progetto);                
+            }             
+        }
     }
     
+    public LinkedList<Attività> getListaAttività(){
+        return listaAttività;
+    }
+    
+    @Override
+    public void eliminaAttività(int id) {
+        int verifica = 0;
+        for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
+            Attività c = iter.next();
+            if(c.getId() == id)  {
+                verifica = 1;
+                iter.remove();
+            }             
+        }
+    }   
+    private void InizializzaDaFile() {
+        try {
+            ClassLoader classLoader = getClass().getClassLoader();
+            File file = new File(classLoader.getResource("MyFile.txt").getFile());
+            Scanner input = new Scanner(file)
+                .useDelimiter(",|\\R")
+                .useLocale(Locale.ITALIAN);
+
+            // vai oltre la testa
+            input.nextLine();
+
+            while (input.hasNext()) {
+                lineNumber++;
+                nextValue = input.next().replace("\"", "");
+                String nome =nextValue;
+
+                nextValue = input.next().replace("\"", "");
+                LocalDate data = LocalDate.parse(nextValue);
+
+                long Value = input.nextLong();
+                long durata = Value;
+
+                nextValue = input.next().replace("\"", "");
+                String progetto = nextValue;
+
+                nextValue = input.next().replace("\"", "");
+                int id = Integer.valueOf(nextValue);
+
+                listaAttività.add(new Attività(nome, data, durata, progetto, id));
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(String.format("Line number '%s, nextValue '%s''", lineNumber, nextValue), ex);
+        }
+    }
 }
