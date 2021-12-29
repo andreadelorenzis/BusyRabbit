@@ -70,6 +70,10 @@ public class Attività {
     public LocalDate getData() {
         return data;
     }
+    
+    public void incDurata(long durata){
+        this.durata += durata;
+    }
 
     public long getDurata() {
         return durata;

@@ -51,13 +51,13 @@ public class TimeTracker extends Tracker implements ITimeTracker {
     };
     
     @Override
-    public void avviaCronometro(Attività attività) {
+    public void avviaTimeTracker(Attività attività) {
         this.corrente = attività;
         cronometro.avvia();        
     }
 
     @Override
-    public void arrestaCronometro(Attività attività) {
+    public void arrestaTimeTracker(Attività attività) {
         cronometro.arresta();
         this.corrente.incDurata(cronometro.getTempo());
         listaAttività.add(this.corrente);

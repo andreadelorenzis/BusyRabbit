@@ -4,10 +4,12 @@
  */
 package main.Models.timetracker.interfaces;
 
+import main.Models.timetracker.classes.Attività;
+
 public interface ITimeTracker extends ITracker {
     
-    public void avviaTimeTracker();
+    public void avviaTimeTracker(Attività attività);
     
-    public void arrestaTimeTracker();
+    public void arrestaTimeTracker(Attività attività);
     
 }
