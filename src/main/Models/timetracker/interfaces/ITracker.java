@@ -15,10 +15,7 @@ public interface ITracker {
     
     public void eliminaAttività(String id);
   
-    public void aggiungiProgetto(String nome, String colore);
- 
-    public void modificaProgetto(String nome, String progetto);
-    
+    public void aggiungiProgetto(String nome, String colore);  
     
     
 }
