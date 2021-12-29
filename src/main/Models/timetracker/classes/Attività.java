@@ -51,34 +51,34 @@ public class Attività {
     public void setNome(String nome) {
         this.nome = nome;
     };
-   
-    public void setDurata(int durata) {
-        this.durata = durata;
-    };
-    
-    public void setProgettoPadre(String progetto) {
-        this.progetto = progetto;
-    };
     
     public String getNome() {
         return this.nome;
     };
     
+    public void setDurata(int durata) {
+        this.durata = durata;
+    };
+    
+    public long getDurata() {
+        return durata;
+    }
+    
+    public void setProgettoPadre(String progetto) {
+        this.progetto = progetto;
+    };
+        
     public String getId() {
         return this.Id;
     }
-
+    
     public LocalDate getData() {
         return data;
     }
 
-    public long getDurata() {
-        return durata;
-    }
 
-    public String getProgetto() {
-        return progetto;
-    }
+
+
     
     
     

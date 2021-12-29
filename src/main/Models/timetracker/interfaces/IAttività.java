@@ -7,4 +7,13 @@ package main.Models.timetracker.interfaces;
 
 public interface IAttività {
     
+    public void setNome(String nome);
+    
+    public String getNome();
+    
+    public void setDurata(int durata);
+     
+    public void setProgettoPadre(String progetto);
+    
+    
 }
