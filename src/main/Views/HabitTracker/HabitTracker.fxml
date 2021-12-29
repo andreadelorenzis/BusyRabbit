@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<AnchorPane id="AnchorPane" prefHeight="502.0" prefWidth="812.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="194.0" layoutY="173.0" text="Habit Tracker">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
+      <AnchorPane layoutX="61.0" layoutY="40.0" maxHeight="600.0" maxWidth="800.0" prefHeight="422.0" prefWidth="690.0" style="-fx-background-color: #0E1726; -fx-max-width: 800;" AnchorPane.bottomAnchor="39.60000000000002" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="60.60000000000002" AnchorPane.topAnchor="40.0" />
    </children>
 </AnchorPane>
