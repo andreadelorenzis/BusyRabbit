@@ -5,7 +5,6 @@
 package main.Models.dashboard.classes;
 
 import java.util.Map;
-import javafx.util.Pair;
 import main.Models.dashboard.interfaces.IDashboard;
 import main.Models.goalmanager.classes.ObiettivoSemplice;
 import main.Models.habittracker.classes.Abitudine;
