@@ -6,6 +6,10 @@ package main.Models.timetracker.classes;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 
 /**
  * Rappresenta l'entità a cui devono essere associate tutte le attività. Tali entità sono
@@ -15,17 +19,15 @@ public class Progetto {
     
     // *********************************
     //  CAMPI
-    // *********************************
+    Collection<Attività> listaAttivitàProgetto = new LinkedList<>();
+    Collection<Attività> listaAttività = new LinkedList<>();
+    Tracker tracker = new Tracker();
     
     // Nome del progetto.
     private String nome;            
     
     // Colore del progetto.
     private String colore;          
-    
-    // Struttura che contiene tutte le attività assegnate al progetto, divise per
-    // anni, mesi e giorni. (Utile per dashboard)
-    private Map strutturaAttività;
     
     private String ID;
     
@@ -42,6 +44,12 @@ public class Progetto {
         this.nome = nome;
         this.colore = colore;
         this.ID = UUID.randomUUID().toString();
+        
+        for(Iterator<Attività> iter = tracker.getListaAttività().iterator(); (iter.hasNext());){
+            Attività c = iter.next();
+            if(c.getProgetto().equals(nome))  
+                listaAttivitàProgetto.add(c);
+        }
     };
     
     // *********************************
@@ -62,26 +70,14 @@ public class Progetto {
      * 
      * @param nome Nome del progetto.
      */
-    public void setNome(String nome) {
-        this.nome = nome;
-    };
+    public void setNome(String nome) {};
     
     /**
      * 
      * @param colore Colore del progetto
      */
-    public void setColore(String colore) {
-        this.colore = colore;
-    };
-    
-    public String getNome() {
-        return this.nome;
-    }
-    
-    public String getColore() {
-        return this.colore;
-    }
-    
+    public void setColore(String colore) {};
+
     public String getID() {
         return this.ID;
     }
