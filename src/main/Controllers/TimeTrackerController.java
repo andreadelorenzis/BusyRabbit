@@ -117,6 +117,12 @@ public class TimeTrackerController {
     */
     private ArrayList<GiornoAttività> giorniAttività;
     
+    private int pomodoro;
+    
+    private int pausaBreve;
+    
+    private int pausaLunga;
+    
     @FXML 
     private void initialize() {
         
@@ -160,6 +166,10 @@ public class TimeTrackerController {
         
         this.visualizzaListaProgetti(progetti);
         this.visualizzaCronologiaAttività(giorniAttività);
+        
+        this.pomodoro = 30;
+        this.pausaBreve = 5;
+        this.pausaLunga = 10;
        
     }
     
@@ -772,8 +782,34 @@ public class TimeTrackerController {
         this.pauseBtnContainer.setMinWidth(0);
     }
     
-    @FXML private void impostaTimer() {
-    
+    @FXML private void impostaTimer() throws IOException {
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/ImpostazioniTimer.fxml"));
+        DialogPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/src/Globall.css").toExternalForm());
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(editor);
+        dialog.setTitle("Imposta Pomodoro Timer");
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        ImpostazioniTimerController controller = fxmlLoader.getController();
+        controller.setPomodoro(this.pomodoro);
+        controller.setPausaBreve(this.pausaBreve);
+        controller.setPausaLunga(this.pausaLunga);
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+            System.out.println("Impostazioni timer cambiate.");
+            System.out.println("Nuove impostazioni:");
+            System.out.println("Pomodoro: " + controller.getPomodoro());
+            System.out.println("Pausa breve: " + controller.getPausaBreve());
+            System.out.println("Pausa lunga: " + controller.getPausaLunga());
+        }
     }
     
     @FXML
