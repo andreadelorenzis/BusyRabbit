@@ -7,6 +7,9 @@ package main.Controllers.HabitTracker;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,16 +41,35 @@ public class HabitTrackerController {
     @FXML
     private VBox infoBox;
     
+    @FXML
+    private Label giornaliereBtn;
+    
+    @FXML
+    private Label completateBtn;
+    
+    @FXML
+    private Label tutteBtn;
+    
     // DEMO
     private ArrayList<AbitudineDemo> listaAbitudini;
+    
+    private ArrayList<AbitudineDemo> listaAbitudiniGiornaliere;
+    
+    private ArrayList<AbitudineDemo> listaAbitudiniCompletate;
+    
+    private String pulsanteAttivo;
     
     @FXML
     private void initialize() {
         
-        // DEMO
-        ArrayList<Integer> giorniRipetizione = new ArrayList<Integer>();
-        giorniRipetizione.add(1);
-        giorniRipetizione.add(5);
+        // <---- DEMO
+        
+        this.listaAbitudiniGiornaliere = new ArrayList<AbitudineDemo>();
+        this.listaAbitudiniCompletate = new ArrayList<AbitudineDemo>();
+        
+        ArrayList<String> giorniRipetizione = new ArrayList<String>();
+        giorniRipetizione.add("LUN");
+        giorniRipetizione.add("MAR");
         
         ArrayList<ItemDemo> items = new ArrayList<ItemDemo>();
         
@@ -73,24 +95,109 @@ public class HabitTrackerController {
         this.listaAbitudini.add(abitudine2);
         this.listaAbitudini.add(abitudine3);
         
+        this.listaAbitudiniGiornaliere.add(abitudine1);
+        this.listaAbitudiniGiornaliere.add(abitudine2);
+        this.listaAbitudiniGiornaliere.add(abitudine3);
+        
+        //----> DEMO
+        
+        this.pulsanteAttivo = "GIORNALIERE";
         this.visualizzaAbitudiniGiornaliere();
     }
     
+    private void visualizzaAbitudini() {
+        this.abitudiniBox.getChildren().clear();
+        if(this.listaAbitudini.size() > 0) {    
+            for(int i = 0; i < this.listaAbitudini.size(); i++) {
+                this.visualizzaAbitudine(this.listaAbitudini.get(i), "TUTTE");
+            }
+        }
+
+    }
+    
     private void visualizzaAbitudiniGiornaliere() {
-        for(int i = 0; i < this.listaAbitudini.size(); i++) {
-            this.visualizzaAbitudine(this.listaAbitudini.get(i));
+        this.abitudiniBox.getChildren().clear();
+        if(this.listaAbitudiniGiornaliere.size() > 0) {
+            for(int i = 0; i < this.listaAbitudiniGiornaliere.size(); i++) {
+                this.visualizzaAbitudine(this.listaAbitudiniGiornaliere.get(i), "NON COMPLETATA");
+            }
         }
     }
     
+    private void visualizzaAbitudiniCompletate() {
+        this.abitudiniBox.getChildren().clear();
+        if(this.listaAbitudiniCompletate.size() > 0) {
+            for(int i = 0; i < this.listaAbitudiniCompletate.size(); i++) {
+                this.visualizzaAbitudine(this.listaAbitudiniCompletate.get(i), "COMPLETATA");
+            }
+        }
+    }
+    
+    private void gestisciCheckAbitudine(AbitudineDemo abitudine, CheckBox check) {
+        if(check.isSelected()) {
+            
+            // elimina da lista abitudini giornaliere
+            for(int i = 0; i < this.listaAbitudiniGiornaliere.size(); i++) {
+                if(abitudine.getId() == this.listaAbitudiniGiornaliere.get(i).getId())
+                    this.listaAbitudiniGiornaliere.remove(i);
+            }
+            
+            // aggiunge a lista abitudini completate
+            this.listaAbitudiniCompletate.add(abitudine);
+            
+             // Aggiorna la view
+             this.visualizzaAbitudiniGiornaliere();
+             
+        } else {
+            
+            // elimina da lista abitudini completate
+            for(int i = 0; i < this.listaAbitudiniCompletate.size(); i++) {
+                if(abitudine.getId() == this.listaAbitudiniCompletate.get(i).getId())
+                    this.listaAbitudiniCompletate.remove(i);
+            }
+            
+            // Aggiunge a lista abitudini giornaliere
+            this.listaAbitudiniGiornaliere.add(abitudine);
+            
+            // Aggiorna la view
+             this.visualizzaAbitudiniCompletate();
+            
+        }
+        
+        
+    } 
+    
     @FXML
-    private void visualizzaAbitudine(AbitudineDemo abitudine) {
+    private void visualizzaAbitudine(AbitudineDemo abitudine, String tipo) {
         System.out.println(abitudine.getNome());
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(10, 0, 10, 0));
         
-        CheckBox check = new CheckBox();
-        check.setText(abitudine.getNome());
-        check.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14;");
+        if(tipo == "TUTTE") {
+            Label label10 = new Label(abitudine.getNome());
+            label10.setStyle("-fx-text-fill: #ffffff");
+            pane.setLeft(label10);
+        } else {
+            CheckBox check = new CheckBox();
+            check.setText(abitudine.getNome());
+            check.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14;");
+            check.setSelected(false);
+            
+            if(tipo == "COMPLETATA") {
+                check.setSelected(true);
+            } 
+            
+            // Evento per gestire il click di un'abitudine.
+            EventHandler<ActionEvent> eventHandler4 = new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    gestisciCheckAbitudine(abitudine, check);
+
+                }
+            };
+            check.addEventHandler(ActionEvent.ACTION, eventHandler4); 
+            pane.setLeft(check);
+        }
         
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
@@ -108,18 +215,52 @@ public class HabitTrackerController {
         label.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);   
         
         HBox imgContainer = new HBox();
+        imgContainer.setAlignment(Pos.CENTER);
         ImageView dots = new ImageView();
         dots.setFitHeight(22);
         dots.setFitWidth(8);
         dots.setImage(new Image(getClass().getResource("/main/risorse/dots.png").toString()));
         imgContainer.getChildren().add(dots);
-        imgContainer.setPadding(new Insets(0, 20, 0, 30));
-       
+        imgContainer.setPadding(new Insets(5, 5, 5, 5));
+        imgContainer.setPadding(new Insets(0, 20, 0, 20));   
+     
+        // Evento per modificare un'abitudine.
+        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                try {
+                    modificaAbitudine(abitudine);
+                } catch (IOException ex) {
+                    Logger.getLogger(HabitTrackerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        imgContainer.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2); 
+        
+        HBox imgContainer2 = new HBox();
+        imgContainer2.setAlignment(Pos.CENTER);
+        ImageView trash = new ImageView();
+        trash.setFitHeight(15);
+        trash.setFitWidth(15);
+        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
+        imgContainer2.getChildren().add(trash);
+        imgContainer2.setPadding(new Insets(5, 5, 5, 5));
+        imgContainer2.setPadding(new Insets(0, 0, 0, 20));  
+
+        // Evento per eliminare un'abitudine.
+        EventHandler<MouseEvent> eventHandler3 = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                eliminaAbitudine(abitudine);
+ 
+            }
+        };
+        imgContainer2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3); 
         
         hBox.getChildren().add(label);
+        hBox.getChildren().add(imgContainer2);
         hBox.getChildren().add(imgContainer);
-        
-        pane.setLeft(check);
+       
         pane.setRight(hBox);
         
         this.abitudiniBox.getChildren().add(pane);
@@ -185,26 +326,109 @@ public class HabitTrackerController {
     
     @FXML
     private void aggiungiAbitudine() throws IOException {
+        
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/main/Views/HabitTracker/EditorAbitudine.fxml"));
-        DialogPane newProject = fxmlLoader.load();
-        newProject.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        DialogPane pane = fxmlLoader.load();
+        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(newProject);
+        dialog.setDialogPane(pane);
         dialog.setTitle("Nuova abitudine");
         
         // Ottiene il controller EditorProgettoController associato alla view
         EditorAbitudineController controller = fxmlLoader.getController();
+        controller.setAbitudine(new AbitudineDemo("", "", new ArrayList<String>(), new ArrayList<ItemDemo>()));
         
         // Apre dialog popup
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         
         // Se l'utente clicca OK.
         if(clickedButton.get() == ButtonType.OK) {
-            System.out.println("Cliccato ok");
+            
+            // Aggiunge abitudine al modello
+            this.listaAbitudini.add(controller.getAbitudine());
+            
+            this.abitudiniBox.getChildren().clear();
+            // Aggiorna la view
+            if(this.pulsanteAttivo == "GIORNALIERE")
+                this.visualizzaAbitudiniGiornaliere();
+            else if(this.pulsanteAttivo == "TUTTE")
+                this.visualizzaAbitudini();
+            
+            this.visualizzaInfoAbitudine(controller.getAbitudine());
+            
         }
+    }
+    
+    @FXML
+    private void modificaAbitudine(AbitudineDemo abitudine) throws IOException {
+        
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/HabitTracker/EditorAbitudine.fxml"));
+        DialogPane pane = fxmlLoader.load();
+        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(pane);
+        dialog.setTitle("Modifica abitudine");
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        EditorAbitudineController controller = fxmlLoader.getController();
+        controller.setAbitudine(abitudine);
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+            
+            // Aggiorna la view
+            if(this.pulsanteAttivo == "GIORNALIERE")
+                this.visualizzaAbitudiniGiornaliere();
+            else if(this.pulsanteAttivo == "TUTTE")
+                this.visualizzaAbitudini();
+            
+            this.visualizzaInfoAbitudine(abitudine);
+        }
+    }
+    
+    private void eliminaAbitudine(AbitudineDemo abitudine) {
+        System.out.println("Abitudine " + abitudine.getNome() + " eliminata.");
+    }
+    
+    @FXML
+    private void evidenziaPulsante(Label label, String nomeBtn) {
+        this.pulsanteAttivo = nomeBtn;
+        
+        // Rimuove evidenziazione da tutti i label
+        this.tutteBtn.setStyle("-fx-text-fill: #ffffff;");
+        this.giornaliereBtn.setStyle("-fx-text-fill: #ffffff;");
+        this.completateBtn.setStyle("-fx-text-fill: #ffffff;");
+        
+        // Aggiunge evidenziazione al pulsante scelto
+        label.setStyle("-fx-text-fill: #2196F3;");
+        
+    }
+    
+    @FXML
+    private void apriGiornaliere() {
+        this.evidenziaPulsante(this.giornaliereBtn, "GIORNALIERE");
+        this.visualizzaAbitudiniGiornaliere();
+    }
+    
+    @FXML
+    private void apriTutte() {
+        this.evidenziaPulsante(this.tutteBtn, "TUTTE");
+        this.visualizzaAbitudini();
+    }
+    
+    @FXML
+    private void apriCompletate() {
+        this.evidenziaPulsante(this.completateBtn, "COMPLETATE");
+        this.visualizzaAbitudiniCompletate();
     }
     
 }

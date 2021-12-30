@@ -109,4 +109,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
       -fx-background-color: transparent;
 }*/
 
+.check-box .box {
+    -fx-background-color: #515365;
+}
+
+.check-box:selected .box .mark {
+    -fx-background-color: #2196F3;
+}
+
 

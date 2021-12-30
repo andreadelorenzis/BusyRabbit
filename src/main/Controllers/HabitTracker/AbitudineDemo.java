@@ -5,6 +5,7 @@
 package main.Controllers.HabitTracker;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  *
@@ -16,16 +17,18 @@ public class AbitudineDemo {
     private int serieAttuale;
     private int serieRecord;
     private Boolean completata;
-    private ArrayList<Integer> giorniRipetizione;
+    private ArrayList<String> giorniRipetizione;
     private ArrayList<ItemDemo> items;
+    private String id;
 
-    public AbitudineDemo(String nome, String descrizione, ArrayList<Integer> giorniRipetizione, ArrayList<ItemDemo> items) {
+    public AbitudineDemo(String nome, String descrizione, ArrayList<String> giorniRipetizione, ArrayList<ItemDemo> items) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.giorniRipetizione = giorniRipetizione;
         this.items = items;
         this.serieAttuale = 0;
         this.serieRecord = 0;
+        this.id = UUID.randomUUID().toString();
     }
      
     public String getNome() {
@@ -48,12 +51,16 @@ public class AbitudineDemo {
         return completata;
     }
 
-    public ArrayList<Integer> getGiorniRipetizione() {
+    public ArrayList<String> getGiorniRipetizione() {
         return giorniRipetizione;
     }
 
     public ArrayList<ItemDemo> getItems() {
         return items;
+    }
+    
+    public String getId() {
+        return this.id;
     }
 
     public void setNome(String nome) {
@@ -76,13 +83,12 @@ public class AbitudineDemo {
         this.completata = completata;
     }
 
-    public void setGiorniRipetizione(ArrayList<Integer> giorniRipetizione) {
+    public void setGiorniRipetizione(ArrayList<String> giorniRipetizione) {
         this.giorniRipetizione = giorniRipetizione;
     }
 
     public void setItems(ArrayList<ItemDemo> items) {
         this.items = items;
     }
-    
     
 }
