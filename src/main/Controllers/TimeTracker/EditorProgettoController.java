@@ -28,7 +28,7 @@ public class EditorProgettoController {
     @FXML 
     private TextField nome;
     
-    private Progetto progetto;
+    private ProgettoDemo progetto;
     
     @FXML
     private void initialize() {
@@ -57,13 +57,13 @@ public class EditorProgettoController {
     }
     
     // Chiamato dal TimeTrackerController
-    public void setProgetto(Progetto progetto) {
+    public void setProgetto(ProgettoDemo progetto) {
         this.progetto = progetto;
         colore.setValue(progetto.getColore());
         nome.setText(progetto.getNome());
     }
     
-    public Progetto getProgetto() {
+    public ProgettoDemo getProgetto() {
         return this.progetto;
     }
     

@@ -55,16 +55,16 @@ public class EditorAttivitàController {
     @FXML
     private BorderPane menuProgetti;
     
-    private Progetto progettoAssociato;
+    private ProgettoDemo progettoAssociato;
     
-    private Attività attività;
+    private AttivitàDemo attività;
     
     /*
     *
     * !!!! DEMO !!!!
     *
     */
-    private ArrayList<Progetto> progetti;
+    private ArrayList<ProgettoDemo> progetti;
     
     @FXML
     private void initialize() {
@@ -77,7 +77,7 @@ public class EditorAttivitàController {
         }
     }
     
-    private void visualizzaProgetto(Progetto progetto) {
+    private void visualizzaProgetto(ProgettoDemo progetto) {
        // Crea nuovo progetto
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(0, 20, 0, 10));
@@ -106,7 +106,7 @@ public class EditorAttivitàController {
     /**
      * Cambia il progett
      */
-    private void cambiaProgetto(Progetto progetto) {
+    private void cambiaProgetto(ProgettoDemo progetto) {
         
         // Crea nuovo progetto
         Circle circle = new Circle();
@@ -119,7 +119,7 @@ public class EditorAttivitàController {
         
         // Associa il progetto all'attività;
         this.progettoAssociato = progetto;
-        this.attività.setProgettoPadre(this.progettoAssociato);
+        this.attività.setProgetto(this.progettoAssociato);
         
         // Aggiorna il pulsante nella view.
         this.btnProgetto.getChildren().clear(); 
@@ -144,7 +144,7 @@ public class EditorAttivitàController {
     }
     
     // Chiamato dal TimeTrackerController
-    public void setAttività(Attività attività) {
+    public void setAttività(AttivitàDemo attività) {
         this.attività = attività;
         nome.setText(attività.getNome());
         this.progettoAssociato = attività.getProgetto();
@@ -152,11 +152,11 @@ public class EditorAttivitàController {
         this.toggleMenuProgetti();
     }
     
-    public Attività getProgetto() {
+    public AttivitàDemo getProgetto() {
         return this.attività;
     }
     
-    public void setListaProgetti(ArrayList<Progetto> progetti) {
+    public void setListaProgetti(ArrayList<ProgettoDemo> progetti) {
         this.progetti = progetti;
         System.out.println(this.progetti.get(1).getNome());
         this.visualizzaListaProgetti();
