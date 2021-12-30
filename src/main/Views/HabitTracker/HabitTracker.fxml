@@ -1,132 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="545.0" prefWidth="790.0" styleClass="mainFxmlClass" stylesheets="@/src/Globall.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.HabitTrackerController">
-    <stylesheets>
-        <URL value="@/main/src/Globall.css" />
-    </stylesheets>
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="850.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.HabitTracker.HabitTrackerController">
    <children>
-      <AnchorPane layoutX="51.0" layoutY="51.0" prefHeight="463.0" prefWidth="688.0" style="-fx-background-color: #0E1726; -fx-background-radius: 20; -fx-border-radius: 12;" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="45.0">
-         <children>
-            <AnchorPane layoutX="20.0" layoutY="37.0" prefHeight="418.0" prefWidth="326.0" style="-fx-background-color: #0E1726;" styleClass="edge-to-edge" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="374.0">
+      <SplitPane dividerPositions="0.5086065573770492" layoutX="26.0" layoutY="25.0" prefHeight="474.0" prefWidth="647.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="30.600000000000023" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="24.799999999999955" AnchorPane.topAnchor="25.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #0E1726;">
                <children>
-                  <BorderPane fx:id="panevc" prefHeight="403.0" prefWidth="326.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                     <top>
-                        <HBox prefHeight="40.0" prefWidth="326.0" BorderPane.alignment="CENTER">
+                  <BorderPane layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="3.6000000000000227">
+                     <left>
+                        <Label text="Abitudini" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </left>
+                     <right>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="237.0" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox fx:id="all" onMouseClicked="#SwitchAll" prefHeight="68.0" prefWidth="71.0">
-                                 <children>
-                                    <Label prefHeight="49.0" prefWidth="70.0" text="Tutti" textFill="WHITE" translateY="14.0">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox fx:id="todo" onMouseClicked="#SwitchToDo" prefHeight="63.0" prefWidth="82.0">
-                                 <children>
-                                    <Label prefHeight="52.0" prefWidth="78.0" text="DaFare" textFill="WHITE" translateY="14.0">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox fx:id="done" onMouseClicked="#SwitchDone" prefHeight="70.0" prefWidth="61.0" translateX="5.0">
-                                 <children>
-                                    <Label prefHeight="45.0" prefWidth="62.0" text="Fatto" textFill="WHITE" translateY="14.0">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
+                              <ImageView fitHeight="18.0" fitWidth="18.0">
+                                 <image>
+                                    <Image url="@../../risorse/plus.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Label text="Nuova abitudine" textFill="#2196f3">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
                            </children>
                         </HBox>
-                     </top>
-                     <center>
-                        <Pane prefHeight="316.0" prefWidth="326.0" BorderPane.alignment="CENTER" />
-                     </center>
+                     </right>
                   </BorderPane>
-                  <Separator opacity="0.5" prefHeight="6.0" prefWidth="326.0" translateY="53.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="382.0" layoutY="52.0" prefHeight="402.0" prefWidth="326.0" style="-fx-background-color: #0E1726;" styleClass="edge-to-edge" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.rightAnchor="11.600000000000023">
-               <children>
-                  <ScrollPane layoutY="1.0" prefHeight="402.0" prefWidth="326.0" style="-fx-background-color: #0E1726;" styleClass="edge-to-edge" AnchorPane.bottomAnchor="0.6000000000000227" AnchorPane.rightAnchor="0.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="60.0" prefHeight="42.0" prefWidth="296.0" style="-fx-border-color: #191E3A; -fx-border-width: 0 0 3 0;" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="18.0">
+                     <children>
+                        <Label text="Tutte" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Giornaliere" textFill="#2196f3">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="Completate" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="12.0" layoutY="102.0" prefHeight="541.0" prefWidth="390.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
                      <content>
-                        <VBox prefHeight="402.0" prefWidth="326.0" style="-fx-background-color: #0E1726;" styleClass="edge-to-edge" />
+                        <VBox fx:id="abitudiniBox" prefHeight="539.0" prefWidth="390.0" style="-fx-background-color: #0E1726; -fx-fill-width: true;" />
                      </content>
                   </ScrollPane>
                </children>
             </AnchorPane>
-            <BorderPane layoutX="7.0" layoutY="-10.0" prefHeight="61.0" prefWidth="326.0">
-               <left>
-                  <Label fx:id="LabelPane1" graphicTextGap="0.0" prefHeight="46.0" prefWidth="90.0" text="Quotidiani" textFill="WHITE" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-               </left>
-               <right>
-                  <HBox fx:id="addDaily" onMouseClicked="#SwitchDailyAdd" prefHeight="62.0" prefWidth="92.0" translateY="21.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fx:id="ImageIconDaily" fitHeight="21.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateX="-4.0" translateY="2.0">
-                           <image>
-                              <Image url="@../risorse/plusgreen.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="LabelDailyAdd" prefHeight="22.0" prefWidth="70.0" text="Quotidiani" textFill="#31a131" translateY="2.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="345.0" prefWidth="353.0" style="-fx-background-color: #0E1726;">
+               <children>
+                  <BorderPane layoutX="3.0" prefHeight="50.0" prefWidth="308.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0">
+                     <left>
+                        <Label text="Informazioni" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="10.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </left>
+                     <right>
+                        <Label text="Modifica" textFill="#2196f3" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <BorderPane.margin>
+                              <Insets right="10.0" />
+                           </BorderPane.margin>
                         </Label>
-                     </children>
-                  </HBox>
-               </right>
-            </BorderPane>
-            <BorderPane layoutX="382.0" layoutY="-11.0" prefHeight="62.0" prefWidth="326.0" AnchorPane.rightAnchor="12.0">
-               <right>
-                  <HBox fx:id="addhabit" onMouseClicked="#SwitchHabitAdd" prefHeight="62.0" prefWidth="82.0" translateY="21.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fx:id="ImageIconHabits" fitHeight="20.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" translateX="-4.0">
-                           <image>
-                              <Image url="@../risorse/plusgreen.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="LabelHabitsAdd" text="Abitudini" textFill="#31a131">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </right>
-               <left>
-                  <Label fx:id="LabelPane2" text="Abitudini" textFill="WHITE" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-               </left>
-            </BorderPane>
-            <Separator layoutX="368.0" layoutY="18.0" opacity="0.5" orientation="VERTICAL" prefHeight="450.0" prefWidth="2.0" translateX="-4.0" AnchorPane.bottomAnchor="8.600000000000023" AnchorPane.leftAnchor="368.0" AnchorPane.rightAnchor="345.6" AnchorPane.topAnchor="14.0" />
-         </children>
-      </AnchorPane>
-      <Label fx:id="LabelOnTop" layoutX="39.0" layoutY="14.0" text="Habits Tracker" textFill="#918f8fb8">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
+                     </right>
+                  </BorderPane>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="14.0" layoutY="64.0" prefHeight="397.0" prefWidth="287.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="64.0">
+                     <content>
+                        <VBox fx:id="infoBox" maxHeight="Infinity" maxWidth="Infinity" prefHeight="585.0" prefWidth="363.0" style="-fx-background-color: #0E1726;">
+                           <children>
+                              <Label text="Arrivare a correre 20 km di fila" textFill="#bac4ca">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
