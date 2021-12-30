@@ -27,7 +27,7 @@
                         </Label>
                      </left>
                      <right>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="237.0" BorderPane.alignment="CENTER">
+                        <HBox alignment="CENTER_RIGHT" onMouseClicked="#aggiungiAbitudine" prefHeight="27.0" prefWidth="149.0" BorderPane.alignment="CENTER">
                            <children>
                               <ImageView fitHeight="18.0" fitWidth="18.0">
                                  <image>
@@ -37,7 +37,7 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Label text="Nuova abitudine" textFill="#2196f3">
+                              <Label onMouseClicked="#aggiungiAbitudine" text="Nuova abitudine" textFill="#2196f3">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -107,15 +107,7 @@
                   </BorderPane>
                   <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="14.0" layoutY="64.0" prefHeight="397.0" prefWidth="287.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="64.0">
                      <content>
-                        <VBox fx:id="infoBox" maxHeight="Infinity" maxWidth="Infinity" prefHeight="585.0" prefWidth="363.0" style="-fx-background-color: #0E1726;">
-                           <children>
-                              <Label text="Arrivare a correre 20 km di fila" textFill="#bac4ca">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
+                        <VBox fx:id="infoBox" maxHeight="Infinity" maxWidth="Infinity" prefHeight="585.0" prefWidth="363.0" style="-fx-background-color: #0E1726;" />
                      </content>
                   </ScrollPane>
                </children>
