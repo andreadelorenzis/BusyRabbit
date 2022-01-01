@@ -15,9 +15,9 @@ public class ObiettivoDemo implements IObiettivo {
     private String nome;
     private String descrizione;
     private Date data;
-    private ArrayList<ObiettivoDemo> sottoObiettivi;
+    private ArrayList<IObiettivo> sottoObiettivi;
 
-    public ObiettivoDemo(String nome, String descrizione, Date data, ArrayList<ObiettivoDemo> sottoObiettivi) {
+    public ObiettivoDemo(String nome, String descrizione, Date data, ArrayList<IObiettivo> sottoObiettivi) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.data = data;
@@ -36,7 +36,7 @@ public class ObiettivoDemo implements IObiettivo {
         return data;
     }
 
-    public ArrayList<ObiettivoDemo> getSottoObiettivi() {
+    public ArrayList<IObiettivo> getSottoObiettivi() {
         return sottoObiettivi;
     }
 
@@ -52,7 +52,7 @@ public class ObiettivoDemo implements IObiettivo {
         this.data = data;
     }
 
-    public void setSottoObiettivi(ArrayList<ObiettivoDemo> sottoObiettivi) {
+    public void setSottoObiettivi(ArrayList<IObiettivo> sottoObiettivi) {
         this.sottoObiettivi = sottoObiettivi;
     }
     

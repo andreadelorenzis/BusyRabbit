@@ -80,10 +80,10 @@ public class EditorObiettiviController {
     private void cambiaTipo(ActionEvent event) {
         if(this.tipoBtn1.isSelected()) {
             this.formObiettivoMisurabile.setVisible(false);
-            this.obiettivo = new ObiettivoDemo("", "", new Date(), new ArrayList<ObiettivoDemo>());
+            this.obiettivo = new ObiettivoDemo("", "", new Date(), new ArrayList<IObiettivo>());
         } else if(this.tipoBtn2.isSelected()) {
             this.formObiettivoMisurabile.setVisible(true);
-            this.obiettivo = new ObiettivoMisurabileDemo("", "", new Date(), new ArrayList<ObiettivoDemo>(), "", 0);
+            this.obiettivo = new ObiettivoMisurabileDemo("", "", new Date(), new ArrayList<IObiettivo>(), "", 0);
         }
     }
     

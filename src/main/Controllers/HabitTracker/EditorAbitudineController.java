@@ -67,7 +67,7 @@ public class EditorAbitudineController {
         this.abitudine.setDescrizione(this.descrizioneArea.getText());
     }
     
-    private void toggleBtn(Label label, Boolean giorno) {
+    private void toggleBtn(Label label, boolean giorno) {
         if(!giorno) {
             giorno = true;
             label.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");

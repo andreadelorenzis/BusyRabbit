@@ -75,16 +75,18 @@ public class GoalManagerController {
         
         this.listaObiettivi = new ArrayList<IObiettivo>();
         
-        ArrayList<ObiettivoDemo> sottoObiettivi = new ArrayList<ObiettivoDemo>();
-        sottoObiettivi.add(new ObiettivoDemo("Superare Analisi", "", new Date(), new ArrayList<ObiettivoDemo>()));
-        sottoObiettivi.add(new ObiettivoDemo("Superare Sistemi Operativi", "", new Date(), new ArrayList<ObiettivoDemo>()));
+        ArrayList<IObiettivo> sottoObiettivi = new ArrayList<IObiettivo>();
+        sottoObiettivi.add(new ObiettivoDemo("Superare Analisi", "", new Date(), new ArrayList<IObiettivo>()));
+        sottoObiettivi.add(new ObiettivoDemo("Superare Sistemi Operativi", "", new Date(), new ArrayList<IObiettivo>()));
         
-        ArrayList<ObiettivoDemo> sottoObiettivi2 = new ArrayList<ObiettivoDemo>();
-        sottoObiettivi2.add(new ObiettivoDemo("Creare il prodotto", "", new Date(), new ArrayList<ObiettivoDemo>()));
-        sottoObiettivi2.add(new ObiettivoDemo("Publicizzare e vendere il prodotto", "", new Date(), new ArrayList<ObiettivoDemo>()));
+        ArrayList<IObiettivo> sottoObiettivi2 = new ArrayList<IObiettivo>();
+        sottoObiettivi2.add(new ObiettivoDemo("Creare il prodotto", "", new Date(), new ArrayList<IObiettivo>()));
+        sottoObiettivi2.add(new ObiettivoDemo("Publicizzare e vendere il prodotto", "", new Date(), new ArrayList<IObiettivo>()));
         
-        this.listaObiettivi.add(new ObiettivoDemo("Dare tutti gli esami dell'università", "", new Date(), sottoObiettivi));
-        this.listaObiettivi.add(new ObiettivoDemo("Dare una maratona", "", new Date(), new ArrayList<ObiettivoDemo>()));
+        
+        ObiettivoMisurabileDemo obiettivoMisurabile = new ObiettivoMisurabileDemo("Dare tutti gli esami dell'università", "", new Date(), sottoObiettivi, "ore", 4);
+        this.listaObiettivi.add(obiettivoMisurabile);
+        this.listaObiettivi.add(new ObiettivoDemo("Dare una maratona", "", new Date(), new ArrayList<IObiettivo>()));
         this.listaObiettivi.add(new ObiettivoDemo("Creare una startup", "", new Date(), sottoObiettivi2));
         
         ArrayList<String> giorni = new ArrayList<String>() {
@@ -101,6 +103,8 @@ public class GoalManagerController {
                 add(new AzioneDemo("Azione 3", giorni, 2, listaObiettivi.get(0)));
             }
         };
+        
+        obiettivoMisurabile.setAzioni(listaAzioni);
         
         // <---- DEMO
         
@@ -174,6 +178,7 @@ public class GoalManagerController {
         EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
+                System.out.println(obiettivo.getClass().getName());
                 visualizzaAzioniObiettivo(obiettivo);
             }
         };
@@ -330,7 +335,7 @@ public class GoalManagerController {
         
         // Ottiene il controller EditorProgettoController associato alla view
         EditorObiettiviController controller = fxmlLoader.getController();
-        controller.setObiettivo(new ObiettivoDemo("", "", new Date(), new ArrayList<ObiettivoDemo>()));
+        controller.setObiettivo(new ObiettivoDemo("", "", new Date(), new ArrayList<IObiettivo>()));
         
         // Apre dialog popup
         Optional<ButtonType> clickedButton = dialog.showAndWait();
@@ -416,8 +421,43 @@ public class GoalManagerController {
     }
     
     private void visualizzaAzioniObiettivo(IObiettivo obiettivo) {
-        this.obiettivoCliccato = obiettivo;
-        this.azioneBtn.setVisible(true);
+        if(obiettivo.getClass().getSimpleName().equals("ObiettivoMisurabileDemo")) {
+            this.boxAzioni.getChildren().clear();
+            this.headerBox.getChildren().clear();
+
+            // Aggiunge header.
+            HBox hBox = new HBox();
+            HBox hBox2 = new HBox();
+            hBox.setAlignment(Pos.CENTER_RIGHT);
+            hBox.setPadding(new Insets(25, 20, 20, 0));
+            hBox2.setAlignment(Pos.CENTER);
+            Label label = new Label("Mostra tutte le azioni giornaliere");
+            label.setStyle("-fx-text-fill: #2196F3; -fx-font-size: 16; -fx-font-weight: 800;");
+            Label label2 = new Label(obiettivo.getNome());
+            label2.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
+            hBox.getChildren().add(label);
+            hBox2.getChildren().add(label2);
+            this.headerBox.getChildren().add(hBox);
+            this.headerBox.getChildren().add(hBox2);
+            
+            // Event handler per visualizzare tutte le azioni del giorno.
+            EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent t) {
+                    visualizzaAzioni();
+                }
+            };
+            label.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+
+            this.obiettivoCliccato = obiettivo;
+            this.azioneBtn.setVisible(true);
+
+            ArrayList<AzioneDemo> azioni = ((ObiettivoMisurabileDemo) obiettivo).getAzioni();
+            for(int i = 0; i < azioni.size(); i++) {
+                this.visualizzaAzione(azioni.get(i));
+            }
+        } else {
+            System.out.println("Questo obiettivi non ha azioni collegate. Collega un azione!");
+        }
     }
     
     private void visualizzaAzioniObiettivoGiornaliere() {
@@ -426,6 +466,7 @@ public class GoalManagerController {
     
     private void visualizzaAzioni() {
         this.boxAzioni.getChildren().clear();
+        this.headerBox.getChildren().clear();
 
         // Aggiunge header.
         HBox hBox = new HBox();
@@ -442,7 +483,7 @@ public class GoalManagerController {
         this.headerBox.getChildren().add(hBox2);
         
         // Visualizza la lista di azioni
-        for(int i = 0; i < listaAzioni.size(); i++) {
+        for(int i = 0; i < this.listaAzioni.size(); i++) {
             this.visualizzaAzione(this.listaAzioni.get(i));
         }
         
@@ -452,8 +493,34 @@ public class GoalManagerController {
     }
     
     @FXML
-    private void aggiungiAzione() {
-        System.out.println("Aggiunta nuova azione per obiettivo: " + this.obiettivoCliccato.getNome());
+    private void aggiungiAzione() throws IOException {
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorAzioni.fxml"));
+        DialogPane pane = fxmlLoader.load();
+        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(pane);
+        dialog.setTitle("Nuova azione");
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        EditorAzioniController controller = fxmlLoader.getController();
+        controller.setAzione(new AzioneDemo("", new ArrayList<String>(), 0, this.obiettivoCliccato));
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+            
+            // Aggiungere l'azione alla lista azioni dell'obiettivo
+            ((ObiettivoMisurabileDemo) this.obiettivoCliccato).getAzioni().add(controller.getAzione());
+            
+            // Aggiornare la view
+            this.visualizzaAzioniObiettivo(obiettivoCliccato);
+            
+        }
     }
     
     private void modificaAzione(AzioneDemo azione) {

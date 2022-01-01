@@ -20,10 +20,11 @@ public class ObiettivoMisurabileDemo extends ObiettivoDemo {
     private ArrayList<AzioneDemo> azioni;
     
     public ObiettivoMisurabileDemo(String nome, String descrizione, Date data,
-            ArrayList<ObiettivoDemo> sottoObiettivi, String unità, int valore) {
+            ArrayList<IObiettivo> sottoObiettivi, String unità, int valore) {
         super(nome, descrizione, data, sottoObiettivi);
         this.unità = unità;
         this.valore = valore;
+        this.azioni = new ArrayList<AzioneDemo>();
     }
 
     public String getUnità() {
