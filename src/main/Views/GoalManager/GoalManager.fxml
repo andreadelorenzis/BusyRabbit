@@ -61,7 +61,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #0E1726; -fx-background-radius: 12; -fx-border-radius: 12;">
                <children>
-                  <VBox fx:id="headerBox" alignment="CENTER" layoutX="-2.0" layoutY="47.0" prefHeight="60.0" prefWidth="398.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="47.0" />
+                  <VBox fx:id="headerBox" alignment="CENTER" layoutX="-2.0" layoutY="47.0" prefHeight="88.0" prefWidth="398.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="47.0" />
                   <BorderPane layoutX="13.0" layoutY="9.0" prefHeight="35.0" prefWidth="379.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="5.400000000000034">
                      <left>
                         <Label text="Azioni" textFill="WHITE" BorderPane.alignment="CENTER">
@@ -90,7 +90,7 @@
                         </HBox>
                      </right>
                   </BorderPane>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="23.0" layoutY="119.0" prefHeight="280.0" prefWidth="359.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="119.0">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="23.0" layoutY="141.0" prefHeight="258.0" prefWidth="359.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="141.0">
                      <content>
                         <VBox fx:id="boxAzioni" prefHeight="354.0" prefWidth="370.0" style="-fx-background-color: #0E1726;" />
                      </content>

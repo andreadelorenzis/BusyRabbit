@@ -426,24 +426,25 @@ public class GoalManagerController {
     }
     
     private void visualizzaAzioniObiettivo(IObiettivo obiettivo) {
-        if(obiettivo.getClass().getSimpleName().equals("ObiettivoMisurabileDemo")) {
-            this.boxAzioni.getChildren().clear();
-            this.headerBox.getChildren().clear();
+        this.boxAzioni.getChildren().clear();
+        this.headerBox.getChildren().clear();
 
-            // Aggiunge header.
-            HBox hBox = new HBox();
-            HBox hBox2 = new HBox();
-            hBox.setAlignment(Pos.CENTER_RIGHT);
-            hBox.setPadding(new Insets(25, 20, 20, 0));
-            hBox2.setAlignment(Pos.CENTER);
-            Label label = new Label("Mostra tutte le azioni giornaliere");
-            label.setStyle("-fx-text-fill: #2196F3; -fx-font-size: 16; -fx-font-weight: 800;");
-            Label label2 = new Label(obiettivo.getNome());
-            label2.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
-            hBox.getChildren().add(label);
-            hBox2.getChildren().add(label2);
-            this.headerBox.getChildren().add(hBox);
-            this.headerBox.getChildren().add(hBox2);
+        // Aggiunge header.
+        HBox hBox = new HBox();
+        HBox hBox2 = new HBox();
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.setPadding(new Insets(15, 20, 10, 0));
+        hBox2.setAlignment(Pos.CENTER);
+        Label label3 = new Label("Mostra tutte le azioni giornaliere");
+        label3.setStyle("-fx-text-fill: #2196F3; -fx-font-size: 16; -fx-font-weight: 800;");
+        Label label4 = new Label(obiettivo.getNome());
+        label4.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
+        hBox.getChildren().add(label3);
+        hBox2.getChildren().add(label4);
+        this.headerBox.getChildren().add(hBox);
+        this.headerBox.getChildren().add(hBox2);
+        
+        if(obiettivo.getClass().getSimpleName().equals("ObiettivoMisurabileDemo")) {
             
             // Event handler per visualizzare tutte le azioni del giorno.
             EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
@@ -451,7 +452,7 @@ public class GoalManagerController {
                     visualizzaAzioni();
                 }
             };
-            label.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+            label3.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 
             this.obiettivoCliccato = obiettivo;
             this.azioneBtn.setVisible(true);
@@ -461,7 +462,15 @@ public class GoalManagerController {
                 this.visualizzaAzione(azioni.get(i));
             }
         } else {
-            System.out.println("Questo obiettivi non ha azioni collegate. Collega un azione!");
+            VBox vBox = new VBox();
+            Label label1 = new Label("Non hai ancora collegato nessuna azione a questo obiettivo.");
+            label1.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
+            Label label2 = new Label("Nuova azione");
+            label2.setStyle("-fx-text-fill: #2196F3; -fx-font-size: 16; -fx-font-weight: 800;");
+            vBox.getChildren().add(label1);
+            vBox.getChildren().add(label2);
+            
+            this.boxAzioni.getChildren().add(vBox);
         }
     }
     
