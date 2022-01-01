@@ -117,4 +117,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #2196F3;
 }
 
+.progress-bar:determinate .track {
+    -fx-background-color: #272E52;
+    -fx-border-width: 0 0 0 0;
+}
+
+.progress-bar:determinate .bar {
+    -fx-background-color: #4361EE;
+    -fx-border-width: 0 0 0 0;
+}
+
 

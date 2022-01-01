@@ -17,6 +17,8 @@ public class ObiettivoMisurabileDemo extends ObiettivoDemo {
     
     private int valore;
     
+    private ArrayList<AzioneDemo> azioni;
+    
     public ObiettivoMisurabileDemo(String nome, String descrizione, Date data,
             ArrayList<ObiettivoDemo> sottoObiettivi, String unità, int valore) {
         super(nome, descrizione, data, sottoObiettivi);
@@ -38,6 +40,14 @@ public class ObiettivoMisurabileDemo extends ObiettivoDemo {
 
     public void setValore(int valore) {
         this.valore = valore;
+    }
+    
+    public void setAzioni(ArrayList<AzioneDemo> azioni) {
+        this.azioni = azioni;
+    }
+    
+    public ArrayList<AzioneDemo> getAzioni() {
+        return this.azioni;
     }
     
 }

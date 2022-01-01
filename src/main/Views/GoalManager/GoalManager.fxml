@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
@@ -60,6 +61,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #0E1726; -fx-background-radius: 12; -fx-border-radius: 12;">
                <children>
+                  <VBox fx:id="headerBox" alignment="CENTER" layoutX="-2.0" layoutY="47.0" prefHeight="60.0" prefWidth="398.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="47.0" />
                   <BorderPane layoutX="13.0" layoutY="9.0" prefHeight="35.0" prefWidth="379.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="5.400000000000034">
                      <left>
                         <Label text="Azioni" textFill="WHITE" BorderPane.alignment="CENTER">
@@ -69,7 +71,7 @@
                         </Label>
                      </left>
                      <right>
-                        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="122.0" BorderPane.alignment="CENTER_LEFT">
+                        <HBox fx:id="azioneBtn" alignment="CENTER_LEFT" onMouseClicked="#aggiungiAzione" prefHeight="35.0" prefWidth="122.0" visible="false" BorderPane.alignment="CENTER_LEFT">
                            <children>
                               <ImageView fitHeight="20.0" fitWidth="20.0">
                                  <image>
@@ -88,15 +90,17 @@
                         </HBox>
                      </right>
                   </BorderPane>
-                  <ScrollPane hbarPolicy="NEVER" layoutX="16.0" layoutY="52.0" prefHeight="480.0" prefWidth="371.0" style="-fx-background-color: #0E1726;">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="23.0" layoutY="119.0" prefHeight="280.0" prefWidth="359.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="119.0">
                      <content>
-                        <VBox fx:id="boxAzioni" prefHeight="478.0" prefWidth="370.0" style="-fx-background-color: #0E1726;">
-                           <children>
-                              <HBox prefHeight="37.0" prefWidth="370.0" />
-                           </children>
-                        </VBox>
+                        <VBox fx:id="boxAzioni" prefHeight="354.0" prefWidth="370.0" style="-fx-background-color: #0E1726;" />
                      </content>
                   </ScrollPane>
+                  <Label layoutX="21.0" layoutY="437.0" style="-fx-font-weight: 800;" text="Progresso giornaliero" textFill="WHITE" AnchorPane.bottomAnchor="72.60000000000002" AnchorPane.leftAnchor="21.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ProgressBar fx:id="progressBar" layoutX="20.0" layoutY="466.0" prefHeight="24.0" prefWidth="359.0" progress="0.0" style="-fx-background-color: #272E52;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="19.0" />
                </children>
             </AnchorPane>
         </items>

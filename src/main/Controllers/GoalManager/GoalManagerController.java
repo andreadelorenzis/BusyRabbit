@@ -21,12 +21,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import main.Controllers.GoalManager.demo.AzioneDemo;
 import main.Controllers.GoalManager.demo.IObiettivo;
 import main.Controllers.GoalManager.demo.IObiettivoMisurabile;
 import main.Controllers.GoalManager.demo.ObiettivoDemo;
@@ -45,9 +48,25 @@ public class GoalManagerController {
     private VBox boxObiettivi;
     private ArrayList<VBox> listaBoxSottoObiettivi;
     
+    @FXML
+    private VBox headerBox;
+    
+    @FXML
+    private VBox boxAzioni;
+    
+    @FXML
+    private ProgressBar progressBar;
+    
+    @FXML
+    private HBox azioneBtn;
+    
     private ArrayList<IObiettivo> listaObiettivi;
     
+    private ArrayList<AzioneDemo> listaAzioni;
+    
     private boolean listaSottoObiettiviAperta = false;
+    
+    private IObiettivo obiettivoCliccato = null;
     
     @FXML
     private void initialize() {
@@ -68,10 +87,26 @@ public class GoalManagerController {
         this.listaObiettivi.add(new ObiettivoDemo("Dare una maratona", "", new Date(), new ArrayList<ObiettivoDemo>()));
         this.listaObiettivi.add(new ObiettivoDemo("Creare una startup", "", new Date(), sottoObiettivi2));
         
+        ArrayList<String> giorni = new ArrayList<String>() {
+            {
+                add("LUN");
+                add("DOM");
+            }
+        };
+        
+        this.listaAzioni = new ArrayList<AzioneDemo>() {
+            {
+                add(new AzioneDemo("Azione 1", giorni, 2, listaObiettivi.get(0)));
+                add(new AzioneDemo("Azione 2", giorni, 2, listaObiettivi.get(0)));
+                add(new AzioneDemo("Azione 3", giorni, 2, listaObiettivi.get(0)));
+            }
+        };
+        
         // <---- DEMO
         
         this.listaBoxSottoObiettivi = new ArrayList<VBox>();
         this.visualizzaObiettivi();
+        this.visualizzaAzioni();
     }
     
     private void visualizzaObiettivi() {
@@ -135,6 +170,15 @@ public class GoalManagerController {
         };
         hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
         
+        // Event handler per visualizzazione pagina azioni.
+        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent t) {
+                visualizzaAzioniObiettivo(obiettivo);
+            }
+        };
+        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
+        
         vBox.getChildren().add(check);
         vBox.getChildren().add(label);
         
@@ -173,13 +217,13 @@ public class GoalManagerController {
             this.listaBoxSottoObiettivi.add(vBox2);
             
             // Event handler per apertura sotto obiettivi.
-            EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
+            EventHandler<MouseEvent> eventHandler3 = new EventHandler<MouseEvent>() {
 
                 public void handle(MouseEvent t) {
                     toggleSottoObiettivi(obiettivo, indice, vBox2);
                 }
             };
-            imgContainer.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
+            pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
             
             this.boxObiettivi.getChildren().add(vBox2);
         }
@@ -369,6 +413,103 @@ public class GoalManagerController {
             System.out.println("Sotto-biettivo aggiunto");
             
         }
+    }
+    
+    private void visualizzaAzioniObiettivo(IObiettivo obiettivo) {
+        this.obiettivoCliccato = obiettivo;
+        this.azioneBtn.setVisible(true);
+    }
+    
+    private void visualizzaAzioniObiettivoGiornaliere() {
+    
+    }
+    
+    private void visualizzaAzioni() {
+        this.boxAzioni.getChildren().clear();
+
+        // Aggiunge header.
+        HBox hBox = new HBox();
+        HBox hBox2 = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox2.setAlignment(Pos.CENTER);
+        Label label = new Label("Tutte le azioni di oggi");
+        label.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
+        Label label2 = new Label("18/09/2021");
+        label2.setStyle("-fx-text-fill: #888EA8; -fx-font-size: 20; -fx-font-weight: 800;");
+        hBox.getChildren().add(label);
+        hBox2.getChildren().add(label2);
+        this.headerBox.getChildren().add(hBox);
+        this.headerBox.getChildren().add(hBox2);
+        
+        // Visualizza la lista di azioni
+        for(int i = 0; i < listaAzioni.size(); i++) {
+            this.visualizzaAzione(this.listaAzioni.get(i));
+        }
+        
+        // Aggiunge le barre di progresso relative alle azioni di oggi
+        this.progressBar.setProgress(10);
+        
+    }
+    
+    @FXML
+    private void aggiungiAzione() {
+        System.out.println("Aggiunta nuova azione per obiettivo: " + this.obiettivoCliccato.getNome());
+    }
+    
+    private void modificaAzione(AzioneDemo azione) {
+        System.out.println("Modifica azione: " + azione.getNome() + ", per obiettivo: " + azione.getObiettivoPadre().getNome());
+    }
+    
+    private void eliminaAzione(AzioneDemo azione) {
+        System.out.println("Eliminazione azione: " + azione.getNome()  + ", per obiettivo: " + azione.getObiettivoPadre().getNome());
+    }
+    
+    private void visualizzaAzione(AzioneDemo azione) {
+        BorderPane pane = new BorderPane();
+        pane.setPadding(new Insets(0, 0, 15, 0));
+        CheckBox check = new CheckBox();
+        check.getStyleClass().add("nome");
+        check.setText(azione.getNome());
+        pane.setLeft(check);
+        this.boxAzioni.getChildren().add(pane);
+        
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(5, 5, 5, 10));
+        ImageView dots = new ImageView();
+        dots.setFitHeight(18);
+        dots.setFitWidth(6);
+        dots.setImage(new Image(getClass().getResource("/main/risorse/dots.png").toString()));
+        hBox.getChildren().add(dots);
+        
+        HBox hBox2 = new HBox();
+        hBox2.setPadding(new Insets(5, 5, 5, 10));
+        ImageView trash = new ImageView();
+        trash.setFitHeight(15);
+        trash.setFitWidth(15);
+        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
+        hBox2.getChildren().add(trash);
+        
+        // Event handler per modifica di un'azione.
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                modificaAzione(azione);
+            }
+        };
+        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        
+        // Event handler per eliminazione di un'azione.
+        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                eliminaAzione(azione);
+            }
+        };
+        hBox2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
+        
+        HBox hBox3 = new HBox();
+        hBox3.getChildren().add(hBox2);
+        hBox3.getChildren().add(hBox);
+        
+        pane.setRight(hBox3);
     }
     
 }

@@ -13,7 +13,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-width: 0 0 1 0;
 }
 
-.obiettivo .nome {
+.nome {
     -fx-text-fill: #ffffff;
     -fx-font-size: 14;
     -fx-font-weight: 800;
