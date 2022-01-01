@@ -1,0 +1,43 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 31 dic 2021, 13:32:40
+    Author     : andre
+*/
+
+.obiettivo {
+    -fx-padding: 10;
+    -fx-border-color: #2B305B;
+    -fx-border-width: 0 0 1 0;
+}
+
+.obiettivo .nome {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14;
+    -fx-font-weight: 800;
+}
+
+.obiettivo .data {
+    -fx-font-size: 14;
+    -fx-text-fill: #888ea8;
+    -fx-padding: 10 0 0 0;
+}
+
+.obiettivo .sottoBtn {
+    -fx-padding: 10 0 0 10;
+}
+
+.obiettivo .sottoBtn .label {
+    -fx-font-size: 14;
+    -fx-text-fill: #2196f3;
+    -fx-padding: 0 0 0 10;
+}
+
+.obiettivo .num-sottoobiettivi {
+    -fx-font-weight: 800;
+    -fx-font-size: 14;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 0 3 0 0;
+}

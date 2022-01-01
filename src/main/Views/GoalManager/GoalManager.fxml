@@ -1,16 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="859.0" style="-fx-background-color: #060818;" stylesheets="@GoalManager.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.GoalManagerController">
    <children>
-      <Label layoutX="192.0" layoutY="173.0" text="GoalManager">
+      <Label layoutX="14.0" layoutY="7.0" text="Goal tracker" textFill="#374667">
          <font>
-            <Font size="36.0" />
+            <Font size="18.0" />
          </font>
       </Label>
+      <SplitPane dividerPositions="0.5" layoutX="31.0" layoutY="42.0" prefHeight="330.0" prefWidth="544.0" style="-fx-background-color: #0E1726; -fx-border-radius: 12; -fx-background-radius: 12;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="42.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #0E1726; -fx-background-radius: 12; -fx-border-radius: 12;">
+               <children>
+                  <BorderPane layoutX="20.0" layoutY="11.0" prefHeight="35.0" prefWidth="371.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="7.0">
+                     <left>
+                        <Label text="I miei obiettivi" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </left>
+                     <right>
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#aggiungiObiettivo" prefHeight="27.0" prefWidth="135.0" BorderPane.alignment="CENTER_LEFT">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="20.0">
+                                 <image>
+                                    <Image url="@/main/risorse/plus.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Nuovo obiettivo" textFill="#2196f3">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </right>
+                  </BorderPane>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="10.0" layoutY="66.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="454.0" prefWidth="379.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="66.0">
+                     <content>
+                        <VBox fx:id="boxObiettivi" alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="452.0" prefWidth="388.0" style="-fx-background-color: #0E1726;" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #0E1726; -fx-background-radius: 12; -fx-border-radius: 12;">
+               <children>
+                  <BorderPane layoutX="13.0" layoutY="9.0" prefHeight="35.0" prefWidth="379.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="5.400000000000034">
+                     <left>
+                        <Label text="Azioni" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </left>
+                     <right>
+                        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="122.0" BorderPane.alignment="CENTER_LEFT">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="20.0">
+                                 <image>
+                                    <Image url="@/main/risorse/plus.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Nuova azione" textFill="#2196f3">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </right>
+                  </BorderPane>
+                  <ScrollPane hbarPolicy="NEVER" layoutX="16.0" layoutY="52.0" prefHeight="480.0" prefWidth="371.0" style="-fx-background-color: #0E1726;">
+                     <content>
+                        <VBox fx:id="boxAzioni" prefHeight="478.0" prefWidth="370.0" style="-fx-background-color: #0E1726;">
+                           <children>
+                              <HBox prefHeight="37.0" prefWidth="370.0" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>

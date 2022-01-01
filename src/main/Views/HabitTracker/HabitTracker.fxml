@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
@@ -76,7 +77,11 @@
                   </HBox>
                   <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="12.0" layoutY="102.0" prefHeight="541.0" prefWidth="390.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0">
                      <content>
-                        <VBox fx:id="abitudiniBox" prefHeight="539.0" prefWidth="390.0" style="-fx-background-color: #0E1726; -fx-fill-width: true;" />
+                        <VBox fx:id="abitudiniBox" prefHeight="539.0" prefWidth="390.0" style="-fx-background-color: #0E1726; -fx-fill-width: true;">
+                           <children>
+                              <BorderPane fx:id="demoPane" prefHeight="88.0" prefWidth="389.0" style="-fx-background-color: #ffffff;" />
+                              <BorderPane fx:id="demoPane1" prefHeight="88.0" prefWidth="389.0" style="-fx-background-color: #ffffff;" />
+                           </children></VBox>
                      </content>
                   </ScrollPane>
                </children>
@@ -107,7 +112,10 @@
                   </BorderPane>
                   <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="14.0" layoutY="64.0" prefHeight="397.0" prefWidth="287.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="64.0">
                      <content>
-                        <VBox fx:id="infoBox" maxHeight="Infinity" maxWidth="Infinity" prefHeight="585.0" prefWidth="363.0" style="-fx-background-color: #0E1726;" />
+                        <VBox fx:id="infoBox" maxHeight="Infinity" maxWidth="Infinity" prefHeight="585.0" prefWidth="363.0" style="-fx-background-color: #0E1726;">
+                           <children>
+                              <CheckBox mnemonicParsing="false" selected="true" text="CheckBox" />
+                           </children></VBox>
                      </content>
                   </ScrollPane>
                </children>
