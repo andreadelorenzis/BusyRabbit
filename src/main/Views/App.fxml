@@ -48,7 +48,7 @@
             </HBox>
          </top>
          <left>
-            <VBox prefHeight="539.0" prefWidth="186.0" style="-fx-border-color: #2B305B; -fx-background-color: #060818;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="539.0" prefWidth="209.0" style="-fx-border-color: #2B305B; -fx-background-color: #060818;" BorderPane.alignment="CENTER">
                <children>
                   <Label style="-fx-text-fill: #374667;" text="Strumenti" textFill="WHITE">
                      <font>
@@ -152,7 +152,7 @@
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox fx:id="dashboardHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaDashboard" prefHeight="42.0" prefWidth="153.0">
+                  <HBox fx:id="dashboardHBox" alignment="CENTER_LEFT" onMouseClicked="#toggleMenuDashboard" prefHeight="42.0" prefWidth="153.0">
                      <children>
                         <ImageView fx:id="dashboardImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -170,7 +170,23 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
+                        <ImageView fitHeight="14.0" fitWidth="14.0">
+                           <image>
+                              <Image url="@/main/risorse/arrow-down.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="15.0" top="2.0" />
+                           </HBox.margin>
+                        </ImageView>
                      </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT">
+                     <children>
+                        <VBox fx:id="dashboardBtns" maxWidth="181.0" prefHeight="0.0" prefWidth="166.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
                   <Label style="-fx-text-fill: #374667;" text="Gestisci" textFill="WHITE">
                      <font>
@@ -199,6 +215,9 @@
                            </HBox.margin>
                         </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>
