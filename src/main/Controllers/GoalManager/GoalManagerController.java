@@ -375,13 +375,13 @@ public class GoalManagerController {
         // Se l'utente clicca OK.
         if(clickedButton.get() == ButtonType.OK) {
             
-            
-            
-            System.out.println(controller.getObiettivo().getNome());
-            System.out.println(controller.getObiettivo().getDescrizione());
-            System.out.println(((ObiettivoMisurabileDemo) controller.getObiettivo()).getUnità());
-            System.out.println(((ObiettivoMisurabileDemo) controller.getObiettivo()).getValore());
-            System.out.println(controller.getObiettivo().getNome());
+            // Sostituire il vecchio obiettivo nella lista obiettivi, potrebbe essere
+            //cambiate la classe (ObiettivoSemplice o ObiettivoMisurabile)
+            for(int i = 0; i < this.listaObiettivi.size(); i++) {
+                if(this.listaObiettivi.get(i).getId() == obiettivo.getId()) {
+                    this.listaObiettivi.set(i, controller.getObiettivo());
+                }
+            }
             
             // Aggiornare la view
             this.visualizzaObiettivi();
@@ -390,6 +390,11 @@ public class GoalManagerController {
     }
     
     private void eliminaObiettivo(IObiettivo obiettivo) {
+        for(int i = 0; i < this.listaObiettivi.size(); i++) {
+            if(obiettivo.getId() == this.listaObiettivi.get(i).getId()) {
+                this.listaObiettivi.remove(i);
+            }
+        }
         System.out.println("Obiettivo: " + obiettivo.getNome() + " eliminato.");
     }
     
@@ -523,11 +528,53 @@ public class GoalManagerController {
         }
     }
     
-    private void modificaAzione(AzioneDemo azione) {
-        System.out.println("Modifica azione: " + azione.getNome() + ", per obiettivo: " + azione.getObiettivoPadre().getNome());
+    private void modificaAzione(AzioneDemo azione) throws IOException {
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorAzioni.fxml"));
+        DialogPane pane = fxmlLoader.load();
+        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(pane);
+        dialog.setTitle("Modifica azione");
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        EditorAzioniController controller = fxmlLoader.getController();
+        controller.setAzione(azione);
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+
+            // Aggiornare la view
+            this.visualizzaAzioniObiettivo(azione.getObiettivoPadre());
+            
+        }
     }
     
     private void eliminaAzione(AzioneDemo azione) {
+        
+        // Eliminare l'azione dalla lista di azioni giornaliere.
+        for(int i = 0; i < this.listaAzioni.size(); i++) {
+            if(azione.getId() == this.listaAzioni.get(i).getId()) {
+                this.listaAzioni.remove(i);
+            }
+        }
+            
+        // Elimina l'azione dalla lista di azioni dell'obiettivo padre.    
+        ArrayList<AzioneDemo> azioni = ((ObiettivoMisurabileDemo) azione.getObiettivoPadre()).getAzioni();
+        for(int i = 0; i < azioni.size(); i++) {
+            if(azione.getId() == azioni.get(i).getId()) {
+                azioni.remove(i);
+            }
+        }
+        
+        // Aggiorna la view
+        this.visualizzaAzioniObiettivo(azione.getObiettivoPadre());
+            
         System.out.println("Eliminazione azione: " + azione.getNome()  + ", per obiettivo: " + azione.getObiettivoPadre().getNome());
     }
     
@@ -559,7 +606,11 @@ public class GoalManagerController {
         // Event handler per modifica di un'azione.
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
-                modificaAzione(azione);
+                try {
+                    modificaAzione(azione);
+                } catch (IOException ex) {
+                    Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         };
         hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);

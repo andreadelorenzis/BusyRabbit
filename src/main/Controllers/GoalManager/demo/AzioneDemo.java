@@ -6,6 +6,7 @@ package main.Controllers.GoalManager.demo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
@@ -16,12 +17,14 @@ public class AzioneDemo {
     private ArrayList<String> giorni;
     private int valore;
     private IObiettivo obiettivoPadre;
+    private String id;
 
     public AzioneDemo(String nome, ArrayList<String> giorni, int valore, IObiettivo obiettivoPadre) {
         this.nome = nome;
         this.giorni = giorni;
         this.valore = valore;
         this.obiettivoPadre = obiettivoPadre;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getNome() {
@@ -34,6 +37,10 @@ public class AzioneDemo {
 
     public int getValore() {
         return valore;
+    }
+    
+    public String getId() {
+        return this.id;
     }
 
     public void setNome(String nome) {

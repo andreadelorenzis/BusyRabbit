@@ -6,6 +6,7 @@ package main.Controllers.GoalManager.demo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
@@ -16,12 +17,14 @@ public class ObiettivoDemo implements IObiettivo {
     private String descrizione;
     private Date data;
     private ArrayList<IObiettivo> sottoObiettivi;
+    private String id;
 
     public ObiettivoDemo(String nome, String descrizione, Date data, ArrayList<IObiettivo> sottoObiettivi) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.data = data;
         this.sottoObiettivi = sottoObiettivi;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getNome() {
@@ -38,6 +41,10 @@ public class ObiettivoDemo implements IObiettivo {
 
     public ArrayList<IObiettivo> getSottoObiettivi() {
         return sottoObiettivi;
+    }
+    
+    public String getId() {
+        return this.id;
     }
 
     public void setNome(String nome) {

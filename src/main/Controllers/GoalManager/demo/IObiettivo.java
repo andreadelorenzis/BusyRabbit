@@ -19,6 +19,8 @@ public interface IObiettivo {
     public Date getData();
 
     public ArrayList<IObiettivo> getSottoObiettivi();
+    
+    public String getId();
 
     public void setNome(String nome);
 

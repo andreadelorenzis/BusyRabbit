@@ -89,7 +89,6 @@ public class EditorObiettiviController {
     
     @FXML
     private void cambiaUnità() {
-        System.out.println(this.unitàField.getText());
         ((ObiettivoMisurabileDemo) this.obiettivo).setUnità(this.unitàField.getText());
     }
     
@@ -98,8 +97,8 @@ public class EditorObiettiviController {
         
         this.nomeField.setText(obiettivo.getNome());
         this.descrizioneArea.setText(obiettivo.getDescrizione());
-        
-        if(this.obiettivo.getClass().getName() == "ObiettivoMisurabileDemo") {
+       
+        if(this.obiettivo.getClass().getSimpleName() == "ObiettivoMisurabileDemo") {
             this.unitàField.setText(((ObiettivoMisurabileDemo) obiettivo).getUnità());
             this.valoreSpinner.getValueFactory().setValue(((ObiettivoMisurabileDemo) obiettivo).getValore());
         }
@@ -111,7 +110,7 @@ public class EditorObiettiviController {
         this.obiettivo.setDescrizione(this.descrizioneArea.getText());
         this.obiettivo.setData(new Date());
         
-        if(this.obiettivo.getClass().getName() == "ObiettivoMisurabileDemo") {
+        if("ObiettivoMisurabileDemo".equals(this.obiettivo.getClass().getSimpleName())) {
             ((ObiettivoMisurabileDemo)this.obiettivo).setUnità(this.unitàField.getText());
             ((ObiettivoMisurabileDemo)this.obiettivo).setValore((int)this.valoreSpinner.getValue());
         }
