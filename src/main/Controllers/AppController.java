@@ -74,6 +74,8 @@ public class AppController {
     private ImageView dashboardImg;
     @FXML
     private VBox dashboardBtns;
+    @FXML
+    private ImageView dashboardArrow;
     
     private HBox timeReportBox = new HBox();
     private Label timeReportLabel = new Label("Report Tempo");
@@ -162,6 +164,8 @@ public class AppController {
         dashboardHBox.setStyle("-fx-background-color: #060818;");
         dashboardLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
         dashboardImg.setImage(new Image(getClass().getResource("/main/risorse/dashboard.png").toString()));
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down.png").toString()));
+        this.dashboardArrow.setRotate(0);
         
         impostazioniHBox.setStyle("-fx-background-color: #060818;");
         impostazioniLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
@@ -266,6 +270,9 @@ public class AppController {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+        this.dashboardArrow.setRotate(180);
         this.timeReportBox.setStyle("-fx-background-color: #374856;"
                 + "-fx-border-radius:12;"
                 + "-fx-border-style:solid;"
@@ -284,6 +291,9 @@ public class AppController {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+        this.dashboardArrow.setRotate(180);
         this.obiettiviReportBox.setStyle("-fx-background-color: #374856;"
                 + "-fx-border-radius:12;"
                 + "-fx-border-style:solid;"
@@ -302,6 +312,9 @@ public class AppController {
     
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+        this.dashboardArrow.setRotate(180);
         this.abitudiniReportBox.setStyle("-fx-background-color: #374856;"
                 + "-fx-border-radius:12;"
                 + "-fx-border-style:solid;"
@@ -319,6 +332,11 @@ public class AppController {
     @FXML
     private void toggleMenuDashboard() {
         if(!this.dashboardMenuAperto) {
+            // Evidenza il pulsante della Dashboard
+            this.rimuoviEvidenziazionePulsanti();
+            this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+            this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+            this.dashboardArrow.setRotate(180);
             
             // Fa comparire i pulsanti nel sotto-menu del pulsante dashboard.
             this.dashboardBtns.getChildren().add(this.timeReportBox);
@@ -329,12 +347,14 @@ public class AppController {
         } else {
             this.dashboardBtns.getChildren().clear();
             this.dashboardMenuAperto = false;
+            this.dashboardArrow.setRotate(0);
         }
     }
     
     private void chiudiMenuDashboard() {
         this.dashboardBtns.getChildren().clear();
         this.dashboardMenuAperto = false;
+        this.dashboardImg.setImage(new Image(getClass().getResource("/main/risorse/dashboard.png").toString()));
     }
     
 }
