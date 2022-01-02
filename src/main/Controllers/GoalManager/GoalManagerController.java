@@ -72,7 +72,6 @@ public class GoalManagerController {
     private void initialize() {
         
         // ----> DEMO
-        
         this.listaObiettivi = new ArrayList<IObiettivo>();
         
         ArrayList<IObiettivo> sottoObiettivi = new ArrayList<IObiettivo>();
