@@ -25,7 +25,7 @@ public class ProgettoDemo {
     private Map<String, Double> anno;
     
     // Contiene il tempo totale progetto per ogni giorno del mese
-    private Map<String, Integer> mese; 
+    private Map<String, Double> mese; 
 
     public ProgettoDemo(String nome, String colore) {
         this.nome = nome;
@@ -61,7 +61,7 @@ public class ProgettoDemo {
         return anno;
     }
 
-    public Map<String, Integer> getMese() {
+    public Map<String, Double> getMese() {
         return mese;
     }
 
@@ -85,7 +85,7 @@ public class ProgettoDemo {
         this.anno = anno;
     }
 
-    public void setMese(Map<String, Integer> mese) {
+    public void setMese(Map<String, Double> mese) {
         this.mese = mese;
     }
 

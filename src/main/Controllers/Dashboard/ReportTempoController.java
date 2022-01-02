@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,8 +25,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -52,6 +57,16 @@ public class ReportTempoController implements Initializable {
     @FXML
     private VBox progressBarsContainer;
     
+    @FXML
+    private Spinner annoSpinner;
+    
+    @FXML
+    private ChoiceBox meseChoice;
+    
+    private int annoSelezionato;
+    
+    private String meseSelezionato;
+    
     private ArrayList<ProgettoDemo> listaProgetti;
 
     @Override
@@ -78,8 +93,42 @@ public class ReportTempoController implements Initializable {
         ProgettoDemo prog1 = new ProgettoDemo("Social Network", "blu");
         prog1.setHexColore("#008FFB");
         prog1.setAnno(anno1);
+        
+        Map<String, Double> mese1 = new HashMap<>();
+        mese1.put("01", 4.0);
+        mese1.put("02", 4.0);
+        mese1.put("03", 7.0);
+        mese1.put("04", 8.0);
+        mese1.put("05", 2.0);
+        mese1.put("06", 3.0);
+        mese1.put("07", 4.0);
+        mese1.put("08", 1.0);
+        mese1.put("09", 5.0);
+        mese1.put("10", 3.0);
+        mese1.put("11", 2.0);
+        mese1.put("12", 5.0);
+        mese1.put("13", 1.0);
+        mese1.put("14", 2.0);
+        mese1.put("15", 4.0);
+        mese1.put("16", 2.0);
+        mese1.put("17", 1.0);
+        mese1.put("18", 2.0);
+        mese1.put("19", 3.0);
+        mese1.put("20", 2.0);
+        mese1.put("21", 2.0);
+        mese1.put("22", 1.0);
+        mese1.put("23", 4.0);
+        mese1.put("24", 3.0);
+        mese1.put("25", 2.0);
+        mese1.put("26", 5.0);
+        mese1.put("27", 4.0);
+        mese1.put("28", 4.0);
+        mese1.put("29", 3.0);
+        mese1.put("30", 2.0);
+        
+        prog1.setMese(mese1);
        
-        // progetto 1
+        // progetto 2
         Map<String, Double> anno2 = new HashMap<String, Double>();
         anno2.put("GEN", 40.0);
         anno2.put("FEB", 30.0);
@@ -96,6 +145,40 @@ public class ReportTempoController implements Initializable {
         ProgettoDemo prog2 = new ProgettoDemo("Analisi 2", "giallo");
         prog2.setHexColore("#FEB019");
         prog2.setAnno(anno2);
+        
+        Map<String, Double> mese2 = new HashMap<>();
+        mese2.put("01", 4.0);
+        mese2.put("02", 4.0);
+        mese2.put("03", 7.0);
+        mese2.put("04", 8.0);
+        mese2.put("05", 2.0);
+        mese2.put("06", 3.0);
+        mese2.put("07", 4.0);
+        mese2.put("08", 1.0);
+        mese2.put("09", 5.0);
+        mese2.put("10", 3.0);
+        mese2.put("11", 2.0);
+        mese2.put("12", 5.0);
+        mese2.put("13", 1.0);
+        mese2.put("14", 2.0);
+        mese2.put("15", 4.0);
+        mese2.put("16", 2.0);
+        mese2.put("17", 1.0);
+        mese2.put("18", 2.0);
+        mese2.put("19", 3.0);
+        mese2.put("20", 2.0);
+        mese2.put("21", 2.0);
+        mese2.put("22", 1.0);
+        mese2.put("23", 4.0);
+        mese2.put("24", 3.0);
+        mese2.put("25", 2.0);
+        mese2.put("26", 5.0);
+        mese2.put("27", 4.0);
+        mese2.put("28", 4.0);
+        mese2.put("29", 3.0);
+        mese2.put("30", 2.0);
+        
+        prog2.setMese(mese2);
         
         // progetto 1
         Map<String, Double> anno3 = new HashMap<String, Double>();
@@ -115,14 +198,91 @@ public class ReportTempoController implements Initializable {
         prog3.setHexColore("#00E396");
         prog3.setAnno(anno3);
         
+        Map<String, Double> mese3 = new HashMap<>();
+        mese3.put("01", 4.0);
+        mese3.put("02", 4.0);
+        mese3.put("03", 7.0);
+        mese3.put("04", 8.0);
+        mese3.put("05", 2.0);
+        mese3.put("06", 3.0);
+        mese3.put("07", 4.0);
+        mese3.put("08", 1.0);
+        mese3.put("09", 5.0);
+        mese3.put("10", 3.0);
+        mese3.put("11", 2.0);
+        mese3.put("12", 5.0);
+        mese3.put("13", 1.0);
+        mese3.put("14", 2.0);
+        mese3.put("15", 4.0);
+        mese3.put("16", 2.0);
+        mese3.put("17", 1.0);
+        mese3.put("18", 2.0);
+        mese3.put("19", 3.0);
+        mese3.put("20", 2.0);
+        mese3.put("21", 2.0);
+        mese3.put("22", 1.0);
+        mese3.put("23", 4.0);
+        mese3.put("24", 3.0);
+        mese3.put("25", 2.0);
+        mese3.put("26", 5.0);
+        mese3.put("27", 4.0);
+        mese3.put("28", 4.0);
+        mese3.put("29", 3.0);
+        mese3.put("30", 2.0);
+        
+        prog3.setMese(mese3);
+        
         this.listaProgetti.add(prog1);
         this.listaProgetti.add(prog2);
         this.listaProgetti.add(prog3);
         
         // <---- DEMO
+
+        // Inizializzare ChoiceBox scelta mese e aggiungere event handler.
+        ObservableList<String> mesi = this.meseChoice.getItems();
+        mesi.add("Gen");
+        mesi.add("Feb");
+        mesi.add("Mar");
+        mesi.add("Apr");
+        mesi.add("Mag");
+        mesi.add("Giu");
+        mesi.add("Lug");
+        mesi.add("Ago");
+        mesi.add("Set");
+        mesi.add("Ott");
+        mesi.add("Nov");
+        mesi.add("Dic");
+        mesi.add("Seleziona mese");
+        meseChoice.setValue("Seleziona mese");
+        meseChoice.getSelectionModel().selectedIndexProperty().addListener(
+                 (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                    this.meseSelezionato = (String) meseChoice.getItems().get((Integer) new_val);
+                    this.visualizzaStackedBarChart(this.calcolaTempoMese());
+                    this.visualizzaPieChart(this.calcolaTempiTotaliProgetti(false));
+                    
+                    if((String) meseChoice.getItems().get((Integer) new_val) == "Selezione mese") {
+                        this.visualizzaStackedBarChart(this.calcolaTempoAnno());
+                        this.visualizzaPieChart(this.calcolaTempiTotaliProgetti(true));
+                    }
+        });
+        
+        // Inizializzare spinner scelta anno e aggiungere event handler.
+        SpinnerValueFactory<Integer> valueFactory1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(2021, 2100);
+        valueFactory1.setValue(2021);
+        this.annoSpinner.setValueFactory(valueFactory1);
+        
+        this.annoSpinner.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> ov, Integer t, Integer t1) {
+                annoSelezionato = (int) annoSpinner.getValue();
+                meseChoice.setValue("Seleziona mese");
+                visualizzaStackedBarChart(calcolaTempoAnno());
+                visualizzaPieChart(calcolaTempiTotaliProgetti(true));
+            }
+        });
         
         this.visualizzaStackedBarChart(this.calcolaTempoAnno());
-        this.visualizzaPieChart();
+        this.visualizzaPieChart(this.calcolaTempiTotaliProgetti(true));
         this.visualizzaProgressBars();
     }
     
@@ -150,15 +310,29 @@ public class ReportTempoController implements Initializable {
            datiAnno.add(tempiProgetto);
         }
         
-        System.out.println(datiAnno);
         return datiAnno;
     }
     
-    private void calcolaTempoMese() {
-    
+    private ArrayList<XYChart.Series<String, Double>> calcolaTempoMese() {
+        ArrayList<XYChart.Series<String, Double>> datiMese = new ArrayList<XYChart.Series<String, Double>>();
+        
+        for(int i = 0; i < this.listaProgetti.size(); i++) {
+            ProgettoDemo progetto = this.listaProgetti.get(i);
+            
+            XYChart.Series<String, Double> tempiProgetto = new XYChart.Series<>();
+            tempiProgetto.setName(progetto.getNome());
+            for(String key : progetto.getMese().keySet()) {
+                tempiProgetto.getData().add(new XYChart.Data<>(key, progetto.getMese().get(key)));
+            }
+            datiMese.add(tempiProgetto);
+        }
+        
+        return datiMese;
     }
     
     private void visualizzaStackedBarChart(ArrayList<XYChart.Series<String, Double>> dati) {
+        this.mesiChart.getData().clear();
+        
         for(int i = 0; i < dati.size(); i++) {
             this.mesiChart.getData().add(dati.get(i));
         }
@@ -170,6 +344,17 @@ public class ReportTempoController implements Initializable {
         
     }
     
+    private ObservableList<PieChart.Data> calcolaTempiTotaliProgetti(boolean anno) {
+        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+        
+        for(ProgettoDemo progetto : this.listaProgetti) {
+            double tempoTotale = this.calcolaTempoTotaleProgetto(progetto, anno);
+            pieData.add(new PieChart.Data(progetto.getNome(), tempoTotale));
+        }
+        
+        return pieData;
+    }
+    
     private double calcolaTempoTotaleProgetto(ProgettoDemo progetto, boolean anno) {
         double tempoTotale = 0;
         
@@ -177,20 +362,18 @@ public class ReportTempoController implements Initializable {
             for(String mese : progetto.getAnno().keySet()) {
                 tempoTotale += progetto.getAnno().get(mese);
             }
+        } else {
+            for(String giorno : progetto.getMese().keySet()) {
+                tempoTotale += progetto.getMese().get(giorno);
+            }
         }
         
         return tempoTotale;
     }
     
-    private void visualizzaPieChart() {
+    private void visualizzaPieChart(ObservableList<PieChart.Data> pieData) {
         
-        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
-        
-        for(int i = 0; i < this.listaProgetti.size(); i++) {
-            ProgettoDemo progetto = this.listaProgetti.get(i);
-            double tempoTotaleProgetto = this.calcolaTempoTotaleProgetto(progetto, true);
-            pieData.add(new PieChart.Data(progetto.getNome(), tempoTotaleProgetto));
-        }
+        this.pieChartContainer.getChildren().clear();
         
         PieChart chart = new PieChart(pieData);
         chart.setStyle("-fx-background-color: transparent;");
@@ -199,7 +382,7 @@ public class ReportTempoController implements Initializable {
         chart.setLegendVisible(false);
         chart.setMinHeight(550);
         chart.setMinWidth(550);
-        chart.setTranslateX(-100);
+        chart.setTranslateX(-50);
         
         int i = 0;
         for(PieChart.Data data : pieData) {
@@ -224,12 +407,11 @@ public class ReportTempoController implements Initializable {
             HBox hBox = new HBox();
             hBox.setPadding(new Insets(0, 0, 10, 0));
             AnchorPane pane = new AnchorPane();
+            
             ProgressBar progress = new ProgressBar();
-            
             progress.setStyle("-fx-accent:" + progetto.getHexColore() + ";");
-            
             progress.setMinHeight(30);
-            progress.setProgress(10);
+            
             Label nome = new Label(progetto.getNome());
             nome.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 14; -fx-font-weight: 800;");
             Label ore = new Label("100:23:20");
@@ -241,7 +423,7 @@ public class ReportTempoController implements Initializable {
             double percent = (this.calcolaTempoTotaleProgetto(progetto, true) / tempoTotale) * 100;
             DecimalFormat df = new DecimalFormat("#.##");
             
-            progress.setProgress(percent);
+            progress.setProgress(this.calcolaTempoTotaleProgetto(progetto, true) / tempoTotale);
             
             Label percentuale = new Label(df.format(percent) + "%");
             percentuale.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 16; -fx-font-weight: 800;");
