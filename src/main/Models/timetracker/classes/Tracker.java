@@ -23,8 +23,8 @@ public class Tracker implements ITracker {
     LinkedList listaProgetti = new LinkedList<Progetto>();
     
     public Tracker(){
-        InizializzaAttivitàDaFile();
-        InizializzaProgettiDaFile();
+        inizializzaAttivitàDaFile();
+        inizializzaProgettiDaFile();
     }
 
     //METODI PUBBLICI 
@@ -35,14 +35,14 @@ public class Tracker implements ITracker {
   
     @Override
     public void modificaAttività(String nome, String progetto, String id) {
-        int verifica = 0;
+        /*int verifica = 0;
         for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
             Attività a = iter.next();
             if(a.getId() == id)  {
                 verifica = 1;
                 //c.setParametri(nome, progetto);                
             }             
-        }
+        }*/
     }
     
     @Override
@@ -50,7 +50,7 @@ public class Tracker implements ITracker {
         int verifica = 0;
         for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
             Attività a = iter.next();
-            if(a.getId() == id)  {
+            if(a.getId().equals(id))  {
                 verifica = 1;
                 iter.remove();
             }             
@@ -78,7 +78,7 @@ public class Tracker implements ITracker {
     }
     
     //METODI PRIVATI
-    private void InizializzaAttivitàDaFile() {
+    private void inizializzaAttivitàDaFile() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
             File file = new File(classLoader.getResource("MyFile.txt").getFile());
@@ -113,7 +113,7 @@ public class Tracker implements ITracker {
         }
     }
     
-    private void InizializzaProgettiDaFile(){
+    private void inizializzaProgettiDaFile(){
         try {
             ClassLoader classLoader = getClass().getClassLoader();
             File file = new File(classLoader.getResource("MyFile.txt").getFile());
@@ -127,7 +127,7 @@ public class Tracker implements ITracker {
             while (input.hasNext()) {
                 lineNumber++;
                 nextValue = input.next().replace("\"", "");
-                String nome =nextValue;
+                String nome = nextValue;
 
                 nextValue = input.next().replace("\"", "");
                 String colore = nextValue;

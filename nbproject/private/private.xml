@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/HabitTracker/AbitudineDemo.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/HabitTracker/HabitTrackerController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/HabitTracker/GiornoCompletamento.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Views/Dashboard/ReportAbitudini.fxml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/HabitTracker/HabitTrackerDemo.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/Controllers/Dashboard/ReportAbitudiniController.java</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/nbproject/private/private.xml</file>
-            <file>file:/C:/Users/andre/Desktop/BusyRabbit-main/src/main/FxmlLoader.java</file>
+            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/timetracker/classes/Attività.java</file>
+            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/agenda/classes/Agenda.java</file>
+            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/timetracker/classes/Tracker.java</file>
+            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/agenda/classes/Evento.java</file>
+            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/agenda/interfaces/IEvento.java</file>
+            <file>file:/C:/Users/Susanna/Desktop/BusyRabbit/src/main/Models/agenda/interfaces/IAgenda.java</file>
         </group>
     </open-files>
 </project-private>

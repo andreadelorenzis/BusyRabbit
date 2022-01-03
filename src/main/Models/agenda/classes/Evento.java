@@ -4,108 +4,98 @@
  */
 package main.Models.agenda.classes;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.UUID;
 import main.Models.goalmanager.classes.ObiettivoMisurabile;
 
-/**
- * Entità che rappresenta l'evento futuro.
- */
+//Entità che rappresenta l'evento futuro.
+
 public class Evento {
-        
-    // *********************************
-    //  CAMPI
-    // *********************************
-    
-    private String nome;                    // Nome dell'evento.
-    
-    private String descrizione;             // Descrizione dell'evento.
-    
-    private Date data;                      // Data in cui avverrà l'evento.
-    
-    private ObiettivoMisurabile obiettivo;  // Obiettivo associato all'evento.
-    
-    private int valore;                     // Valore dell'evento che incrementerò l'obiettivo associato.
-    
-    private Boolean completato;             // Variabile booleana che rappresenta il completamento.
    
-    // *********************************
+    //CAMPI  
+    private String nome;                    // Nome dell'evento.
+    private String descrizione;             // Descrizione dell'evento.
+    private LocalDate data;                 // Data in cui avverrà l'evento.
+    private String obiettivo;               // Obiettivo associato all'evento. 
+    private int valore;                     // Valore dell'evento che incrementerò l'obiettivo associato.
+    private boolean completato;             // Variabile booleana che rappresenta il completamento.
+    private String id;          // Identificativo dell'attività.
+   
     //  COSTRUTTORI
-    // *********************************
+    public Evento(String nome, String descrizione, LocalDate data, String Obiettivo, int valore) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.obiettivo = obiettivo;
+        this.valore = valore;
+        this.completato = false;   
+        this.id = UUID.randomUUID().toString();
+    };
     
-    /**
-     * 
-     * @param nome Nome dell'evento.
-     * @param descrizione Date dell'evento.
-     * @param data Data in cui avverrà l'evento.
-     * @param Obiettivo Obiettivo associato all'evento.
-     * @param valore Valore dell'evento che incrementerò l'obiettivo associato.
-     */
-    public Evento(String nome, String descrizione, Date data, ObiettivoMisurabile Obiettivo, int valore) {};
+    public Evento(String nome, String descrizione, LocalDate data) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.completato = false;
+        this.id = UUID.randomUUID().toString();
+    };
     
-    /**
-     * 
-     * @param nome Nome dell'evento.
-     * @param data Data in cui avverrà l'evento.
-     * @param Obiettivo Obiettivo associato all'evento.
-     * @param valore Valore dell'evento che incrementerò l'obiettivo associato. 
-     */
-    public Evento(String nome, Date data, ObiettivoMisurabile Obiettivo, int valore) {};
-    
-    /**
-     * 
-     * @param nome Nome dell'evento.
-     * @param data Data in cui avverrà l'evento.
-     */
-    public Evento(String nome, Date data) {};
-    
-    // *********************************
-    //  METODI PRIVATI
-    // *********************************
- 
-    // *********************************
+    //costruttore per metodo inizializzaEventiDaFile
+    public Evento(String nome, String descrizione, LocalDate data, String Obiettivo, int valore, int id) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.obiettivo = obiettivo;
+        this.valore = valore;
+        this.completato = false;   
+        this.id = UUID.randomUUID().toString();
+    };
+
     //  METODI PUBBLICI
-    // *********************************
 
-    /**
-     * 
-     * @param nome Nome dell'evento.
-     */
     public void setNome(String nome) {
+        this.nome = nome;
     };
+    public String getNome(){
+        return this.nome;
+    }
     
-    /**
-     * 
-     * @param descrizione Descrizione dell'evento.
-     */
     public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
     };
-
-    /**
-     * 
-     * @param data Data in cui avverrà l'evento.
-     */
-    public void setData(Date data) {
-    }
-
-    /**
-     * 
-     * @param obiettivo Obiettivo associato all'evento.
-     */
-    public void setObiettivo(ObiettivoMisurabile obiettivo) {
-    }
-
-    /**
-     * 
-     * @param valore Valore di incremento dell'obiettivo una volta che l'evento sarà completato.
-     */
-    public void setValore(int valore) {
-    }
-
-    /**
-     * 
-     * @param completato Variabile booleana di completamento.
-     */
-    public void setCompletato(Boolean completato) {
+    public String getDescrizione(){
+        return this.descrizione;
     }
     
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+    public LocalDate getData() {
+        return this.data;
+    }
+
+    public void setObiettivo(String obiettivo) {
+        this.obiettivo = obiettivo;
+    }
+    public String getObiettivo(){
+        return this.obiettivo;
+    }
+
+    public void setValore(int valore) {
+        this.valore = valore;
+    }
+    public int getValore(){
+        return this.valore;
+    }
+
+    public void setCompletato(boolean completato) {
+        this.completato = completato;
+    }
+    public boolean getCompleato(){
+        return this.completato;
+    }
+    
+    public String getId(){
+        return this.id;
+    }
 }
