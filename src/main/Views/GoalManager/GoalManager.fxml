@@ -95,7 +95,7 @@
                         <VBox fx:id="boxAzioni" prefHeight="354.0" prefWidth="370.0" style="-fx-background-color: #0E1726;" />
                      </content>
                   </ScrollPane>
-                  <Label layoutX="21.0" layoutY="437.0" style="-fx-font-weight: 800;" text="Progresso giornaliero" textFill="WHITE" AnchorPane.bottomAnchor="72.60000000000002" AnchorPane.leftAnchor="21.0">
+                  <Label layoutX="21.0" layoutY="437.0" style="-fx-font-weight: 800;" text="Progresso obiettivo" textFill="WHITE" AnchorPane.bottomAnchor="72.60000000000002" AnchorPane.leftAnchor="21.0">
                      <font>
                         <Font size="14.0" />
                      </font>

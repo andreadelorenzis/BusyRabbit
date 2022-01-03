@@ -5,6 +5,7 @@
 package main.Controllers.HabitTracker;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -19,6 +20,7 @@ public class AbitudineDemo {
     private Boolean completata;
     private ArrayList<String> giorniRipetizione;
     private ArrayList<ItemDemo> items;
+    private ArrayList<Date> giorniCompletamento;
     private String id;
 
     public AbitudineDemo(String nome, String descrizione, ArrayList<String> giorniRipetizione, ArrayList<ItemDemo> items) {
