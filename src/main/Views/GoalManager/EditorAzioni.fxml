@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<DialogPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.EditorAzioniController">
+   <content>
+      <AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="629.0" style="-fx-background-color: #0E1726;">
+         <children>
+            <Label layoutX="22.0" layoutY="14.0" text="Editor Azioni" textFill="#374667">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="101.0" prefHeight="32.0" prefWidth="558.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="20.600000000000023">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="82.0" text="Azione:" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="azioneField" onKeyTyped="#cambiaNome" prefHeight="26.0" prefWidth="465.0" promptText="Inserisci azione" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <VBox fx:id="valoreBox" layoutX="21.0" layoutY="200.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="558.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="82.0" text="Valore:" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="valoreSpinner" editable="true" prefHeight="33.0" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="giorniBox" layoutX="21.0" layoutY="311.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="558.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="152.0" text="Giorni di ripetizione:" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lunBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="33.0" prefWidth="30.0" style="-fx-font-weight: 800; -fx-border-color: #4361ee;" text="L" textAlignment="CENTER" textFill="#4361ee">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="marBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="33.0" prefWidth="30.0" style="-fx-font-weight: 800; -fx-border-color: #4361ee;" text="M" textAlignment="CENTER" textFill="#4361ee">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="merBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="33.0" prefWidth="30.0" style="-fx-font-weight: 800; -fx-border-color: #4361ee;" text="M" textAlignment="CENTER" textFill="#4361ee">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="gioBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="33.0" prefWidth="30.0" style="-fx-font-weight: 800; -fx-border-color: #4361ee;" text="G" textAlignment="CENTER" textFill="#4361ee">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="venBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="33.0" prefWidth="30.0" style="-fx-font-weight: 800; -fx-border-color: #4361ee;" text="V" textAlignment="CENTER" textFill="#4361ee">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="sabBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="33.0" prefWidth="30.0" style="-fx-font-weight: 800; -fx-border-color: #4361ee;" text="S" textAlignment="CENTER" textFill="#4361ee">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="domBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="33.0" prefWidth="30.0" style="-fx-font-weight: 800; -fx-border-color: #4361ee;" text="D" textAlignment="CENTER" textFill="#4361ee">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label layoutX="21.0" layoutY="71.0" text="Inserisci l'azione da svolgere." textFill="#bac4ca">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="162.0" text="Imposta il valore dell'azione." textFill="#bac4ca">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="272.0" text="Scegli i giorni della settimana in cui svolgere l'azione:" textFill="#bac4ca">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

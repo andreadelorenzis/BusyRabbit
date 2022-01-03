@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.HabitTracker.EditorAbitudineController">
+   <content>
+      <AnchorPane id="AnchorPane" minHeight="345.0" prefHeight="345.0" prefWidth="600.0" style="-fx-background-color: #0E1726;">
+         <children>
+            <Label layoutX="24.0" layoutY="24.0" style="-fx-text-fill: #374667;" text="Editor Abitudine" textFill="WHITE" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="24.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <VBox layoutX="24.0" layoutY="60.0" prefHeight="310.0" prefWidth="562.0" AnchorPane.bottomAnchor="29.600000000000023" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="60.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="180.0" text="Abitudine:" textFill="#bac4ca">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="abitudineField" onKeyTyped="#cambiaNome" prefHeight="26.0" prefWidth="472.0" promptText="Inserisci abitudine" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="562.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="137.0" text="Descrizione:" textFill="#bac4ca">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="descrizioneArea" onKeyTyped="#cambiaDescrizione" prefHeight="68.0" prefWidth="430.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="115.0" text="Data di inizio:" textFill="#bac4ca">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="dataPicker" prefHeight="26.0" prefWidth="171.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0">
+                     <children>
+                        <Label prefHeight="20.0" prefWidth="132.0" text="Giorni di ripetizione:" textFill="#bac4ca">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lunBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="30.0" prefWidth="29.0" style="-fx-border-color: #4361EE;" text="L" textFill="#4361ee">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="marBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="30.0" prefWidth="29.0" style="-fx-border-color: #4361EE;" text="M" textFill="#4361ee">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="merBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="30.0" prefWidth="29.0" style="-fx-border-color: #4361EE;" text="M" textFill="#4361ee">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="gioBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="30.0" prefWidth="29.0" style="-fx-border-color: #4361EE;" text="G" textFill="#4361ee">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="venBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="30.0" prefWidth="29.0" style="-fx-border-color: #4361EE;" text="V" textFill="#4361ee">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="sabBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="30.0" prefWidth="29.0" style="-fx-border-color: #4361EE;" text="S" textFill="#4361ee">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="domBtn" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#cambiaGiorni" prefHeight="30.0" prefWidth="29.0" style="-fx-border-color: #4361EE;" text="D" textFill="#4361ee">
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>
