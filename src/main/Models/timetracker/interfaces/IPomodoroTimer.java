@@ -4,6 +4,8 @@
  */
 package main.Models.timetracker.interfaces;
 
+import main.Models.timetracker.classes.Attività;
+
 public interface IPomodoroTimer extends ITracker {
     
     public void setDurataSessione(int durata);
@@ -14,10 +16,8 @@ public interface IPomodoroTimer extends ITracker {
   
     public void setCicli(int nCicli);
   
-    public void avviaPomodoroTimer();
-  
-    public void sospendiPomodoroTimer();
-  
+    public void avviaPomodoroTimer(Attività attività);
+    
     public void resettaPomodoroTimer();
     
 }

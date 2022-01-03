@@ -13,10 +13,10 @@ import java.util.UUID;
 public class Attività {
     //  CAMPI
     private String nome;        // Nome dell'attività.    
-    private LocalDate data;          // Data in cui è stata svolta l'attività.    
-    private long durata;         // Durata dell'attività.    
-    private String progetto;  // Progetto a cui l'attività è associato.    
-    private String id;             // Identificativo dell'attività.
+    private LocalDate data;     // Data in cui è stata svolta l'attività.    
+    private long durata;        // Durata dell'attività.    
+    private String progetto;    // Progetto a cui l'attività è associato.    
+    private String id;          // Identificativo dell'attività.
     
     //  COSTRUTTORI    
     public Attività(String nome, LocalDate data, long durata, String progetto) {
@@ -43,11 +43,6 @@ public class Attività {
         return this.nome;
     }
     
-    public void setDurata(int durata) {
-        this.durata = durata;
-    }
-
-
     public LocalDate getData() {
         return data;
     }
@@ -58,6 +53,10 @@ public class Attività {
 
     public long getDurata() {
         return durata;
+    }
+    
+    public void setDurata(int durata) {
+        this.durata = durata;
     }
     
     public void setProgettoPadre(String progetto) {

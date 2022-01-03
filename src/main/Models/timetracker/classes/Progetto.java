@@ -15,7 +15,6 @@ import java.util.LinkedList;
 public class Progetto {
     //  CAMPI
     LinkedList listaAttivitàProgetto = new LinkedList<Attività>();
-    LinkedList listaAttività = new LinkedList<Attività>();
     Tracker tracker = new Tracker();
     
     private String nome;
@@ -62,8 +61,8 @@ public class Progetto {
     
     private void calcolaDurata(){
         for(Iterator<Attività> iter = this.listaAttivitàProgetto.iterator(); (iter.hasNext());){
-            Attività c = iter.next();
-            this.durata += c.getDurata();
+            Attività a = iter.next();
+            this.durata += a.getDurata();
         }
     }
 }
