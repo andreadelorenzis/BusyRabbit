@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
  //Utilizzato da TimeTracker per cronometrare il tempo.
-    // prova errori
+
 
 public class Cronometro {
     //  CAMPI
