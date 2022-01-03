@@ -4,10 +4,9 @@
  */
 package main.Models.timetracker.classes;
 
-/**
- *
- * @author Mars_DB
- */
+// Classe che estende thread per la creazione di un timer
+// utilizzato dal PomodoroTimer
+
 public class Timer extends Thread {
     private int     secondi;
     private int     minuti;

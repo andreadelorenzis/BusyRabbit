@@ -6,8 +6,7 @@ package main.Models.timetracker.classes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
- //Utilizzato da TimeTracker per cronometrare il tempo.
-
+ // Utilizzato da TimeTracker per cronometrare il tempo.
 
 public class Cronometro {
     //  CAMPI

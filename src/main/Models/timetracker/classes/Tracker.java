@@ -12,11 +12,11 @@ import java.util.Locale;
 import java.util.Scanner;
 import main.Models.timetracker.interfaces.ITracker;
 
-//Classe astratta estesa da PomodoroTimer e TimeTracker
+// Classe estesa da PomodoroTimer e TimeTracker
 
 public class Tracker implements ITracker {
+    
     //  CAMPI
-
     int lineNumber = 0;
     String nextValue  = "";
     LinkedList listaAttività = new LinkedList<Attività>();
@@ -28,6 +28,7 @@ public class Tracker implements ITracker {
     }
 
     //METODI PUBBLICI 
+    
     @Override
     public void aggiungiAttività(String nome, LocalDate data, long durata, String progetto) {
         listaAttività.add(new Attività(nome, data, durata, progetto));
@@ -81,7 +82,7 @@ public class Tracker implements ITracker {
     private void inizializzaAttivitàDaFile() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("MyFile.txt").getFile());
+            File file = new File(classLoader.getResource("FileAttività.txt").getFile());
             Scanner input = new Scanner(file)
                 .useDelimiter(",|\\R")
                 .useLocale(Locale.ITALIAN);
@@ -116,7 +117,7 @@ public class Tracker implements ITracker {
     private void inizializzaProgettiDaFile(){
         try {
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("MyFile.txt").getFile());
+            File file = new File(classLoader.getResource("FileProgetti.txt").getFile());
             Scanner input = new Scanner(file)
                 .useDelimiter(",|\\R")
                 .useLocale(Locale.ITALIAN);

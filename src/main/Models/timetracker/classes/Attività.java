@@ -7,8 +7,7 @@ package main.Models.timetracker.classes;
 import java.time.LocalDate;
 import java.util.UUID;
 
-
- //Rappresenta un'attività che è stata monitorata dall'utente.
+ // Rappresenta un'attività che è stata monitorata dall'utente.
 
 public class Attività {
     //  CAMPI
@@ -16,7 +15,7 @@ public class Attività {
     private LocalDate data;     // Data in cui è stata svolta l'attività.    
     private long durata;        // Durata dell'attività.    
     private String progetto;    // Progetto a cui l'attività è associato.    
-    private String id;          // Identificativo dell'attività.
+    private String id;          // Identificativo dell'attività, generato casualmente.
     
     //  COSTRUTTORI    
     public Attività(String nome, LocalDate data, long durata, String progetto) {

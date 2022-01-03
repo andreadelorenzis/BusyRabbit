@@ -62,7 +62,7 @@ public class Agenda implements IAgenda {
     private void inizializzaEventiDaFile() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("MyFile.txt").getFile());
+            File file = new File(classLoader.getResource("FileEventi.txt").getFile());
             Scanner input = new Scanner(file)
                 .useDelimiter(",|\\R")
                 .useLocale(Locale.ITALIAN);

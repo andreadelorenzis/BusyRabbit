@@ -14,10 +14,8 @@ import main.Models.timetracker.classes.Progetto;
  * Entità che rappresenta l'account dell'utente e contiene tutti i dati.
  */
 public class Account {
-    
-    // *********************************
+
     //  CAMPI
-    // *********************************
     
     private String nome;                          // Nome o username utente.
         
@@ -36,87 +34,43 @@ public class Account {
     private Abitudine[] listaAbitudini;           // Lista abitudini attive.
     
     private Evento[] listaEventi;                 // Lista eventi programmati.
-    
-    // *********************************
-    //  COSTRUTTORI
-    // *********************************
-    
-    /**
-     * 
-     * @param nome Nome dell'utente.
-     * @param email Email dell'utente.
-     * @param password Password dell'utente.
-     */
-    public Account(String nome, String email, String password) {};
-    
-    // *********************************
-    //  METODI PRIVATI
-    // *********************************
- 
-    // *********************************
-    //  METODI PUBBLICI
-    // ********************************* 
 
-    /**
-     * 
-     * @param nome Nome o username utente.
-     */
+    //  COSTRUTTORI
+
+    public Account(String nome, String email, String password) {};
+
+    //  METODI PRIVATI
+
+    //  METODI PUBBLICI
+
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    /**
-     * 
-     * @param email Email dell'utente.
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * 
-     * @param password Password associata all'account.
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * 
-     * @param sfondoChiaro Theme chiaro/scuro
-     */
     public void setSfondoChiaro(Boolean sfondoChiaro) {
         this.sfondoChiaro = sfondoChiaro;
     }
 
-    /**
-     * 
-     * @return Lista dei progetti creati.
-     */
     public Progetto[] getListaProgetti() {
         return listaProgetti;
     }
 
-    /**
-     * 
-     * @return Lista obiettivi correnti.
-     */
     public ObiettivoSemplice[] getListaObiettivi() {
         return listaObiettivi;
     }
 
-    /**
-     * 
-     * @return Lista abitudini attive.
-     */
     public Abitudine[] getListaAbitudini() {
         return listaAbitudini;
     }
 
-    /**
-     * 
-     * @return Lista eventi programmati.
-     */
     public Evento[] getListaEventi() {
         return listaEventi;
     }

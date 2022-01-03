@@ -6,22 +6,25 @@ package main.Models.timetracker.classes;
 
 import main.Models.timetracker.interfaces.IPomodoroTimer;
 
- //Permette di monitorare un'attività con delle sessioni, intervallate da periodi di pausa.
+ // Permette di monitorare un'attività con la tecnica di studio del pomodoro.
 
 public class PomodoroTimer extends Tracker implements IPomodoroTimer {
     //  CAMPI
     private static PomodoroTimer instance = null;
-    private int durataSessione;     // Durata della sessione di lavoro.    
-    private int durataPausaBreve;   // Durata della pausa breve.    
-    private int durataPausaLunga;   // Durata della pausa lunga.    
-    private int nCicli;             // Periodo dopo il quale comincia una pausa lunga.
-    private boolean reset;
+    
+    private int durataSessione;     // Durata della sessione di lavoro  
+    private int durataPausaBreve;   // Durata della pausa breve
+    private int durataPausaLunga;   // Durata della pausa lunga
+    private int nCicli;             // Periodo dopo il quale comincia una pausa lunga
+    private boolean reset;          // Variabile di lavoro per fermare il timer
+    
     Timer sessione     = new Timer(durataSessione);
     Timer pausaBreve   = new Timer(durataPausaBreve);
     Timer pausaLunga   = new Timer(durataPausaLunga);
   
     // COSTRUTTORE PRIVATO.
-    private PomodoroTimer() {};
+    private PomodoroTimer() {
+    };
 
     //  METODI PUBBLICI
     public static PomodoroTimer getInstance() {
