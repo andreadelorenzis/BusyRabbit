@@ -4,8 +4,8 @@
  */
 package src.app.timetracker.classes;
 
+import java.time.LocalDate;
 import main.Models.timetracker.classes.Attività;
-import java.util.Date;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class AttivitàTest {
     
-    Date data = new Date();
+    private LocalDate data;
     private Attività attività = new Attività(data, 5, "Nome attività");
     
     /**

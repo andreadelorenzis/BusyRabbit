@@ -101,21 +101,21 @@ public class TimeTrackerController {
     @FXML
     private Button avviaBtn;
     
-    private Progetto progettoAssociato;
+    private ProgettoDemo progettoAssociato;
     
     /**
      * 
      * !!!! DEMO !!!!
      * 
      */
-    private ArrayList<Progetto> progetti;
+    private ArrayList<ProgettoDemo> progetti;
     
     /**
     * 
     * !!!! DEMO !!!!
     * 
     */
-    private ArrayList<GiornoAttività> giorniAttività;
+    private ArrayList<GiornoAttivitàDemo> giorniAttività;
     
     private int pomodoro;
     
@@ -141,24 +141,24 @@ public class TimeTrackerController {
         * !!!! DEMO !!!!
         * 
         */
-        this.progetti = new ArrayList<Progetto> ();
-        progetti.add(new Progetto("Social Network", "#FEB019"));
-        progetti.add(new Progetto("Studiare", "#00E396"));
-        progetti.add(new Progetto("Workout", "#9C27B0"));
+        this.progetti = new ArrayList<ProgettoDemo> ();
+        progetti.add(new ProgettoDemo("Social Network", "#FEB019"));
+        progetti.add(new ProgettoDemo("Studiare", "#00E396"));
+        progetti.add(new ProgettoDemo("Workout", "#9C27B0"));
 
         /**
         * 
         * !!!! DEMO !!!!
         * 
         */
-        giorniAttività = new ArrayList<GiornoAttività>();
+        giorniAttività = new ArrayList<GiornoAttivitàDemo>();
         for(int i = 0; i < 3; i++) {
-            ArrayList<Attività> listaAttività = new ArrayList<Attività>();
-            listaAttività.add(new Attività(new Date(), 500, "Attività1", new Progetto("Social Network", "#FEB019")));
-            listaAttività.add(new Attività(new Date(), 500, "Attività2", new Progetto("Studiare", "#00E396")));
-            listaAttività.add(new Attività(new Date(), 500, "Attività3", new Progetto("Workout", "#9C27B0")));
+            ArrayList<AttivitàDemo> listaAttività = new ArrayList<AttivitàDemo>();
+            listaAttività.add(new AttivitàDemo(new Date(), 500, "Attività1", new ProgettoDemo("Social Network", "#FEB019")));
+            listaAttività.add(new AttivitàDemo(new Date(), 500, "Attività2", new ProgettoDemo("Studiare", "#00E396")));
+            listaAttività.add(new AttivitàDemo(new Date(), 500, "Attività3", new ProgettoDemo("Workout", "#9C27B0")));
             
-            GiornoAttività giorno = new GiornoAttività();
+            GiornoAttivitàDemo giorno = new GiornoAttivitàDemo();
             giorno.setListaAttività(listaAttività);
             
             giorniAttività.add(giorno);
@@ -176,7 +176,7 @@ public class TimeTrackerController {
     /**
      * Visualizza nella view la lista dei progetti esistenti.
      */
-    private void visualizzaListaProgetti(ArrayList<Progetto> progetti) {
+    private void visualizzaListaProgetti(ArrayList<ProgettoDemo> progetti) {
         for(int i = 0; i < progetti.size(); i++) {
             this.visualizzaProgetto(progetti.get(i));
         }
@@ -186,7 +186,7 @@ public class TimeTrackerController {
      * Usa i dati di un Progetto per creare un componenete nella view.
      */
     @FXML
-    private void visualizzaProgetto(Progetto progetto) {
+    private void visualizzaProgetto(ProgettoDemo progetto) {
         
         // Crea nuovo progetto
         BorderPane pane = new BorderPane();
@@ -269,7 +269,7 @@ public class TimeTrackerController {
     /**
      * Cambia il progett
      */
-    private void cambiaProgetto(Progetto progetto) {
+    private void cambiaProgetto(ProgettoDemo progetto) {
         
         // Crea nuovo progetto
         Circle circle = new Circle();
@@ -303,7 +303,7 @@ public class TimeTrackerController {
         
         // Ottiene il controller EditorProgettoController associato alla view
         EditorProgettoController editorController = fxmlLoader.getController();
-        editorController.setProgetto(new Progetto("", ""));
+        editorController.setProgetto(new ProgettoDemo("", ""));
         
         // Apre dialog popup
         Optional<ButtonType> clickedButton = dialog.showAndWait();
@@ -325,7 +325,7 @@ public class TimeTrackerController {
      * Modifica un Progetto e aggiorna la view.
      */
     @FXML
-    private void modificaProgetto(Progetto progetto) throws IOException {
+    private void modificaProgetto(ProgettoDemo progetto) throws IOException {
         
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -365,7 +365,7 @@ public class TimeTrackerController {
     /**
      * Elimina un Progetto e aggiorna la view.
      */
-    private void eliminaProgetto(Progetto progetto) {
+    private void eliminaProgetto(ProgettoDemo progetto) {
         System.out.println("Progetto: " + progetto.getNome() + " eliminato!");
     }
     
@@ -425,7 +425,7 @@ public class TimeTrackerController {
     /**
      * Visualizza nella view le informazioni sulle attività passate.
      */
-    private void visualizzaCronologiaAttività(ArrayList<GiornoAttività> giorniAttività) {
+    private void visualizzaCronologiaAttività(ArrayList<GiornoAttivitàDemo> giorniAttività) {
         for(int i = 0; i < giorniAttività.size(); i++) {
             this.visualizzaGiornoAttività(giorniAttività.get(i));
         }
@@ -438,7 +438,7 @@ public class TimeTrackerController {
      * Usa i dati di un GiornoAttività per creare e poi inserire un componenente nella view.
      */
     @FXML
-    private void visualizzaGiornoAttività(GiornoAttività giorno) {
+    private void visualizzaGiornoAttività(GiornoAttivitàDemo giorno) {
         
         // Crea un BorderPane container.
         BorderPane giornoAttivitàContainer = new BorderPane();
@@ -457,7 +457,7 @@ public class TimeTrackerController {
         VBox listaAttività = new VBox();
         
         for(int i = 0; i < giorno.getListaAttività().size(); i++) {
-            Attività attività = giorno.getListaAttività().get(i);
+            AttivitàDemo attività = giorno.getListaAttività().get(i);
             
             // Crea un'attività e la aggiunge alla lista.
             BorderPane pane = visualizzaAttività(attività);
@@ -547,7 +547,7 @@ public class TimeTrackerController {
     private void avviaTimeTracker(ActionEvent event) throws IOException {
         
         if(this.attivitàText.getText() != "") {
-            this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText()));
+            this.aggiungiAttività(new AttivitàDemo(new Date(), 5, this.attivitàText.getText()));
         } else {
             System.out.println("Perfavore inserisci il nome di un'attività.");
         }
@@ -557,7 +557,7 @@ public class TimeTrackerController {
      * Aggiunge una nuova Attività e aggiorna la view.
      */
     @FXML
-    private void aggiungiAttività(Attività attività) throws IOException {
+    private void aggiungiAttività(AttivitàDemo attività) throws IOException {
         
         // Aggiungere l'attività nel modello.
 
@@ -568,9 +568,9 @@ public class TimeTrackerController {
          */
         
         // Se l'ultimo giorno della cronologia è ieri crea un nuovo giorno e aggiungi l'attività.
-        GiornoAttività giorno = new GiornoAttività();
-        ArrayList<Attività> listaAttività = new ArrayList<Attività>();
-        attività.setProgettoPadre(this.progettoAssociato);
+        GiornoAttivitàDemo giorno = new GiornoAttivitàDemo();
+        ArrayList<AttivitàDemo> listaAttività = new ArrayList<AttivitàDemo>();
+        attività.setProgetto(this.progettoAssociato);
         listaAttività.add(attività);
         giorno.setListaAttività(listaAttività);
         this.giorniAttività.add(0, giorno);
@@ -584,7 +584,7 @@ public class TimeTrackerController {
     /**
      * Modifica un'attività e aggiorna la view.
      */
-    private void modificaAttività(Attività attività) throws IOException {
+    private void modificaAttività(AttivitàDemo attività) throws IOException {
         
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -619,14 +619,14 @@ public class TimeTrackerController {
     /**
      * Elimina un'attività e aggiorna la view.
      */
-    private void eliminaAttività(Attività attività) {
+    private void eliminaAttività(AttivitàDemo attività) {
         System.out.println("Attività: " + attività.getNome() + " eliminata.");
     }
     
     /**
      * Usa i dati di un'Attività per creare un componente nella view.
      */
-    private BorderPane visualizzaAttività(Attività attività) {
+    private BorderPane visualizzaAttività(AttivitàDemo attività) {
         
         // Crea un BorderPane.
         BorderPane pane = new BorderPane();
@@ -827,7 +827,7 @@ public class TimeTrackerController {
             return;
         }
         
-        this.aggiungiAttività(new Attività(new Date(), 5, this.attivitàText.getText(), new Progetto("Altro", "#E5E5E5")));
+        this.aggiungiAttività(new AttivitàDemo(new Date(), 5, this.attivitàText.getText(), new ProgettoDemo("Altro", "#E5E5E5")));
     }
     
     private void cambiaTipoTracker(String tipo) {

@@ -76,8 +76,8 @@ public class PageController {
         stage.setScene(scene);
         stage.setWidth(dimSchermo.getWidth());
         stage.setHeight(dimSchermo.getHeight());
-        stage.setX(0);
-        stage.setY(0);
+        stage.setX(dimSchermo.getMinX());
+        stage.setY(dimSchermo.getMinY());
         stage.setResizable(true);
         stage.show();
     }

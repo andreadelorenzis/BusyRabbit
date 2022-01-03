@@ -33,9 +33,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #1B2E4B;
 }
 
+
 .scroll-pane .scroll-bar:vertical .thumb {
     -fx-background-color: #2B305B;
 }
+
 
 .dialog-pane .button-bar .button:default {
     -fx-background-color: #4361EE;
@@ -45,4 +47,85 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .dialog-pane .button-bar .button:cancel {
     -fx-background-color: gray;
     -fx-text-fill: #ffffff;
+
 }
+
+  /* change root scene background color */ 
+.root {
+    -fx-background-color: #060818     
+}
+
+ .scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color :transparent;
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+    /* change scroll button dimension */
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 0.0 10.0 0.0;
+
+}
+   /* change scroll button dimension(10.00) , end-corner(2.0) */
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 2.0 0.0;
+
+}
+      .scroll-bar .increment-arrow,
+      .scroll-bar .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.10em 0.0;
+}
+
+   /* change dimension of scroll bar ( 0.10em) */
+ .scroll-bar:vertical .increment-arrow,
+ .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.0 0.10em;
+}
+  /* change color of scroll button and button dimension befor selected ( -0.5)*/
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color :derive(#2B305B,35.0%); 
+    -fx-background-insets : -0.5, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+   /* change color of scroll button when selected */
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color :derive(#4D4C4F,30.0%); 
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+/*.scroll-pane > .corner {
+      -fx-background-color: transparent;
+}*/
+
+.check-box .box {
+    -fx-background-color: #515365;
+}
+
+.check-box:selected .box .mark {
+    -fx-background-color: #2196F3;
+}
+
+/*
+.progress-bar:determinate .track {
+    -fx-background-color: #272E52;
+    -fx-border-width: 0 0 0 0;
+}
+
+.progress-bar:determinate .bar {
+    -fx-background-color: #4361EE;
+    -fx-border-width: 0 0 0 0;
+}
+*/
+

@@ -3,8 +3,15 @@ package main.Controllers;
 import main.FxmlLoader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.Interpolator;
+import javafx.animation.ScaleTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +22,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import main.Controllers.GoalManager.GoalManagerController;
 import main.Main;
 
 /*
@@ -62,6 +72,21 @@ public class AppController {
     private Label dashboardLabel;
     @FXML
     private ImageView dashboardImg;
+    @FXML
+    private VBox dashboardBtns;
+    @FXML
+    private ImageView dashboardArrow;
+    
+    private HBox timeReportBox = new HBox();
+    private Label timeReportLabel = new Label("Report Tempo");
+    
+    private HBox obiettiviReportBox = new HBox();
+    private Label obiettiviReportLabel = new Label("Report Obiettivi");
+    
+    private HBox abitudiniReportBox = new HBox();
+    private Label abitudiniReportLabel = new Label("Report Abitudini");
+    
+    private boolean dashboardMenuAperto = false;
     
     @FXML
     private HBox impostazioniHBox;
@@ -75,6 +100,47 @@ public class AppController {
     
     @FXML 
     private void initialize() throws IOException {
+        String stile = "-fx-text-fill: #58698D; -fx-font-weight: 800; -fx-font-size: 16;";
+        
+        this.timeReportLabel.setStyle(stile);
+        this.obiettiviReportLabel.setStyle(stile);
+        this.abitudiniReportLabel.setStyle(stile);
+        
+        this.timeReportBox.getChildren().add(this.timeReportLabel);
+        this.timeReportBox.setMinHeight(40);
+        this.timeReportBox.setAlignment(Pos.CENTER_LEFT);
+        this.timeReportBox.setPadding(new Insets(0, 0, 0, 10));
+        this.obiettiviReportBox.getChildren().add(this.obiettiviReportLabel);
+        this.obiettiviReportBox.setMinHeight(40);
+        this.obiettiviReportBox.setAlignment(Pos.CENTER_LEFT);
+        this.obiettiviReportBox.setPadding(new Insets(0, 0, 0, 10));
+        this.abitudiniReportBox.getChildren().add(this.abitudiniReportLabel);
+        this.abitudiniReportBox.setMinHeight(40);
+        this.abitudiniReportBox.setAlignment(Pos.CENTER_LEFT);
+        this.abitudiniReportBox.setPadding(new Insets(0, 0, 0, 10));
+        
+        // Aggiunge gli event handler dei click dei bottoni.
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                apriPaginaReportTempo(t);
+            }
+        };
+        this.timeReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        
+        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                apriPaginaReportObiettivi(t);
+            }
+        };
+        this.obiettiviReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
+        
+        EventHandler<MouseEvent> eventHandler3 = new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                apriPaginaReportAbitudini(t);
+            }
+        };
+        this.abitudiniReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
+        
         this.apriPaginaTimeTracker();
     }
     
@@ -98,10 +164,21 @@ public class AppController {
         dashboardHBox.setStyle("-fx-background-color: #060818;");
         dashboardLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
         dashboardImg.setImage(new Image(getClass().getResource("/main/risorse/dashboard.png").toString()));
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down.png").toString()));
+        this.dashboardArrow.setRotate(0);
         
         impostazioniHBox.setStyle("-fx-background-color: #060818;");
         impostazioniLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
         impostazioniImg.setImage(new Image(getClass().getResource("/main/risorse/settings.png").toString()));
+        
+        this.timeReportBox.setStyle("-fx-background-color: #060818;");
+        this.timeReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
+        
+        this.obiettiviReportBox.setStyle("-fx-background-color: #060818;");
+        this.obiettiviReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
+        
+        this.abitudiniReportBox.setStyle("-fx-background-color: #060818;");
+        this.abitudiniReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
     }
     
     private void evidenziaPulsante(HBox hBox, Label label, ImageView imageView, String imgFile) {
@@ -119,6 +196,7 @@ public class AppController {
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(this.timeHBox, this.timeLabel, this.timeImg, "clock-white");
+        this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
@@ -134,6 +212,7 @@ public class AppController {
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(habitHBox, habitLabel, habitImg, "refresh-white");
+        this.chiudiMenuDashboard();
        
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
@@ -148,6 +227,7 @@ public class AppController {
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(goalHBox, goalLabel, goalImg, "darts-white");
+        this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
@@ -162,24 +242,11 @@ public class AppController {
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(agendaHBox, agendaLabel, agendaImg, "agenda-white");
+        this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
        URL fileUrl = Main.class.getResource("/main/Views/Agenda/Agenda.fxml");
-        Pane view = object.getPage(fileUrl);
-        panePrincipale.setCenter(view);
-    } 
-    
-    @FXML
-    private void apriPaginaDashboard(MouseEvent event) {
-        
-        // Cambia stile pulsanti navigazione
-        this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(dashboardHBox, dashboardLabel, dashboardImg, "dashboard-white");
-        
-        // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/Dashboard.fxml");
         Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
     } 
@@ -190,6 +257,7 @@ public class AppController {
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings-white");
+        this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
         FxmlLoader object = new FxmlLoader();
@@ -197,5 +265,96 @@ public class AppController {
         Pane view = object.getPage(fileUrl);
         panePrincipale.setCenter(view);
     } 
+    
+    private void apriPaginaReportTempo(MouseEvent event) {
+        
+        // Cambia stile pulsanti navigazione
+        this.rimuoviEvidenziazionePulsanti();
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+        this.dashboardArrow.setRotate(180);
+        this.timeReportBox.setStyle("-fx-background-color: #374856;"
+                + "-fx-border-radius:12;"
+                + "-fx-border-style:solid;"
+                + "-fx-background-radius:12;");
+        this.timeReportLabel.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
+        
+        // Cambia la pagina all'interno del BorderPane
+        FxmlLoader object = new FxmlLoader();
+        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportTempo.fxml");
+        Pane view = object.getPage(fileUrl);
+        panePrincipale.setCenter(view);
+        
+    }
+    
+    private void apriPaginaReportObiettivi(MouseEvent event) {
+        
+        // Cambia stile pulsanti navigazione
+        this.rimuoviEvidenziazionePulsanti();
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+        this.dashboardArrow.setRotate(180);
+        this.obiettiviReportBox.setStyle("-fx-background-color: #374856;"
+                + "-fx-border-radius:12;"
+                + "-fx-border-style:solid;"
+                + "-fx-background-radius:12;");
+        this.obiettiviReportLabel.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
+        
+        // Cambia la pagina all'interno del BorderPane
+        FxmlLoader object = new FxmlLoader();
+        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportObiettivi.fxml");
+        Pane view = object.getPage(fileUrl);
+        panePrincipale.setCenter(view);
+        
+    }
+    
+    private void apriPaginaReportAbitudini(MouseEvent event) {
+    
+        // Cambia stile pulsanti navigazione
+        this.rimuoviEvidenziazionePulsanti();
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+        this.dashboardArrow.setRotate(180);
+        this.abitudiniReportBox.setStyle("-fx-background-color: #374856;"
+                + "-fx-border-radius:12;"
+                + "-fx-border-style:solid;"
+                + "-fx-background-radius:12;");
+        this.abitudiniReportLabel.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
+        
+        // Cambia la pagina all'interno del BorderPane
+        FxmlLoader object = new FxmlLoader();
+        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportAbitudini.fxml");
+        Pane view = object.getPage(fileUrl);
+        panePrincipale.setCenter(view);
+        
+    }
+    
+    @FXML
+    private void toggleMenuDashboard() {
+        if(!this.dashboardMenuAperto) {
+            // Evidenza il pulsante della Dashboard
+            this.rimuoviEvidenziazionePulsanti();
+            this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
+            this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
+            this.dashboardArrow.setRotate(180);
+            
+            // Fa comparire i pulsanti nel sotto-menu del pulsante dashboard.
+            this.dashboardBtns.getChildren().add(this.timeReportBox);
+            this.dashboardBtns.getChildren().add(this.obiettiviReportBox);
+            this.dashboardBtns.getChildren().add(this.abitudiniReportBox);
+            
+            this.dashboardMenuAperto = true;
+        } else {
+            this.dashboardBtns.getChildren().clear();
+            this.dashboardMenuAperto = false;
+            this.dashboardArrow.setRotate(0);
+        }
+    }
+    
+    private void chiudiMenuDashboard() {
+        this.dashboardBtns.getChildren().clear();
+        this.dashboardMenuAperto = false;
+        this.dashboardImg.setImage(new Image(getClass().getResource("/main/risorse/dashboard.png").toString()));
+    }
     
 }
