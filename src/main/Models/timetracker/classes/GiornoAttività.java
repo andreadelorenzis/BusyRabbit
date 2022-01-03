@@ -4,8 +4,9 @@
  */
 package main.Models.timetracker.classes;
 
-import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.LinkedList;
 
 /**
  *
@@ -14,9 +15,9 @@ import java.util.Date;
 public class GiornoAttività {
     private Date data;
     private int tempoTotale;
-    private ArrayList<Attività> listaAttività;
+    private LinkedList<Attività> listaAttività;
 
-    public void setListaAttività(ArrayList<Attività> listaAttività) {
+    public void setListaAttività(LinkedList<Attività> listaAttività) {
         this.listaAttività = listaAttività;
     }
 
@@ -28,7 +29,7 @@ public class GiornoAttività {
         return tempoTotale;
     }
 
-    public ArrayList<Attività> getListaAttività() {
+    public LinkedList<Attività> getListaAttività() {
         return listaAttività;
     }
 

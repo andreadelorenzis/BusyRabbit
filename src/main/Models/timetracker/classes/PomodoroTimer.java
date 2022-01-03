@@ -14,8 +14,11 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
     private int durataSessione;     // Durata della sessione di lavoro.    
     private int durataPausaBreve;   // Durata della pausa breve.    
     private int durataPausaLunga;   // Durata della pausa lunga.    
-    private int nCicli;            // Periodo dopo il quale comincia una pausa lunga.    
-   // private Timer timer;            // Timer semplice usato dal pomodoro timer
+    private int nCicli;             // Periodo dopo il quale comincia una pausa lunga.
+    private boolean reset;
+    Timer sessione     = new Timer(durataSessione);
+    Timer pausaBreve   = new Timer(durataPausaBreve);
+    Timer pausaLunga   = new Timer(durataPausaLunga);
   
     // COSTRUTTORE PRIVATO.
     private PomodoroTimer() {};
@@ -47,16 +50,29 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
         this.nCicli = nCicli;
     }
   
-    public void avviaPomodoroTimer(){
-        
+    public void avviaPomodoroTimer(Attività a){
+        this.reset = false;
+        for(int i = 0; i < nCicli && this.reset == false; i++){
+            sessione.run();
+            System.out.println("Fine esecuzione del thread sessione!");
+            if(i < nCicli - 1){
+                pausaBreve.run();
+                System.out.println("Fine esecuzione del thread pausa breve!");
+            }        
+            else{
+                pausaLunga.run();
+                System.out.println("Fine esecuzione del thread pausa lunga!");
+            }
+            this.reset = sessione.getReset();
+        }
+        if(this.reset == false)
+            a.incDurata(nCicli * durataSessione * 1000);        
     }
-  
-    public void sospendiPomodoroTimer(){
-        
-    }
-  
+    
+    @Override
     public void resettaPomodoroTimer(){
-        
-    }
-   
+        this.sessione.setReset(true);
+        this.pausaBreve.setReset(true);
+        this.pausaLunga.setReset(true);
+    }   
 }

@@ -6,7 +6,6 @@ package main.Models.timetracker.classes;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -22,8 +21,10 @@ public class Tracker implements ITracker {
     String nextValue  = "";
     LinkedList listaAttività = new LinkedList<Attività>();
     LinkedList listaProgetti = new LinkedList<Progetto>();
+    
     public Tracker(){
-        InizializzaDaFile();        
+        InizializzaAttivitàDaFile();
+        InizializzaProgettiDaFile();
     }
 
     //METODI PUBBLICI 
@@ -36,8 +37,8 @@ public class Tracker implements ITracker {
     public void modificaAttività(String nome, String progetto, String id) {
         int verifica = 0;
         for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
-            Attività c = iter.next();
-            if(c.getId() == id)  {
+            Attività a = iter.next();
+            if(a.getId() == id)  {
                 verifica = 1;
                 //c.setParametri(nome, progetto);                
             }             
@@ -48,8 +49,8 @@ public class Tracker implements ITracker {
     public void eliminaAttività(String id) {
         int verifica = 0;
         for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
-            Attività c = iter.next();
-            if(c.getId() == id)  {
+            Attività a = iter.next();
+            if(a.getId() == id)  {
                 verifica = 1;
                 iter.remove();
             }             
@@ -58,19 +59,26 @@ public class Tracker implements ITracker {
         
     public LinkedList<Attività> getListaAttività(){
         return listaAttività;
-    }
+    }    
     
     @Override
     public void aggiungiProgetto(String nome, String colore) {
-        
+        listaProgetti.add(new Progetto(nome, colore));
     }
     
     public void eliminaProgetto(String id){
-        
+        int verifica = 0;
+        for(Iterator<Progetto> iter = listaProgetti.iterator(); ((iter.hasNext() && verifica == 0));){
+            Progetto p = iter.next();
+            if(p.getId() == id)  {
+                verifica = 1;
+                iter.remove();
+            }             
+        }
     }
     
     //METODI PRIVATI
-    private void InizializzaDaFile() {
+    private void InizializzaAttivitàDaFile() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
             File file = new File(classLoader.getResource("MyFile.txt").getFile());
@@ -99,6 +107,32 @@ public class Tracker implements ITracker {
                 int id = Integer.valueOf(nextValue);
 
                 listaAttività.add(new Attività(nome, data, durata, progetto));
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(String.format("Linea numero '%s, prossimo valore: '%s''", lineNumber, nextValue), ex);
+        }
+    }
+    
+    private void InizializzaProgettiDaFile(){
+        try {
+            ClassLoader classLoader = getClass().getClassLoader();
+            File file = new File(classLoader.getResource("MyFile.txt").getFile());
+            Scanner input = new Scanner(file)
+                .useDelimiter(",|\\R")
+                .useLocale(Locale.ITALIAN);
+
+            // vai oltre la testa
+            input.nextLine();
+
+            while (input.hasNext()) {
+                lineNumber++;
+                nextValue = input.next().replace("\"", "");
+                String nome =nextValue;
+
+                nextValue = input.next().replace("\"", "");
+                String colore = nextValue;
+                
+                listaProgetti.add(new Progetto(nome, colore));
             }
         } catch (Exception ex) {
             throw new RuntimeException(String.format("Line number '%s, nextValue '%s''", lineNumber, nextValue), ex);
