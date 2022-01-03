@@ -4,6 +4,7 @@
  */
 package main.Models.account.classes;
 
+import java.util.Scanner;
 import main.Models.agenda.classes.Agenda;
 import main.Models.dashboard.classes.Dashboard;
 import main.Models.goalmanager.classes.GoalManager;
@@ -15,12 +16,12 @@ import main.Models.timetracker.classes.TimeTracker;
  */
 public class App {
     
-    // *********************************
     //  CAMPI
-    // *********************************
+    Scanner tastiera = new Scanner(System.in);
+   // Scanner fileSystem = new Scanner();
     
     // Account utente ottenuto dal database in fase di Login/Registrazione.
-    Account account;             
+    Account account;         
     
     // Componente che misura il tempo.
     TimeTracker timeTracker;     
@@ -39,12 +40,13 @@ public class App {
     
     // Componente per modificare delle impostazioni di questo account.
     Impostazioni impostazioni;   
+    //  COSTRUTTORE
+    public App(){
         
-    // *********************************
-    //  COSTRUTTORI
-    // *********************************
+    }
+
     
-    // *********************************
+
     //  METODI PRIVATI
     // *********************************
  
@@ -60,17 +62,15 @@ public class App {
      * @param confermaPass Conferma della password.
      * @return 
      */
-    public Account registrati(String email, String password, String confermaPass) {
-        return new Account("", email, password);
-    };
+    public Account registrati(String nome, String email, String password, String confermaPass) {
+        while(password.equals(confermaPass)){
+            System.out.println("Le password non corrispondono, reinserire: ");
+            
+        }
+        return new Account(nome, email, password);
+    }
     
-    /**
-     * Legge un account esistente dalla cartella Database usando email e password.
-     * 
-     * @param email Email dell'utente.
-     * @param password Password dell'utente.
-     * @return Account che contiene la struttura dei dati dell'utente.
-     */
+
     public Account accedi(String email, String password) {
         return new Account("", email, password);
     };

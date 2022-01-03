@@ -17,23 +17,11 @@ public class Account {
 
     //  CAMPI
     
-    private String nome;                          // Nome o username utente.
-        
-    private String email;                         // Email dell'utente.
-    
-    private String password;                      // Password associata all'account.
-    
-    private Date data;                            // Data di creazione dell'account.
-    
-    private Boolean sfondoChiaro;                 // Theme chiaro/scuro
-    
-    private Progetto[] listaProgetti;             // Lista dei progetti creati.
-    
-    private ObiettivoSemplice[] listaObiettivi;   // Lista obiettivi correnti.
-    
-    private Abitudine[] listaAbitudini;           // Lista abitudini attive.
-    
-    private Evento[] listaEventi;                 // Lista eventi programmati.
+    private String nome;                          // Nome o username utente.        
+    private String email;                         // Email dell'utente.    
+    private String password;                      // Password associata all'account.    
+    private Date data;                            // Data di creazione dell'account.    
+    private Boolean sfondoChiaro;                 // Theme chiaro/scuro    
 
     //  COSTRUTTORI
 
@@ -57,22 +45,6 @@ public class Account {
 
     public void setSfondoChiaro(Boolean sfondoChiaro) {
         this.sfondoChiaro = sfondoChiaro;
-    }
-
-    public Progetto[] getListaProgetti() {
-        return listaProgetti;
-    }
-
-    public ObiettivoSemplice[] getListaObiettivi() {
-        return listaObiettivi;
-    }
-
-    public Abitudine[] getListaAbitudini() {
-        return listaAbitudini;
-    }
-
-    public Evento[] getListaEventi() {
-        return listaEventi;
     }
     
 }
