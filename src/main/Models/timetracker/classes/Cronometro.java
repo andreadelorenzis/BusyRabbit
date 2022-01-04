@@ -5,10 +5,11 @@
 package main.Models.timetracker.classes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import main.Models.timetracker.interfaces.ICronometro;
 
  // Utilizzato da TimeTracker per cronometrare il tempo.
 
-public class Cronometro {
+public class Cronometro implements ICronometro {
     //  CAMPI
         private long inizio;
         private long fine;

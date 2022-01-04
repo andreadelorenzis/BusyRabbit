@@ -12,7 +12,7 @@ public class TimeTracker extends Tracker implements ITimeTracker {
     
     //  CAMPI    
     private static TimeTracker instanzaTimeTracker = null;
-    Attività corrente;
+    private Attività corrente;
     private Cronometro cronometro;
     
     // COSTRUTTORI

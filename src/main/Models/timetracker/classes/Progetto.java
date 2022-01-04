@@ -14,8 +14,8 @@ import java.util.LinkedList;
 
 public class Progetto {
     //  CAMPI
-    LinkedList listaAttivitàProgetto = new LinkedList<Attività>();
-    Tracker tracker = new Tracker();
+    private LinkedList listaAttivitàProgetto = new LinkedList<Attività>();
+    private Tracker t = new Tracker();
     
     private String nome;
     private String colore;          
@@ -28,31 +28,40 @@ public class Progetto {
         this.colore = colore;
         this.id = UUID.randomUUID().toString();
         
-        for(Iterator<Attività> iter = tracker.getListaAttività().iterator(); (iter.hasNext());){
-            Attività c = iter.next();
-            if(c.getProgetto().equals(nome))  
-                listaAttivitàProgetto.add(c);
+        for(Iterator<Attività> iter = t.getListaAttività().iterator(); (iter.hasNext());){
+            Attività a = iter.next();
+            if(a.getProgetto().equals(nome))  
+                this.listaAttivitàProgetto.add(a);
         }
     };
     //  METODI PUBBLICI
 
     public void aggiungiAttività(Attività attività) {
-        listaAttivitàProgetto.add(attività);
-    };
+        this.listaAttivitàProgetto.add(attività);
+    }
+    
+    public void rimuoviAttività(Attività attività){
+        for(Iterator<Attività> iter = listaAttivitàProgetto.iterator(); (iter.hasNext());){
+            Attività a = iter.next();
+            if(a.getId().equals(attività.getId()))  
+                this.listaAttivitàProgetto.remove(a);
+        }
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
-    };
+    }
 
     public void setColore(String colore) {
         this.colore = colore;
-    };
+    }
 
     public String getId() {
         return this.id;
     }
     
     public long getDurata(){
+        this.durata = 0;
         calcolaDurata();
         return this.durata;
     }

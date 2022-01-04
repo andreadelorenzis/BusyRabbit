@@ -5,9 +5,12 @@
 package main.Models.timetracker.classes;
 
 // Classe che estende thread per la creazione di un timer
+
+import main.Models.timetracker.interfaces.ITimer;
+
 // utilizzato dal PomodoroTimer
 
-public class Timer extends Thread {
+public class Timer extends Thread implements ITimer {
     private int     secondi;
     private int     minuti;
     private boolean reset;

@@ -6,10 +6,11 @@ package main.Models.timetracker.classes;
 
 import java.time.LocalDate;
 import java.util.UUID;
+import main.Models.timetracker.interfaces.IAttività;
 
  // Rappresenta un'attività che è stata monitorata dall'utente.
 
-public class Attività {
+public class Attività implements IAttività{
     //  CAMPI
     private String nome;        // Nome dell'attività.    
     private LocalDate data;     // Data in cui è stata svolta l'attività.    

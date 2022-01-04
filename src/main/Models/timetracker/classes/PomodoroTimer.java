@@ -18,9 +18,9 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
     private int nCicli;             // Periodo dopo il quale comincia una pausa lunga
     private boolean reset;          // Variabile di lavoro per fermare il timer
     
-    Timer sessione     = new Timer(durataSessione);
-    Timer pausaBreve   = new Timer(durataPausaBreve);
-    Timer pausaLunga   = new Timer(durataPausaLunga);
+    private Timer sessione     = new Timer(durataSessione);
+    private Timer pausaBreve   = new Timer(durataPausaBreve);
+    private Timer pausaLunga   = new Timer(durataPausaLunga);
   
     // COSTRUTTORE PRIVATO.
     private PomodoroTimer() {

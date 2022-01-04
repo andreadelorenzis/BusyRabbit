@@ -4,14 +4,13 @@
  */
 package main.Models.timetracker.interfaces;
 
-
-public interface ICronometro {
+/**
+ *
+ * @author Mars_DB
+ */
+public interface ITimer {
     
-    public void avvia();
-     
-    public void arresta();
- 
-    public long getTempo();
+    public void setReset(boolean reset);
     
-    public void convertiTempo(long durata);    
+    public boolean getReset();    
 }

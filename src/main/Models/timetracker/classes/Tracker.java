@@ -17,10 +17,10 @@ import main.Models.timetracker.interfaces.ITracker;
 public class Tracker implements ITracker {
     
     //  CAMPI
-    int lineNumber = 0;
-    String nextValue  = "";
-    LinkedList listaAttività = new LinkedList<Attività>();
-    LinkedList listaProgetti = new LinkedList<Progetto>();
+    private int lineNumber = 0;
+    private String nextValue  = "";
+    protected LinkedList listaAttività = new LinkedList<Attività>();
+    protected LinkedList listaProgetti = new LinkedList<Progetto>();
     
     public Tracker(){
         inizializzaAttivitàDaFile();
@@ -57,10 +57,6 @@ public class Tracker implements ITracker {
             }             
         }
     }
-        
-    public LinkedList<Attività> getListaAttività(){
-        return listaAttività;
-    }    
     
     @Override
     public void aggiungiProgetto(String nome, String colore) {
@@ -77,6 +73,10 @@ public class Tracker implements ITracker {
             }             
         }
     }
+    
+    public LinkedList<Attività> getListaAttività(){
+        return listaAttività;
+    }  
     
     //METODI PRIVATI
     private void inizializzaAttivitàDaFile() {
