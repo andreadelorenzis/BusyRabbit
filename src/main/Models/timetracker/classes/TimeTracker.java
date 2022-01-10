@@ -6,27 +6,16 @@ package main.Models.timetracker.classes;
 
 import main.Models.timetracker.interfaces.ITimeTracker;
 
-/**
- * Permette di cronometrare un'attività.
- */
+// Permette di cronometrare un'attività.
+
 public class TimeTracker extends Tracker implements ITimeTracker {
     
     //  CAMPI    
     private static TimeTracker instanzaTimeTracker = null;
-    Attività corrente;
+    private Attività corrente;
     private Cronometro cronometro;
     
-    // Costruttore invisibile.
-    private TimeTracker() {}
-        
-    // *********************************
-    //  METODI PUBBLICI
-    // *********************************
-    
-    /**
-     * 
-     * @return Istanza singleton della classe TimeTracker
-     */
+    // COSTRUTTORI
     public static TimeTracker getInstance() {
         // Crea l'oggetto solo se NON esiste:
         if (instanzaTimeTracker == null) {
@@ -34,7 +23,12 @@ public class TimeTracker extends Tracker implements ITimeTracker {
         }
         return instanzaTimeTracker;
     };
-    
+        
+    private TimeTracker() {
+    }
+        
+    //  METODI PUBBLICI
+
     @Override
     public void avviaTimeTracker(Attività attività) {
         this.corrente = attività;

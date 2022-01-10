@@ -12,22 +12,23 @@ import java.util.Locale;
 import java.util.Scanner;
 import main.Models.timetracker.interfaces.ITracker;
 
-//Classe astratta estesa da PomodoroTimer e TimeTracker
+// Classe estesa da PomodoroTimer e TimeTracker
 
 public class Tracker implements ITracker {
+    
     //  CAMPI
-
-    int lineNumber = 0;
-    String nextValue  = "";
-    LinkedList listaAttività = new LinkedList<Attività>();
-    LinkedList listaProgetti = new LinkedList<Progetto>();
+    private int lineNumber = 0;
+    private String nextValue  = "";
+    protected LinkedList listaAttività = new LinkedList<Attività>();
+    protected LinkedList listaProgetti = new LinkedList<Progetto>();
     
     public Tracker(){
-        InizializzaAttivitàDaFile();
-        InizializzaProgettiDaFile();
+        inizializzaAttivitàDaFile();
+        inizializzaProgettiDaFile();
     }
 
     //METODI PUBBLICI 
+    
     @Override
     public void aggiungiAttività(String nome, LocalDate data, long durata, String progetto) {
         listaAttività.add(new Attività(nome, data, durata, progetto));
@@ -35,14 +36,14 @@ public class Tracker implements ITracker {
   
     @Override
     public void modificaAttività(String nome, String progetto, String id) {
-        int verifica = 0;
+        /*int verifica = 0;
         for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
             Attività a = iter.next();
             if(a.getId() == id)  {
                 verifica = 1;
                 //c.setParametri(nome, progetto);                
             }             
-        }
+        }*/
     }
     
     @Override
@@ -50,16 +51,12 @@ public class Tracker implements ITracker {
         int verifica = 0;
         for(Iterator<Attività> iter = listaAttività.iterator(); ((iter.hasNext() && verifica == 0));){
             Attività a = iter.next();
-            if(a.getId() == id)  {
+            if(a.getId().equals(id))  {
                 verifica = 1;
                 iter.remove();
             }             
         }
     }
-        
-    public LinkedList<Attività> getListaAttività(){
-        return listaAttività;
-    }    
     
     @Override
     public void aggiungiProgetto(String nome, String colore) {
@@ -77,11 +74,15 @@ public class Tracker implements ITracker {
         }
     }
     
+    public LinkedList<Attività> getListaAttività(){
+        return listaAttività;
+    }  
+    
     //METODI PRIVATI
-    private void InizializzaAttivitàDaFile() {
+    private void inizializzaAttivitàDaFile() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("MyFile.txt").getFile());
+            File file = new File(classLoader.getResource("FileAttività.txt").getFile());
             Scanner input = new Scanner(file)
                 .useDelimiter(",|\\R")
                 .useLocale(Locale.ITALIAN);
@@ -113,10 +114,10 @@ public class Tracker implements ITracker {
         }
     }
     
-    private void InizializzaProgettiDaFile(){
+    private void inizializzaProgettiDaFile(){
         try {
             ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("MyFile.txt").getFile());
+            File file = new File(classLoader.getResource("FileProgetti.txt").getFile());
             Scanner input = new Scanner(file)
                 .useDelimiter(",|\\R")
                 .useLocale(Locale.ITALIAN);
@@ -127,7 +128,7 @@ public class Tracker implements ITracker {
             while (input.hasNext()) {
                 lineNumber++;
                 nextValue = input.next().replace("\"", "");
-                String nome =nextValue;
+                String nome = nextValue;
 
                 nextValue = input.next().replace("\"", "");
                 String colore = nextValue;

@@ -8,15 +8,21 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import main.Models.timetracker.classes.Attività;
 
-public interface ITracker {
+/**
+ *
+ * @author Mars_DB
+ */
+public interface IGiornoAttività {
     
-    public void aggiungiAttività(String nome, LocalDate data, long durata, String progetto);
-    
-    public void modificaAttività(String nome, String progetto, String id);
-    
-    public void eliminaAttività(String id);
-  
-    public void aggiungiProgetto(String nome, String colore); 
-    
+    public LocalDate getData();    
+
+    public int getTempoTotale();
+
     public LinkedList<Attività> getListaAttività();
+
+    public void setData(LocalDate data);
+
+    public void setTempoTotale(int tempoTotale);
+    
+    public void aggiungiAttività(Attività attività);
 }

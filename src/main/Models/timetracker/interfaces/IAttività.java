@@ -13,15 +13,17 @@ public interface IAttività {
     
     public String getNome();
     
-    public void setDurata(int durata);
+    public LocalDate getData();
+    
+    public void incDurata(long durata);
     
     public long getDurata();
+    
+    public void setDurata(int durata);
     
     public void setProgettoPadre(String progetto);
         
     public String getId();
-    
-    public LocalDate getData();
     
     public String getProgetto();
 }

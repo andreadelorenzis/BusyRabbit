@@ -10,6 +10,8 @@ public interface IProgetto {
         
     public void aggiungiAttività(Attività attività);
     
+    public void rimuoviAttività(Attività attività);
+    
     public void setNome(String nome);
      
     public void setColore(String colore);
