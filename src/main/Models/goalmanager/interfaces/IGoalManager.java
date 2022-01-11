@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package main.Models.goalmanager.interfaces;
 
-import java.util.Date;
-import main.Models.goalmanager.classes.Azione;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Gestore degli obiettivi.
@@ -13,50 +10,47 @@ import main.Models.goalmanager.classes.Azione;
 public interface IGoalManager {
     
     /**
+     * Aggiunge un nuovo obiettivo scomponibile
      * 
-     * @param nome Nome dell'obiettivo.
-     * @param descrizione Descrizione dell'obiettivo.
-     * @param dataRaggiungimento Data entro cui raggiungere l'obiettivo.
+     * @param obiettivo 
      */
-    public void aggiungiObiettivoSemplice(String nome, String descrizione, Date dataRaggiungimento);
+    public void aggiungiObiettivoScomponibile(IObiettivo obiettivo);
+    
+    /**
+     * Aggiunge un nuovo ObiettivoAzione
+     * 
+     * @param obiettivo
+     */
+    public void aggiungiObiettivoAzione(IObiettivo obiettivo);
     
     /**
      * 
-     * @param nome Nome dell'obiettivo.
-     * @param descrizione Descrizione dell'obiettivo.
-     * @param dataRaggiungimento Data entro cui raggiungere l'obiettivo.
-     * @param valore Valore totale dell'obiettivo da raggiungere.
-     * @param unità Unità di misura dell'obiettivo
-     * @param listaAzioni Lista di azioni collegate all'obiettivo.
+     * @return la lista di tutti gli obiettivi 
      */
-    public void aggiungiObiettivoMisurabile(String nome, String descrizione, Date dataRaggiungimento, 
-            int valore, String unità, Azione[] listaAzioni);
+    public List<IObiettivo> getObiettivi();
     
     /**
+     * Verifica se la data di oggi coincide con quella di raggiungimento di qualche obiettivo
+     * salvato e, in caso affermativo, fa fallire tali obiettivi
      * 
-     * @param nome Nome dell'obiettivo.
-     * @param descrizione Descrizione dell'obiettivo.
-     * @param dataRaggiungimento Data entro cui raggiungere l'obiettivo.
-     * @param ID Identificativo dell'obiettivo.
+     * @param data la data di oggi
+     * @return la lista degli obiettivi da completare oggi
      */
-    public void modificaObiettivoSemplice(String nome, String descrizione, Date dataRaggiungimento, int ID);
-    
+    public void calcolaScadenzeObiettivi(LocalDate data);
+
     /**
+     * Calcola l'elenco delle azioni collegate da svolgere nella data specificata.
      * 
-     * @param nome Nome dell'obiettivo.
-     * @param descrizione Descrizione dell'obiettivo.
-     * @param dataRaggiungimento Data entro cui raggiungere l'obiettivo.
-     * @param valore Valore totale dell'obiettivo da raggiungere
-     * @param unità Unità di misura dell'obiettivo
-     * @param listaAzioni Lista di azioni collegate all'obiettivo.
-     * @param ID Identificativo dell'obiettivo.
+     * @param data la data del giorno
+     * @return la lista degli obiettivi da completare oggi
      */
-    public void modificaObiettivoMisurabile(String nome, String descrizione, Date dataRaggiungimento, 
-            int valore, String unità, Azione[] listaAzioni, int ID);
+    public List<IObiettivo> calcolaAzioniGiornaliere(LocalDate data);
     
     /**
+     * Elimina un obiettivo.
      * 
      * @param ID Identificativo dell'obiettivo.
      */
-    public void eliminaObiettivo(int ID);
+    public void eliminaObiettivo(String idObiettivo);
+    
 }

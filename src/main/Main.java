@@ -10,6 +10,7 @@ package main;
 // Demo
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -25,6 +26,8 @@ import javafx.stage.Stage;
  * @author Mars_DB
  */
 public class Main extends Application {
+    
+    public static LocalDate dataUltimoAccesso;
     
     @Override
     public void start(Stage primaryStage) {
@@ -54,6 +57,7 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Main.dataUltimoAccesso = LocalDate.now();
         launch(args);
     }
     
