@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
-package main.Models.goalmanager;
+package GoalManager;
+
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
+
 import main.Giorno;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
@@ -20,14 +21,8 @@ import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.IAzioneSessione;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- *
- * @author andre
- */
-public class GoalManagerTest {
+public class GoalManagerTests {
     GoalManager g = null;
     
     private void inizializzaGoalManager(GoalManager g) {
@@ -36,7 +31,7 @@ public class GoalManagerTest {
                                                       LocalDate.of(2022, Month.MARCH, 22)));
         g.aggiungiObiettivo(new ObiettivoAzione("Dare l'esame di analisi 2", 
                                                 "", 
-                                                LocalDate.of(2022, Month.FEBRUARY, 2), 
+                                                LocalDate.of(2022, Month.JANUARY, 2), 
                                                 60, 
                                                 "ore"));
     }
@@ -76,16 +71,16 @@ public class GoalManagerTest {
      */
     @Test
     public void testObiettivi() {
-        g = GoalManager.getInstance();
+        g = new GoalManager();
         // non ci sono obiettivi nel goal manager
         assertTrue(g.getObiettivi().isEmpty());
         inizializzaGoalManager(g);
         // ci sono 3 obiettivi nel goal manager
         assertEquals(2, g.getObiettivi().size());
-        // il primo Ã¨ un ObiettivoScomponibile
-        assertEquals("main.Models.goalmanager.classes.ObiettivoScomponibile", g.getObiettivi().get(0).getClass());
-        // il secondo Ã¨ un ObiettivoAzione
-        assertEquals("main.Models.goalmanager.classes.ObiettivoAzione", g.getObiettivi().get(1).getClass());
+        // il primo è un ObiettivoScomponibile
+        assertTrue(g.getObiettivi().get(0) instanceof ObiettivoScomponibile);
+        // il secondo è un ObiettivoAzione
+        assertTrue(g.getObiettivi().get(1)instanceof ObiettivoAzione);
     }
     
     /**
@@ -93,31 +88,31 @@ public class GoalManagerTest {
      */
     @Test
     public void testSottoObiettivi() {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiSottoObiettivi(g);
         IObiettivoScomponibile obiettivoScomp = (IObiettivoScomponibile) g.getObiettivi().get(0);
         
         // ci sono 2 sotto-obiettivi
-        assertEquals(2, obiettivoScomp.getSottoObiettivi().size());
+        assertEquals(3, obiettivoScomp.getSottoObiettivi().size());
         
         // Completo il primo sotto-obiettivo
         obiettivoScomp.getSottoObiettivi().get(0).completa();
-        // il sotto-obiettivo risulta completato ed il progresso principale Ã¨ pari al 33.3%
+        // il sotto-obiettivo risulta completato ed il progresso principale è pari al 33.3%
         assertTrue(obiettivoScomp.getSottoObiettivi().get(0).getCompletato());
         assertEquals(0.333, obiettivoScomp.calcolaProgresso(), 0.01);
 
         // Completo il secondo sotto-obiettivo
         obiettivoScomp.getSottoObiettivi().get(1).completa();
-        // il sotto-obiettivo risulta completato ed il progresso principale Ã¨ pari al 66.6%
+        // il sotto-obiettivo risulta completato ed il progresso principale è pari al 66.6%
         assertTrue(obiettivoScomp.getSottoObiettivi().get(1).getCompletato());
         assertEquals(0.666, obiettivoScomp.calcolaProgresso(), 0.01);
         
         // Completo il terzo sotto-obiettivo
         obiettivoScomp.getSottoObiettivi().get(2).completa();
-        // il sotto-obiettivo risulta completato ed il progresso principale Ã¨ pari al 100%
+        // il sotto-obiettivo risulta completato ed il progresso principale è pari al 100%
         assertTrue(obiettivoScomp.getSottoObiettivi().get(2).getCompletato());
-        assertEquals(0.1, obiettivoScomp.calcolaProgresso(), 0.01);
+        assertEquals(1.0, obiettivoScomp.calcolaProgresso(), 0.01);
     }
     
     /**
@@ -125,17 +120,17 @@ public class GoalManagerTest {
      */
     @Test
     public void testScadenzaObiettivi() {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         
         // calcolo quali obiettivi sono scaduti alla data del 3 Febbraio 2022
         g.calcolaScadenzeObiettivi(LocalDate.of(2022, Month.FEBRUARY, 3));
         
-        // il primo obiettivo NON Ã¨ ancora scaduto
+        // il primo obiettivo NON è ancora scaduto
         assertFalse(g.getObiettivi().get(0).getFallimento());
         
-        // il secondo obiettivo Ã¨ scaduto
-        assertTrue(g.getObiettivi().get(0).getFallimento());
+        // il secondo obiettivo è scaduto
+        assertTrue(g.getObiettivi().get(1).getFallimento());
     }
     
     /**
@@ -143,7 +138,7 @@ public class GoalManagerTest {
      */
     @Test
     public void testAzioni() {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
@@ -154,7 +149,7 @@ public class GoalManagerTest {
         // completo la prima azione
         obiettivo.getAzioni().get(0).completa();
         
-        // l'azione risulta completata e il progresso dell'obiettivo Ã¨ pari al 8.3%
+        // l'azione risulta completata e il progresso dell'obiettivo è pari al 8.3%
         assertTrue(obiettivo.getAzioni().get(0).getCompletata());
         assertEquals(0.083, obiettivo.calcolaProgresso(), 0.01);
         
@@ -162,7 +157,7 @@ public class GoalManagerTest {
         //obiettivo.getAzioni().get(1).attiva();
         //obiettivo.getAzioni().get(1).completa();
         
-        // l'azione risulta completata e il progresso dell'obiettivo Ã¨ pari al 11.6%
+        // l'azione risulta completata e il progresso dell'obiettivo è pari al 11.6%
         //assertTrue(obiettivo.getAzioni().get(0).getCompletata());
         //assertEquals(0.116, obiettivo.calcolaProgresso(), 0.01);
     }
@@ -172,14 +167,14 @@ public class GoalManagerTest {
      */
     @Test
     public void testPresenzaAzioniGiornaliere() {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         
-        // calcolo le azioni da completare oggi (MartedÃ¬ 11 Gennaio 2022)
+        // calcolo le azioni da completare oggi (Martedì 11 Gennaio 2022)
         List<IAzione> azioniGiornaliere = g.calcolaAzioniGiornaliere(LocalDate.of(2022, Month.JANUARY, 11));
         
-        // nella lista Ã¨ presente una sola azione
+        // nella lista è presente una sola azione
         assertEquals(1, azioniGiornaliere.size());
         assertEquals("Leggere 10 pagine", azioniGiornaliere.get(0).getNome());
     }
@@ -189,7 +184,7 @@ public class GoalManagerTest {
      */
     @Test
     public void testCompletamentoObiettivoAzione() {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
@@ -197,7 +192,7 @@ public class GoalManagerTest {
         // completo l'obiettivo
         obiettivo.completa();
         
-        // calcolo le azioni da completare oggi (MartedÃ¬ 11 Gennaio 2022)
+        // calcolo le azioni da completare oggi (Martedì 11 Gennaio 2022)
         List<IAzione> azioniGiornaliere = g.calcolaAzioniGiornaliere(LocalDate.of(2022, Month.JANUARY, 11));
         
         // non ci sono azioni giornaliere
@@ -207,7 +202,7 @@ public class GoalManagerTest {
     // Verifica l'aggiunta ed il completamento di Item in un'AzioneScomponibile
     @Test 
     public void testAzioneScomponibile() {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
@@ -223,44 +218,48 @@ public class GoalManagerTest {
         // completo il primo item
         azione.getItems().get(0).completa();
         
-        // primo item "Leggere 5 pagine" Ã¨ completato
+        // primo item "Leggere 5 pagine" è completato
         assertTrue(azione.getItems().get(0).getCompletato());
         assertEquals("Leggere 5 pagine", azione.getItems().get(0).getNome());
         
-        // secondo item non Ã¨ completato
+        // secondo item non è completato
         assertFalse(azione.getItems().get(1).getCompletato());
         
     }   
     
     // Verifica il completamento di un'AzioneSessione
+    /*
     @Test
     public void testAzioneSession() throws InterruptedException {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
         IAzioneSessione azione = (IAzioneSessione) obiettivo.getAzioni().get(1);
         
         // Imposto la durata a 1 secondo
-        azione.setDurata(1);
+        azione.setDurata(2);
         
         // faccio partire la sessione
+        azione.avviaSessione();
         
-        // attendo 1 secondi
+        // attendo 1.5 secondi
+        Thread.sleep(1500);
         
-        // l'azione Ã¨ completata
+        // l'azione è completata
         assertTrue(azione.getCompletata());
         
-    }
+    }*/
     
     /**
      * Verifica l'eliminazione di obiettivi, azioni e items.
      */
     @Test
     public void testEliminazione() {
-        g = GoalManager.getInstance();
+    	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
+        aggiungiSottoObiettivi(g);
         IObiettivoAzione obiettivoAzione = (IObiettivoAzione) g.getObiettivi().get(1);
         String idAzione = obiettivoAzione.getAzioni().get(1).getId();
         IObiettivoScomponibile obiettivoScomp = (IObiettivoScomponibile) g.getObiettivi().get(0);
@@ -269,15 +268,15 @@ public class GoalManagerTest {
         // elimino il primo sotto-obiettivo dell'ObiettivoScomponibile
         obiettivoScomp.eliminaSottoObiettivo(idSottoOb);
         
-        // c'Ã¨ solo un sotto-obiettivo, il primo
-        assertTrue(obiettivoScomp.getSottoObiettivi().size() == 1);
-        assertTrue(obiettivoScomp.getSottoObiettivi().get(0).equals("Correre 10km di fila"));
+        // c'è solo un sotto-obiettivo, il primo
+        assertTrue(obiettivoScomp.getSottoObiettivi().size() == 2);
+        assertEquals("Correre 20 km di fila", obiettivoScomp.getSottoObiettivi().get(0).getNome());
         
         // elimino la seconda azione dell'ObiettivoAzione
         obiettivoAzione.eliminaAzione(idAzione);
         
-        // c'Ã¨ solo un'azione, la prima
+        // c'è solo un'azione, la prima
         assertTrue(obiettivoAzione.getAzioni().size() == 1);
-        assertTrue(obiettivoAzione.getAzioni().get(0).equals("Leggere 10 pagine"));
+        assertEquals("Leggere 10 pagine", obiettivoAzione.getAzioni().get(0).getNome());
     }
 }

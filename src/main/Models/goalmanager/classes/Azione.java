@@ -7,6 +7,7 @@ import java.util.UUID;
 import main.Giorno;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IObiettivo;
+import main.Models.goalmanager.interfaces.IObiettivoAzione;
 
 public class Azione implements IAzione {
     
@@ -39,7 +40,7 @@ public class Azione implements IAzione {
     /**
      * L'obiettivo a cui l'azione è collegata
      */
-    private IObiettivo obiettivo;
+    private IObiettivoAzione obiettivo;
     
     /**
      * Identificativo dell'azione
@@ -64,7 +65,13 @@ public class Azione implements IAzione {
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
     public void completa() {
-        completata = !completata;
+        if(!completata) {
+        	completata = true;
+        	obiettivo.setValoreAttuale(obiettivo.getValoreAttuale() + incremento);
+        } else {
+        	completata = false;
+        	obiettivo.setValoreAttuale(obiettivo.getValoreAttuale() - incremento);
+        }
     }
 
     @Override
@@ -118,12 +125,12 @@ public class Azione implements IAzione {
     }
 
     @Override
-    public void setObiettivo(IObiettivo obiettivo) {
+    public void setObiettivo(IObiettivoAzione obiettivo) {
         this.obiettivo = obiettivo;
     }
 
     @Override
-    public IObiettivo getObiettivo() {
+    public IObiettivoAzione getObiettivo() {
         return obiettivo;
     }
     

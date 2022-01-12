@@ -12,17 +12,12 @@ import main.Models.goalmanager.interfaces.IObiettivoAzione;
 
 public class GoalManager implements IGoalManager {
     // CAMPI
-    private static GoalManager istanza = null;
     
     private List<IObiettivo> obiettivi = new ArrayList<>();
     
-        // COSTRUTTORI
-    public static GoalManager getInstance() {
-        // Crea l'oggetto solo se NON esiste:
-        if (istanza == null) {
-            istanza = new GoalManager();
-        }
-        return istanza;
+    // COSTRUTTORI
+    public GoalManager() {
+        
     };
     
     /**
@@ -53,12 +48,13 @@ public class GoalManager implements IGoalManager {
 
     @Override
     public void calcolaScadenzeObiettivi(LocalDate data) {
-        obiettivi.stream()
-                 .forEach(ob -> {
-                     if(ob.getData().isBefore(data) || ob.getData().isEqual(data)) {
-                         ob.faiFallire();
-                     }
-                 });
+    	int i = 0;
+        for(IObiettivo ob : obiettivi) {
+        	if(ob.getData().isBefore(data) || ob.getData().isEqual(data)) {
+                obiettivi.get(i).faiFallire();
+            }
+        	i++;
+        }
     }
 
     @Override
@@ -71,7 +67,8 @@ public class GoalManager implements IGoalManager {
                         obAzione.getAzioni().stream()
                                             .forEach(azione -> {
                                                if((azione.getDataInizio().isBefore(data) || azione.getDataInizio().isEqual(data))
-                                                  && giornoPresente(data, azione.getGiorniRipetizione())) {
+                                                  && giornoPresente(data, azione.getGiorniRipetizione())
+                                                  && !ob.getCompletato()) {
                                                    azioni.add(azione);
                                                } 
                                             });

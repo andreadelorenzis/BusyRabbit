@@ -23,22 +23,22 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     /**
      * Il valore attuale raggiunto completando le azioni
      */
-    private int valoreAttuale;
+    private int valoreAttuale = 0;
     
     /**
      * L'unità di misura del valore di questo obiettivo
      */
-    private String unità;
+    private String unita;
 
     //----------------------------- COSTRUTTORI --------------------------------
-    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unità) {
+    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unita) {
         super(nome, descrizione, data);
-        this.unità = unità;
+        this.unita = unita;
         this.valoreTotale = valoreTotale;
     }
     
-    public ObiettivoAzione(String nome, LocalDate data, int valore, String unità) {
-        this(nome, "", data, valore, unità);
+    public ObiettivoAzione(String nome, LocalDate data, int valore, String unita) {
+        this(nome, "", data, valore, unita);
     }
 
     //--------------------------- METODI PUBBLICI ------------------------------
@@ -66,13 +66,13 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     }
 
     @Override
-    public String getUnità() {
-        return unità;
+    public String getUnita() {
+        return unita;
     }
 
     @Override
-    public void setUnità(String unità) {
-        this.unità = unità;
+    public void setUnita(String unita) {
+        this.unita = unita;
     }
 
     @Override
@@ -87,12 +87,12 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
 
     @Override
     public void setValoreAttuale(int valore) {
-        this.valoreAttuale = valoreAttuale;
+        valoreAttuale = valore;
     }
 
     @Override
     public void setValoreTotale(int valore) {
-        this.valoreTotale = valoreTotale;
+        valoreTotale = valore;
     }
     
 }

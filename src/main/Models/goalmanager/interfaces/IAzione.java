@@ -84,12 +84,12 @@ public interface IAzione {
      * 
      * @param obiettivo l'obiettivo a cui questa azione è collegata
      */
-    public void setObiettivo(IObiettivo obiettivo);
+    public void setObiettivo(IObiettivoAzione obiettivo);
     
     /**
      * 
      * @return l'obiettivo a cui questa azione è collegata
      */
-    public IObiettivo getObiettivo();
+    public IObiettivoAzione getObiettivo();
     
 }

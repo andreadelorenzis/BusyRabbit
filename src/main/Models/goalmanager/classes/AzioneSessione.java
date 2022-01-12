@@ -31,17 +31,22 @@ public class AzioneSessione extends Azione implements IAzioneSessione {
     public AzioneSessione(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni, int durata) {
         super(nome, incremento, dataInizio, giorni);
         this.durata = durata;
+        timer = new Timer(durata);
     }
 
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
     public void avviaSessione() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void sospendiSessione() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void terminaSessione() {
+    	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

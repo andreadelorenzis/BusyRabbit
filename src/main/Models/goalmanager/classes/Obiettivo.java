@@ -30,7 +30,7 @@ public abstract class Obiettivo implements IObiettivo {
     /**
      * Se l'obiettivo è arrivato alla data di scadenza o no
      */
-    private boolean fallito;
+    private boolean fallito = false;
     
     /**
      * L'eventuale obiettivo padre di questo obiettivo, null altrimenti
