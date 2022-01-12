@@ -36,7 +36,15 @@ public interface Item {
     
     /**
      * L'AzioneScomponibile di cui questo item fa parte
+     * 
+     * @return azione
      */
     public IAzioneScomponibile getAzione();
+    
+    /**
+     * 
+     * @param azione 
+     */
+    public void setAzione(IAzioneScomponibile azione);
     
 }

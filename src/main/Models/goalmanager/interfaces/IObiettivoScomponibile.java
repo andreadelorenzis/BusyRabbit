@@ -26,12 +26,6 @@ public interface IObiettivoScomponibile extends IObiettivo {
     
     /**
      * 
-     * @return l'obiettivo padre se presente, null altrimenti
-     */
-    public IObiettivo getObiettivoPadre();
-    
-    /**
-     * 
      * @param idObiettivo identificativo del sotto-obiettivo da eliminare
      */
     public void eliminaSottoObiettivo(String idObiettivo);

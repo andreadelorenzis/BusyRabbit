@@ -32,4 +32,41 @@ public interface IObiettivoAzione extends IObiettivo {
      * @param idAzione identificativo dell'azione da eliminare
      */
     public void eliminaAzione(String idAzione);
+    
+    /**
+     * 
+     * @return valore attuale
+     */
+    public int getValoreAttuale();
+    
+    /**
+     * 
+     * @return valore totale
+     */
+    public int getValoreTotale();
+    
+    /**
+     * 
+     * @return l'unità di misura dell'obiettivo
+     */
+    public String getUnità();
+
+    /**
+     * 
+     * @param unità l'unità di misura dell'obiettivo
+     */
+    public void setUnità(String unità);
+    
+    /**
+     * 
+     * @param valore valore attuale
+     */
+    public void setValoreAttuale(int valore);
+    
+    /***
+     * 
+     * @param valore valore totale
+     */
+    public void setValoreTotale(int valore);
+    
 }

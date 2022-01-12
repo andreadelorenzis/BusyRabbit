@@ -4,7 +4,7 @@
  */
 package main.Models.goalmanager.interfaces;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Rappresenta un qualsiasi obiettivo, avente un nome, una descrizione, una data di completamento ed un valore che rappresenta 
@@ -47,7 +47,7 @@ public interface IObiettivo {
     /**
      * @return data di completamento dell'obiettivo
      */
-    public Date getData();
+    public LocalDate getData();
     
     /**
      * @return identificativo dell'obiettivo
@@ -68,15 +68,9 @@ public interface IObiettivo {
     
     /**
      * 
-     * @return il valore attuale dell'obiettivo
+     * @return l'obiettivo padre di questo obiettivo, null altrimenti
      */
-    public int getValoreAttuale();
-    
-    /**
-     * 
-     * @return il valore totale da raggiungere dell'obiettivo
-     */
-    public int getValoreTotale();
+    public IObiettivo getObiettivoPadre();
     
     /**
      * @param nome nome dell'obiettivo
@@ -91,6 +85,13 @@ public interface IObiettivo {
     /**
      * @param data data dell'obiettivo
      */
-    public void setData(Date data);
+    public void setData(LocalDate data);
+    
+    /**
+     * Imposta l'obiettivo padre di un qualsiasi obiettivo.
+     * 
+     * @param obiettivo l'obiettivo figlio
+     */
+    public void setObiettivoPadre(IObiettivo obiettivo);
     
 }

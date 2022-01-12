@@ -22,7 +22,7 @@ public interface IAzioneSessione extends IAzione {
      * 
      * @return la durata della sessione
      */
-    public double getDurata();
+    public int getDurata();
     
     /**
      * 
@@ -34,6 +34,6 @@ public interface IAzioneSessione extends IAzione {
      * 
      * @param durata
      */
-    public void setDurata(double durata);
+    public void setDurata(int durata);
     
 }

@@ -16,12 +16,6 @@ import main.Giorno;
 public interface IAzione {
     
     /**
-     * Se il giorno della data di oggi è tra quelli in cui compare l'azione ed è passata la data
-     * di inizio dell'azione, la attiva, in modo che possa essere completata.
-     */
-    public void attiva();
-    
-    /**
      * Completa l'azione. Solo se l'azione è attiva.
      */
     public void completa();
@@ -34,12 +28,6 @@ public interface IAzione {
     
     /**
      * 
-     * @return se l'azione è attiva o meno
-     */
-    public boolean getAttiva();
-    
-    /**
-     * 
      * @return nome dell'azione
      */
     public String getNome();
@@ -48,7 +36,7 @@ public interface IAzione {
      * 
      * @return valore di incremento dell'obiettivo quando l'azione viene collegata
      */
-    public int getValore();
+    public int getIncremento();
     
     /**
      * 
@@ -78,7 +66,7 @@ public interface IAzione {
      * 
      * @param valore valore di incremento dell'obiettivo quando l'azione viene collegata
      */
-    public void setValore(int valore);
+    public void setIncremento(int incremento);
     
     /**
      * 
@@ -91,6 +79,12 @@ public interface IAzione {
      * @param date la data di inizio dell'azione
      */
     public void setDataInizio(LocalDate date);
+    
+    /**
+     * 
+     * @param obiettivo l'obiettivo a cui questa azione è collegata
+     */
+    public void setObiettivo(IObiettivo obiettivo);
     
     /**
      * 
