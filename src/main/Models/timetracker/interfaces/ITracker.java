@@ -1,22 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package main.Models.timetracker.interfaces;
 
-import java.time.LocalDate;
-import java.util.LinkedList;
-import main.Models.timetracker.classes.Attività;
-
+/**
+ * 
+ * Modella un generico strumento per monitorare il tempo.
+ *
+ */
 public interface ITracker {
-    
-    public void aggiungiAttività(String nome, LocalDate data, long durata, String progetto);
-    
-    public void modificaAttività(String nome, String progetto, String id);
-    
-    public void eliminaAttività(String id);
-  
-    public void aggiungiProgetto(String nome, String colore); 
-    
-    public LinkedList<Attività> getListaAttività();
+	
+	/**
+	 * Inizia a monitorare il tempo con il tracker
+	 */
+	public void avvia();
+	
+	/**
+	 * Termina il monitoraggio del tempo
+	 * 
+	 * @return il periodo di tempo totale monitorato, in secondi
+	 */
+	public long termina();
+	
+	/**
+	 * 
+	 * @return se il tracker � attualmente avviato o no
+	 */
+	public boolean getAvviato();
+	
+    /**
+     * 
+     * @param ascoltatore che verra informato quando una sessione del timer termina
+     */
+    public void setAscoltatore(ITrackable ascoltatore);
+	
 }

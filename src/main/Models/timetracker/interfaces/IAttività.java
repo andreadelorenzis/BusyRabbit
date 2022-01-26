@@ -1,29 +1,72 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package main.Models.timetracker.interfaces;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
-
-public interface IAttivit√† {
+/**
+ * 
+ * Attivit‡ monitorata dall'utente. Ogni attivit‡ deve fare parte di un progetto.
+ *
+ */
+public interface IAttivit‡ {
     
+	/**
+	 * 
+	 * @param nome dell'attivit‡
+	 */
     public void setNome(String nome);
     
+    /**
+     * 
+     * @return nome dell'attivit‡
+     */
     public String getNome();
     
+    /**
+     * 
+     * @return data di inizio svolgimento
+     */
     public LocalDate getData();
     
-    public void incDurata(long durata);
+    /**
+     * 
+     * @return ora di inizio dell'attivit‡
+     */
+    public LocalTime getOraInizio();
     
+    /**
+     * 
+     * @return l'ora di fine attivit‡
+     */
+    public LocalTime getOraFine();
+    
+    /**
+     * 
+     * @return durata in secondi
+     */
     public long getDurata();
     
-    public void setDurata(int durata);
+    /**
+     * 
+     * @param durata durata in secondi
+     */
+    public void setDurata(long durata);
     
-    public void setProgettoPadre(String progetto);
+    /**
+     * 
+     * @param id del progetto di cui fa parte questa attivit‡
+     */
+    public void setProgettoPadre(IProgetto progetto);
         
+    /**
+     * 
+     * @return identificativo
+     */
     public String getId();
     
-    public String getProgetto();
+    /**
+     * 
+     * @return id del progetto di cui fa parte questa attivit‡
+     */
+    public IProgetto getProgetto();
 }
