@@ -1,49 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package main.Models.habittracker.interfaces;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
+import main.Giorno;
+
+/**
+ * 
+ * Tool to track habits of the user.
+ *
+ */
 public interface IHabitTracker {
     
     /**
      * 
-     * @param nome Nome dell'abitudine periodica.
-     * @param data Data di partenza dell'abitudine periodica.
-     * @param giorni Giorni in cui si ripeterà l'abitudine.
+     * @param habit
      */
-    public void aggiungiAbitudinePeriodica(String nome, Date dataInizio, int[] giorni);
+    public void addHabit(IHabit habit);
+    
+    /**
+     * Calculate habits to do in the specified date
+     * 
+     * @param date of today
+     * @return list of today's habits
+     */
+    public List<IHabit> calculateTodayHabits(LocalDate date);
+    
+    /**
+     * Reset the count of all the habits which were not completed by the user in the days between the two dates.
+     * 
+     * @param date1 most recent access
+     * @param date2 access of today
+     */
+    public void resetHabits(LocalDate date1, LocalDate date2);
     
     /**
      * 
-     * @param nome Nome dell'abitudine contatore.
-     * @param tipo Permette di dire se l'abitudine è positiva (+), negativa (-) o entrambe (+ e -).
+     * @return list of all habits
      */
-    public void aggiungiAbitudineContatore(String nome, Boolean tipo);
+    public List<IHabit> getHabits();
     
     /**
      * 
-     * @param nome Nome dell'abitudine periodica.
-     * @param data Data di partenza dell'abitudine periodica.
-     * @param giorni Giorni in cui si ripeterà l'abitudine.
-     * @param ID Identificativo dell'abitudine.
+     * @param idHabit id of the habit
      */
-    public void modificaAbitudinePeriodica(String nome, Date data, int[] giorni, int ID);
-    
-    /**
-     * 
-     * @param nome Nome dell'abitudine contatore.
-     * @param tipo Permette di dire se l'abitudine è positiva (+), negativa (-) o entrambe (+ e -).
-     * @param ID Identificativo dell'abitudine.
-     */
-    public void modificaAbitudineContatore(String nome, Boolean tipo, int ID);
-    
-    /**
-     * 
-     * @param ID Identificativo dell'abitudine.
-     */
-    public void eliminaAbitudine(int ID);
+    public void removeHabit(String idHabit);
     
 }
