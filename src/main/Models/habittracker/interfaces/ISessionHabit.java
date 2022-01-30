@@ -13,19 +13,9 @@ public interface ISessionHabit extends IHabit {
     public void startSession();
     
     /**
-     * Stop the session
-     */
-    public void stopSession();
-    
-    /**
-     * Restart the stopped session
-     */
-    public void restartSession();
-    
-    /**
      * Reset the session
      */
-    public void resetSession();
+    public void stopSession();
     
     /**
      * 
