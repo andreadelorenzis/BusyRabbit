@@ -1,16 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.Impostazioni.ImpostazioniController">
    <children>
-      <Label layoutX="198.0" layoutY="173.0" text="Impostazioni">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="663.0" prefWidth="617.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="615.0" style="-fx-background-color: #060818;">
+               <children>
+                  <AnchorPane layoutX="58.0" layoutY="62.0" prefHeight="291.0" prefWidth="500.0" style="-fx-background-color: #0E1726; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="46.80000000000001" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="57.200000000000045" AnchorPane.topAnchor="62.0">
+                     <children>
+                        <Label layoutX="21.0" layoutY="29.0" style="-fx-font-weight: 800;" text="Cambia password" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox layoutX="21.0" layoutY="62.0" maxWidth="500.0" prefWidth="500.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="27.799999999999955">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" maxWidth="700.0" prefHeight="0.0" prefWidth="451.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="121.0" text="Vecchia password:" textFill="#bac4ca">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="oldPassField" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci vecchia password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" maxWidth="700.0" prefHeight="0.0" prefWidth="451.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="121.0" text="Nuova password:" textFill="#bac4ca">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="newPassField" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci nuova password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" maxWidth="700.0" prefHeight="0.0">
+                                 <children>
+                                    <Button fx:id="changeBtn1" mnemonicParsing="false" onAction="#cambiaPassword" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #4361EE; -fx-font-weight: 800; -fx-cursor: hand;" text="Cambia" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Label layoutX="21.0" layoutY="200.0" style="-fx-font-weight: 800;" text="Cambia email" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox layoutX="21.0" layoutY="238.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="27.799999999999955">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" maxWidth="700.0" prefHeight="33.0" prefWidth="451.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="121.0" text="Nuova email:" textFill="#bac4ca">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="newEmailField" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci nuova email" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="15.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" maxWidth="700.0" prefHeight="33.0" prefWidth="451.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="121.0" text="Password:" textFill="#bac4ca">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="passField1" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci la tua password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="15.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" maxWidth="700.0">
+                                 <children>
+                                    <Button fx:id="changeBtn2" mnemonicParsing="false" onAction="#cambiaEmail" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #4361EE; -fx-font-weight: 800; -fx-cursor: hand;" text="Cambia" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Label layoutX="21.0" layoutY="384.0" style="-fx-font-weight: 800;" text="Elimina account" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox layoutX="21.0" layoutY="420.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="27.799999999999955">
+                           <children>
+                              <HBox fx:id="pass2Field" alignment="CENTER_LEFT" maxWidth="700.0" prefHeight="33.0" prefWidth="451.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="121.0" text="Password:" textFill="#bac4ca">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="passField2" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci la tua password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" maxWidth="700.0">
+                                 <children>
+                                    <Button fx:id="eliminaBtn" mnemonicParsing="false" onAction="#eliminaAccount" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #E7515A; -fx-font-weight: 800; -fx-cursor: hand;" text="Elimina" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <Label layoutX="58.0" layoutY="22.0" text="Impostazioni" textFill="#374667" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="22.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

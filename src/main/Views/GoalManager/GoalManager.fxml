@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
@@ -15,16 +14,16 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="859.0" style="-fx-background-color: #060818;" stylesheets="@GoalManager.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.GoalManagerController">
    <children>
-      <Label layoutX="14.0" layoutY="7.0" text="Goal tracker" textFill="#374667">
+      <Label layoutX="53.0" layoutY="14.0" text="Goal tracker" textFill="#374667">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <SplitPane dividerPositions="0.5" layoutX="31.0" layoutY="42.0" prefHeight="330.0" prefWidth="544.0" style="-fx-background-color: #0E1726; -fx-border-radius: 12; -fx-background-radius: 12;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="42.0">
+      <SplitPane dividerPositions="0.5" layoutX="53.0" layoutY="55.0" prefHeight="514.0" prefWidth="746.0" style="-fx-background-color: #0E1726; -fx-border-radius: 12; -fx-background-radius: 12;" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="55.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #0E1726; -fx-background-radius: 12; -fx-border-radius: 12;">
                <children>
-                  <BorderPane layoutX="20.0" layoutY="11.0" prefHeight="35.0" prefWidth="371.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="7.0">
+                  <BorderPane layoutX="-7.0" layoutY="11.0" prefHeight="35.0" prefWidth="362.0" AnchorPane.leftAnchor="0.20000000000004547" AnchorPane.rightAnchor="7.0">
                      <left>
                         <Label text="I miei obiettivi" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
@@ -43,7 +42,7 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Nuovo obiettivo" textFill="#2196f3">
+                              <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-cursor: hand;" text="Nuovo obiettivo" textFill="#2196f3">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -51,18 +50,26 @@
                            </children>
                         </HBox>
                      </right>
+                     <padding>
+                        <Insets left="25.0" right="25.0" />
+                     </padding>
                   </BorderPane>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="10.0" layoutY="66.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="454.0" prefWidth="379.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="66.0">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="10.0" layoutY="66.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="454.0" prefWidth="379.0" style="-fx-background-color: #0E1726;" vbarPolicy="NEVER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="66.0">
                      <content>
-                        <VBox fx:id="boxObiettivi" alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="452.0" prefWidth="388.0" style="-fx-background-color: #0E1726;" />
+                        <VBox fx:id="boxObiettivi" alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="452.0" prefWidth="388.0" style="-fx-background-color: #0E1726;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                           </padding></VBox>
                      </content>
                   </ScrollPane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #0E1726; -fx-background-radius: 12; -fx-border-radius: 12;">
                <children>
-                  <VBox fx:id="headerBox" alignment="CENTER" layoutX="-2.0" layoutY="47.0" prefHeight="88.0" prefWidth="398.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="47.0" />
-                  <BorderPane layoutX="13.0" layoutY="9.0" prefHeight="35.0" prefWidth="379.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="5.400000000000034">
+                  <BorderPane layoutX="2.0" layoutY="9.0" prefHeight="35.0" prefWidth="362.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <left>
                         <Label text="Azioni" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
@@ -71,7 +78,7 @@
                         </Label>
                      </left>
                      <right>
-                        <HBox fx:id="azioneBtn" alignment="CENTER_LEFT" onMouseClicked="#aggiungiAzione" prefHeight="35.0" prefWidth="122.0" visible="false" BorderPane.alignment="CENTER_LEFT">
+                        <HBox fx:id="azioneBtn" alignment="CENTER_LEFT" onMouseClicked="#aggiungiAzione" prefHeight="35.0" prefWidth="122.0" style="-fx-cursor: hand;" visible="false" BorderPane.alignment="CENTER_LEFT">
                            <children>
                               <ImageView fitHeight="20.0" fitWidth="20.0">
                                  <image>
@@ -89,18 +96,21 @@
                            </children>
                         </HBox>
                      </right>
+                     <padding>
+                        <Insets left="25.0" right="25.0" />
+                     </padding>
                   </BorderPane>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="23.0" layoutY="141.0" prefHeight="258.0" prefWidth="359.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="141.0">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="3.0" layoutY="54.0" prefHeight="460.0" prefWidth="370.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0">
                      <content>
-                        <VBox fx:id="boxAzioni" prefHeight="354.0" prefWidth="370.0" style="-fx-background-color: #0E1726;" />
+                        <BorderPane fx:id="paginaAzioni" prefHeight="385.0" prefWidth="368.0" style="-fx-background-color: #0E1726;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </padding></BorderPane>
                      </content>
                   </ScrollPane>
-                  <Label layoutX="21.0" layoutY="437.0" style="-fx-font-weight: 800;" text="Progresso obiettivo" textFill="WHITE" AnchorPane.bottomAnchor="72.60000000000002" AnchorPane.leftAnchor="21.0">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <ProgressBar fx:id="progressBar" layoutX="20.0" layoutY="466.0" prefHeight="24.0" prefWidth="359.0" progress="0.0" style="-fx-background-color: #272E52;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="19.0" />
                </children>
             </AnchorPane>
         </items>

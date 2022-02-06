@@ -8,36 +8,133 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 */
 
 .obiettivo {
-    -fx-padding: 10;
+    -fx-padding: 10 10 10 10;
     -fx-border-color: #2B305B;
-    -fx-border-width: 0 0 1 0;
+    -fx-border-width: 1 0 0 0;
+}
+
+.azione {
+	-fx-font-size: 16;
+	-fx-padding: 0 0 10 0;
 }
 
 .nome {
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 14;
+    -fx-text-fill: #BAC4CA;
+    -fx-font-size: 16;
     -fx-font-weight: 800;
 }
 
 .obiettivo .data {
     -fx-font-size: 14;
     -fx-text-fill: #888ea8;
-    -fx-padding: 10 0 0 0;
+    -fx-padding: 10 0 5 0;
 }
 
-.obiettivo .sottoBtn {
-    -fx-padding: 10 0 0 10;
-}
-
-.obiettivo .sottoBtn .label {
-    -fx-font-size: 14;
-    -fx-text-fill: #2196f3;
-    -fx-padding: 0 0 0 10;
-}
-
-.obiettivo .num-sottoobiettivi {
+.num-sotto-obiettivi {
     -fx-font-weight: 800;
-    -fx-font-size: 14;
+    -fx-font-size: 18;
     -fx-text-fill: #ffffff;
-    -fx-padding: 0 3 0 0;
+    -fx-padding: 0 5 0 2;
 }
+
+.btn-sotto-obiettivi {
+	-fx-cursor: hand;
+	-fx-padding: 0 15 0 0;
+}
+
+.tutte-azioni-btn {
+	-fx-text-fill: #2196F3; 
+	-fx-font-size: 14; 
+	-fx-font-weight: 800;
+	-fx-cursor: hand;
+}
+
+.nome-obiettivo {
+	-fx-text-fill: #BAC4CA;
+	-fx-font-size: 22;
+	-fx-font-weight: 600;
+	-fx-padding: 30 0 15 0;
+}
+
+.no-action-label {
+	-fx-text-fill: #BAC4CA; 
+	-fx-font-size: 18;
+}
+
+.new-action-btn {
+	-fx-text-fill: #2196F3; 
+	-fx-font-size: 16; 
+	-fx-font-weight: 800;
+	-fx-cursor: hand;
+}
+
+.azioni-obiettivo-btn {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 18;
+	-fx-font-weight: 800;
+	-fx-cursor: hand;
+	-fx-padding: 0 10 0 0;
+}
+
+.elemento-lista {
+	-fx-padding: 0 0 0 3;
+}
+
+.header-label {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 18;
+	-fx-font-weight: 800;
+	-fx-padding: 0 0 20 0;
+}
+
+.elemento-lista {
+	-fx-padding: 0 0 0 5;
+	-fx-text-fill: #BAC4CA;
+	-fx-font-size: 16px;
+}
+
+.descrizione-label {
+	-fx-text-fill: #888EA8;
+	-fx-font-size: 16;
+	-fx-padding: 0 0 20 0;
+}
+
+.progress-bar {
+    -fx-background-radius: 5;     
+}
+
+.progress-bar .track {
+	-fx-background-color: #272E52;
+	-fx-background-radius: 5;
+}
+
+.progress-bar:determinate .bar {
+    -fx-background-color: #4361EE;
+    -fx-background-insets: 1 1 2 1;
+    -fx-padding: 1.1em;
+	-fx-background-radius: 5;
+}
+
+.progress-title {
+	-fx-text-fill: #BAC4CA;
+	-fx-font-size: 18;
+	-fx-font-weigth: 800;
+	-fx-padding: 0 0 10 0;
+}
+
+.progress-label {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 18;
+	-fx-font-weight: 800;
+	-fx-padding: 0 0 0 18;
+}
+
+.header-azioni-giorno {
+	-fx-padding: 0 0 25 0;
+}
+
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+    -fx-background-color: #191E3A;
+}
+

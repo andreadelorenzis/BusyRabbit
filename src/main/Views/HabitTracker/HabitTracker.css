@@ -1,0 +1,28 @@
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+    -fx-background-color: #191E3A;
+}
+
+.no-habits-label {
+	-fx-text-fill: #BAC4CA; 
+	-fx-font-size: 18;
+	-fx-padding: 30 0 0 0;
+}
+
+.new-habit-btn {
+	-fx-text-fill: #2196F3; 
+	-fx-font-size: 16; 
+	-fx-font-weight: 800;
+	-fx-cursor: hand;
+}
+
+.abitudine {
+	-fx-cursor: hand;
+	-fx-padding: 15 10 15 10;
+}
+
+.abitudine:hover {
+	-fx-background-color: #374856; 
+	-fx-background-radius: 10; 
+	-fx-border-radius: 10;
+}
