@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="panePrincipale" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.TimeTrackerController">
+<AnchorPane id="AnchorPane" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.TimeTrackerController">
    <children>
       <BorderPane fx:id="formTracker" layoutX="50.0" layoutY="63.0" prefHeight="131.0" prefWidth="758.0" style="-fx-background-color: #0E1726;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="63.0">
          <top>
@@ -31,7 +32,7 @@
                   </TextField>
                </left>
                <right>
-                  <HBox fx:id="boxProgetto" alignment="CENTER" onMouseClicked="#apriMenuProgettiForm" prefHeight="20.0" prefWidth="90.0" style="-fx-cursor: hand;" BorderPane.alignment="CENTER">
+                  <HBox fx:id="boxProgetto" alignment="CENTER" onMouseClicked="#toggleMenuProgetto" prefHeight="20.0" prefWidth="90.0" BorderPane.alignment="CENTER">
                      <children>
                         <ImageView fitHeight="15.0" fitWidth="15.0">
                            <image>
@@ -57,37 +58,14 @@
          <bottom>
             <StackPane BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane fx:id="formTimeTracker" prefHeight="56.0" prefWidth="533.0">
+                  <BorderPane fx:id="formTimeTracker" prefHeight="56.0" prefWidth="533.0" visible="true">
                      <padding>
                         <Insets bottom="20.0" />
                      </padding>
                      <right>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="229.0" BorderPane.alignment="TOP_RIGHT">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="215.0" BorderPane.alignment="TOP_RIGHT">
                            <children>
-                              <Label fx:id="oreLabel" text="00" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <Label text=":" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="minutiLabel" text="00" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label text=":" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="secondiLabel" text="00" textFill="WHITE">
+                              <Label text="00:00:00" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="22.0" />
                                  </font>
@@ -95,12 +73,50 @@
                                     <Insets right="30.0" />
                                  </HBox.margin>
                               </Label>
+                              <Button fx:id="avviaTimeTracker" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#avviaTimeTracker" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800;" text="START " textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="12.0" fitWidth="12.0">
+                                       <image>
+                                          <Image url="@/main/risorse/play.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets top="2.0" />
+                                 </padding>
+                              </Button>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets top="10.0" />
+                           </BorderPane.margin>
+                        </HBox>
+                     </right>
+                  </BorderPane>
+                  <BorderPane fx:id="formPomodoro" prefHeight="56.0" prefWidth="533.0" visible="false">
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                     <right>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="402.0" BorderPane.alignment="TOP_RIGHT">
+                           <children>
+                              <Label text="00:30:00" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="22.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <HBox fx:id="pauseBtnContainer" prefHeight="36.0" prefWidth="0.0" />
                               <StackPane>
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                                  <children>
-                                    <Button fx:id="startBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#avviaTracker" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800; -fx-cursor: hand;" text="START " textFill="WHITE">
+                                    <Button fx:id="avviaBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#avviaPomodoroTimer" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800;" text="START " textFill="WHITE">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0">
                                              <image>
@@ -111,18 +127,21 @@
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
+                                       <StackPane.margin>
+                                          <Insets left="15.0" />
+                                       </StackPane.margin>
                                     </Button>
-                                    <Button fx:id="stopBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#terminaTracker" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #E7515A; -fx-font-weight: 800; -fx-cursor: hand;" text="STOP" textFill="WHITE" visible="false">
+                                    <Button fx:id="resetBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#resettaPomodoroTimer" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: #DBA033; -fx-font-weight: 800;" text="RESET " textFill="WHITE" visible="false">
                                        <graphic>
-                                          <ImageView fitHeight="12.0" fitWidth="12.0">
+                                          <ImageView fitHeight="13.0" fitWidth="13.0">
                                              <image>
-                                                <Image url="@/main/risorse/play.png" />
+                                                <Image url="@/main/risorse/reset.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
-                                       <padding>
-                                          <Insets top="2.0" />
-                                       </padding>
+                                       <StackPane.margin>
+                                          <Insets left="15.0" />
+                                       </StackPane.margin>
                                     </Button>
                                  </children>
                               </StackPane>
@@ -138,7 +157,7 @@
                               <Insets top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#impostaTimer" style="-fx-background-color: #122C49;" text=" Settings" textFill="#58698d" visible="false">
+                              <Button mnemonicParsing="false" onAction="#impostaTimer" style="-fx-background-color: #122C49;" text=" Settings" textFill="#58698d">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -160,20 +179,20 @@
                      <padding>
                         <Insets bottom="20.0" />
                      </padding>
-                     <left>
-                        <HBox BorderPane.alignment="CENTER">
+                     <right>
+                        <HBox BorderPane.alignment="TOP_RIGHT">
                            <BorderPane.margin>
                               <Insets top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="719.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="719.0">
                                  <children>
                                     <Label text="Orario di inizio:" textFill="#58698d">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="orarioText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;">
+                                    <TextField fx:id="orarioText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -186,19 +205,19 @@
                                           <Insets left="3.0" right="3.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="orarioText2" prefHeight="50.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" />
+                                    <TextField fx:id="orarioText2" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                     <Label text="Data:" textFill="#58698d">
                                        <HBox.margin>
                                           <Insets left="35.0" right="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <DatePicker fx:id="dataManuale" prefHeight="26.0" prefWidth="162.0" />
+                                    <DatePicker fx:id="dateManuale" prefHeight="26.0" prefWidth="162.0" />
                                     <Label text="Durata:" textFill="#58698d">
                                        <HBox.margin>
                                           <Insets left="35.0" right="20.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="durataText1" prefHeight="58.0" prefWidth="34.0" promptText="00" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" />
+                                    <TextField fx:id="durataText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                     <Label text=":" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
@@ -207,7 +226,7 @@
                                           <Insets left="3.0" right="3.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="durataText2" prefHeight="26.0" prefWidth="34.0" promptText="00" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" />
+                                    <TextField fx:id="durataText2" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                     <Label text=":" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
@@ -216,24 +235,19 @@
                                           <Insets left="3.0" right="3.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="durataText3" prefHeight="26.0" prefWidth="34.0" promptText="00" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" />
+                                    <TextField fx:id="durataText3" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" />
                                  </children>
-                                 <HBox.margin>
-                                    <Insets top="5.0" />
-                                 </HBox.margin>
                               </HBox>
+                              <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#creaAttivitàManualmente" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800;" text="AGGIUNGI" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets top="2.0" />
+                                 </padding>
+                              </Button>
                            </children>
                         </HBox>
-                     </left>
-                     <right>
-                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#creaAttivitàManualmente" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800; -fx-cursor: hand;" text="AGGIUNGI" textFill="WHITE" BorderPane.alignment="CENTER">
-                           <padding>
-                              <Insets top="2.0" />
-                           </padding>
-                           <BorderPane.margin>
-                              <Insets top="10.0" />
-                           </BorderPane.margin>
-                        </Button>
                      </right>
                   </BorderPane>
                </children>
@@ -249,40 +263,61 @@
          <children>
             <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" prefHeight="462.0" prefWidth="758.0" style="-fx-background-color: #122C49;" styleClass="edge-to-edge" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <AnchorPane fx:id="containerAttività" style="-fx-background-color: #333333;">
-                     <children>
-                        <VBox fx:id="listaGiorniAttività" prefHeight="462.0" prefWidth="860.0" style="-fx-background-color: #060818;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
+                  <VBox fx:id="listaGiorniAttività" prefHeight="462.0" prefWidth="709.0" style="-fx-background-color: #060818;" />
                </content>
             </ScrollPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="menuProgettiFormContainer" layoutX="875.0" layoutY="118.0" prefHeight="9.0" prefWidth="236.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="118.0" />
-      <HBox alignment="CENTER" layoutX="48.0" layoutY="18.0" prefHeight="35.0" prefWidth="847.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="18.0">
-         <children>
-            <Button fx:id="cronoBtn" mnemonicParsing="false" onAction="#attivaCronometro" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #3C4B63;" styleClass="formBtn" text="Cronometro" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="pomoBtn" mnemonicParsing="false" onAction="#attivaPomodoro" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #1B2A44;" styleClass="formBtn" text="Pomodoro" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="manualBtn" mnemonicParsing="false" onAction="#attivaManuale" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #1B2A44;" styleClass="formBtn" text="Manuale" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
+      <BorderPane fx:id="menuProgetti" layoutX="559.0" layoutY="118.0" prefHeight="312.0" prefWidth="228.0" style="-fx-background-color: #1B2E4B;" visible="false" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="118.0">
+         <center>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="136.0" prefWidth="228.0" style="-fx-background-color: #1B2E4B;">
+               <content>
+                  <VBox fx:id="listaProgetti" prefHeight="238.0" prefWidth="227.0" style="-fx-background-color: #1B2E4B;">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" onMouseClicked="#aggiungiProgetto" prefHeight="37.0" prefWidth="228.0" BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <ImageView fitHeight="15.0" fitWidth="15.0">
+                     <image>
+                        <Image url="@/main/risorse/plus.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label prefHeight="20.0" prefWidth="139.0" style="-fx-font-weight: 600;" text="Crea nuovo progetto" textFill="#2196f3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="27.0" prefWidth="207.0" style="-fx-background-color: #1B2E4B;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Progetti" textFill="#374667">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+      <ChoiceBox fx:id="timeChoice" layoutX="693.0" layoutY="21.0" prefHeight="20.0" prefWidth="114.0" style="-fx-background-color: #122C49; -fx-border-radius: 6; -fx-background-radius: 6;" AnchorPane.rightAnchor="50.599999999999994" AnchorPane.topAnchor="21.0">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </ChoiceBox>
    </children>
 </AnchorPane>

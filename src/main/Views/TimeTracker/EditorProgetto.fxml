@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="140.0" prefWidth="354.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorProgettoController">
+<DialogPane fx:id="editorProgetto" prefHeight="140.0" prefWidth="354.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorProgettoController">
    <content>
       <BorderPane prefHeight="144.0" prefWidth="354.0">
          <top>
@@ -35,10 +35,10 @@
                   <HBox alignment="CENTER_LEFT">
                      <children>
                         <Label text="Nome:" textFill="WHITE" />
-                        <TextField fx:id="nameField" prefHeight="26.0" prefWidth="174.0" promptText="Inserisci nome progetto" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="nome" onKeyTyped="#handleTextField" prefHeight="26.0" prefWidth="174.0" promptText="Inserisci nome progetto" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
-                           </HBox.margin> 
+                           </HBox.margin>
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -48,7 +48,7 @@
                   <HBox alignment="CENTER_LEFT">
                      <children>
                         <Label text="Colore" textFill="WHITE" />
-                        <ChoiceBox fx:id="colorChoice" prefWidth="150.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
+                        <ChoiceBox fx:id="colore" prefWidth="150.0" style="-fx-background-color: #1B2E4B;">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

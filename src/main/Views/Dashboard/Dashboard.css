@@ -1,3 +1,11 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2 gen 2022, 01:00:34
+    Author     : andre
+*/
 
 .stacked-bar-chart:vertical {
     
@@ -17,8 +25,6 @@
 .stacked-bar-chart:vertical .chart-legend {
     -fx-background-color: #3B3F5C;
     -fx-text-fill: #ffffff;
-    -fx-font-size: 16;
-    -fx-font-weigth: 800;
 }
 
 .chart-legend-label {
@@ -29,388 +35,355 @@
     -fx-text-fill: #ffffff;
 }
 
-.pie-chart {
-	-fx-pref-width:400;
-    -fx-pref-height: 400; 
-    -fx-min-width: 400;
-    -fx-min-height: 400;
-    -fx-max-width: 400;
-    -fx-max-height: 400;
-}
-
-.pie-chart .chart-content {
-	-fx-padding: 20px;
-}
-
-.pie-chart .chart-legend {
-	-fx-background-color: #3B3F5C;
-}
-
-.pie-chart .chart-pie-label-line {
-    -fx-stroke: #2B305B;
-    -fx-background-color: #2B305B;
-    -fx-fill: #2B305B;
-}
-
-.pie-chart .chart-pie-label {
+.chart .chart-pie-label-line {
+    -fx-stroke: #ffffff;
+    -fx-background-color: #ffffff;
     -fx-fill: #ffffff;
-    -fx-font-size: 16;
-    -fx-font-weight: 800;
 }
 
-.progress-bar {
-    -fx-background-radius: 5;     
+.chart .chart-pie-label {
+    -fx-fill: #ffffff;
+    -fx-font-size: 14;
 }
-
-.progress-bar .track {
-	-fx-background-radius: 5;
-}
-
-.progress-bar:determinate .bar {
-    -fx-background-insets: 1 1 2 1;
-    -fx-padding: 1.1em;
-	-fx-background-radius: 5;
-}
-
 
 /* RED */
-.Rosso0 .data0.chart-pie,
-.Rosso0 .default-color0.chart-bar {
+.rosso0 .data0.chart-pie,
+.rosso0 .default-color0.chart-bar {
     -fx-pie-color: #FF4560;
     -fx-bar-fill: #FF4560;
 }
-.Rosso1 .data1.chart-pie,
-.Rosso1 .default-color1.chart-bar{
+.rosso1 .data1.chart-pie,
+.rosso1 .default-color1.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso2 .data2.chart-pie,
-.Rosso2 .default-color2.chart-bar{
+.rosso2 .data2.chart-pie,
+.rosso2 .default-color2.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso3 .data3.chart-pie,
-.Rosso3 .default-color3.chart-bar{
+.rosso3 .data3.chart-pie,
+.rosso3 .default-color3.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso4 .data4.chart-pie,
-.Rosso4 .default-color4.chart-bar{
+.rosso4 .data4.chart-pie,
+.rosso4 .default-color4.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso5 .data5.chart-pie,
-.Rosso5 .default-color5.chart-bar{
+.rosso5 .data5.chart-pie,
+.rosso5 .default-color5.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso6 .data6.chart-pie,
-.Rosso6 .default-color6.chart-bar{
+.rosso6 .data6.chart-pie,
+.rosso6 .default-color6.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso7 .data7.chart-pie,
-.Rosso7 .default-color7.chart-bar{
+.rosso7 .data7.chart-pie,
+.rosso7 .default-color7.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso8 .data8.chart-pie,
-.Rosso8 .default-color8.chart-bar{
+.rosso8 .data8.chart-pie,
+.rosso8 .default-color8.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso9 .data9.chart-pie,
-.Rosso9 .default-color9.chart-bar{
+.rosso9 .data9.chart-pie,
+.rosso9 .default-color9.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
-.Rosso10 .data10.chart-pie,
-.Rosso10 .default-color10.chart-bar{
+.rosso10 .data10.chart-pie,
+.rosso10 .default-color10.chart-bar{
     -fx-pie-color: #FF4560; 
     -fx-bar-fill: #FF4560;
 }
 
 /* GREY */
-.Rosso0 .data0.chart-pie,
-.Rosso0 .default-color0.chart-bar{
+.grigio0 .data0.chart-pie,
+.grigio0 .default-color0.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso1 .data1.chart-pie,
-.Rosso1 .default-color1.chart-bar{
+.grigio1 .data1.chart-pie,
+.grigio1 .default-color1.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso2 .data2.chart-pie,
-.Rosso2 .default-color2.chart-bar{
+.grigio2 .data2.chart-pie,
+.grigio2 .default-color2.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso3 .data3.chart-pie,
-.Rosso3 .default-color3.chart-bar{
+.grigio3 .data3.chart-pie,
+.grigio3 .default-color3.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso4 .data4.chart-pie,
-.Rosso4 .default-color4.chart-bar{
+.grigio4 .data4.chart-pie,
+.grigio4 .default-color4.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso5 .data5.chart-pie,
-.Rosso5 .default-color5.chart-bar{
+.grigio5 .data5.chart-pie,
+.grigio5 .default-color5.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso6 .data6.chart-pie,
-.Rosso6 .default-color6.chart-bar{
+.grigio6 .data6.chart-pie,
+.grigio6 .default-color6.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso7 .data7.chart-pie,
-.Rosso7 .default-color7.chart-bar{
+.grigio7 .data7.chart-pie,
+.grigio7 .default-color7.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso8 .data8.chart-pie,
-.Rosso8 .default-color8.chart-bar{
+.grigio8 .data8.chart-pie,
+.grigio8 .default-color8.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso9 .data9.chart-pie,
-.Rosso9 .default-color9.chart-bar{
+.grigio9 .data9.chart-pie,
+.grigio9 .default-color9.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
-.Rosso10 .data10.chart-pie,
-.Rosso10 .default-color10.chart-bar{
+.grigio10 .data10.chart-pie,
+.grigio10 .default-color10.chart-bar{
     -fx-pie-color: #C4C4C4;
     -fx-bar-fill: #C4C4C4;
 }
 
 /* YELLOW */
-.Giallo0 .data0.chart-pie,
-.Giallo0 .default-color0.chart-bar{
+.giallo0 .data0.chart-pie,
+.giallo0 .default-color0.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo1 .data1.chart-pie,
-.Giallo1 .default-color1.chart-bar{
+.giallo1 .data1.chart-pie,
+.giallo1 .default-color1.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo2 .data2.chart-pie,
-.Giallo2 .default-color2.chart-bar{
+.giallo2 .data2.chart-pie,
+.giallo2 .default-color2.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo3 .data3.chart-pie,
-.Giallo3 .default-color3.chart-bar{
+.giallo3 .data3.chart-pie,
+.giallo3 .default-color3.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo4 .data4.chart-pie,
-.Giallo4 .default-color4.chart-bar{
+.giallo4 .data4.chart-pie,
+.giallo4 .default-color4.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo5 .data5.chart-pie,
-.Giallo5 .default-color5.chart-bar{
+.giallo5 .data5.chart-pie,
+.giallo5 .default-color5.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo6 .data6.chart-pie,
-.Giallo6 .default-color6.chart-bar{
+.giallo6 .data6.chart-pie,
+.giallo6 .default-color6.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo7 .data7.chart-pie,
-.Giallo7 .default-color7.chart-bar{
+.giallo7 .data7.chart-pie,
+.giallo7 .default-color7.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo8 .data8.chart-pie,
-.Giallo8 .default-color8.chart-bar{
+.giallo8 .data8.chart-pie,
+.giallo8 .default-color8.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo9 .data9.chart-pie,
-.Giallo9 .default-color9.chart-bar{
+.giallo9 .data9.chart-pie,
+.giallo9 .default-color9.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
-.Giallo10 .data10.chart-pie,
-.Giallo10 .default-color10.chart-bar{
+.giallo10 .data10.chart-pie,
+.giallo10 .default-color10.chart-bar{
     -fx-pie-color: #FEB019;
     -fx-bar-fill: #FEB019;
 }
 
 /* GREEN */
-.Verde0 .data0.chart-pie,
-.Verde0 .default-color0.chart-bar{
+.verde0 .data0.chart-pie,
+.verde0 .default-color0.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde1 .data1.chart-pie,
-.Verde1 .default-color1.chart-bar{
+.verde1 .data1.chart-pie,
+.verde1 .default-color1.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde2 .data2.chart-pie,
-.Verde2 .default-color2.chart-bar{
+.verde2 .data2.chart-pie,
+.verde2 .default-color2.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde3 .data3.chart-pie,
-.Verde3 .default-color3.chart-bar{
+.verde3 .data3.chart-pie,
+.verde3 .default-color3.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde4 .data4.chart-pie,
-.Verde4 .default-color4.chart-bar{
+.verde4 .data4.chart-pie,
+.verde4 .default-color4.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde5 .data5.chart-pie,
-.Verde5 .default-color5.chart-bar{
+.verde5 .data5.chart-pie,
+.verde5 .default-color5.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde6 .data6.chart-pie,
-.Verde6 .default-color6.chart-bar{
+.verde6 .data6.chart-pie,
+.verde6 .default-color6.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde7 .data7.chart-pie,
-.Verde7 .default-color7.chart-bar{
+.verde7 .data7.chart-pie,
+.verde7 .default-color7.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde8 .data8.chart-pie,
-.Verde8 .default-color8.chart-bar{
+.verde8 .data8.chart-pie,
+.verde8 .default-color8.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde9 .data9.chart-pie,
-.Verde9 .default-color9.chart-bar{
+.verde9 .data9.chart-pie,
+.verde9 .default-color9.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
-.Verde10 .data10.chart-pie,
-.Verde10 .default-color10.chart-bar{
+.verde10 .data10.chart-pie,
+.verde10 .default-color10.chart-bar{
     -fx-pie-color: #00E396; 
     -fx-bar-fill: #00E396;
 }
 
-/* Blu */
-.Blu0 .data0.chart-pie, 
-.Blu0 .default-color0.chart-bar{
+/* BLU */
+.blu0 .data0.chart-pie, 
+.blu0 .default-color0.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu1 .data1.chart-pie, 
-.Blu1 .default-color1.chart-bar{
+.blu1 .data1.chart-pie, 
+.blu1 .default-color1.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu2 .data2.chart-pie, 
-.Blu2 .default-color2.chart-bar{
+.blu2 .data2.chart-pie, 
+.blu2 .default-color2.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu3 .data3.chart-pie, 
-.Blu3 .default-color3.chart-bar{
+.blu3 .data3.chart-pie, 
+.blu3 .default-color3.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu4 .data4.chart-pie, 
-.Blu4 .default-color4.chart-bar{
+.blu4 .data4.chart-pie, 
+.blu4 .default-color4.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu5 .data5.chart-pie, 
-.Blu5 .default-color5.chart-bar{
+.blu5 .data5.chart-pie, 
+.blu5 .default-color5.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu6 .data6.chart-pie, 
-.Blu6 .default-color6.chart-bar{
+.blu6 .data6.chart-pie, 
+.blu6 .default-color6.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu7 .data7.chart-pie, 
-.Blu7 .default-color7.chart-bar{
+.blu7 .data7.chart-pie, 
+.blu7 .default-color7.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu8 .data8.chart-pie, 
-.Blu8 .default-color8.chart-bar{
+.blu8 .data8.chart-pie, 
+.blu8 .default-color8.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu9 .data9.chart-pie, 
-.Blu9 .default-color9.chart-bar{
+.blu9 .data9.chart-pie, 
+.blu9 .default-color9.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
-.Blu10 .data10.chart-pie, 
-.Blu10 .default-color10.chart-bar{
+.blu10 .data10.chart-pie, 
+.blu10 .default-color10.chart-bar{
     -fx-pie-color: #008FFB; 
     -fx-bar-fill: #008FFB;
 }
 
-/* Viola */
-.Viola0 .data0.chart-pie,
-.Viola0 .default-color0.chart-bar{
+/* VIOLA */
+.viola0 .data0.chart-pie,
+.viola0 .default-color0.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola1 .data1.chart-pie,
-.Viola1 .default-color1.chart-bar{
+.viola1 .data1.chart-pie,
+.viola1 .default-color1.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola2 .data2.chart-pie,
-.Viola2 .default-color2.chart-bar{
+.viola2 .data2.chart-pie,
+.viola2 .default-color2.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola3 .data3.chart-pie,
-.Viola3 .default-color3.chart-bar{
+.viola3 .data3.chart-pie,
+.viola3 .default-color3.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola4 .data4.chart-pie,
-.Viola4 .default-color4.chart-bar{
+.viola4 .data4.chart-pie,
+.viola4 .default-color4.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola5 .data5.chart-pie,
-.Viola5 .default-color5.chart-bar{
+.viola5 .data5.chart-pie,
+.viola5 .default-color5.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola6 .data6.chart-pie,
-.Viola6 .default-color6.chart-bar{
+.viola6 .data6.chart-pie,
+.viola6 .default-color6.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola7 .data7.chart-pie,
-.Viola7 .default-color7.chart-bar{
+.viola7 .data7.chart-pie,
+.viola7 .default-color7.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola8 .data8.chart-pie,
-.Viola8 .default-color8.chart-bar{
+.viola8 .data8.chart-pie,
+.viola8 .default-color8.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola9 .data9.chart-pie,
-.Viola9 .default-color9.chart-bar{
+.viola9 .data9.chart-pie,
+.viola9 .default-color9.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }
-.Viola10 .data10.chart-pie,
-.Viola10 .default-color10.chart-bar{
+.viola10 .data10.chart-pie,
+.viola10 .default-color10.chart-bar{
     -fx-pie-color: #9C27B0; 
     -fx-bar-fill: #9C27B0;
 }

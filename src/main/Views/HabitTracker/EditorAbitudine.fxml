@@ -5,27 +5,23 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <DialogPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.HabitTracker.EditorAbitudineController">
    <content>
-      <AnchorPane id="AnchorPane" minHeight="345.0" prefHeight="454.0" prefWidth="600.0" style="-fx-background-color: #0E1726;">
+      <AnchorPane id="AnchorPane" minHeight="345.0" prefHeight="345.0" prefWidth="600.0" style="-fx-background-color: #0E1726;">
          <children>
             <Label layoutX="24.0" layoutY="24.0" style="-fx-text-fill: #374667;" text="Editor Abitudine" textFill="WHITE" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="24.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <VBox layoutX="24.0" layoutY="60.0" prefHeight="387.0" prefWidth="562.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="60.0">
+            <VBox layoutX="24.0" layoutY="60.0" prefHeight="310.0" prefWidth="562.0" AnchorPane.bottomAnchor="29.600000000000023" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="60.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0">
                      <children>
@@ -37,15 +33,12 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="abitudineField" prefHeight="26.0" prefWidth="472.0" promptText="Inserisci abitudine" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="abitudineField" onKeyTyped="#cambiaNome" prefHeight="26.0" prefWidth="472.0" promptText="Inserisci abitudine" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="562.0">
                      <children>
@@ -57,15 +50,12 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="descrizioneArea" prefHeight="68.0" prefWidth="430.0" />
+                        <TextArea fx:id="descrizioneArea" onKeyTyped="#cambiaDescrizione" prefHeight="68.0" prefWidth="430.0" />
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0">
                      <children>
-                        <Label prefHeight="20.0" prefWidth="125.0" text="Data di inizio:" textFill="#bac4ca">
+                        <Label prefHeight="20.0" prefWidth="115.0" text="Data di inizio:" textFill="#bac4ca">
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
@@ -75,13 +65,10 @@
                         </Label>
                         <DatePicker fx:id="dataPicker" prefHeight="26.0" prefWidth="171.0" />
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0">
                      <children>
-                        <Label prefHeight="20.0" prefWidth="125.0" text="Giorni di ripetizione:" textFill="#bac4ca">
+                        <Label prefHeight="20.0" prefWidth="132.0" text="Giorni di ripetizione:" textFill="#bac4ca">
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
@@ -164,53 +151,6 @@
                            </font>
                         </Label>
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0">
-                     <children>
-                        <Label prefHeight="20.0" prefWidth="126.0" text="Tipo:" textFill="#bac4ca">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <RadioButton fx:id="tipoRadio1" mnemonicParsing="false" onAction="#cambiaTipo" selected="true" text="Abitudine scomponibile" textFill="WHITE">
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="tipo" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="tipoRadio2" mnemonicParsing="false" onAction="#cambiaTipo" text="Abitudine sessione" textFill="WHITE" toggleGroup="$tipo">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox fx:id="formSessione" alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="562.0" visible="false">
-                     <children>
-                        <Label prefHeight="20.0" prefWidth="125.0" text="Durata" textFill="#bac4ca">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Spinner fx:id="durataSpinner" />
-                     </children>
                   </HBox>
                </children>
             </VBox>
@@ -218,7 +158,7 @@
       </AnchorPane>
    </content>
    <buttonTypes>
-      <ButtonType fx:constant="CANCEL" />
       <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
    </buttonTypes>
 </DialogPane>
