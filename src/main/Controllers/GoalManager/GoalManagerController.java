@@ -1,6 +1,8 @@
 package main.Controllers.GoalManager;
 
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.Timer;
+
+import org.controlsfx.control.Notifications;
+
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +25,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -33,8 +47,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import main.Giorno;
+import main.Main;
+import main.PageController;
 import main.Controllers.Helper;
+import main.Models.accountmanager.classes.App;
 import main.Models.goalmanager.classes.Azione;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
@@ -46,6 +68,7 @@ import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
+
 
 public class GoalManagerController {
     
@@ -83,6 +106,7 @@ public class GoalManagerController {
     private Map<String, Boolean> obiettiviAperti = new HashMap<>();
     
     //--------------------------- METODI PRIVATI --------------------------------
+    
     /**
      * Aggiorna la view degli obiettivi.
      */

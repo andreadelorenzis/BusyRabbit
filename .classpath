@@ -11,5 +11,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/andre/Desktop/controlsfx-9.0.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
