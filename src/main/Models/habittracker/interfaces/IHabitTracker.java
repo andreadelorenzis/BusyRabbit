@@ -1,10 +1,8 @@
 package main.Models.habittracker.interfaces;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-
-import main.Giorno;
+import java.util.Map;
 
 /**
  * 
@@ -33,7 +31,7 @@ public interface IHabitTracker {
      * @param date1 most recent access
      * @param date2 access of today
      */
-    public void resetHabits(LocalDate date1, LocalDate date2);
+    public void resetHabits(LocalDate date1, LocalDate date2); 
     
     /**
      * 
@@ -46,5 +44,25 @@ public interface IHabitTracker {
      * @param idHabit id of the habit
      */
     public void removeHabit(String idHabit);
+    
+    /**
+     * Get the recording of habits in a year
+     * chiave: days
+     * valore: list of habits completed
+     * 
+     * @return days of monitoring
+     */
+    public Map<Integer, List<IHabit>> getYearRecords(int year);
+    
+    /**
+     * Get the recording of habits in the last week
+     * chiave: days
+     * valore: list of habits completed
+     * 
+     * @return days of monitoring
+     */
+    public Map<Integer, List<IHabit>> getWeekRecords();
+    
+	public IHabit getHabit(String id);
     
 }

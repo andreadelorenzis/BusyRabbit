@@ -3,8 +3,10 @@ package main.Models.habittracker.interfaces;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
-import main.Giorno;
+import main.Models.habittracker.classes.HabitTracker;
+
 
 /**
  * 
@@ -47,6 +49,12 @@ public interface IHabit {
 	 * @param record count of the habit
 	 */
 	public void setRecord(int record);
+	
+	/**
+	 * 
+	 * @param date of start of the habit
+	 */
+	public void setStartDate(LocalDate date);
 	
 	/**
 	 * 
@@ -108,4 +116,11 @@ public interface IHabit {
 	 */
 	public String getId();
 	
+	public List<Integer> getYearRecords(int year);
+	
+	public List<Integer> getWeekRecords();
+	
+	public Map<Integer, List<Integer>> getYearData();
+	
+	public void addHabitRecord(LocalDate date);
 }
