@@ -1,7 +1,7 @@
-package main.Models.AccountManager.interfaces;
+package main.Models.accountmanager.interfaces;
 
-import main.Models.AccountManager.classes.ExistingAccountException;
-import main.Models.AccountManager.classes.WrongCredentialsException;
+import main.Models.accountmanager.classes.ExistingAccountException;
+import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.timetracker.interfaces.ITimeTracker;
@@ -86,15 +86,4 @@ public interface IApp {
      */
     public boolean getAccessoEffettuato();
     
-    /**
-     * 
-     * @return se lo sfondo scuro è attivo o no
-     */
-    public boolean getSfondoScuro();
-    
-    /**
-     * 
-     * @return username dell'account
-     */
-    public String getUsername();
 }

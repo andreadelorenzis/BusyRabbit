@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Models.accountmanager.classes;
 
 import java.io.BufferedReader;
@@ -18,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import main.Colori;
 import main.Giorno;
-import main.Models.AccountManager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IApp;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.classes.GoalManager;
@@ -40,24 +36,29 @@ import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISessionHabit;
 import main.Models.habittracker.interfaces.ISimpleHabit;
-import main.Models.timetracker.classes.Attivitï¿½;
+import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.classes.TimeTracker;
-import main.Models.timetracker.interfaces.IAttivitï¿½;
+import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
-/**
- *
- * @author Mars_DB
- */
 public class AppWriter {
+	private ITimeTracker tt;
+	private IGoalManager gm;
+	private IHabitTracker ht;
+	
+	public AppWriter(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
+		this.tt = tt;
+		this.gm = gm;
+		this.ht = ht;
+	}
     
-    	public void scriviProgetti(BufferedWriter writer) {
+    public void scriviProgetti(BufferedWriter writer) {
 		try {
 			int i = 0;
 			for(IProgetto p : tt.getProgetti()) {
-				// se p non ï¿½ il progetto di default
+				// se p non è il progetto di default
 				if(i > 0) {
 					String progetto = p.getNome() + "," + p.getColore() + "," + p.getId() + "\n";
 					writer.write(progetto);
@@ -69,18 +70,18 @@ public class AppWriter {
 		}
 	}
     
-    	public void scriviAttivitï¿½(BufferedWriter writer) {
+    public void scriviAttività(BufferedWriter writer) {
 		try {
-			for(IAttivitï¿½ a : tt.getAttivitï¿½()) {
+			for(IAttività a : tt.getAttività()) {
 				String idProgetto = "null";
 				if(!(a.getProgetto().getId().equals(tt.getProgetti().get(0).getId()))) {
 					idProgetto = a.getProgetto().getId();
 				} 
-				String attivitï¿½ = a.getNome() + "," + a.getData().getDayOfMonth() + "," + a.getData().getMonthValue()
+				String Attività = a.getNome() + "," + a.getData().getDayOfMonth() + "," + a.getData().getMonthValue()
 								  + "," + a.getData().getYear() + "," + a.getOraInizio().getHour() 
 								  + "," + a.getOraInizio().getMinute() + "," + a.getDurata() + "," + idProgetto + "," 
 								  + a.getId() + "\n";
-				writer.write(attivitï¿½);
+				writer.write(Attività);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

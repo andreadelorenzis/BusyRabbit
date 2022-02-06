@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Models.accountmanager.classes;
 
 import java.io.BufferedReader;
@@ -18,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import main.Colori;
 import main.Giorno;
-import main.Models.AccountManager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IApp;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.classes.GoalManager;
@@ -40,10 +36,10 @@ import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISessionHabit;
 import main.Models.habittracker.interfaces.ISimpleHabit;
-import main.Models.timetracker.classes.Attivitï¿½;
+import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.classes.TimeTracker;
-import main.Models.timetracker.interfaces.IAttivitï¿½;
+import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
@@ -52,8 +48,28 @@ import main.Models.timetracker.interfaces.ITimeTracker;
  * @author Mars_DB
  */
 public class AppReader {
+	private ITimeTracker tt;
+	private IGoalManager gm;
+	private IHabitTracker ht;
+	
+	public AppReader(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
+		this.tt = tt;
+		this.gm = gm;
+		this.ht = ht;
+	}
     
-    	public void leggiProgetti(BufferedReader reader) throws IOException {
+	private IProgetto trovaProgetto(String idProgetto) {
+		int i = 0;
+		for(IProgetto p : tt.getProgetti()) {
+			if(p.getId().equals(idProgetto)) {
+				return tt.getProgetti().get(i);
+			}
+			i++;
+		}
+		return null;
+	}
+	
+    public void leggiProgetti(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
 		while(!line.equals("---attivita---")) {
 			String[] params = line.split(",");
@@ -66,7 +82,7 @@ public class AppReader {
 		}
 	}
 	
-	public void leggiAttivitï¿½(BufferedReader reader) throws IOException {
+	public void leggiAttività(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
 		while(!(line.equals("---obiettivi---"))) {	
 			String[] params = line.split(",");
@@ -80,14 +96,14 @@ public class AppReader {
 			String idProgetto = params[7];
 			String id = params[8];
 			IProgetto progetto;
-			IAttivitï¿½ a;
+			IAttività a;
 			if(!idProgetto.equals("null")) {
 				progetto = trovaProgetto(idProgetto);
-				a = new Attivitï¿½(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, progetto, id);
+				a = new Attività(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, progetto, id);
 			} else {
-				a = new Attivitï¿½(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, id);
+				a = new Attività(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, id);
 			}
-			tt.aggiungiAttivitï¿½(a);
+			tt.aggiungiAttività(a);
 			line = reader.readLine();
 		}
 	}
@@ -161,10 +177,10 @@ public class AppReader {
 					mese = Integer.parseInt(params[6]);
 					anno = Integer.parseInt(params[7]);
 					int valore = Integer.parseInt(params[8]);
-					String unitï¿½ = params[9];
+					String unità = params[9];
 					id = params[10];
 					// creo il sotto-obiettivo azione e lo aggiungo alla lista
-					nuovo = new ObiettivoAzione(nome, descrizione, LocalDate.of(anno, mese, giorno), valore, unitï¿½, id);
+					nuovo = new ObiettivoAzione(nome, descrizione, LocalDate.of(anno, mese, giorno), valore, unità, id);
 					obiettivi.add(nuovo);
 					// lo aggiungo anche al obiettivo padre, giï¿½ aggiunto nella lista
 					int i = 0;
@@ -182,10 +198,10 @@ public class AppReader {
 					mese = Integer.parseInt(params[5]);
 					anno = Integer.parseInt(params[6]);
 					int valore = Integer.parseInt(params[7]);
-					String unitï¿½ = params[8];
+					String unità = params[8];
 					id = params[9];
 					// creo l'obiettivo scomponibile e lo aggiungo alla lista
-					nuovo = new ObiettivoAzione(nome, descrizione, LocalDate.of(anno, mese, giorno), valore, unitï¿½, id);
+					nuovo = new ObiettivoAzione(nome, descrizione, LocalDate.of(anno, mese, giorno), valore, unità, id);
 					obiettivi.add(nuovo);
 					gm.aggiungiObiettivo(nuovo);
 				}

@@ -1,4 +1,4 @@
-package main.Models.AccountManager.classes;
+package main.Models.accountmanager.classes;
 
 public class WrongCredentialsException extends Exception {
 	

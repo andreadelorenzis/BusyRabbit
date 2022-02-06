@@ -1,4 +1,4 @@
-package main.Models.AccountManager.classes;
+package main.Models.accountmanager.classes;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import main.Colori;
 import main.Giorno;
-import main.Models.AccountManager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IApp;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.classes.GoalManager;
@@ -36,10 +36,10 @@ import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISessionHabit;
 import main.Models.habittracker.interfaces.ISimpleHabit;
-import main.Models.timetracker.classes.Attivitï¿½;
+import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.classes.TimeTracker;
-import main.Models.timetracker.interfaces.IAttivitï¿½;
+import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
@@ -50,8 +50,8 @@ public class App implements IApp {
 	private String email = "";
 	private String password = "";
 	private boolean accessoEffettuato = false;
-        private AppWriter writerAp = new AppWriter();
-        private AppReader readerAp = new AppReader();
+    private AppWriter writerApp = new AppWriter(tt, gm, ht);
+    private AppReader readerApp = new AppReader(tt, gm, ht);
 
 	@Override
 	public void registraAccount(String nome, String email, String password, String ripetiPass) throws WrongCredentialsException, 
@@ -99,19 +99,19 @@ public class App implements IApp {
 				reader.readLine();
 
 				// lettura progetti
-				readerAp.leggiProgetti(reader);
+				readerApp.leggiProgetti(reader);
 				
-				// lettura attivitï¿½
-				readerAp.leggiAttivitï¿½(reader);
+				// lettura Attività
+				readerApp.leggiAttività(reader);
 				
 				// lettura obiettivi
-				readerAp.leggiObiettivi(reader);
+				readerApp.leggiObiettivi(reader);
 				
 				// lettura abitudini
-				readerAp.leggiAbitudini(reader);
+				readerApp.leggiAbitudini(reader);
 				
 				// lettura storico abitudini
-				readerAp.leggiStoricoAbitudini(reader);
+				readerApp.leggiStoricoAbitudini(reader);
 				
 				reader.close();
 			} else {
@@ -174,21 +174,22 @@ public class App implements IApp {
 	
 	@Override
 	public void salvaDati() {
+		
 		if(accessoEffettuato) {
 			BufferedWriter writer;
 			try {
 				writer = new BufferedWriter(new FileWriter("database/" + email + ".txt", false));
 				writer.write("password," + password + "\n");
 				writer.write("---progetti---\n");
-				scriviProgetti(writer);
+				writerApp.scriviProgetti(writer);
 				writer.write("---attivita---\n");
-				scriviAttivitï¿½(writer);
+				writerApp.scriviAttività(writer);
 				writer.write("---obiettivi---\n");
-				scriviObiettivi(writer, gm.getObiettivi());
+				writerApp.scriviObiettivi(writer, gm.getObiettivi());
 				writer.write("---abitudini---\n");
-				scriviAbitudini(writer);
+				writerApp.scriviAbitudini(writer);
 				writer.write("---storico-abitudini---\n");
-				scriviStoricoAbitudini(writer);
+				writerApp.scriviStoricoAbitudini(writer);
 				writer.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -248,15 +249,5 @@ public class App implements IApp {
 			}
 		}
 	}
-		
-	private IProgetto trovaProgetto(String idProgetto) {
-		int i = 0;
-		for(IProgetto p : tt.getProgetti()) {
-			if(p.getId().equals(idProgetto)) {
-				return tt.getProgetti().get(i);
-			}
-			i++;
-		}
-		return null;
-	}
+
 }
