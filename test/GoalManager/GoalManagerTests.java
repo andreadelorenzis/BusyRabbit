@@ -22,8 +22,14 @@ import main.Models.goalmanager.interfaces.IAzioneSessione;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 
+/**
+ * TODO:
+ * - testare obiettivo padre []
+ * - testare azioni giornaliere per singolo obiettivo []
+ *
+ */
 public class GoalManagerTests {
-    GoalManager g = null;
+    GoalManager g = null; 
     
     private void inizializzaGoalManager(GoalManager g) {
         g.aggiungiObiettivo(new ObiettivoScomponibile("Fare una maratona", 
@@ -34,7 +40,7 @@ public class GoalManagerTests {
                                                 LocalDate.of(2022, Month.JANUARY, 2), 
                                                 60, 
                                                 "ore"));
-    }
+    } 
     
     private void aggiungiSottoObiettivi(GoalManager g) {
         // aggiungo 2 sotto-obiettivi all'ObiettivoScomponibile
@@ -228,28 +234,34 @@ public class GoalManagerTests {
     }   
     
     // Verifica il completamento di un'AzioneSessione
-    /*
     @Test
-    public void testAzioneSession() throws InterruptedException {
+    public void testAzioneSessione() throws InterruptedException {
     	g = new GoalManager();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
         IAzioneSessione azione = (IAzioneSessione) obiettivo.getAzioni().get(1);
         
+        // l'azione non è completata
+        assertFalse(azione.getCompletata());
+        
         // Imposto la durata a 1 secondo
-        azione.setDurata(2);
+        azione.setDurata(1);
         
         // faccio partire la sessione
         azione.avviaSessione();
         
-        // attendo 1.5 secondi
-        Thread.sleep(1500);
+        // attendo 2 secondi e qualcosa
+		try {
+			Thread.sleep(2100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} 
         
         // l'azione è completata
         assertTrue(azione.getCompletata());
         
-    }*/
+    }
     
     /**
      * Verifica l'eliminazione di obiettivi, azioni e items.

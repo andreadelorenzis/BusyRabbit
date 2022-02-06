@@ -3,6 +3,10 @@ package AccountManager;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 import main.Colori;
@@ -15,6 +19,7 @@ import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
+import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISimpleHabit;
 import main.Models.timetracker.interfaces.IAttività;
@@ -31,7 +36,7 @@ class AccountManagerTests {
 	private void accedi(IApp app) {
 		// accede all'account presente nel database
 		try {
-			app.accedi("andredelo@gmail.com", "pass123");
+			app.accedi("test@gmail.com", "pass123");
 		} catch (WrongCredentialsException e) {
 			e.printStackTrace();
 		}
@@ -42,11 +47,11 @@ class AccountManagerTests {
 		IApp app = new App();
 		
 		// prova ad accedere ad un account sbagliando email
-		assertThrows(WrongCredentialsException.class, () -> app.accedi("andredelo@gmail.co", "pass123"));
+		assertThrows(WrongCredentialsException.class, () -> app.accedi("test@gmail.co", "pass123"));
 		assertFalse(app.getAccessoEffettuato());
 		
 		// prova ad accedere ad un account sbagliando password
-		assertThrows(WrongCredentialsException.class, () -> app.accedi("andredelo@gmail.com", "pass13"));
+		assertThrows(WrongCredentialsException.class, () -> app.accedi("test@gmail.com", "pass13"));
 		assertFalse(app.getAccessoEffettuato());
 		
 		// accede ad un account esistente
@@ -66,8 +71,8 @@ class AccountManagerTests {
 		assertFalse(app.getAccessoEffettuato());
 		assertFalse(new File("database/andre@gmail.com.txt").exists());
 		
-		// prova a creare un nuovo account, ma l'email "andredelo@gmail.com" è già stata usata
-		assertThrows(ExistingAccountException.class, () -> app.registraAccount("Andre", "andredelo@gmail.com", "pass123", "pass123"));
+		// prova a creare un nuovo account, ma l'email "newemail@gmail.com" è già stata usata
+		assertThrows(ExistingAccountException.class, () -> app.registraAccount("Andre", "test@gmail.com", "pass123", "pass123"));
 		
 		// registra un nuovo account con successo
 		try {
@@ -138,6 +143,7 @@ class AccountManagerTests {
 		assertEquals(5, a.getData().getMonthValue());
 		assertEquals(2022, a.getData().getYear());
 		assertEquals(7200, a.getDurata());
+		assertEquals(LocalTime.of(23, 1), a.getOraInizio());
 		assertEquals("idP1", a.getProgetto().getId());
 		assertEquals("idA1", a.getId());
 		
@@ -208,16 +214,23 @@ class AccountManagerTests {
 	}
 	
 	@Test
-	public void testLetturaImpostazioni() {
+	public void testLetturaStoricoAbitudini() {
 		IApp app = new App();
+		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
 		accedi(app);
 		
-		// sfondo-scuro: true
-		assertTrue(app.getSfondoScuro());
-		// username: andre
-		assertEquals("andre", app.getUsername());
+		// testo i dati salvati nell'anno 2021
+		Map<Integer, List<IHabit>> anno2021 = ht.getYearRecords(2021);
+		Map<Integer, List<IHabit>> anno2022 = ht.getYearRecords(2022);
+		// il giorno 8 dell'anno 2022 ha 2 abitudini completate
+		assertEquals(2, anno2022.get(8).size());
+		assertEquals("routine mattutina", anno2022.get(8).get(0).getName());
+		assertEquals("allenamento", anno2022.get(8).get(1).getName());
+		// il giorno 5 del 2021 ha 1 abitudine completata
+		assertEquals(1, anno2021.get(5).size());
+		assertEquals("allenamento", anno2021.get(5).get(0).getName());
 	}
 
 }
