@@ -24,8 +24,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import main.Models.AccountManager.classes.App;
-import main.Models.AccountManager.interfaces.IApp;
+import main.Models.accountmanager.classes.App;
+import main.Models.accountmanager.interfaces.IApp;
 
 /**
  *

@@ -3,9 +3,9 @@ package main.Controllers.Impostazioni;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import main.Models.AccountManager.classes.ExistingAccountException;
-import main.Models.AccountManager.classes.WrongCredentialsException;
-import main.Models.AccountManager.interfaces.IApp;
+import main.Models.accountmanager.classes.ExistingAccountException;
+import main.Models.accountmanager.classes.WrongCredentialsException;
+import main.Models.accountmanager.interfaces.IApp;
 
 public class ImpostazioniController {
 	@FXML

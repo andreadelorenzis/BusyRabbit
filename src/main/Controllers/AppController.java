@@ -21,7 +21,7 @@ import main.Controllers.GoalManager.GoalManagerController;
 import main.Controllers.HabitTracker.HabitTrackerController;
 import main.Controllers.Impostazioni.ImpostazioniController;
 import main.Controllers.TimeTracker.TimeTrackerController;
-import main.Models.AccountManager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IApp;
 import main.Main;
 
 public class AppController {

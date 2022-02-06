@@ -10,10 +10,10 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import main.Colori;
-import main.Models.AccountManager.classes.App;
-import main.Models.AccountManager.classes.ExistingAccountException;
-import main.Models.AccountManager.classes.WrongCredentialsException;
-import main.Models.AccountManager.interfaces.IApp;
+import main.Models.accountmanager.classes.App;
+import main.Models.accountmanager.classes.ExistingAccountException;
+import main.Models.accountmanager.classes.WrongCredentialsException;
+import main.Models.accountmanager.interfaces.IApp;
 import main.Models.goalmanager.classes.ObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.IGoalManager;
