@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <DialogPane prefHeight="429.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.EditorObiettiviController">
    <content>
       <AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #0E1726;">
@@ -91,7 +90,7 @@
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="unitàField" onKeyTyped="#cambiaUnità" prefHeight="30.0" prefWidth="164.0" promptText="Unità di misura (es: ore)" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
+                        <TextField fx:id="unitàField" prefHeight="30.0" prefWidth="164.0" promptText="Unità di misura (es: ore)" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
                            <font>
                               <Font size="14.0" />
                            </font>

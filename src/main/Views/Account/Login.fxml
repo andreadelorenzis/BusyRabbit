@@ -28,14 +28,20 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <TextField layoutY="74.0" prefHeight="26.0" prefWidth="444.0" promptText="Inserisci email" style="-fx-background-color: #1B2E4B;">
+            <TextField fx:id="emailLogField" layoutY="74.0" prefHeight="26.0" prefWidth="444.0" promptText="Inserisci email" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
                <cursor>
                   <Cursor fx:constant="TEXT" />
-               </cursor></TextField>
-            <TextField layoutY="113.0" prefHeight="26.0" prefWidth="444.0" promptText="Inserisci password" style="-fx-background-color: #1B2E4B;">
+               </cursor>
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="passLogField" layoutY="113.0" prefHeight="26.0" prefWidth="444.0" promptText="Inserisci password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
                <cursor>
                   <Cursor fx:constant="TEXT" />
-               </cursor></TextField>
+               </cursor>
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
             <Label layoutX="76.0" layoutY="161.0" onMouseClicked="#apriPaginaRegistrazione" style="-fx-font-weight: 900;" text="Non sei ancora registrato? Registrati." textFill="#2196f3">
                <font>
                   <Font size="16.0" />
@@ -44,7 +50,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Button layoutX="148.0" layoutY="222.0" mnemonicParsing="false" onMouseClicked="#apriSchermataPrincipale" prefHeight="40.0" prefWidth="135.0" style="-fx-font-weight: 800; -fx-background-color: #4361EE;" text="Accedi" textFill="WHITE">
+            <Button layoutX="148.0" layoutY="222.0" mnemonicParsing="false" onAction="#accedi" prefHeight="40.0" prefWidth="135.0" style="-fx-font-weight: 800; -fx-background-color: #4361EE;" text="Accedi" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

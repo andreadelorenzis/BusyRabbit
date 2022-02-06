@@ -9,165 +9,177 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="979.0" prefWidth="1038.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.Dashboard.ReportAbitudiniController">
+<AnchorPane style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.Dashboard.ReportAbitudiniController">
    <children>
-      <Label layoutX="35.0" layoutY="11.0" text="Report Abitudini" textFill="#374667">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="34.0" layoutY="49.0" prefHeight="618.0" prefWidth="863.0" style="-fx-background-radius: 12; -fx-background-color: #0E1726; -fx-border-radius: 12;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="49.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="0.800000011920929" layoutY="0.800000011920929" style="-fx-background-color: #060818;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.800000011920929">
          <content>
-            <AnchorPane prefHeight="627.0" prefWidth="665.0" style="-fx-background-color: #0E1726; -fx-border-radius: 12;">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
+            <AnchorPane id="AnchorPane" prefHeight="717.0" prefWidth="755.0" style="-fx-background-color: #060818;">
                <children>
-                  <HBox alignment="CENTER" layoutX="40.0" layoutY="325.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.39999999999998">
+                  <Label layoutX="86.0" layoutY="16.0" text="Report Abitudini" textFill="#374667" AnchorPane.leftAnchor="86.0" AnchorPane.topAnchor="16.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane layoutX="70.0" layoutY="54.0" maxWidth="1400.0" prefHeight="609.0" prefWidth="748.0" style="-fx-background-color: #0E1726; -fx-border-radius: 12; -fx-background-radius: 12;" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="54.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
                      <children>
-                        <VBox prefHeight="194.0" prefWidth="897.0" style="-fx-border-color: #2B305B;">
+                        <VBox alignment="CENTER" layoutX="38.0" layoutY="26.0" maxWidth="1100.0" prefHeight="562.0" prefWidth="929.0" AnchorPane.leftAnchor="10.400000000000091" AnchorPane.rightAnchor="20.399999999999864">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="897.0" VBox.vgrow="NEVER">
-                                 <children>
-                                    <Label text="Gen" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="50.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Feb" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Mar" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Apr" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Mag" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Giu" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Lug" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Ago" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Set" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Ott" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Nov" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label text="Dic" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="40.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="849.0" style="-fx-font-weight: 800; -fx-font-size: 16;" text="Ultimi 7 giorni" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets bottom="25.0" />
                                  </VBox.margin>
-                              </HBox>
-                              <HBox prefHeight="122.0" prefWidth="653.0" VBox.vgrow="NEVER">
+                              </Label>
+                              <HBox fx:id="settimanaBox" alignment="CENTER" maxWidth="902.0" prefHeight="129.0" prefWidth="857.0" />
+                              <VBox maxWidth="940.0">
                                  <children>
-                                    <VBox alignment="CENTER" prefHeight="135.0" prefWidth="36.0" HBox.hgrow="NEVER">
+                                    <Label prefHeight="26.0" prefWidth="889.0" style="-fx-font-weight: 800; -fx-font-size: 16;" text="Diagramma annuale" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="CENTER" prefHeight="212.0" prefWidth="892.0">
                                        <children>
-                                          <Label text="Lun" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets top="5.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Label alignment="CENTER" prefWidth="34.0" text="Mer" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Label text="Ven" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Label text="Dom" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                          </Label>
+                                          <VBox prefHeight="160.0" prefWidth="906.0" style="-fx-border-color: #2B305B;">
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="891.0" VBox.vgrow="NEVER">
+                                                   <children>
+                                                      <Label text="Gen" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="50.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Feb" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Mar" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Apr" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Mag" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Giu" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Lug" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Ago" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Set" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Ott" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Nov" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label text="Dic" textFill="WHITE">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox prefHeight="150.0" prefWidth="891.0" VBox.vgrow="NEVER">
+                                                   <children>
+                                                      <VBox alignment="CENTER" minWidth="45.0" prefHeight="135.0" prefWidth="41.0" HBox.hgrow="NEVER">
+                                                         <children>
+                                                            <Label text="Lun" textFill="WHITE">
+                                                               <VBox.margin>
+                                                                  <Insets top="5.0" />
+                                                               </VBox.margin>
+                                                            </Label>
+                                                            <Label alignment="CENTER" prefWidth="34.0" text="Mer" textFill="WHITE">
+                                                               <VBox.margin>
+                                                                  <Insets top="20.0" />
+                                                               </VBox.margin>
+                                                            </Label>
+                                                            <Label text="Ven" textFill="WHITE">
+                                                               <VBox.margin>
+                                                                  <Insets top="20.0" />
+                                                               </VBox.margin>
+                                                            </Label>
+                                                            <Label text="Dom" textFill="WHITE">
+                                                               <VBox.margin>
+                                                                  <Insets bottom="10.0" top="20.0" />
+                                                               </VBox.margin>
+                                                            </Label>
+                                                         </children>
+                                                         <HBox.margin>
+                                                            <Insets right="10.0" />
+                                                         </HBox.margin>
+                                                      </VBox>
+                                                      <TilePane fx:id="tilePane" orientation="VERTICAL" prefHeight="146.0" prefRows="10" prefTileHeight="17.0" prefTileWidth="17.0" prefWidth="5.0" HBox.hgrow="NEVER" />
+                                                      <VBox fx:id="selezioneAnniBox" alignment="TOP_CENTER" minWidth="100.0" prefHeight="200.0" prefWidth="100.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
                                        </children>
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </VBox>
-                                    <TilePane fx:id="tilePane" orientation="VERTICAL" prefHeight="135.0" prefWidth="730.0" HBox.hgrow="ALWAYS" />
-                                    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <Label text="2021" textFill="WHITE" />
-                                          <Label text="2021" textFill="WHITE" />
-                                          <Label text="2021" textFill="WHITE" />
-                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox maxWidth="940.0">
+                                 <children>
+                                    <Label fx:id="giornoLabel" style="-fx-font-weight: 800;" text="Label" textFill="WHITE" visible="false">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <VBox fx:id="giornoBox" prefHeight="152.0" prefWidth="900.0" style="-fx-border-color: #2B305B;" visible="false">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
                                     </VBox>
                                  </children>
-                              </HBox>
+                              </VBox>
                            </children>
                         </VBox>
                      </children>
-                  </HBox>
-                  <Label alignment="CENTER" layoutX="34.0" layoutY="283.0" prefHeight="26.0" prefWidth="889.0" style="-fx-font-weight: 800; -fx-font-size: 16;" text="Diagramma annuale" textFill="WHITE" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.39999999999998">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="79.0" layoutY="21.0" prefHeight="26.0" prefWidth="849.0" style="-fx-font-weight: 800; -fx-font-size: 16;" text="Ultimi 7 giorni" textFill="WHITE" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="86.0">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <HBox fx:id="settimanaBox" alignment="CENTER" layoutX="50.0" layoutY="68.0" maxWidth="902.0" prefHeight="102.0" prefWidth="902.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="68.0" />
-                  <HBox alignment="CENTER" layoutX="61.0" layoutY="614.0" prefHeight="152.0" prefWidth="905.0" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="62.0">
-                     <children>
-                        <VBox fx:id="giornoBox" prefHeight="152.0" prefWidth="900.0" style="-fx-border-color: #2B305B;">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Label fx:id="giornoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="567.0" prefHeight="26.0" prefWidth="887.0" style="-fx-font-weight: 800; -fx-font-size: 16;" text="Label" textFill="WHITE" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="76.39999999999998">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </content>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
       </ScrollPane>
    </children>
 </AnchorPane>
