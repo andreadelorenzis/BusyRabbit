@@ -86,4 +86,6 @@ public interface IApp {
      */
     public boolean getAccessoEffettuato();
     
+    public String getEmail();
+    
 }

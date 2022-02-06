@@ -139,6 +139,7 @@ public class App implements IApp {
 		return accessoEffettuato;
 	}
 	
+	@Override
 	public String getEmail() {
 		return email;
 	}
