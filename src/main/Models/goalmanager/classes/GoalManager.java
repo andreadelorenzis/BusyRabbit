@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import main.Giorno;
+import main.Controllers.GoalManager.GMHelper;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.goalmanager.interfaces.IObiettivo;
@@ -19,22 +20,6 @@ public class GoalManager implements IGoalManager {
     public GoalManager() {
         
     };
-    
-    /**
-     * 
-     * @param data la data da comparare
-     * @param giorni la lista di giorni
-     * @return se il giorno della data è presente nella lista di giorni
-     */
-    private boolean giornoPresente(LocalDate data, List<Giorno> giorni) {
-        boolean presente = false;
-        for(Giorno giorno : giorni) {
-            if(data.getDayOfWeek().toString().equals(giorno.toString())) {
-                presente = true;
-            }
-        }
-        return presente;
-    }
     
     @Override
     public void aggiungiObiettivo(IObiettivo obiettivo) {
@@ -67,7 +52,7 @@ public class GoalManager implements IGoalManager {
                         obAzione.getAzioni().stream()
                                             .forEach(azione -> {
                                                if((azione.getDataInizio().isBefore(data) || azione.getDataInizio().isEqual(data))
-                                                  && giornoPresente(data, azione.getGiorniRipetizione())
+                                                  && GMHelper.giornoPresente(data, azione.getGiorniRipetizione())
                                                   && !ob.getCompletato()) {
                                                    azioni.add(azione);
                                                } 
@@ -76,6 +61,7 @@ public class GoalManager implements IGoalManager {
                  });
         return azioni;             
     }
+    
 
     @Override
     public void eliminaObiettivo(String idObiettivo) {

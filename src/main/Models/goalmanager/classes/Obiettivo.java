@@ -15,7 +15,7 @@ public abstract class Obiettivo implements IObiettivo {
     /**
      * La descrizione
      */
-    private String descrizione;
+    private String descrizione = "";
     
     /**
      * La data di scadenza dell'obiettivo
@@ -40,9 +40,20 @@ public abstract class Obiettivo implements IObiettivo {
     /**
      * Identificativo del obiettivo
      */
-    private final String id;
+    private String id;
     
     //----------------------------- COSTRUTTORI --------------------------------
+    /**
+     * 
+     * @param nome
+     * @param data 
+     */
+    public Obiettivo(String nome, LocalDate data) {
+        this.nome = nome;
+        this.data = data;
+        this.id = UUID.randomUUID().toString();
+    }
+    
     /**
      * 
      * @param nome 
@@ -50,19 +61,21 @@ public abstract class Obiettivo implements IObiettivo {
      * @param data 
      */
     public Obiettivo(String nome, String descrizione, LocalDate data) {
-        this.nome = nome;
+        this(nome, data);
         this.descrizione = descrizione;
-        this.data = data;
-        this.id = UUID.randomUUID().toString();
     }
-
+    
     /**
      * 
      * @param nome
-     * @param data 
+     * @param descrizione
+     * @param data
+     * @param id
      */
-    public Obiettivo(String nome, LocalDate data) {
-        this(nome, "", data);
+    public Obiettivo(String nome, String descrizione, LocalDate data, String id) {
+        this(nome, data);
+        this.descrizione = descrizione;
+        this.id = id;
     }
     
     //--------------------------- METODI PUBBLICI ------------------------------

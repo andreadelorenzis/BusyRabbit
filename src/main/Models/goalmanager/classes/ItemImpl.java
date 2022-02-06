@@ -18,14 +18,14 @@ public class ItemImpl implements Item {
     private boolean completato = false;
     
     /**
-     * L'AzioneScomponibile che si compone di questo item
+     * Il padre che contiene questo item
      */
-    private IAzioneScomponibile azione;
+    private Object padre;
     
     /**
      * Identificativo dell'item
      */
-    private final String id;
+    private String id;
     
     //----------------------------- COSTRUTTORI --------------------------------
     /**
@@ -37,6 +37,11 @@ public class ItemImpl implements Item {
         this.id = UUID.randomUUID().toString();
     }
 
+    public ItemImpl(String nome, String id) {
+        this(nome);
+        this.id = id;
+    }
+    
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
     public void completa() {
@@ -64,12 +69,12 @@ public class ItemImpl implements Item {
     }
 
     @Override
-    public IAzioneScomponibile getAzione() {
-        return azione;
+    public Object getPadre() {
+        return padre;
     }
     
     @Override
-    public void setAzione(IAzioneScomponibile azione) {
-        this.azione = azione;
+    public void setPadre(Object padre) {
+        this.padre = padre;
     }
 }

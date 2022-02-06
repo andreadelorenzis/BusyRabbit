@@ -27,10 +27,16 @@ public class AzioneScomponibile extends Azione implements IAzioneScomponibile {
     public AzioneScomponibile(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni) {
         super(nome, incremento, dataInizio, giorni);
     }
+    
+    public AzioneScomponibile(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni, String id) {
+        super(nome, incremento, dataInizio, giorni, id);
+    }
+
 
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
     public void aggiungiItem(Item item) {
+    	item.setPadre(this);
         items.add(item);
     }
 

@@ -19,6 +19,15 @@ public class ObiettivoScomponibile extends Obiettivo implements IObiettivoScompo
     /**
      * 
      * @param nome
+     * @param data 
+     */
+    public ObiettivoScomponibile(String nome, LocalDate data) {
+        super(nome, data);
+    }
+    
+    /**
+     * 
+     * @param nome
      * @param descrizione
      * @param data 
      */
@@ -29,11 +38,14 @@ public class ObiettivoScomponibile extends Obiettivo implements IObiettivoScompo
     /**
      * 
      * @param nome
-     * @param data 
+     * @param descrizione
+     * @param data
+     * @param id
      */
-    public ObiettivoScomponibile(String nome, LocalDate data) {
-        this(nome, "", data);
+    public ObiettivoScomponibile(String nome, String descrizione, LocalDate data, String id) {
+        super(nome, descrizione, data, id);
     }
+
 
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override

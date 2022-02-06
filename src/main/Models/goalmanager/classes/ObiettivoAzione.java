@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import main.Controllers.GoalManager.GMHelper;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 
@@ -31,14 +33,46 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     private String unita;
 
     //----------------------------- COSTRUTTORI --------------------------------
-    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unita) {
-        super(nome, descrizione, data);
-        this.unita = unita;
-        this.valoreTotale = valoreTotale;
+    /**
+     * 
+     * @param nome
+     * @param data
+     * @param valore
+     * @param unita
+     */
+    public ObiettivoAzione(String nome, LocalDate data, int valore, String unita) {
+    	super(nome, data);
+    	this.valoreTotale = valore;
+    	this.unita = unita;
     }
     
-    public ObiettivoAzione(String nome, LocalDate data, int valore, String unita) {
-        this(nome, "", data, valore, unita);
+    /**
+     * 
+     * @param nome
+     * @param descrizione
+     * @param data
+     * @param valoreTotale
+     * @param unita
+     */
+    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unita) {
+        super(nome, descrizione, data);
+        this.valoreTotale = valoreTotale;
+    	this.unita = unita;
+    }
+    
+    /**
+     * 
+     * @param nome
+     * @param descrizione
+     * @param data
+     * @param valoreTotale
+     * @param unita
+     * @param id
+     */
+    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unita, String id) {
+        super(nome, descrizione, data, id);
+        this.valoreTotale = valoreTotale;
+    	this.unita = unita;
     }
 
     //--------------------------- METODI PUBBLICI ------------------------------
@@ -56,6 +90,20 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     @Override
     public List<IAzione> getAzioni() {
         return azioni;
+    }
+    
+    @Override 
+    public List<IAzione> getAzioniGiornaliere(LocalDate data) {
+        List<IAzione> azioni = new ArrayList<>();
+        this.azioni.stream()
+        	  .forEach(az -> {
+        		  if((az.getDataInizio().isBefore(data) || az.getDataInizio().isEqual(data)) 
+        			 && GMHelper.giornoPresente(data, az.getGiorniRipetizione()) 
+        			 && !super.getCompletato()) {
+        			  azioni.add(az);
+        		  }
+        	  });
+        return azioni;    
     }
 
     @Override

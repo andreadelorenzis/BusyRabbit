@@ -9,7 +9,7 @@ import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 
-public class Azione implements IAzione {
+public abstract class Azione implements IAzione {
     
     //-------------------------------- CAMPI -----------------------------------
     /**
@@ -45,7 +45,7 @@ public class Azione implements IAzione {
     /**
      * Identificativo dell'azione
      */
-    private final String id;
+    private String id;
 
     //----------------------------- COSTRUTTORI --------------------------------
     /***
@@ -60,6 +60,11 @@ public class Azione implements IAzione {
         this.dataInizio = dataInizio;
         this.giorni = giorni;
         this.id = UUID.randomUUID().toString();
+    }
+    
+    public Azione(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni, String id) {
+        this(nome, incremento, dataInizio, giorni);
+        this.id = id;
     }
 
     //--------------------------- METODI PUBBLICI ------------------------------
