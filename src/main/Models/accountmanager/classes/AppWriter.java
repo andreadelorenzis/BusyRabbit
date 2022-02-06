@@ -1,24 +1,13 @@
 package main.Models.accountmanager.classes;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import main.Colori;
 import main.Giorno;
-import main.Models.accountmanager.interfaces.IApp;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
-import main.Models.goalmanager.classes.GoalManager;
-import main.Models.goalmanager.classes.ItemImpl;
 import main.Models.goalmanager.classes.ObiettivoAzione;
 import main.Models.goalmanager.classes.ObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.IAzione;
@@ -29,28 +18,22 @@ import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.Item;
-import main.Models.habittracker.classes.HabitTracker;
 import main.Models.habittracker.classes.SessionHabit;
 import main.Models.habittracker.classes.SimpleHabit;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISessionHabit;
 import main.Models.habittracker.interfaces.ISimpleHabit;
-import main.Models.timetracker.classes.Attività;
-import main.Models.timetracker.classes.Progetto;
-import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
 public class AppWriter {
 	private ITimeTracker tt;
-	private IGoalManager gm;
 	private IHabitTracker ht;
 	
 	public AppWriter(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
 		this.tt = tt;
-		this.gm = gm;
 		this.ht = ht;
 	}
     
