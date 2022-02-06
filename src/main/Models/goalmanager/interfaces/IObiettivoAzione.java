@@ -29,6 +29,12 @@ public interface IObiettivoAzione extends IObiettivo {
     
     /**
      * 
+     * @return le azioni da completare alla data specificata
+     */
+    public List<IAzione> getAzioniGiornaliere(LocalDate data);
+    
+    /**
+     * 
      * @param idAzione identificativo dell'azione da eliminare
      */
     public void eliminaAzione(String idAzione);

@@ -37,6 +37,7 @@ public interface IGoalManager {
      */
     public List<IAzione> calcolaAzioniGiornaliere(LocalDate data);
     
+    
     /**
      * Elimina un obiettivo.
      * 

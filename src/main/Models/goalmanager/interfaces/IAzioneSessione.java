@@ -1,6 +1,6 @@
 package main.Models.goalmanager.interfaces;
 
-import main.Models.timetracker.classes.Timer;
+import main.Models.timetracker.classes.TimerSemplice;
 
 /**
  * Azione associata ad una durata di tempo. L'azione può essere completata al termine di un timer
@@ -12,11 +12,11 @@ public interface IAzioneSessione extends IAzione {
      * Fa partire il timer con la durata di tempo impostata per l'azione.
      */
     public void avviaSessione();
-    
+
     /**
-     * Mette in pausa il timer.
+     * Fa terminare il timer.
      */
-    public void sospendiSessione();
+    public void terminaSessione();
     
     /**
      * 
@@ -28,7 +28,7 @@ public interface IAzioneSessione extends IAzione {
      * 
      * @return il timer associato a questa azione
      */
-    public Timer getTimer();
+    public TimerSemplice getTimer();
     
     /**
      * 

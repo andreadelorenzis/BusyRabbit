@@ -39,12 +39,12 @@ public interface Item {
      * 
      * @return azione
      */
-    public IAzioneScomponibile getAzione();
+    public Object getPadre();
     
     /**
      * 
      * @param azione 
      */
-    public void setAzione(IAzioneScomponibile azione);
+    public void setPadre(Object obj);
     
 }
