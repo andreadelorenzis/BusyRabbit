@@ -1,20 +1,12 @@
 package main.Controllers;
 
-import main.FxmlLoader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,20 +15,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import main.Controllers.Dashboard.ReportAbitudiniController;
+import main.Controllers.Dashboard.ReportTempoController;
 import main.Controllers.GoalManager.GoalManagerController;
+import main.Controllers.HabitTracker.HabitTrackerController;
+import main.Controllers.Impostazioni.ImpostazioniController;
+import main.Controllers.TimeTracker.TimeTrackerController;
+import main.Models.AccountManager.interfaces.IApp;
 import main.Main;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author andre
- */
 public class AppController {
     @FXML
     private HBox timeHBox;
@@ -44,28 +31,18 @@ public class AppController {
     private Label timeLabel;
     @FXML
     private ImageView timeImg;
-    
     @FXML
     private HBox goalHBox;
     @FXML
     private Label goalLabel;
     @FXML
     private ImageView goalImg;
-    
     @FXML
     private HBox habitHBox;
     @FXML
     private Label habitLabel;
     @FXML
     private ImageView habitImg;
-    
-    @FXML
-    private HBox agendaHBox;
-    @FXML
-    private Label agendaLabel;
-    @FXML
-    private ImageView agendaImg;
-    
     @FXML
     private HBox dashboardHBox;
     @FXML
@@ -79,9 +56,6 @@ public class AppController {
     
     private HBox timeReportBox = new HBox();
     private Label timeReportLabel = new Label("Report Tempo");
-    
-    private HBox obiettiviReportBox = new HBox();
-    private Label obiettiviReportLabel = new Label("Report Obiettivi");
     
     private HBox abitudiniReportBox = new HBox();
     private Label abitudiniReportLabel = new Label("Report Abitudini");
@@ -98,22 +72,19 @@ public class AppController {
     @FXML
     private BorderPane panePrincipale;
     
+    private IApp app;
+    
     @FXML 
     private void initialize() throws IOException {
         String stile = "-fx-text-fill: #58698D; -fx-font-weight: 800; -fx-font-size: 16;";
         
         this.timeReportLabel.setStyle(stile);
-        this.obiettiviReportLabel.setStyle(stile);
         this.abitudiniReportLabel.setStyle(stile);
         
         this.timeReportBox.getChildren().add(this.timeReportLabel);
         this.timeReportBox.setMinHeight(40);
         this.timeReportBox.setAlignment(Pos.CENTER_LEFT);
         this.timeReportBox.setPadding(new Insets(0, 0, 0, 10));
-        this.obiettiviReportBox.getChildren().add(this.obiettiviReportLabel);
-        this.obiettiviReportBox.setMinHeight(40);
-        this.obiettiviReportBox.setAlignment(Pos.CENTER_LEFT);
-        this.obiettiviReportBox.setPadding(new Insets(0, 0, 0, 10));
         this.abitudiniReportBox.getChildren().add(this.abitudiniReportLabel);
         this.abitudiniReportBox.setMinHeight(40);
         this.abitudiniReportBox.setAlignment(Pos.CENTER_LEFT);
@@ -122,26 +93,30 @@ public class AppController {
         // Aggiunge gli event handler dei click dei bottoni.
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
-                apriPaginaReportTempo(t);
+                try {
+					apriPaginaReportTempo();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         };
         this.timeReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
         
-        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-                apriPaginaReportObiettivi(t);
-            }
-        };
-        this.obiettiviReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
-        
         EventHandler<MouseEvent> eventHandler3 = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
-                apriPaginaReportAbitudini(t);
+                try {
+					apriPaginaReportAbitudini();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         };
         this.abitudiniReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
-        
-        this.apriPaginaTimeTracker();
+    }
+    
+    public void setAppData(IApp app) throws IOException {
+    	this.app = app;
+    	apriPaginaHabitTracker();
     }
     
     private void rimuoviEvidenziazionePulsanti() {
@@ -157,10 +132,6 @@ public class AppController {
         habitLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
         habitImg.setImage(new Image(getClass().getResource("/main/risorse/refresh.png").toString()));
         
-        agendaHBox.setStyle("-fx-background-color: #060818;");
-        agendaLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        agendaImg.setImage(new Image(getClass().getResource("/main/risorse/agenda.png").toString()));
-        
         dashboardHBox.setStyle("-fx-background-color: #060818;");
         dashboardLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
         dashboardImg.setImage(new Image(getClass().getResource("/main/risorse/dashboard.png").toString()));
@@ -173,9 +144,6 @@ public class AppController {
         
         this.timeReportBox.setStyle("-fx-background-color: #060818;");
         this.timeReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        
-        this.obiettiviReportBox.setStyle("-fx-background-color: #060818;");
-        this.obiettiviReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
         
         this.abitudiniReportBox.setStyle("-fx-background-color: #060818;");
         this.abitudiniReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
@@ -192,22 +160,29 @@ public class AppController {
     
     @FXML
     private void apriPaginaTimeTracker() throws IOException {
-        
+
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(this.timeHBox, this.timeLabel, this.timeImg, "clock-white");
         this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/TimeTracker.fxml");
-        Pane view = object.getPage(fileUrl);
+        fxmlLoader.setLocation(fileUrl);
+        Pane view = fxmlLoader.load();
+        view.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        TimeTrackerController controller = fxmlLoader.getController();
+        controller.setTimeTracker(app.getTT());
 
     } 
     
     @FXML
-    private void apriPaginaHabitTracker(MouseEvent event) {
+    private void apriPaginaHabitTracker() throws IOException {
        
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
@@ -215,14 +190,21 @@ public class AppController {
         this.chiudiMenuDashboard();
        
         // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fileUrl = Main.class.getResource("/main/Views/HabitTracker/HabitTracker.fxml");
-        Pane view = object.getPage(fileUrl);
+        fxmlLoader.setLocation(fileUrl);
+        Pane view = fxmlLoader.load();
+        view.getStylesheets().add(getClass().getResource("/main/Views/HabitTracker/HabitTracker.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        HabitTrackerController controller = fxmlLoader.getController();
+        controller.setHabitTracker(app.getHT());
     } 
     
     @FXML
-    private void apriPaginaGoalManager(MouseEvent event) {
+    private void apriPaginaGoalManager() throws IOException {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
@@ -230,43 +212,20 @@ public class AppController {
         this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fileUrl = Main.class.getResource("/main/Views/GoalManager/GoalManager.fxml");
-        Pane view = object.getPage(fileUrl);
+        fxmlLoader.setLocation(fileUrl);
+        Pane view = fxmlLoader.load();
+        view.getStylesheets().add(getClass().getResource("/main/Views/GoalManager/GoalManager.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
+        
+        // Ottiene il controller EditorProgettoController associato alla view
+        GoalManagerController controller = fxmlLoader.getController();
+        controller.setGoalManager(app.getGM());
     } 
     
-    @FXML
-    private void apriPaginaAgenda(MouseEvent event) {
-        
-        // Cambia stile pulsanti navigazione
-        this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(agendaHBox, agendaLabel, agendaImg, "agenda-white");
-        this.chiudiMenuDashboard();
-        
-        // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
-       URL fileUrl = Main.class.getResource("/main/Views/Agenda/Agenda.fxml");
-        Pane view = object.getPage(fileUrl);
-        panePrincipale.setCenter(view);
-    } 
-    
-    @FXML
-    private void apriPaginaImpostazioni(MouseEvent event) {
-        
-        // Cambia stile pulsanti navigazione
-        this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings-white");
-        this.chiudiMenuDashboard();
-        
-        // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Impostazioni/Impostazioni.fxml");
-        Pane view = object.getPage(fileUrl);
-        panePrincipale.setCenter(view);
-    } 
-    
-    private void apriPaginaReportTempo(MouseEvent event) {
+    private void apriPaginaReportTempo() throws IOException {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
@@ -280,35 +239,43 @@ public class AppController {
         this.timeReportLabel.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
         
         // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportTempo.fxml");
-        Pane view = object.getPage(fileUrl);
+        fxmlLoader.setLocation(fileUrl);
+        Pane view = fxmlLoader.load();
+        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/Dashboard.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
+        
+        // imposta l'istanza del time tracker
+        ReportTempoController controller = fxmlLoader.getController();
+        controller.setTimeTracker(app.getTT());
         
     }
     
-    private void apriPaginaReportObiettivi(MouseEvent event) {
+    @FXML
+    private void apriPaginaImpostazioni() throws IOException {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
-        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down-white.png").toString()));
-        this.dashboardArrow.setRotate(180);
-        this.obiettiviReportBox.setStyle("-fx-background-color: #374856;"
-                + "-fx-border-radius:12;"
-                + "-fx-border-style:solid;"
-                + "-fx-background-radius:12;");
-        this.obiettiviReportLabel.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
+        this.evidenziaPulsante(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings-white");
+        this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportObiettivi.fxml");
-        Pane view = object.getPage(fileUrl);
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL fileUrl = Main.class.getResource("/main/Views/Impostazioni/Impostazioni.fxml");
+        fxmlLoader.setLocation(fileUrl);
+        Pane view = fxmlLoader.load();
+        view.getStylesheets().add(getClass().getResource("/main/Views/Impostazioni/Impostazioni.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
         
-    }
+        // imposta l'istanza del time tracker
+        ImpostazioniController controller = fxmlLoader.getController();
+        controller.setApp(this.app);
+    } 
     
-    private void apriPaginaReportAbitudini(MouseEvent event) {
+    private void apriPaginaReportAbitudini() throws IOException {
     
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
@@ -322,11 +289,17 @@ public class AppController {
         this.abitudiniReportLabel.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
         
         // Cambia la pagina all'interno del BorderPane
-        FxmlLoader object = new FxmlLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportAbitudini.fxml");
-        Pane view = object.getPage(fileUrl);
+        fxmlLoader.setLocation(fileUrl);
+        Pane view = fxmlLoader.load();
+        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/ReportAbitudini.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
         
+        // imposta l'istanza del habit tracker
+        ReportAbitudiniController controller = fxmlLoader.getController();
+        controller.setHabitTracker(app.getHT());
     }
     
     @FXML
@@ -340,7 +313,6 @@ public class AppController {
             
             // Fa comparire i pulsanti nel sotto-menu del pulsante dashboard.
             this.dashboardBtns.getChildren().add(this.timeReportBox);
-            this.dashboardBtns.getChildren().add(this.obiettiviReportBox);
             this.dashboardBtns.getChildren().add(this.abitudiniReportBox);
             
             this.dashboardMenuAperto = true;

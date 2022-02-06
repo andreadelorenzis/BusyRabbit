@@ -1,487 +1,554 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Controllers.GoalManager;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import main.Controllers.GoalManager.demo.AzioneDemo;
-import main.Controllers.GoalManager.demo.IObiettivo;
-import main.Controllers.GoalManager.demo.IObiettivoMisurabile;
-import main.Controllers.GoalManager.demo.ObiettivoDemo;
-import main.Controllers.GoalManager.demo.ObiettivoMisurabileDemo;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import main.Giorno;
+import main.Controllers.Helper;
+import main.Models.goalmanager.classes.Azione;
+import main.Models.goalmanager.classes.AzioneScomponibile;
+import main.Models.goalmanager.classes.AzioneSessione;
+import main.Models.goalmanager.classes.Obiettivo;
+import main.Models.goalmanager.classes.ObiettivoAzione;
+import main.Models.goalmanager.classes.ObiettivoScomponibile;
+import main.Models.goalmanager.interfaces.IAzione;
+import main.Models.goalmanager.interfaces.IGoalManager;
+import main.Models.goalmanager.interfaces.IObiettivo;
+import main.Models.goalmanager.interfaces.IObiettivoAzione;
+import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 
-/**
- *
- * @author andre
- */
 public class GoalManagerController {
     
+	//-------------------------------- CAMPI FXML -----------------------------------
     @FXML 
     private BorderPane obiettivo0;
-    
     @FXML
-    private VBox boxObiettivi;
-    private ArrayList<VBox> listaBoxSottoObiettivi;
-    
+    private VBox boxObiettivi;    
     @FXML
-    private VBox headerBox;
-    
-    @FXML
-    private VBox boxAzioni;
-    
-    @FXML
-    private ProgressBar progressBar;
-    
+    private BorderPane paginaAzioni;    
     @FXML
     private HBox azioneBtn;
     
-    private ArrayList<IObiettivo> listaObiettivi;
+	//--------------------------------- CAMPI ------------------------------------
+    /*
+     * Istanza del GoalManager dell'app.
+     */
+    private IGoalManager gm;
     
-    private ArrayList<AzioneDemo> listaAzioni;
-    
-    private boolean listaSottoObiettiviAperta = false;
-    
+    /*
+     * L'ultimo obiettivo cliccato.
+     */
     private IObiettivo obiettivoCliccato = null;
     
-    @FXML
-    private void initialize() {
-        
-        // ----> DEMO
-        this.listaObiettivi = new ArrayList<IObiettivo>();
-        
-        ArrayList<IObiettivo> sottoObiettivi = new ArrayList<IObiettivo>();
-        sottoObiettivi.add(new ObiettivoDemo("Superare Analisi", "", new Date(), new ArrayList<IObiettivo>()));
-        sottoObiettivi.add(new ObiettivoDemo("Superare Sistemi Operativi", "", new Date(), new ArrayList<IObiettivo>()));
-        
-        ArrayList<IObiettivo> sottoObiettivi2 = new ArrayList<IObiettivo>();
-        sottoObiettivi2.add(new ObiettivoDemo("Creare il prodotto", "", new Date(), new ArrayList<IObiettivo>()));
-        sottoObiettivi2.add(new ObiettivoDemo("Publicizzare e vendere il prodotto", "", new Date(), new ArrayList<IObiettivo>()));
-        
-        
-        ObiettivoMisurabileDemo obiettivoMisurabile = new ObiettivoMisurabileDemo("Dare tutti gli esami dell'universitÃ ", "", new Date(), sottoObiettivi, "ore", 4);
-        this.listaObiettivi.add(obiettivoMisurabile);
-        this.listaObiettivi.add(new ObiettivoDemo("Dare una maratona", "", new Date(), new ArrayList<IObiettivo>()));
-        this.listaObiettivi.add(new ObiettivoDemo("Creare una startup", "", new Date(), sottoObiettivi2));
-        
-        ArrayList<String> giorni = new ArrayList<String>() {
-            {
-                add("LUN");
-                add("DOM");
-            }
-        };
-        
-        this.listaAzioni = new ArrayList<AzioneDemo>() {
-            {
-                add(new AzioneDemo("Azione 1", giorni, 2, listaObiettivi.get(0)));
-                add(new AzioneDemo("Azione 2", giorni, 2, listaObiettivi.get(0)));
-                add(new AzioneDemo("Azione 3", giorni, 2, listaObiettivi.get(0)));
-            }
-        };
-        
-        obiettivoMisurabile.setAzioni(listaAzioni);
-        
-        // <---- DEMO
-        
-        this.listaBoxSottoObiettivi = new ArrayList<VBox>();
-        this.visualizzaObiettivi();
-        this.visualizzaAzioni();
-    }
+    /*
+     * Il container nella view dell'ultimo obiettivo cliccato.
+     */
+    private BorderPane paneObiettivoCliccato = null;
     
-    private void visualizzaObiettivi() {
-        this.boxObiettivi.getChildren().clear();
-        for(int i = 0; i < this.listaObiettivi.size(); i++) 
-            this.visualizzaObiettivo(this.listaObiettivi.get(i), i);
-    }
+    /*
+     * Map che contiene quali menu sotto-obiettivi sono aperti
+     * chiave: id obiettivo
+     * valore: se la lista sotto-obiettivi è aperta o meno
+     */
+    private Map<String, Boolean> obiettiviAperti = new HashMap<>();
     
-    private void toggleSottoObiettivi(IObiettivo obiettivo, int indice, VBox container) {
-        if(!this.listaSottoObiettiviAperta) {
-            if(obiettivo.getSottoObiettivi().size() > 0) {
-                container.setMaxWidth(this.boxObiettivi.getBoundsInParent().getWidth() - 60);
-                for(int i = 0; i < obiettivo.getSottoObiettivi().size(); i++) {
-                    // Crea il sotto-obiettivo nella view, con larghezza minore.
-                    BorderPane pane = this.creaViewSottoObiettivo(obiettivo.getSottoObiettivi().get(i));
-                    container.getChildren().add(pane);
-                }
-                this.listaSottoObiettiviAperta = true;
-            }
-        } else {
-            container.getChildren().clear();
-            this.listaSottoObiettiviAperta = false;
+    //--------------------------- METODI PRIVATI --------------------------------
+    /**
+     * Aggiorna la view degli obiettivi.
+     */
+    private void aggiornaObiettivi() {
+        boxObiettivi.getChildren().clear();
+        for(int i = 0; i < gm.getObiettivi().size(); i++) {
+        	BorderPane pane = creaViewObiettivo((Obiettivo) gm.getObiettivi().get(i));
+        	boxObiettivi.getChildren().add(pane);
+        	if(i == 0) {
+        		pane.setStyle("-fx-border-width: 0 0 0 0;");
+        	}
         }
+            
     }
     
-    private void visualizzaObiettivo(IObiettivo obiettivo, int indice) {
+    /**
+     * Calcola a che livello si trova un determinato obiettivo nella scala gerarchica.
+     */
+    private int calcolaProfonditàObiettivo(IObiettivo o) {
+    	int i = 0;
+    	IObiettivo nodo = o.getObiettivoPadre();
+    	while(nodo != null) {
+    		i++;
+    		nodo = nodo.getObiettivoPadre();
+    	};
+    	return i;
+    }
+    
+    /**
+     * Crea a view di un singolo obiettivo.
+     */
+    private BorderPane creaViewObiettivo(IObiettivo o) {
+    	
+    	// crea i container
         BorderPane pane = new BorderPane();
         pane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         pane.getStyleClass().add("obiettivo");
-        
         VBox vBox = new VBox();
+        pane.setLeft(vBox);
         
+        // aggiunge il checkbox
         CheckBox check = new CheckBox();
-        check.setText(obiettivo.getNome());
+        check.setText(o.getNome());
         check.getStyleClass().add("nome");
         check.setMaxWidth(300);
         check.setWrapText(true);
+        vBox.getChildren().add(check);
+        vBox.getStyleClass().add("obiettivo-content");
         
+        // aggiunge la data
         Label label = new Label("Ago, 07 2021");
         label.getStyleClass().add("data");
-
-        HBox hBox = new HBox();
-        ImageView plus = new ImageView();
-        plus.setFitHeight(15);
-        plus.setFitWidth(15);
-        plus.setImage(new Image(getClass().getResource("/main/risorse/plus.png").toString()));
-        Label label2 = new Label("Sotto-obiettivo");
-        hBox.getChildren().add(plus);
-        hBox.getChildren().add(label2);
-        hBox.getStyleClass().add("sottoBtn");
-        
-        // Event handler per aggiunta di un sotto-obiettivo.
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-                try {
-                    aggiungiSottoObiettivo(obiettivo);
-                } catch (IOException ex) {
-                    Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-        
-        // Event handler per visualizzazione pagina azioni.
-        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-                System.out.println(obiettivo.getClass().getName());
-                visualizzaAzioniObiettivo(obiettivo);
-            }
-        };
-        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
-        
-        vBox.getChildren().add(check);
         vBox.getChildren().add(label);
-        
-        vBox.getChildren().add(hBox);
-        pane.setLeft(vBox);
-        
-        this.boxObiettivi.getChildren().add(pane);
-        
-        HBox hBox3 = new HBox();
-        
-        if(obiettivo.getSottoObiettivi().size() > 0) {
-            VBox imgContainer = new VBox();
-            imgContainer.setAlignment(Pos.CENTER);
-            ImageView arrow = new ImageView();
-            arrow.setFitHeight(15);
-            arrow.setFitWidth(15);
-            arrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down.png").toString()));
-            imgContainer.getChildren().add(arrow);
-             
-            HBox hBox4 = new HBox();
-            Label label3 = new Label("" + obiettivo.getSottoObiettivi().size());
-            label3.getStyleClass().add("num-sottoobiettivi");
-            hBox4.getChildren().add(label3);
-            hBox4.getChildren().add(imgContainer);
-            hBox4.setPadding(new Insets(5, 5, 5, 5));
-            hBox4.setAlignment(Pos.CENTER);
-            
-            hBox3.getChildren().add(hBox4);
-            
-            pane.setRight(hBox3);
-            
-            // Crea un container sotto al obiettivo da popolare con gli eventuali sotto-obiettivi.
-            VBox vBox2 = new VBox();
-            vBox2.setAlignment(Pos.TOP_LEFT);
-            vBox2.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            this.listaBoxSottoObiettivi.add(vBox2);
-            
-            // Event handler per apertura sotto obiettivi.
-            EventHandler<MouseEvent> eventHandler3 = new EventHandler<MouseEvent>() {
 
+        HBox btnAggiunta;
+        HBox boxBtns = new HBox();
+        boxBtns.setAlignment(Pos.CENTER_RIGHT);
+        
+        // crea il centro del pane
+        HBox center = new HBox();
+        center.getStyleClass().add("obiettivo-center");
+        pane.setCenter(center);
+        
+        // se è un obiettivo scomponibile
+    	if(o instanceof ObiettivoScomponibile) {
+    		
+    		// crea pulsante di aggiunta sotto-obiettivi
+    		btnAggiunta = Helper.creaBtnAggiunta("Sotto-obiettivo");
+            
+            // collega evento per aggiunta di un sotto-obiettivo.
+    		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent t) {
-                    toggleSottoObiettivi(obiettivo, indice, vBox2);
+                    try {
+                    	t.consume();
+                        aggiungiSottoObiettivo(o);
+                    } catch (IOException ex) {
+                        Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            };
-            pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
-            
-            this.boxObiettivi.getChildren().add(vBox2);
-        }
-
-        VBox imgContainer2 = new VBox();
-        imgContainer2.setPadding(new Insets(5, 5, 5, 15));
-        imgContainer2.setAlignment(Pos.CENTER);
-        ImageView dots = new ImageView();
-        dots.setFitHeight(18);
-        dots.setFitWidth(6);
-        dots.setImage(new Image(getClass().getResource("/main/risorse/dots.png").toString()));
-        imgContainer2.getChildren().add(dots);
-        
-        // Event handler per modifica obiettivo.
-        EventHandler<MouseEvent> eventHandler3 = new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-                try {
-                    modificaObiettivo(obiettivo);
-                } catch (IOException ex) {
-                    Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
+            });
+    		
+    		// se è presente almeno un sotto-obiettivo
+    		if(((ObiettivoScomponibile) o).getSottoObiettivi().size() > 0) {
+            	IObiettivoScomponibile os = (IObiettivoScomponibile) o;
+            	center.setCursor(Cursor.HAND);
+            	
+            	// crea label numero sotto-obiettivi
+            	HBox btnSottoObiettivi = GMHelper.creaSottoObiettiviBtn(os.getSottoObiettivi().size(), center);
+            	boxBtns.getChildren().add(btnSottoObiettivi);
+                
+                // aggiungo container per sotto-obiettivi
+                VBox boxSottoObiettivi = new VBox();
+                boxSottoObiettivi.getStyleClass().add("box-sotto-obiettivi");
+                boxSottoObiettivi.setAlignment(Pos.TOP_RIGHT);
+                pane.setBottom(boxSottoObiettivi);
+                
+                // collega eventi per apertura sotto obiettivi.
+                EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent t) {
+                    	t.consume();
+                        toggleSottoObiettivi(os, boxSottoObiettivi);
+                    }
+                };
+                btnSottoObiettivi.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+                center.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+                
+                // aggiunge obiettivo alla mappa sotto-obiettivi aperti
+                obiettiviAperti.put(os.getId(), false);
+                
+    		}
+    	} else {
+    		center.setCursor(Cursor.HAND);
+    		
+    		// crea pulsante di aggiunta azioni
+    		btnAggiunta = Helper.creaBtnAggiunta("Azione");
+    		
+            // collega evento per aggiunta di un'azione.
+    		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent t) {
+                    try {
+                    	t.consume();
+                    	apriEditorAzione(null, o, true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-        };
-        imgContainer2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
-        
-        VBox imgContainer3 = new VBox();
-        imgContainer3.setPadding(new Insets(5, 5, 5, 15));
-        imgContainer3.setAlignment(Pos.CENTER);
-        ImageView trash = new ImageView();
-        trash.setFitHeight(18);
-        trash.setFitWidth(18);
-        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
-        imgContainer3.getChildren().add(trash);
-        
-        // Event handler per eliminazione obiettivo.
-        EventHandler<MouseEvent> eventHandler4 = new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-                eliminaObiettivo(obiettivo);
-            }
-        };
-        imgContainer3.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler4);
-        
-        hBox3.getChildren().add(imgContainer2);
-        hBox3.getChildren().add(imgContainer3);
-        hBox3.setAlignment(Pos.CENTER);
-    }
-    
-    private BorderPane creaViewSottoObiettivo(IObiettivo obiettivo) {
-        BorderPane pane = new BorderPane();
-        pane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-        pane.getStyleClass().add("obiettivo");
-        
-        VBox vBox = new VBox();
-        
-        CheckBox check = new CheckBox();
-        check.setText(obiettivo.getNome());
-        check.getStyleClass().add("nome");
-        
-        Label label = new Label("Ago, 07 2021");
-        label.getStyleClass().add("data");
-        
-
-        HBox hBox = new HBox();
-        
-        ImageView plus = new ImageView();
-        plus.setFitHeight(15);
-        plus.setFitWidth(15);
-        plus.setImage(new Image(getClass().getResource("/main/risorse/plus.png").toString()));
-        Label label2 = new Label("Sotto-obiettivo");
-        hBox.getChildren().add(plus);
-        hBox.getChildren().add(label2);
-        hBox.getStyleClass().add("sottoBtn");
-        
-        vBox.getChildren().add(check);
-        vBox.getChildren().add(label);
-        
-        VBox imgContainer = new VBox();
-        imgContainer.setAlignment(Pos.CENTER);
-        ImageView arrow = new ImageView();
-        arrow.setFitHeight(15);
-        arrow.setFitWidth(15);
-        arrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down.png").toString()));
-        imgContainer.getChildren().add(arrow);
-  
-        pane.setLeft(vBox);
+            });
+    		
+    		// collega evento visualizzazione azioni obiettivo
+    		center.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent t) {
+                	if(paneObiettivoCliccato != null) {
+                		paneObiettivoCliccato.setStyle("-fx-background-color: #0E1726");
+                	}
+                	pane.setStyle("-fx-background-color: #374856; -fx-background-radius: 10; -fx-border-radius: 10;");
+                	paneObiettivoCliccato = pane;
+                	obiettivoCliccato = o;
+                    apriPaginaAzioni(o);
+                }
+            });
+    	}
+        vBox.getChildren().add(btnAggiunta);
+       
+        // crea il pulsante di apertura menù dell'obiettivo
+        HBox menuBtn = creaBtnMenu(o);
+        menuBtn.getStyleClass().add("obiettivo-content");
+        boxBtns.getChildren().add(menuBtn);
+        pane.setRight(boxBtns);
         
         return pane;
     }
     
-    @FXML
-    private void aggiungiObiettivo() throws IOException {
-        
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorObiettivi.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
-        dialog.setTitle("Nuovo obiettivo");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorObiettiviController controller = fxmlLoader.getController();
-        controller.setObiettivo(new ObiettivoDemo("", "", new Date(), new ArrayList<IObiettivo>()));
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-            
-            // Aggiungere l'obiettivo alla listaObiettivi
-            this.listaObiettivi.add(controller.getObiettivo());
-            
-            // Aggiornare la view
-            this.visualizzaObiettivi();
-            
-        }
-    }
-    
-    @FXML
-    private void modificaObiettivo(IObiettivo obiettivo) throws IOException {
-        
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorObiettivi.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
-        dialog.setTitle("Modifica obiettivo");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorObiettiviController controller = fxmlLoader.getController();
-        controller.setObiettivo(obiettivo);
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-            
-            // Sostituire il vecchio obiettivo nella lista obiettivi, potrebbe essere
-            //cambiate la classe (ObiettivoSemplice o ObiettivoMisurabile)
-            for(int i = 0; i < this.listaObiettivi.size(); i++) {
-                if(this.listaObiettivi.get(i).getId() == obiettivo.getId()) {
-                    this.listaObiettivi.set(i, controller.getObiettivo());
+    /**
+     * Apre la lista di sotto-obiettivi dell'obiettivo cliccato.
+     */
+    private void toggleSottoObiettivi(IObiettivoScomponibile o, VBox container) {
+        if(!obiettiviAperti.get(o.getId())) {
+            if(o.getSottoObiettivi().size() > 0) {
+            	
+            	// calcolo la profondità del sotto-obiettivo
+            	int prof = calcolaProfonditàObiettivo(o.getSottoObiettivi().get(0));
+            	
+            	// aggiungo un container di larghezza minore in base alla profondità
+            	VBox box = new VBox();
+            	int padding = 15;
+            	box.setMaxWidth((boxObiettivi.getWidth() - padding) - prof * 60);
+            	container.getChildren().add(box);
+            	
+            	// aggiungo gli obiettivi al container di larghezza minore
+                for(int i = 0; i < o.getSottoObiettivi().size(); i++) {
+                    BorderPane pane = creaViewObiettivo(o.getSottoObiettivi().get(i));
+                    box.getChildren().add(pane);
                 }
-            }
-            
-            // Aggiornare la view
-            this.visualizzaObiettivi();
-            
-        }
-    }
-    
-    private void eliminaObiettivo(IObiettivo obiettivo) {
-        for(int i = 0; i < this.listaObiettivi.size(); i++) {
-            if(obiettivo.getId() == this.listaObiettivi.get(i).getId()) {
-                this.listaObiettivi.remove(i);
-            }
-        }
-        System.out.println("Obiettivo: " + obiettivo.getNome() + " eliminato.");
-    }
-    
-    @FXML
-    private void aggiungiSottoObiettivo(IObiettivo obiettivo) throws IOException {
-        
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorObiettivi.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
-        dialog.setTitle("Nuovo sotto-obiettivo");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorObiettiviController controller = fxmlLoader.getController();
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-            
-            System.out.println("Sotto-biettivo aggiunto");
-            
-        }
-    }
-    
-    private void visualizzaAzioniObiettivo(IObiettivo obiettivo) {
-        this.boxAzioni.getChildren().clear();
-        this.headerBox.getChildren().clear();
-
-        // Aggiunge header.
-        HBox hBox = new HBox();
-        HBox hBox2 = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.setPadding(new Insets(15, 20, 10, 0));
-        hBox2.setAlignment(Pos.CENTER);
-        Label label3 = new Label("Mostra tutte le azioni giornaliere");
-        label3.setStyle("-fx-text-fill: #2196F3; -fx-font-size: 16; -fx-font-weight: 800;");
-        Label label4 = new Label(obiettivo.getNome());
-        label4.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
-        hBox.getChildren().add(label3);
-        hBox2.getChildren().add(label4);
-        this.headerBox.getChildren().add(hBox);
-        this.headerBox.getChildren().add(hBox2);
-        
-        if(obiettivo.getClass().getSimpleName().equals("ObiettivoMisurabileDemo")) {
-            
-            // Event handler per visualizzare tutte le azioni del giorno.
-            EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent t) {
-                    visualizzaAzioni();
-                }
-            };
-            label3.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-
-            this.obiettivoCliccato = obiettivo;
-            this.azioneBtn.setVisible(true);
-
-            ArrayList<AzioneDemo> azioni = ((ObiettivoMisurabileDemo) obiettivo).getAzioni();
-            for(int i = 0; i < azioni.size(); i++) {
-                this.visualizzaAzione(azioni.get(i));
+                
+                // aggiorno l'info sulle liste sotto-obiettivi aperte
+                obiettiviAperti.put(o.getId(), true);
             }
         } else {
-            VBox vBox = new VBox();
-            Label label1 = new Label("Non hai ancora collegato nessuna azione a questo obiettivo.");
-            label1.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
-            Label label2 = new Label("Nuova azione");
-            label2.setStyle("-fx-text-fill: #2196F3; -fx-font-size: 16; -fx-font-weight: 800;");
-            vBox.getChildren().add(label1);
-            vBox.getChildren().add(label2);
-            
-            this.boxAzioni.getChildren().add(vBox);
+        	
+        	// chiudo la lista sotto-obiettivi dell'obiettivo scomponibile
+            container.getChildren().clear();
+            obiettiviAperti.put(o.getId(), false);
         }
     }
     
-    private void visualizzaAzioniObiettivoGiornaliere() {
-    
+    /**
+     * Crea pulsante di apertura menù.
+     */
+    private HBox creaBtnMenu(Object obj) {
+    	
+        // crea view pulsante
+        HBox editBtn = Helper.creaBtnEdit();
+        
+        // crea il menu dropdown
+        ContextMenu menu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Modifica");
+        MenuItem menuItem2 = new MenuItem("Elimina");
+        menuItem1.setOnAction((ActionEvent e) -> {
+        	try {
+        		if(obj instanceof Obiettivo) {
+        			apriEditorObiettivo((Obiettivo) obj, false, false);
+        		} else if(obj instanceof Azione) {
+        			apriEditorAzione((Azione) obj, null, false);
+        		}
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+        });
+        menuItem2.setOnAction((ActionEvent e) -> {
+        	if(obj instanceof Obiettivo) {
+    			eliminaObiettivo((Obiettivo) obj);
+    		} else if(obj instanceof Azione) {
+    			eliminaAzione((Azione) obj);
+    		}
+        });
+        menu.getItems().addAll(menuItem1, menuItem2);
+        
+        // Evento per il click del menù attività
+        editBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+            	menu.show(editBtn, t.getScreenX(), t.getScreenY());
+            	t.consume();
+            }
+        }); 
+        
+        return editBtn;
     }
     
-    private void visualizzaAzioni() {
-        this.boxAzioni.getChildren().clear();
-        this.headerBox.getChildren().clear();
-
-        // Aggiunge header.
+    /**
+     * Apre l'editor degli obiettivi in aggiunta/modifica.
+     */
+    private void apriEditorObiettivo(IObiettivo o, boolean nuovo, boolean isSottoObiettivo) throws IOException {
+        // carica il dialog di modifica obiettivo
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorObiettivi.fxml"));
+        DialogPane pane = fxmlLoader.load();
+        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        Dialog<ButtonType> dialog = new Dialog<>(); 
+        dialog.setDialogPane(pane);
+        
+        // imposta il titolo del dialog
+        if(nuovo) {
+        	dialog.setTitle("Nuovo obiettivo");
+        } else {
+        	dialog.setTitle("Modifica obiettivo");
+        }
+        
+        // ottiene il controller del dialog e imposta l'obiettivo se in modifica
+        EditorObiettiviController controller = fxmlLoader.getController();
+        if(!nuovo && !isSottoObiettivo) {
+        	controller.setObiettivo(o);
+        }
+        
+        // valida gli input
+    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+    		if(controller.getNome().isBlank() 									||
+    		   (controller.isTipoAzione() && controller.getUnità().isBlank()) 	||
+    		   controller.getData() == null) {
+    			event.consume();
+    			if(controller.getNome().isBlank()) {
+    				throw new IllegalStateException("Perfavore, inserisci un nome per l'obiettivo");
+    			} else if(controller.isTipoAzione() && controller.getUnità().isBlank()) {
+    				throw new IllegalStateException("Perfavore, inserisci un'unità di misura per l'obiettivo");
+    			}
+    			else if(controller.getData() == null) {
+    				throw new IllegalStateException("Perfavore, scegli una data di raggiungimento per l'obiettivo");
+    			}
+    			
+        	}
+    	});
+        
+        // apre il dialog e attende
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {  
+        	String nome = controller.getNome();
+        	String descrizione = controller.getDescrizione();
+        	LocalDate data = controller.getData();
+        	boolean isTipoAzione = controller.isTipoAzione();
+        	String unità = controller.getUnità();
+    		int valore = controller.getValore();
+        	
+        	if(nuovo) {
+        		IObiettivo nuovoObiettivo;
+        		if(isTipoAzione) {
+        			nuovoObiettivo = new ObiettivoAzione(nome, descrizione, data, valore, unità);
+        		} else {
+        			nuovoObiettivo = new ObiettivoScomponibile(nome, descrizione, data);
+        		}
+        		if(isSottoObiettivo) {
+        			((ObiettivoScomponibile) o).aggiungiSottoObiettivo(nuovoObiettivo);
+        		} else {
+        			gm.aggiungiObiettivo(nuovoObiettivo);
+        		}
+        	} else {
+        			
+    			// modifico l'obiettivo 
+    			o.setNome(nome);
+    			o.setDescrizione(descrizione);
+    			o.setData(data);
+        		if(o instanceof ObiettivoAzione)
+        			((ObiettivoAzione) o).setUnita(unità);
+        			((ObiettivoAzione) o).setValoreTotale(valore);
+        		}
+        	}
+            
+        // Aggiornare la view
+        this.aggiornaObiettivi();
+    }
+    
+    /**
+     * Apre l'editor delle azioni in aggiunta/modifica.
+     */
+    private void apriEditorAzione(IAzione azione, IObiettivo o, boolean nuovo) throws IOException {
+    	
+        // Carica il file fxml e crea un nuovo popup Dialog
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorAzioni.fxml"));
+        DialogPane pane = fxmlLoader.load();
+        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(pane);
+        
+        // imposta titolo
+        if(nuovo) {
+        	dialog.setTitle("Nuova azione");
+        } else {
+        	dialog.setTitle("Modifica azione");
+        }
+        
+        // Ottiene il controller e imposta l'azione se in modifica
+        EditorAzioniController controller = fxmlLoader.getController();
+        if(!nuovo) {
+        	controller.setAzione(azione);
+        }
+        
+        // valida gli input
+    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+    		if(controller.getNome().isBlank() && controller.getData() == null){
+    			event.consume();
+    			if(controller.getNome().isBlank()) {
+    				throw new IllegalStateException("Perfavore, inserisci un nome per l'azione");
+    			} else if(controller.getData() == null) {
+    				throw new IllegalStateException("Perfavore, inserisci una data di inizio per l'azione");
+    			}
+        	}
+    	});
+        
+        // Apre dialog popup
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // Se l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+        	String nome = controller.getNome();
+        	int valore = controller.getValore();
+        	LocalDate data = controller.getData();
+        	List<Giorno> giorni = controller.getGiorni();
+        	boolean isTipoSessione = controller.isTipoSessione();
+        	int durata = controller.getDurata();
+            
+        	if(nuovo) {
+        		IObiettivoAzione oa = (IObiettivoAzione) o;
+        		
+        		// aggiungo una nuova azione
+        		IAzione nuovaAzione;
+        		if(isTipoSessione) {
+        			nuovaAzione = new AzioneSessione(nome, valore, data, giorni, durata);
+        		} else {
+        			nuovaAzione = new AzioneScomponibile(nome, valore, data, giorni);
+        		}
+        		oa.collegaAzione(nuovaAzione);
+        		nuovaAzione.setObiettivo(oa);
+        		
+        		// aggiorno la view
+        		apriPaginaAzioni(o);
+        	} else {
+        		
+        		// modifico l'azione
+    			azione.setNome(nome);
+    			azione.setIncremento(valore);
+    			azione.setDataInizio(data);
+    			azione.setGiorniRipetizione(giorni);
+        		if(azione instanceof AzioneSessione) {
+        			((AzioneSessione) azione).setDurata(durata);
+        		}
+        		
+        		// aggiorno la view
+        		apriPaginaAzioni(azione.getObiettivo());
+        	}
+            
+        }
+    }
+    
+    /**
+     * Elimina un obiettivo dal modello.
+     */
+    private void eliminaObiettivo(IObiettivo obiettivo) {
+        boolean sottoObiettivo = obiettivo.getObiettivoPadre() != null;
+    	
+    	// elimina l'obiettivo dal modello
+    	if(sottoObiettivo) { 
+    		IObiettivoScomponibile obPadre = (IObiettivoScomponibile) obiettivo.getObiettivoPadre();
+    		obPadre.eliminaSottoObiettivo(obiettivo.getId());
+    	} else {
+        	gm.eliminaObiettivo(obiettivo.getId());
+    	}
+    	
+    	// aggiorna la view
+    	aggiornaObiettivi();
+    	
+    }
+    
+    private void resettaPaginaAzioni() {
+    	paginaAzioni.setTop(null);
+    	paginaAzioni.setCenter(null);
+    	paginaAzioni.setBottom(null);
+    }
+    
+    /**
+     * Visualizza la lista completa delle azioni collegate ad un obiettivo.
+     */
+    private void apriPaginaAzioni(IObiettivo obiettivo) {
+    	IObiettivoAzione o = (ObiettivoAzione) obiettivo;
+        this.azioneBtn.setVisible(true);
+        this.obiettivoCliccato = obiettivo;
+        resettaPaginaAzioni();
+         
+        // crea header
+        VBox header = creaHeaderAzioniObiettivo(obiettivo);
+        paginaAzioni.setTop(header);
+        
+        if(o.getAzioni().size() > 0) {
+        	// aggiunge le azioni alla view
+            this.visualizzaTotaleAzioniObiettivo(o);
+        } else {
+        	// crea messaggio
+            VBox vBox = new VBox();
+            vBox.setAlignment(Pos.CENTER);
+            Label label1 = new Label("Non hai ancora collegato nessuna azione a questo obiettivo.");
+            label1.getStyleClass().add("no-action-label");
+            Label label2 = new Label("Nuova azione");
+            label2.getStyleClass().add("new-action-btn");
+            vBox.getChildren().add(label1);
+            vBox.getChildren().add(label2);
+            paginaAzioni.setCenter(vBox);
+            
+            // aggiunge evento aggiutna nuova azione
+            label2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent t) {
+                	try {
+						aggiungiAzione();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+                }
+            }); 
+        }
+    }
+    
+	public static VBox creaHeaderAzioniGiornaliere() {
+		VBox header = new VBox();
+		header.getStyleClass().add("header-azioni-giorno");
         HBox hBox = new HBox();
         HBox hBox2 = new HBox();
         hBox.setAlignment(Pos.CENTER);
@@ -492,150 +559,292 @@ public class GoalManagerController {
         label2.setStyle("-fx-text-fill: #888EA8; -fx-font-size: 20; -fx-font-weight: 800;");
         hBox.getChildren().add(label);
         hBox2.getChildren().add(label2);
-        this.headerBox.getChildren().add(hBox);
-        this.headerBox.getChildren().add(hBox2);
+        header.getChildren().add(hBox);
+        header.getChildren().add(hBox2);
+        return header;
+	}
+    
+	/**
+	 * Crea l'intestazione della pagina azioni.
+	 */
+	private VBox creaHeaderAzioniObiettivo(IObiettivo obiettivo) {
+		IObiettivoAzione o = (IObiettivoAzione) obiettivo;
+		
+		// crea l'intestazione
+        VBox header = new VBox();
+        HBox hBox = new HBox();
+        HBox hBox2 = new HBox();
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.setPadding(new Insets(15, 0, 0, 0));
+        hBox2.setAlignment(Pos.CENTER);
+        Label label3 = new Label("Visualizza tutte le azioni giornaliere");
+        label3.getStyleClass().add("tutte-azioni-btn");
+        Label label4 = new Label(o.getNome());
+        label4.getStyleClass().add("nome-obiettivo");
+        hBox.getChildren().add(label3);
+        hBox2.getChildren().add(label4);
+        header.getChildren().add(hBox);
+        header.getChildren().add(hBox2);
         
-        // Visualizza la lista di azioni
-        for(int i = 0; i < this.listaAzioni.size(); i++) {
-            this.visualizzaAzione(this.listaAzioni.get(i));
+        // collega evento visualizzazione totale azioni giornaliere
+        label3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	
+            	// rimuovo evidenziazione obiettivo cliccato
+            	paneObiettivoCliccato.setStyle("-fx-background-color: #0E1726;");
+            	
+            	// visualizza il totale azioni giornaliere per tutti gli obiettivi
+            	visualizzaAzioniGiornaliere();
+            }
+        }); 
+        
+        // crea la descrizione
+        Label desc = new Label(o.getDescrizione());
+        desc.getStyleClass().add("descrizione-label");
+        header.getChildren().add(desc);
+          
+        // crea i pulsanti "Tutte" e "Oggi"
+        if(o.getAzioni().size() > 0) {
+            HBox hBox3 = new HBox();
+            hBox3.setStyle("-fx-padding: 0 0 20 0;");
+            hBox3.setAlignment(Pos.CENTER_LEFT);
+            Label label5 = new Label("Tutte");
+            label5.setStyle("-fx-text-fill: #2196F3;");
+            Label label6 = new Label("Oggi");
+            label5.getStyleClass().add("azioni-obiettivo-btn");
+            label6.getStyleClass().add("azioni-obiettivo-btn");
+            hBox3.getChildren().addAll(label5, label6);
+            header.getChildren().add(hBox3);
+            
+            // collega evento visualizzazione azioni obiettivo giornaliere
+            label5.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent t) {
+                	label5.setStyle("-fx-text-fill: #2196F3;");
+                	label6.setStyle("-fx-text-fill: #ffffff;");
+                	visualizzaTotaleAzioniObiettivo(o);
+                }
+            });
+            
+            // collega evento visualizzazione totale azioni obiettivo
+            label6.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent t) {
+                	label6.setStyle("-fx-text-fill: #2196F3;");
+                	label5.setStyle("-fx-text-fill: #ffffff;");
+                	visualizzaAzioniObiettivoGiornaliere(o);
+                }
+            }); 
         }
-        
-        // Aggiunge le barre di progresso relative alle azioni di oggi
-        this.progressBar.setProgress(10);
-        
+      
+        return header;
+	}
+    
+    /**
+     * Visualizza la lista di azioni programmate per oggi di un obiettivo.
+     */
+    private void visualizzaAzioniObiettivoGiornaliere(IObiettivoAzione o) {
+    	
+    	// visualizza la lista di azioni giornaliere dell'obiettivo
+    	List<IAzione> azioni = o.getAzioniGiornaliere(LocalDate.now());
+    	if(azioni.size() > 0) {
+        	VBox container = new VBox();
+        	for(IAzione a : azioni) {
+        		container.getChildren().add(creaViewAzione(a, true));
+        	}
+        	paginaAzioni.setCenter(container);
+    	} else {
+        	// aggiunge messaggio 
+            VBox vBox = new VBox();
+            vBox.setAlignment(Pos.CENTER);
+            Label label1 = new Label("Nessuna azione da completare oggi per questo obiettivo.");
+            label1.getStyleClass().add("no-action-label");
+            vBox.getChildren().add(label1);
+            paginaAzioni.setCenter(vBox);
+    	}
+    	
     }
     
+    /**
+     * Visualizza la lista totale delle azioni collegate all'obiettivo.
+     */
+    private void visualizzaTotaleAzioniObiettivo(IObiettivoAzione o) {
+    	
+    	// crea header
+    	VBox header = this.creaHeaderAzioniObiettivo(o);
+    	paginaAzioni.setTop(header);
+        
+        // visualizza la lista completa di azioni per l'obiettivo
+    	List<IAzione> azioni = o.getAzioni();
+    	VBox container = new VBox();
+    	for(IAzione a : azioni) {
+    		container.getChildren().add(creaViewAzione(a, false));
+    	}
+    	paginaAzioni.setCenter(container);
+    	
+    }
+    
+    /**
+     * Visualizza tutte le azioni da completare oggi.
+     */
+    private void visualizzaAzioniGiornaliere() {
+
+        // aggiunge header.
+        VBox header = creaHeaderAzioniGiornaliere();
+        paginaAzioni.setTop(header);
+        
+        // creo la lista azioni giornaliere
+        List<IAzione> azioni = gm.calcolaAzioniGiornaliere(LocalDate.now());
+        if(azioni.size() > 0) {
+        	VBox containerAzioni = new VBox();
+        	
+            // creo sezione azioni ancora da svolgere
+            Label label = new Label("Da fare:");
+            label.getStyleClass().add("header-label");
+            VBox box1 = new VBox();
+            box1.getChildren().add(label);
+            
+            // creo sezione azioni completate
+            Label label2 = new Label("Completate:");
+            label2.getStyleClass().add("header-label");
+            VBox box2 = new VBox();
+            box2.setPadding(new Insets(60, 0, 0, 0));
+            box2.getChildren().add(label2);
+            
+            // visualizza la lista di azioni di oggi
+            int completate = 0;
+            for(IAzione a : azioni) {
+            	if(a.getCompletata()) {
+            		completate++;
+            		box2.getChildren().add(creaViewAzione(a, true));
+            	} else {
+            		box1.getChildren().add(creaViewAzione(a, true));
+            	}
+            }
+            containerAzioni.getChildren().addAll(box1, box2);
+            paginaAzioni.setCenter(containerAzioni);
+            
+            // visualizza la barra di progresso
+            double progress = completate / azioni.size();
+            VBox bar = creaProgressBar(progress);
+            paginaAzioni.setBottom(bar);
+            
+        } else {
+        	
+        	// aggiunge messaggio 
+            VBox vBox = new VBox();
+            vBox.setAlignment(Pos.CENTER);
+            Label label1 = new Label("Nessuna azione da completare.");
+            label1.getStyleClass().add("no-action-label");
+            vBox.getChildren().add(label1);
+            paginaAzioni.setCenter(vBox);
+        }
+    }
+    
+    private VBox creaProgressBar(double progress) {
+    	VBox vBox = new VBox();
+    	Label label = new Label("Progresso giornaliero:");
+    	label.getStyleClass().add("progress-title");
+    	HBox box = new HBox();
+    	box.setAlignment(Pos.CENTER_LEFT);
+    	Label perc = new Label(Math.round(progress * 100.0) / 100.0 + "%");
+    	perc.getStyleClass().add("progress-label");
+    	ProgressBar bar = new ProgressBar(progress + 0.01);
+    	bar.getStyleClass().add("progress-bar");
+    	HBox.setHgrow(bar, Priority.ALWAYS);
+    	bar.setMaxWidth(Double.MAX_VALUE);
+    	box.getChildren().addAll(bar, perc);
+    	vBox.getChildren().addAll(label, box);
+    	return vBox;
+    }
+    
+    /**
+     * Elimina un'azione dal modello.
+     */
+    private void eliminaAzione(IAzione azione) {
+    	
+    	// elimina azione dal modello
+    	azione.getObiettivo().eliminaAzione(azione.getId());
+    	
+    	// aggiorna view
+    	this.apriPaginaAzioni(azione.getObiettivo());
+    	
+    }
+    
+    /**
+     * Crea la view di una singola azione.
+     */
+    private BorderPane creaViewAzione(IAzione azione, boolean todo) {
+    	
+    	// crea il container
+        BorderPane pane = new BorderPane();
+        pane.getStyleClass().add("azione");
+        
+        if(todo) {
+        	// crea checkbox
+            CheckBox check = new CheckBox();
+            check.setText(azione.getNome());
+            check.setSelected(azione.getCompletata());
+            check.getStyleClass().add("nome");
+            pane.setLeft(check);
+            
+            // collega evento click checkbox
+            check.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent t) {
+                	t.consume();
+                    completaAzione(azione);
+                }
+            });
+        } else {
+        	pane.setLeft(Helper.creaElementoLista(azione.getNome()));
+        }
+        
+        // crea pulsante menu azione
+        HBox menuBtn = this.creaBtnMenu(azione);
+        pane.setRight(menuBtn);
+        
+        return pane;
+    }
+    
+    private void completaAzione(IAzione a) {
+    	
+    	// comunica con il modello
+    	a.completa();
+    	
+    	// aggiorna view
+    	this.visualizzaAzioniGiornaliere();
+    }
+    
+    //------------------------------ METODI FXML ----------------------------------
+    /**
+     * Collega un'azione all'obiettivo cliccato.
+     */
     @FXML
     private void aggiungiAzione() throws IOException {
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorAzioni.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
-        dialog.setTitle("Nuova azione");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorAzioniController controller = fxmlLoader.getController();
-        controller.setAzione(new AzioneDemo("", new ArrayList<String>(), 0, this.obiettivoCliccato));
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-            
-            // Aggiungere l'azione alla lista azioni dell'obiettivo
-            ((ObiettivoMisurabileDemo) this.obiettivoCliccato).getAzioni().add(controller.getAzione());
-            
-            // Aggiornare la view
-            this.visualizzaAzioniObiettivo(obiettivoCliccato);
-            
-        }
+        apriEditorAzione(null, obiettivoCliccato, true);
     }
     
-    private void modificaAzione(AzioneDemo azione) throws IOException {
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorAzioni.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
-        dialog.setTitle("Modifica azione");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorAzioniController controller = fxmlLoader.getController();
-        controller.setAzione(azione);
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-
-            // Aggiornare la view
-            this.visualizzaAzioniObiettivo(azione.getObiettivoPadre());
-            
-        }
+    /**
+     * Aggiunge un nuovo obiettivo.
+     */
+    @FXML
+    private void aggiungiObiettivo() throws IOException {
+        apriEditorObiettivo(null, true, false);
     }
     
-    private void eliminaAzione(AzioneDemo azione) {
-        
-        // Eliminare l'azione dalla lista di azioni giornaliere.
-        for(int i = 0; i < this.listaAzioni.size(); i++) {
-            if(azione.getId() == this.listaAzioni.get(i).getId()) {
-                this.listaAzioni.remove(i);
-            }
-        }
-            
-        // Elimina l'azione dalla lista di azioni dell'obiettivo padre.    
-        ArrayList<AzioneDemo> azioni = ((ObiettivoMisurabileDemo) azione.getObiettivoPadre()).getAzioni();
-        for(int i = 0; i < azioni.size(); i++) {
-            if(azione.getId() == azioni.get(i).getId()) {
-                azioni.remove(i);
-            }
-        }
-        
-        // Aggiorna la view
-        this.visualizzaAzioniObiettivo(azione.getObiettivoPadre());
-            
-        System.out.println("Eliminazione azione: " + azione.getNome()  + ", per obiettivo: " + azione.getObiettivoPadre().getNome());
+    /**
+     * Aggiunge un nuovo sotto-obiettivo all'obiettivo cliccato.
+     */
+    private void aggiungiSottoObiettivo(IObiettivo obiettivo) throws IOException {
+    	apriEditorObiettivo(obiettivo, true, true);
     }
     
-    private void visualizzaAzione(AzioneDemo azione) {
-        BorderPane pane = new BorderPane();
-        pane.setPadding(new Insets(0, 0, 15, 0));
-        CheckBox check = new CheckBox();
-        check.getStyleClass().add("nome");
-        check.setText(azione.getNome());
-        pane.setLeft(check);
-        this.boxAzioni.getChildren().add(pane);
-        
-        HBox hBox = new HBox();
-        hBox.setPadding(new Insets(5, 5, 5, 10));
-        ImageView dots = new ImageView();
-        dots.setFitHeight(18);
-        dots.setFitWidth(6);
-        dots.setImage(new Image(getClass().getResource("/main/risorse/dots.png").toString()));
-        hBox.getChildren().add(dots);
-        
-        HBox hBox2 = new HBox();
-        hBox2.setPadding(new Insets(5, 5, 5, 10));
-        ImageView trash = new ImageView();
-        trash.setFitHeight(15);
-        trash.setFitWidth(15);
-        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
-        hBox2.getChildren().add(trash);
-        
-        // Event handler per modifica di un'azione.
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-                try {
-                    modificaAzione(azione);
-                } catch (IOException ex) {
-                    Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-        
-        // Event handler per eliminazione di un'azione.
-        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-                eliminaAzione(azione);
-            }
-        };
-        hBox2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
-        
-        HBox hBox3 = new HBox();
-        hBox3.getChildren().add(hBox2);
-        hBox3.getChildren().add(hBox);
-        
-        pane.setRight(hBox3);
+    //---------------------------- METODI PUBBLICI --------------------------------
+    /**
+     * Imposta l'istanza del GoalManager.
+     */
+    public void setGoalManager(IGoalManager gm) {
+    	this.gm = gm;
+    	aggiornaObiettivi();
+    	visualizzaAzioniGiornaliere();
     }
     
 }

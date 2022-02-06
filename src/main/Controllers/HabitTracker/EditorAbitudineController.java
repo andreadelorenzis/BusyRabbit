@@ -1,70 +1,69 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Controllers.HabitTracker;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import main.Models.goalmanager.classes.AzioneSessione;
+import main.Models.goalmanager.interfaces.IAzioneSessione;
+import main.Models.habittracker.classes.SessionHabit;
+import main.Models.habittracker.interfaces.IHabit;
+import main.Models.habittracker.interfaces.ISessionHabit;
 
-/**
- *
- * @author andre
- */
 public class EditorAbitudineController {
     
     @FXML
     private TextField abitudineField;
-    
     @FXML
     private TextArea descrizioneArea;
-    
     @FXML
-    private DatePicker dataPicker;
-    
+    private DatePicker dataPicker; 
+    @FXML
+    private RadioButton tipoRadio1;
+    @FXML
+    private RadioButton tipoRadio2;
+    @FXML
+    private HBox formSessione;
+    @FXML
+    private Spinner<Integer> durataSpinner;
     @FXML
     private Label lunBtn;
-    private boolean lun = false;
-    
     @FXML
     private Label marBtn;
-    private boolean mar  = false;
-    
     @FXML
     private Label merBtn;
-    private boolean mer  = false;
-    
     @FXML
     private Label gioBtn;
-    private boolean gio  = false;
-    
     @FXML
     private Label venBtn;
-    private boolean ven  = false;
-    
     @FXML
     private Label sabBtn;
-    private boolean sab  = false;
-    
     @FXML
     private Label domBtn;
-    private boolean dom  = false;
     
-    private AbitudineDemo abitudine;
-    
-    @FXML
-    private void cambiaNome() {
-        this.abitudine.setNome(this.abitudineField.getText());
-    }
+    // giorni della settimana selezionati
+    private boolean lun, mar, mer, gio, ven, sab, dom = false;
+    private List<DayOfWeek> giorni = new ArrayList<>();
     
     @FXML
-    private void cambiaDescrizione() {
-        this.abitudine.setDescrizione(this.descrizioneArea.getText());
+    private void initialize() {
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        valueFactory.setValue(1);
+        durataSpinner.setValueFactory(valueFactory);
+        dataPicker.setValue(LocalDate.now());
     }
     
     private void toggleBtn(Label label, boolean giorno) {
@@ -79,111 +78,108 @@ public class EditorAbitudineController {
     
     @FXML
     private void cambiaGiorni(MouseEvent event) {
-        
         String btnGiornoCliccato = ((Label) event.getSource()).getId();
-        
         switch(btnGiornoCliccato) {
             case "lunBtn": 
-                this.toggleBtn(this.lunBtn, this.lun);
+                toggleBtn(lunBtn, lun);
+                giorni.add(DayOfWeek.MONDAY);
                 break;
             case "marBtn": 
-                this.toggleBtn(this.marBtn, this.mar);
-                 break;
+            	toggleBtn(marBtn, mar);
+            	giorni.add(DayOfWeek.TUESDAY);
+            	break;
             case "merBtn": 
-                this.toggleBtn(this.merBtn, this.mer);
-                 break;
+            	toggleBtn(merBtn, mer);
+            	giorni.add(DayOfWeek.WEDNESDAY);
+            	break;
             case "gioBtn": 
-                this.toggleBtn(this.gioBtn, this.gio);
-                 break;
+            	toggleBtn(gioBtn, gio);
+            	giorni.add(DayOfWeek.THURSDAY);
+            	break;
             case "venBtn": 
-                this.toggleBtn(this.venBtn, this.ven);
-                 break;
+            	toggleBtn(venBtn, ven);
+            	giorni.add(DayOfWeek.FRIDAY);
+            	break;
             case "sabBtn": 
-                this.toggleBtn(this.sabBtn, this.sab);
-                 break;
+            	toggleBtn(sabBtn, sab);
+            	giorni.add(DayOfWeek.SATURDAY);
+            	break;
             case "domBtn": 
-                this.toggleBtn(this.domBtn, this.dom);
-                 break;
+            	toggleBtn(domBtn, dom);
+            	giorni.add(DayOfWeek.SUNDAY);
+            	break;
         }
-        
-        ArrayList<String> giorni = new ArrayList<String>();
-        
-        if(lun)
-            giorni.add("LUN");
-        if(mar)
-            giorni.add("MAR");
-        if(mer)
-            giorni.add("MER");
-        if(gio)
-            giorni.add("GIO");
-        if(ven)
-            giorni.add("VEN");
-        if(sab)
-            giorni.add("SAB");
-        if(dom)
-            giorni.add("DOM");
-        
-        this.abitudine.setGiorniRipetizione(giorni);
     }
     
-    public AbitudineDemo getAbitudine() {
-        return this.abitudine;
-    }
-
     @FXML
-    public void setAbitudine(AbitudineDemo abitudine) {
-        this.abitudine = abitudine;
-        this.abitudineField.setText(abitudine.getNome());
-        this.descrizioneArea.setText(abitudine.getDescrizione());
-        
-        ArrayList<String> giorni = this.abitudine.getGiorniRipetizione();
+    private void cambiaTipo(ActionEvent event) {
+        if(tipoRadio1.isSelected()) {
+            formSessione.setVisible(false);
+        } else if(tipoRadio2.isSelected()) {
+            formSessione.setVisible(true);
+        }
+    }
+    public void setAbitudine(IHabit abitudine) {
+        abitudineField.setText(abitudine.getName());
+        List<DayOfWeek> giorni = abitudine.getDays();
         for(int i = 0; i < giorni.size(); i++) {
             switch(giorni.get(i)) {
-                case "LUN": 
-                    {
-                        this.lun = true;
-                        this.lunBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                    
-                case "MAR":
-                    {
-                        this.mar = true;
-                        this.marBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "MER":
-                    {
-                        this.mer = true;
-                        this.merBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "GIO":
-                    {
-                        this.gio = true;
-                        this.gioBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "VEN":
-                    {
-                        this.ven = true;
-                        this.venBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "SAB":
-                    {
-                        this.sab = true;
-                        this.sabBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "DOM":
-                    {
-                        this.dom = true;
-                        this.domBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-            }
+                case MONDAY: 
+                    toggleBtn(lunBtn, lun);
+                    break;
+                case TUESDAY:
+                    toggleBtn(marBtn, mar);
+                    break;
+                case WEDNESDAY:
+                    toggleBtn(merBtn, mer);
+                    break;
+                case THURSDAY:
+                    toggleBtn(gioBtn, gio);
+                    break;
+                case FRIDAY:
+                    toggleBtn(venBtn, ven);
+                    break;
+                case SATURDAY:
+                    toggleBtn(sabBtn, sab);
+                    break;
+                case SUNDAY:
+                    toggleBtn(domBtn, dom);
+                    break;
+            }      
         }
+        if(abitudine instanceof SessionHabit) {
+        	ISessionHabit abitudineSessione = (ISessionHabit) abitudine;
+        	tipoRadio2.setSelected(true);
+        	tipoRadio1.setDisable(true);
+        	durataSpinner.getValueFactory().setValue(abitudineSessione.getDuration());
+        	formSessione.setVisible(true);
+        } else {
+        	tipoRadio2.setDisable(true);
+        }
+    }
+    
+    public String getNome() {
+    	return abitudineField.getText();
+    }
+    
+    public String getDescrizione() {
+    	return descrizioneArea.getText();
+    }
+    
+    public LocalDate getData() {
+    	return dataPicker.getValue();
+    }
+    
+    public boolean isSessione() {
+    	return tipoRadio2.isSelected();
+    }
+    
+    public List<DayOfWeek> getGiorni() {
+    	return giorni;
+    }
+    
+    public int getDurata() {
+    	return durataSpinner.getValue();
     }
     
 }

@@ -1,70 +1,53 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Controllers.TimeTracker;
 
-import java.util.HashMap;
-import java.util.Map;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import main.Models.timetracker.classes.Progetto;
+import main.Colori;
+import main.Models.timetracker.interfaces.IProgetto;
 
-/**
- *
- * @author andre
- */
 public class EditorProgettoController {
     
     @FXML
-    private ChoiceBox<String> colore;
+    private ChoiceBox<String> colorChoice;
     
     @FXML 
-    private TextField nome;
+    private TextField nameField;
     
-    private ProgettoDemo progetto;
+    /*
+     * Colore del progetto
+     */
+    private Colori colore;
     
     @FXML
     private void initialize() {
-        Map<String, String> valoreColori = new HashMap<String, String>();
-        valoreColori.put("Rosso", "#FF4560");
-        valoreColori.put("Giallo", "#FEB019");
-        valoreColori.put("Verde", "#00E396");
-        valoreColori.put("Blu", "#008FFB");
-        valoreColori.put("Viola", "#9C27B0");
-        
-        ObservableList<String> list = colore.getItems();
+        ObservableList<String> list = colorChoice.getItems();
         list.add("Rosso");
         list.add("Verde");
         list.add("Blu");
         list.add("Giallo");
         list.add("Viola");
-        colore.getSelectionModel().selectedIndexProperty().addListener(
+        colorChoice.getSelectionModel().selectedIndexProperty().addListener(
                  (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-                    progetto.setColore(valoreColori.get((String) colore.getItems().get((Integer) new_val)));
+                	String stringColore = (String) colorChoice.getItems().get((Integer) new_val);
+                    colore = Colori.valueOf(stringColore);
         });
     }
     
-    @FXML
-    private void handleTextField(KeyEvent event) {
-        this.progetto.setNome(nome.getText());
+    public void setProgetto(IProgetto progetto) {
+    	nameField.setText(progetto.getNome());
+        colorChoice.setValue(progetto.getColore().toString());
+        colore = progetto.getColore();
     }
     
-    // Chiamato dal TimeTrackerController
-    public void setProgetto(ProgettoDemo progetto) {
-        this.progetto = progetto;
-        colore.setValue(progetto.getColore());
-        nome.setText(progetto.getNome());
+    public String getNome() {
+    	return nameField.getText();
     }
     
-    public ProgettoDemo getProgetto() {
-        return this.progetto;
+    public Colori getColore() {
+    	return colore;
     }
     
 }

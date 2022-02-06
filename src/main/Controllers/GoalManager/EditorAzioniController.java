@@ -1,96 +1,73 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Controllers.GoalManager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import main.Controllers.GoalManager.demo.AzioneDemo;
+import javafx.scene.layout.HBox;
+import main.Giorno;
+import main.Models.goalmanager.classes.Azione;
+import main.Models.goalmanager.classes.AzioneScomponibile;
+import main.Models.goalmanager.classes.AzioneSessione;
+import main.Models.goalmanager.interfaces.IAzione;
+import main.Models.goalmanager.interfaces.IAzioneSessione;
 
-/**
- *
- * @author andre
- */
 public class EditorAzioniController {
     @FXML
     private TextField azioneField;
-    
     @FXML
-    private Spinner valoreSpinner;
-    
+    private DatePicker datePicker;
+    @FXML
+    private Spinner<Integer> valoreSpinner;
+    @FXML
+    private Spinner<Integer> durataSpinner;
+    @FXML
+    private HBox formSessione;
     @FXML
     private Label lunBtn;
-    
-    private boolean lun;
-    
     @FXML
     private Label marBtn;
-    
-    private boolean mar;
-    
     @FXML
     private Label merBtn;
-    
-    private boolean mer;
-    
     @FXML
     private Label gioBtn;
-    
-    private boolean gio;
-    
     @FXML
     private Label venBtn;
-    
-    private boolean ven;
-    
     @FXML
     private Label sabBtn;
-    
-    private boolean sab;
-    
     @FXML
     private Label domBtn;
+    @FXML
+    private RadioButton tipoRadio1;
+    @FXML
+    private RadioButton tipoRadio2;
     
-    private boolean dom;
-    
-    private AzioneDemo azione;
+    // giorni della settimana selezionati
+    private boolean lun, mar, mer, gio, ven, sab, dom = false;
+    private List<Giorno> giorni = new ArrayList<>();
     
     @FXML
     private void initialize() {
         SpinnerValueFactory<Integer> valueFactory1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
         valueFactory1.setValue(1);
-        this.valoreSpinner.setValueFactory(valueFactory1);
-        
-        this.valoreSpinner.valueProperty().addListener(new ChangeListener<Integer>() {
-            @Override
-            public void changed(ObservableValue<? extends Integer> ov, Integer t, Integer t1) {
-                azione.setValore((int) valoreSpinner.getValue());
-            }
-        });
-        
-        this.lun = false;
-        this.mar = false;
-        this.mer = false;
-        this.gio = false;
-        this.ven = false;
-        this.sab = false;
-        this.dom = false;
+        valueFactory2.setValue(1);
+        valoreSpinner.setValueFactory(valueFactory1);
+        durataSpinner.setValueFactory(valueFactory2);
+        datePicker.setValue(LocalDate.now());
     }
     
-    @FXML
-    private void cambiaNome() {
-        this.azione.setNome(this.azioneField.getText());
-    }
-    
-    @FXML
     private void toggleBtn(Label label, boolean giorno) {
         if(!giorno) {
             giorno = true;
@@ -104,172 +81,108 @@ public class EditorAzioniController {
     @FXML
     private void cambiaGiorni(MouseEvent event) {
         String btnGiornoCliccato = ((Label) event.getSource()).getId();
-        System.out.println(btnGiornoCliccato);
-        
         switch(btnGiornoCliccato) {
             case "lunBtn": 
-                {
-                    if(this.lun) {
-                        this.lun = false;
-                        this.lunBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE;"
-                                + " -fx-border-color: #4361EE; -fx-font-weight: 800;");
-                    } else {
-                        this.lun = true;
-                        this.lunBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff; -fx-font-weight: 800;");
-                    }
-                    break;
-                }
+                toggleBtn(lunBtn, lun);
+                giorni.add(Giorno.MONDAY);
+                break;
             case "marBtn": 
-                {
-                    if(this.mar) {
-                        this.mar = false;
-                        this.marBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE;"
-                                + " -fx-border-color: #4361EE; -fx-font-weight: 800;");
-                    } else {
-                        this.mar = true;
-                        this.marBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff; -fx-font-weight: 800;");
-                    }
-                    break;
-                }
+            	toggleBtn(marBtn, mar);
+            	giorni.add(Giorno.TUESDAY);
+            	break;
             case "merBtn": 
-                {
-                    if(this.mer) {
-                        this.mer = false;
-                        this.merBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE;"
-                                + " -fx-border-color: #4361EE; -fx-font-weight: 800;");
-                    } else {
-                        this.mer = true;
-                        this.merBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff; -fx-font-weight: 800;");
-                    }
-                    break;
-                }
+            	toggleBtn(merBtn, mer);
+            	giorni.add(Giorno.WEDNESDAY);
+            	break;
             case "gioBtn": 
-                {
-                    if(this.gio) {
-                        this.gio = false;
-                        this.gioBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE;"
-                                + " -fx-border-color: #4361EE; -fx-font-weight: 800;");
-                    } else {
-                        this.gio = true;
-                        this.gioBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff; -fx-font-weight: 800;");
-                    }
-                    break;
-                }
+            	toggleBtn(gioBtn, gio);
+            	giorni.add(Giorno.THURSDAY);
+            	break;
             case "venBtn": 
-                {
-                    if(this.ven) {
-                        this.ven = false;
-                        this.venBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE;"
-                                + " -fx-border-color: #4361EE; -fx-font-weight: 800;");
-                    } else {
-                        this.ven = true;
-                        this.venBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff; -fx-font-weight: 800;");
-                    }
-                    break;
-                }
+            	toggleBtn(venBtn, ven);
+            	giorni.add(Giorno.FRIDAY);
+            	break;
             case "sabBtn": 
-                {
-                    if(this.sab) {
-                        this.sab = false;
-                        this.sabBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE;"
-                                + " -fx-border-color: #4361EE; -fx-font-weight: 800;");
-                    } else {
-                        this.sab = true;
-                        this.sabBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff; -fx-font-weight: 800;");
-                    }
-                    break;
-                }
+            	toggleBtn(sabBtn, sab);
+            	giorni.add(Giorno.SATURDAY);
+            	break;
             case "domBtn": 
-                {
-                    if(this.dom) {
-                        this.dom = false;
-                        this.domBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE;"
-                                + " -fx-border-color: #4361EE; -fx-font-weight: 800;");
-                    } else {
-                        this.dom = true;
-                        this.domBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff; -fx-font-weight: 800;");
-                    }
-                    break;
-                }
+            	toggleBtn(domBtn, dom);
+            	giorni.add(Giorno.SUNDAY);
+            	break;
         }
-        
-        ArrayList<String> giorni = new ArrayList<String>();
-        
-        if(this.lun)
-            giorni.add("LUN");
-        if(this.mar)
-            giorni.add("MAR");
-        if(this.mer)
-            giorni.add("MER");
-        if(this.gio)
-            giorni.add("GIO");
-        if(this.ven)
-            giorni.add("VEN");
-        if(this.sab)
-            giorni.add("SAB");
-        if(this.dom)
-            giorni.add("DOM");
-        
-        this.azione.setGiorni(giorni);
     }
     
-    public void setAzione(AzioneDemo azione) {
-        this.azione = azione;
+    @FXML
+    private void cambiaTipo(ActionEvent event) {
+        if(tipoRadio1.isSelected()) {
+            formSessione.setVisible(false);
+        } else if(tipoRadio2.isSelected()) {
+            formSessione.setVisible(true);
+        }
+    }
+    
+    public void setAzione(IAzione azione) {
         this.azioneField.setText(azione.getNome());
-        this.valoreSpinner.getValueFactory().setValue(azione.getValore());
-        
-        ArrayList<String> giorni = this.azione.getGiorni();
+        this.valoreSpinner.getValueFactory().setValue(azione.getIncremento());
+        List<Giorno> giorni = azione.getGiorniRipetizione();
         for(int i = 0; i < giorni.size(); i++) {
             switch(giorni.get(i)) {
-                case "LUN": 
-                    {
-                        this.lun = true;
-                        this.lunBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                    
-                case "MAR":
-                    {
-                        this.mar = true;
-                        this.marBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "MER":
-                    {
-                        this.mer = true;
-                        this.merBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "GIO":
-                    {
-                        this.gio = true;
-                        this.gioBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "VEN":
-                    {
-                        this.ven = true;
-                        this.venBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "SAB":
-                    {
-                        this.sab = true;
-                        this.sabBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
-                case "DOM":
-                    {
-                        this.dom = true;
-                        this.domBtn.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-                         break;
-                    }
+                case MONDAY: 
+                    toggleBtn(lunBtn, lun);
+                    break;
+                case TUESDAY:
+                    toggleBtn(marBtn, mar);
+                    break;
+                case WEDNESDAY:
+                    toggleBtn(merBtn, mer);
+                    break;
+                case THURSDAY:
+                    toggleBtn(gioBtn, gio);
+                    break;
+                case FRIDAY:
+                    toggleBtn(venBtn, ven);
+                    break;
+                case SATURDAY:
+                    toggleBtn(sabBtn, sab);
+                    break;
+                case SUNDAY:
+                    toggleBtn(domBtn, dom);
+                    break;
             }
+        }
+        if(azione instanceof AzioneSessione) {
+        	IAzioneSessione azioneSessione = (IAzioneSessione) azione;
+        	tipoRadio2.setSelected(true);
+        	tipoRadio1.setDisable(true);
+        	durataSpinner.getValueFactory().setValue(azioneSessione.getDurata());
+        } else {
+        	tipoRadio2.setDisable(true);
         }
     }
     
-    public AzioneDemo getAzione() {
-        return this.azione;
+    public String getNome() {
+    	return azioneField.getText();
+    }
+    
+    public int getValore() {
+    	return valoreSpinner.getValue();
+    }
+    
+    public List<Giorno> getGiorni() {
+    	return giorni;
+    }
+    
+    public boolean isTipoSessione() {
+    	return tipoRadio2.isSelected();
+    }
+    
+    public int getDurata() {
+    	return durataSpinner.getValue();
+    }
+    
+    public LocalDate getData() {
+    	return datePicker.getValue();
     }
     
 }

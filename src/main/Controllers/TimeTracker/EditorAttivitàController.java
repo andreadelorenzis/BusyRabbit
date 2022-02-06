@@ -1,50 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Controllers.TimeTracker;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.ChoiceBox;
+import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import main.Models.timetracker.classes.Attività;
-import main.Models.timetracker.classes.Progetto;
+import main.Models.timetracker.interfaces.IAttivit�;
+import main.Models.timetracker.interfaces.IProgetto;
 
-/**
- *
- * @author andre
- */
-public class EditorAttivitàController {
+public class EditorAttivit�Controller {
     
     @FXML
-    private TextField nome;
-    
-    @FXML
-    private ChoiceBox progetto;
-    
-    @FXML
-    private DatePicker data;
+    private TextField nameField;
     
     @FXML 
     private HBox btnProgetto;
@@ -55,84 +31,82 @@ public class EditorAttivitàController {
     @FXML
     private BorderPane menuProgetti;
     
-    private ProgettoDemo progettoAssociato;
-    
-    private AttivitàDemo attività;
-    
-    /*
-    *
-    * !!!! DEMO !!!!
-    *
-    */
-    private ArrayList<ProgettoDemo> progetti;
+    @FXML
+    private DatePicker datePicker;
     
     @FXML
-    private void initialize() {
-       
-    }
+    private TextField oraField1;
+    @FXML
+    private TextField oraField2;
+    @FXML
+    private TextField durataField1;
+    @FXML
+    private TextField durataField2;
+    @FXML
+    private TextField durataField3;
+    
+    /*
+     * Lista progetti creati.
+     */
+    private List<IProgetto> progetti;
+    
+    /*
+     * Progetto scelto per l'attivit�.
+     */
+    private IProgetto progetto;
     
     private void visualizzaListaProgetti() {
         for(int i = 0; i < progetti.size(); i++) {
-            this.visualizzaProgetto(progetti.get(i));
+        	if(i > 0) {
+                creaViewProgetto(progetti.get(i));
+        	}
         }
     }
     
-    private void visualizzaProgetto(ProgettoDemo progetto) {
-       // Crea nuovo progetto
+    public void creaViewProgetto(IProgetto progetto) {     
+    	
+        // crea contenitore progetto
         BorderPane pane = new BorderPane();
+        pane.getStyleClass().add("lista-progetti-elem");
         pane.setPadding(new Insets(0, 20, 0, 10));
         pane.setMinHeight(60);
-        Circle circle = new Circle();
-        circle.setRadius(3);
-        circle.setFill(Color.web(progetto.getColore()));
-        
-        Label label1 = new Label(progetto.getNome());
-        label1.setGraphic(circle);
-        label1.setStyle("-fx-text-fill: " + progetto.getColore() +";");
-        pane.setLeft(label1);
-        
-        // Collega un event handler per la modifica del progetto
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+       
+        // crea nome e pallino progetto nella parte sinistra
+        HBox nome = new HBox();
+        nome.setAlignment(Pos.CENTER);
+        Label label1 = TTHelper.creaLabelProgetto(progetto);
+        nome.getChildren().add(label1);
+        pane.setLeft(nome);
+
+        // aggiunge event handler al container
+        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 cambiaProgetto(progetto);
             }
         };
-        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
         
-        this.listaProgetti.getChildren().add(pane);
+        // aggiunge il progetto alla view
+        listaProgetti.getChildren().add(pane);
     }
     
     /**
-     * Cambia il progett
+     * Cambia il progetto
      */
-    private void cambiaProgetto(ProgettoDemo progetto) {
+    private void cambiaProgetto(IProgetto progetto) {
+
+    	// modifica progetto
+        Label label = TTHelper.creaLabelProgetto(progetto);
+        this.progetto = progetto;
         
-        // Crea nuovo progetto
-        Circle circle = new Circle();
-        circle.setRadius(3);
-        circle.setFill(Color.web(progetto.getColore()));
-        Label label = new Label(progetto.getNome());
-        label.setGraphic(circle);
-        label.setStyle("-fx-text-fill: " + progetto.getColore() +";");
-        
-        
-        // Associa il progetto all'attività;
-        this.progettoAssociato = progetto;
-        this.attività.setProgetto(this.progettoAssociato);
-        
-        // Aggiorna il pulsante nella view.
+        // aggiorna il pulsante nella view.
         this.btnProgetto.getChildren().clear(); 
         this.btnProgetto.getChildren().add(label);
         
-        // Chiudi menù
+        // chiudi men�
         this.toggleMenuProgetti();
         
-    }
-    
-    @FXML
-    private void handleTextField(KeyEvent event) {
-        this.attività.setNome(nome.getText());
     }
     
     @FXML
@@ -143,23 +117,59 @@ public class EditorAttivitàController {
             menuProgetti.setVisible(true);  
     }
     
-    // Chiamato dal TimeTrackerController
-    public void setAttività(AttivitàDemo attività) {
-        this.attività = attività;
-        nome.setText(attività.getNome());
-        this.progettoAssociato = attività.getProgetto();
-        this.cambiaProgetto(attività.getProgetto());
+    public void setAttivit�(IAttivit� a) {
+    	nameField.setText(a.getNome());
+        this.cambiaProgetto(a.getProgetto());
         this.toggleMenuProgetti();
+        datePicker.setValue(a.getData());
+        oraField1.setText("" + a.getOraInizio().getHour());
+        oraField2.setText("" + a.getOraInizio().getMinute());
+        durataField1.setText("" + (a.getDurata() / 3600) % 60);
+        durataField2.setText("" + (a.getDurata() / 60) % 60);
+        durataField3.setText("" + (a.getDurata()) % 60);
     }
     
-    public AttivitàDemo getProgetto() {
-        return this.attività;
-    }
-    
-    public void setListaProgetti(ArrayList<ProgettoDemo> progetti) {
+    public void setListaProgetti(List<IProgetto> progetti) {
         this.progetti = progetti;
-        System.out.println(this.progetti.get(1).getNome());
         this.visualizzaListaProgetti();
+    }
+    
+    public String getNome() {
+    	return nameField.getText();
+    }
+    
+    public LocalDate getData() {
+    	return datePicker.getValue();
+    }
+    
+    public LocalTime getOra() {
+    	int ore = 0;
+    	int minuti = 0;
+    	try {
+    		ore = Integer.parseInt(oraField1.getText());
+        	minuti = Integer.parseInt(oraField2.getText());
+    	} catch(NumberFormatException e) {
+    		System.out.println("Inserisci un orario valida.");
+    	}
+    	return LocalTime.of(ore, minuti);
+    }
+    
+    public int getDurata() {
+    	int ore = 0;
+    	int minuti = 0;
+    	int secondi = 0;
+    	try {
+        	ore = Integer.parseInt(durataField1.getText());
+        	minuti = Integer.parseInt(durataField2.getText());
+        	secondi = Integer.parseInt(durataField3.getText());
+    	} catch(NumberFormatException e) {
+    		System.out.println("Inserisci una durata valida.");
+    	}
+    	return ore * 3600 + minuti * 60 + secondi;
+    }
+    
+    public IProgetto getProgetto() {
+    	return progetto;
     }
     
 }

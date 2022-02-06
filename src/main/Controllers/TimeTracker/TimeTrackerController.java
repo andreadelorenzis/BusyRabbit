@@ -1,18 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package main.Controllers.TimeTracker;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,856 +16,894 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import main.Models.timetracker.classes.Attivit√†;
-import main.Models.timetracker.classes.GiornoAttivit√†;
+import main.Models.timetracker.classes.Attivit‡;
+import main.Models.timetracker.classes.PomodoroTimer;
 import main.Models.timetracker.classes.Progetto;
-import main.FxmlLoader;
+import main.Models.timetracker.classes.TrackerEnum;
+import main.Models.timetracker.interfaces.IAttivit‡;
+import main.Models.timetracker.interfaces.IPomodoroTimer;
+import main.Models.timetracker.interfaces.IProgetto;
+import main.Models.timetracker.interfaces.ITimeTracker;
+import main.Models.timetracker.interfaces.ITrackable;
+import main.Colori;
+import main.Controllers.Helper;
 
-public class TimeTrackerController {
+public class TimeTrackerController implements ITrackable {
     
+	//-------------------------------- CAMPI FXML -----------------------------------
     @FXML
+    private AnchorPane panePrincipale;
+    @FXML
+    private AnchorPane containerAttivit‡;
+	@FXML
     private ScrollPane scroll;
-    
+	@FXML
+	private AnchorPane menuProgettiFormContainer;
     @FXML
-    private VBox listaGiorniAttivit√†;
-    
-    @FXML 
-    private ChoiceBox timeChoice;
-    
+    private VBox listaGiorniAttivit‡;
     @FXML 
     private BorderPane menuProgetti;
     @FXML
     private VBox listaProgetti;
-    
     @FXML
-    private TextField attivit√†Text;
-    
+    private TextField attivit‡Text;
     @FXML
-    private BorderPane formTimeTracker;
-    
+    private BorderPane formTimeTracker;     
     @FXML
-    private BorderPane formPomodoro;
-    
+    private BorderPane formManuale;   
     @FXML
-    private BorderPane formManuale;
-    
+    private TextField orarioText1;   
     @FXML
-    private TextField orarioText1;
-    
-    @FXML
-    private TextField orarioText2;
-    
+    private TextField orarioText2;  
     @FXML
     private DatePicker dataManuale;
-    
     @FXML
-    private TextField durataText1;
-    
+    private TextField durataText1; 
     @FXML
-    private TextField durataText2;
-    
+    private TextField durataText2; 
     @FXML
-    private TextField durataText3;
-    
+    private TextField durataText3;   
     @FXML
-    private HBox boxProgetto;
-    
+    private HBox boxProgetto;   
     @FXML
-    private HBox pauseBtnContainer;
-    
+    private HBox pauseBtnContainer; 
     @FXML
-    private Button resetBtn;
-            
+    private Button stopBtn;         
     @FXML
-    private Button avviaBtn;
-    
-    private ProgettoDemo progettoAssociato;
-    
-    /**
-     * 
-     * !!!! DEMO !!!!
-     * 
-     */
-    private ArrayList<ProgettoDemo> progetti;
-    
-    /**
-    * 
-    * !!!! DEMO !!!!
-    * 
-    */
-    private ArrayList<GiornoAttivit√†Demo> giorniAttivit√†;
-    
-    private int pomodoro;
-    
-    private int pausaBreve;
-    
-    private int pausaLunga;
-    
-    @FXML 
-    private void initialize() {
-        
-        ObservableList<String> list = timeChoice.getItems();
-        list.add("Cronometro");
-        list.add("Pomodoro");
-        list.add("Manuale");
-        timeChoice.setValue("Cronometro");
-        timeChoice.getSelectionModel().selectedIndexProperty().addListener(
-                 (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-                    this.cambiaTipoTracker((String) timeChoice.getItems().get((Integer) new_val));
-        });
-        
-        /**
-        * 
-        * !!!! DEMO !!!!
-        * 
-        */
-        this.progetti = new ArrayList<ProgettoDemo> ();
-        progetti.add(new ProgettoDemo("Social Network", "#FEB019"));
-        progetti.add(new ProgettoDemo("Studiare", "#00E396"));
-        progetti.add(new ProgettoDemo("Workout", "#9C27B0"));
-
-        /**
-        * 
-        * !!!! DEMO !!!!
-        * 
-        */
-        giorniAttivit√† = new ArrayList<GiornoAttivit√†Demo>();
-        for(int i = 0; i < 3; i++) {
-            ArrayList<Attivit√†Demo> listaAttivit√† = new ArrayList<Attivit√†Demo>();
-            listaAttivit√†.add(new Attivit√†Demo(new Date(), 500, "Attivit√†1", new ProgettoDemo("Social Network", "#FEB019")));
-            listaAttivit√†.add(new Attivit√†Demo(new Date(), 500, "Attivit√†2", new ProgettoDemo("Studiare", "#00E396")));
-            listaAttivit√†.add(new Attivit√†Demo(new Date(), 500, "Attivit√†3", new ProgettoDemo("Workout", "#9C27B0")));
-            
-            GiornoAttivit√†Demo giorno = new GiornoAttivit√†Demo();
-            giorno.setListaAttivit√†(listaAttivit√†);
-            
-            giorniAttivit√†.add(giorno);
-        }
-        
-        this.visualizzaListaProgetti(progetti);
-        this.visualizzaCronologiaAttivit√†(giorniAttivit√†);
-        
-        this.pomodoro = 30;
-        this.pausaBreve = 5;
-        this.pausaLunga = 10;
-       
-    }
-    
-    /**
-     * Visualizza nella view la lista dei progetti esistenti.
-     */
-    private void visualizzaListaProgetti(ArrayList<ProgettoDemo> progetti) {
-        for(int i = 0; i < progetti.size(); i++) {
-            this.visualizzaProgetto(progetti.get(i));
-        }
-    }
-    
-    /**
-     * Usa i dati di un Progetto per creare un componenete nella view.
-     */
+    private Button startBtn;
     @FXML
-    private void visualizzaProgetto(ProgettoDemo progetto) {
-        
-        // Crea nuovo progetto
-        BorderPane pane = new BorderPane();
-        pane.setPadding(new Insets(0, 20, 0, 10));
-        pane.setMinHeight(60);
-        Circle circle = new Circle();
-        circle.setRadius(3);
-        circle.setFill(Color.web(progetto.getColore()));
-        
-        HBox box3 = new HBox();
-        box3.setAlignment(Pos.CENTER);
-        Label label1 = new Label(progetto.getNome());
-        label1.setGraphic(circle);
-        label1.setStyle("-fx-text-fill: " + progetto.getColore() +";");
-        box3.getChildren().add(label1);
-        
-        HBox containerBtn = new HBox();
-        containerBtn.setAlignment(Pos.CENTER);
-        //containerBtn.setStyle("-fx-background-color: red;");
-        
-        HBox box = new HBox();
-        box.setAlignment(Pos.CENTER);
-        ImageView edit = new ImageView();
-        edit.setFitHeight(15);
-        edit.setFitWidth(15);
-        edit.setImage(new Image(getClass().getResource("/main/risorse/edit.png").toString()));
-        box.getChildren().add(edit);
-        box.setPadding(new Insets(5, 5, 5, 5));
-        
-        HBox box2 = new HBox();
-        box2.setAlignment(Pos.CENTER);
-        ImageView trash = new ImageView();
-        trash.setFitHeight(13);
-        trash.setFitWidth(13);
-        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
-        box2.getChildren().add(trash);
-        box2.setPadding(new Insets(5, 5, 5, 5));
-        
-        containerBtn.getChildren().add(box);
-        containerBtn.getChildren().add(box2);
-        
-        pane.setLeft(box3);
-        pane.setRight(containerBtn);
-        
-        // Event handler per la modifica del progetto
-        EventHandler<MouseEvent> eventHandlerModifica = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                try {
-                    modificaProgetto(progetto);
-                } catch (IOException ex) {
-                    Logger.getLogger(TimeTrackerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-       
-        // Event handler per l'eliminazione di un progetto
-        EventHandler<MouseEvent> eventHandlerElimina = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                eliminaProgetto(progetto);
-            }
-        };
-       
-        box.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerModifica);
-        box2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerElimina);
-        
-        // Collega un event handler per la scelta del progetto
-        EventHandler<MouseEvent> eventHandler2 = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                cambiaProgetto(progetto);
-            }
-        };
-        label1.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler2);
-        
-        listaProgetti.getChildren().add(pane);
-    }
-    
-    /**
-     * Cambia il progett
-     */
-    private void cambiaProgetto(ProgettoDemo progetto) {
-        
-        // Crea nuovo progetto
-        Circle circle = new Circle();
-        circle.setRadius(3);
-        circle.setFill(Color.web(progetto.getColore()));
-        Label label = new Label(progetto.getNome());
-        label.setGraphic(circle);
-        label.setStyle("-fx-text-fill: " + progetto.getColore() +";");
-        
-        this.progettoAssociato = progetto;
-        this.boxProgetto.getChildren().clear(); 
-        this.boxProgetto.getChildren().add(label);
-        
-    }
-    
-    /**
-     * Apre il il form dei progetti, aggiunge un Progetto e aggiorna la view.
-     */
+    private Label oreLabel;
     @FXML
-    private void aggiungiProgetto() throws IOException {
-        
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorProgetto.fxml"));
-        DialogPane newProject = fxmlLoader.load();
-        newProject.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(newProject);
-        dialog.setTitle("Nuovo progetto");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorProgettoController editorController = fxmlLoader.getController();
-        editorController.setProgetto(new ProgettoDemo("", ""));
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-            
-            // Aggiungere il progetto nel modello.
-            this.progetti.add(editorController.getProgetto());
-            
-            // Aggiornare la view
-            this.listaProgetti.getChildren().clear();
-            this.visualizzaListaProgetti(this.progetti);
-            this.toggleMenuProgetto();
-        }
-    }
-    
-    /**
-     * Modifica un Progetto e aggiorna la view.
-     */
+    private Label minutiLabel;
     @FXML
-    private void modificaProgetto(ProgettoDemo progetto) throws IOException {
-        
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorProgetto.fxml"));
-        DialogPane newProject = fxmlLoader.load();
-        newProject.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(newProject);
-        dialog.setTitle("Modifica progetto");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorProgettoController editorController = fxmlLoader.getController();
-        editorController.setProgetto(progetto);
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-            
-            // Modificare il progetto nel modello.
-            for(int i = 0; i < this.progetti.size() - 1; i++) {
-                if(progetto == this.progetti.get(i)) {
-                    
-                }
-            }
-            
-            // Refreshare la lista di componenti nella view
-            this.listaProgetti.getChildren().clear();
-            this.visualizzaListaProgetti(this.progetti);
-            this.toggleMenuProgetto();
-            
-        }
-    }
-    
-    /**
-     * Elimina un Progetto e aggiorna la view.
-     */
-    private void eliminaProgetto(ProgettoDemo progetto) {
-        System.out.println("Progetto: " + progetto.getNome() + " eliminato!");
-    }
-    
-    /**
-     * Apre il men√π a tendina della lista progetti.
-     */
+    private Label secondiLabel;
     @FXML
-    private void toggleMenuProgetto() {
-        if(menuProgetti.isVisible()) 
-            menuProgetti.setVisible(false);
-        else
-            menuProgetti.setVisible(true);    
-    }
-    
-    /**
-     * Crea e inserisce nella view il componente per poter cambiare pagina attivit√†.
-     */
+    private Button settingsBtn;
     @FXML
-    private HBox creaFormPagine() {
-        
-        HBox form = new HBox();
-        form.setAlignment(Pos.CENTER_LEFT);
-        
-        BorderPane pane = new BorderPane();
-        pane.setStyle("-fx-background-color: #0E1726; -fx-border-style: solid; -fx-border-color: #191E3A; -fx-border-width: 3;");
-        pane.setPadding(new Insets(0, 15, 0, 15));
-        
-        ImageView leftArrow = new ImageView();
-        leftArrow.setFitHeight(15);
-        leftArrow.setFitWidth(15);
-        leftArrow.setRotate(-90);
-        leftArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow.png").toString()));
-        BorderPane.setAlignment(leftArrow, Pos.CENTER);
-        leftArrow.setStyle("-fx-border-color: #191E3A; -fx-border-width: 0 0 0 3;");
-        
-        ImageView rightArrow = new ImageView();
-        rightArrow.setFitHeight(15);
-        rightArrow.setFitWidth(15);
-        rightArrow.setRotate(90);
-        rightArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow.png").toString()));
-        BorderPane.setAlignment(rightArrow, Pos.CENTER);
-        rightArrow.setStyle("-fx-border-color: #191E3A; -fx-border-width: 0 3 0 0;");
-        
-        Label label = new Label("1-50 di 832");
-        label.setPadding(new Insets(12, 15, 12, 15));
-        label.setStyle("-fx-text-fill: #ffffff; -fx-border-color: #191E3A; -fx-border-width: 0;");
-        
-        pane.setLeft(leftArrow);
-        pane.setRight(rightArrow);
-        pane.setCenter(label);
-        
-        form.getChildren().add(pane);
-        
-        return form;
-    }
-    
-    /**
-     * Visualizza nella view le informazioni sulle attivit√† passate.
-     */
-    private void visualizzaCronologiaAttivit√†(ArrayList<GiornoAttivit√†Demo> giorniAttivit√†) {
-        for(int i = 0; i < giorniAttivit√†.size(); i++) {
-            this.visualizzaGiornoAttivit√†(giorniAttivit√†.get(i));
-        }
-        HBox formPagine = this.creaFormPagine();
-        listaGiorniAttivit√†.getChildren().add(formPagine);
-    }
-    
-    
-    /**
-     * Usa i dati di un GiornoAttivit√† per creare e poi inserire un componenente nella view.
-     */
+    private Button manualBtn;
     @FXML
-    private void visualizzaGiornoAttivit√†(GiornoAttivit√†Demo giorno) {
-        
-        // Crea un BorderPane container.
-        BorderPane giornoAttivit√†Container = new BorderPane();
-        giornoAttivit√†Container.setStyle("-fx-border-radius: 14; -fx-background-radius: 12;");
-        giornoAttivit√†Container.setPadding(new Insets(0, 0, 40, 0));
-        
-        // Crea un VBox da mettere nel BorderPane.
-        VBox giornoAttivit√† = new VBox();
-        giornoAttivit√†.setStyle("-fx-background-color: #0E1726; -fx-border-radius: 14; -fx-background-radius: 12;");
-        
-        // Crea un BorderPane che funger√† da header.
-        BorderPane header = creaHeaderGiornoAttivit√†();
-        header.setMinHeight(50);
-        
-        // Crea un VBox come lista per le attivit√† svolte durante il giorno.
-        VBox listaAttivit√† = new VBox();
-        
-        for(int i = 0; i < giorno.getListaAttivit√†().size(); i++) {
-            Attivit√†Demo attivit√† = giorno.getListaAttivit√†().get(i);
-            
-            // Crea un'attivit√† e la aggiunge alla lista.
-            BorderPane pane = visualizzaAttivit√†(attivit√†);
-            listaAttivit√†.getChildren().add(pane);
-        }
-        
-        // Aggiunge header e lista attivit√† al VBox.
-        giornoAttivit√†.getChildren().add(header);
-        giornoAttivit√†.getChildren().add(listaAttivit√†);
-        
-        // Mette il giorno attivit√† nel container.
-        giornoAttivit√†Container.setCenter(giornoAttivit√†);
-        
-        scroll.setFitToHeight(true);
-        scroll.setFitToWidth(true);
-        scroll.setStyle("-fx-background-color: #122C49;");
-        scroll.getStyleClass().add("edge-to-edge");
-      
-        
-        // Inserisce l'oggetto creato nella view.
-        this.listaGiorniAttivit√†.getChildren().add(giornoAttivit√†Container);
-        
-    }
-    
-    /**
-     * Crea e inserisce nella view il pulsante di aggiunta progetto.
-     */
-    private HBox creaBtnProgetto() {
-        HBox btnProgetto = new HBox();
-        btnProgetto.setAlignment(Pos.CENTER);
-        ImageView plus = new ImageView();
-        plus.setFitHeight(15);
-        plus.setFitWidth(15);
-        plus.setImage(new Image(getClass().getResource("/main/risorse/plus.png").toString()));
-        Label label6 = new Label("Progetto");
-        label6.setStyle("-fx-text-fill: #2196F3; -fx-font-size: 14;");
-        label6.setPadding(new Insets(0, 0, 0, 10));
-        btnProgetto.getChildren().add(plus);
-        btnProgetto.getChildren().add(label6);
-        return btnProgetto;
-    }
-    
-    /**
-     * Usa i dati di un GiornoAttivit√† per creare l'header del componente nella view.
-     */
-    private BorderPane creaHeaderGiornoAttivit√†() {
-        
-        // Crea un BorderPane.
-        BorderPane header = new BorderPane();
-        header.setStyle("-fx-background-color: #191E3A; -fx-pref-height: 50; -fx-alignment: center; -fx-border-radius: 12 12 0 0; -fx-background-radius: 12 12 0 0;");
-        header.setPadding(new Insets(0, 20, 0, 20));
-        
-        // Crea parte destra del BorderPane.
-        HBox headerDestra = new HBox();
-        headerDestra.setAlignment(Pos.CENTER);
-        Label label1 = new Label("Total:");
-        label1.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14; -fx-font-weight: 800;");
-        headerDestra.getChildren().add(label1);     
-        Label label2 = new Label("04:53:23");
-        label2.setStyle("-fx-text-fill: #888ea8; -fx-font-size: 14; -fx-font-weight: 800;");
-        label2.setPadding(new Insets(0, 20, 0, 10));
-        headerDestra.getChildren().add(label2);
-        ImageView dots = new ImageView();
-        dots.setFitHeight(18);
-        dots.setFitWidth(6);
-        dots.setImage(new Image(getClass().getResource("/main/risorse/dots.png").toString()));
-        headerDestra.getChildren().add(dots);
-        
-        // Crea parte sinistra del BorderPane.
-        HBox headerSinistra = new HBox();
-        headerSinistra.setAlignment(Pos.CENTER);
-        Label label3 = new Label("Nov 17, 2020");
-        label3.setStyle("-fx-text-fill: #BAC4CA; -fx-alignment: center; -fx-font-size: 14;");
-        headerSinistra.getChildren().add(label3);
-        
-        // Imposta parte sinistra e destra del BorderPane.
-        header.setLeft(headerSinistra);
-        header.setRight(headerDestra);
-        
-        return header;
-    }
-    
-    /**
-     * 
-     */
+    private Button pomoBtn;
     @FXML
-    private void avviaTimeTracker(ActionEvent event) throws IOException {
-        
-        if(this.attivit√†Text.getText() != "") {
-            this.aggiungiAttivit√†(new Attivit√†Demo(new Date(), 5, this.attivit√†Text.getText()));
-        } else {
-            System.out.println("Perfavore inserisci il nome di un'attivit√†.");
-        }
-    }
+    private Button cronoBtn;
+    
+	//--------------------------------- CAMPI ------------------------------------
+    /*
+     * Istanza del TimeTracker dell'app.
+     */
+    private ITimeTracker tt;
+    
+    /*
+     * Progetto scelto l'attivit‡ da monitorare.
+     */
+	private IProgetto progetto = null;
+	
+	/*
+	 * Pagina corrente della cronologia attivit‡.
+	 */
+	private int pagina = 1;
+	
+	/*
+	 * Se un qualunque men˘ progetto Ë aperto.
+	 */
+    private boolean menuProgettiAperto = false;
+    
+    /*
+     * L'eventuale men˘ progetto apero.
+     */
+    private BorderPane menuProgettiCorrente;
+    
+    //--------------------------- METODI PRIVATI --------------------------------
     
     /**
-     * Aggiunge una nuova Attivit√† e aggiorna la view.
+     * Aggiunge un progetto alla view.
      */
-    @FXML
-    private void aggiungiAttivit√†(Attivit√†Demo attivit√†) throws IOException {
+    public BorderPane creaViewProgetto(IProgetto progetto, VBox container) {     
+    	
+        // crea contenitore progetto
+        BorderPane pane = TTHelper.creaPaneProgetto(progetto);
         
-        // Aggiungere l'attivit√† nel modello.
-
-        /**
-         * 
-         * !!!! DEMO !!!!
-         * 
-         */
+        // aggiunge pulsante di edit nella parte destra
+        HBox editBtn = creaViewEditBtn(progetto);
+        pane.setRight(editBtn);
         
-        // Se l'ultimo giorno della cronologia √® ieri crea un nuovo giorno e aggiungi l'attivit√†.
-        GiornoAttivit√†Demo giorno = new GiornoAttivit√†Demo();
-        ArrayList<Attivit√†Demo> listaAttivit√† = new ArrayList<Attivit√†Demo>();
-        attivit√†.setProgetto(this.progettoAssociato);
-        listaAttivit√†.add(attivit√†);
-        giorno.setListaAttivit√†(listaAttivit√†);
-        this.giorniAttivit√†.add(0, giorno);
-
-        // Refreshare la lista attivit√† della view
-        this.listaGiorniAttivit√†.getChildren().clear();
-        this.visualizzaCronologiaAttivit√†(giorniAttivit√†);
-            
-    }
-    
-    /**
-     * Modifica un'attivit√† e aggiorna la view.
-     */
-    private void modificaAttivit√†(Attivit√†Demo attivit√†) throws IOException {
-        
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorAttivit√†.fxml"));
-        DialogPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(editor);
-        dialog.setTitle("Modifica Attivit√†");
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        EditorAttivit√†Controller editorController = fxmlLoader.getController();
-        System.out.println(this.progetti.get(1));
-        editorController.setListaProgetti(this.progetti);
-        editorController.setAttivit√†(attivit√†);
-        
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
-            
-            // Refreshare la lista attivit√† della view
-            this.listaGiorniAttivit√†.getChildren().clear();
-            this.visualizzaCronologiaAttivit√†(this.giorniAttivit√†);
-            System.out.println(attivit√†.getNome() + " " + attivit√†.getProgetto().getNome());
-            
-        }
-    }
-    
-    /**
-     * Elimina un'attivit√† e aggiorna la view.
-     */
-    private void eliminaAttivit√†(Attivit√†Demo attivit√†) {
-        System.out.println("Attivit√†: " + attivit√†.getNome() + " eliminata.");
-    }
-    
-    /**
-     * Usa i dati di un'Attivit√† per creare un componente nella view.
-     */
-    private BorderPane visualizzaAttivit√†(Attivit√†Demo attivit√†) {
-        
-        // Crea un BorderPane.
-        BorderPane pane = new BorderPane();
-        pane.setStyle("-fx-border-color: #191E3A; -fx-border-width: 2 0 0 0; ");
-        pane.setPadding(new Insets(0, 20, 0, 20));
-        pane.setMinHeight(60);
-        
-        // Crea la parte sinistra del BorderPane.
-        HBox attivit√†Sinistra = new HBox();
-        attivit√†Sinistra.setAlignment(Pos.CENTER);
-        attivit√†Sinistra.setFillHeight(true);
-        Label label2 = new Label(attivit√†.getNome());
-        label2.setStyle("-fx-font-size: 14; -fx-text-fill: #888EA8;");
-        label2.setPadding(new Insets(0, 20, 0, 20));
-        attivit√†Sinistra.getChildren().add(label2);
-        
-        // Visualizza progetto associato ad attivit√†.
-        Label label5;
-        if(attivit√†.getProgetto() != null) {
-           label5 = new Label(attivit√†.getProgetto().getNome());
-           Circle circle = new Circle();
-           circle.setRadius(3);
-           circle.setFill(Color.web(attivit√†.getProgetto().getColore()));
-           label5.setGraphic(circle);
-           label5.setStyle("-fx-text-fill: " + attivit√†.getProgetto().getColore() + ";");
-        } else {
-            label5 = new Label("Altro");
-            Circle circle = new Circle();
-            circle.setRadius(3);
-            circle.setFill(Color.web("#E5E5E5"));
-            label5.setGraphic(circle);
-            label5.setStyle("-fx-text-fill: #E5E5E5;");
-        }
-        attivit√†Sinistra.getChildren().add(label5);
-        
-        // Crea la parte destra del BorderPane.
-        HBox attivit√†Destra = new HBox();
-        attivit√†Destra.setAlignment(Pos.CENTER);
-        attivit√†Destra.setFillHeight(true);
-        Label label3 = new Label("12:52  -  8:56");
-        label3.setStyle("-fx-font-size: 14; -fx-text-fill: #888EA8; -fx-border-style: solid; -fx-border-color: #191E3A; -fx-border-width: 0 3 0 3;");
-        label3.setPadding(new Insets(20, 25, 20, 25));
-        Label label4 = new Label("05:53:23");
-        label4.setStyle("-fx-text-fill: #888ea8; -fx-font-size: 14; -fx-font-weight: 800; -fx-border-style: solid; -fx-border-color: #191E3A; -fx-border-width: 0 3 0 0;");
-        label4.setPadding(new Insets(20, 25, 20, 25));
-        
-        HBox box = new HBox();
-        ImageView dots = new ImageView();
-        dots.setFitHeight(18);
-        dots.setFitWidth(6);
-        dots.setImage(new Image(getClass().getResource("/main/risorse/dots.png").toString()));
-        box.getChildren().add(dots);
-        box.setAlignment(Pos.CENTER);
-        box.setPadding(new Insets(5, 23, 5, 5));
-        
-        HBox box2 = new HBox();
-        ImageView trash = new ImageView();
-        box2.setStyle("-fx-border-style: solid; -fx-border-color: #191E3A; -fx-border-width: 0 0 0 3;");
-        box2.setPadding(new Insets(5, 5, 5, 20));
-        trash.setFitHeight(18);
-        trash.setFitWidth(18);
-        trash.setImage(new Image(getClass().getResource("/main/risorse/trash.png").toString()));
-        box2.getChildren().add(trash);
-        box2.setAlignment(Pos.CENTER);
-        
-        HBox container = new HBox();
-        container.setAlignment(Pos.CENTER);
-        container.setPadding(new Insets(0, 25, 0, 0));
-        container.getChildren().add(label3);
-        container.getChildren().add(label4);
-        attivit√†Destra.getChildren().add(container);
-        attivit√†Destra.getChildren().add(box);
-        attivit√†Destra.getChildren().add(box2);
-        
-        // Evento per il click del men√π attivit√†
-        EventHandler<MouseEvent> eventHandlerMenu = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                try {
-                    modificaAttivit√†(attivit√†);
-                } catch (IOException ex) {
-                    Logger.getLogger(TimeTrackerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        
-        // Evento per il click del pulsante elimina attivit√†.
-        EventHandler<MouseEvent> eventHandlerElimina = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                eliminaAttivit√†(attivit√†);
-            }
-        };
-        box.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerMenu);   
-        box2.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandlerElimina);   
-
-        
-        // Imposta parte sinistra e destra del BorderPane.
-        pane.setLeft(attivit√†Sinistra);
-        pane.setRight(attivit√†Destra);
+        // aggiunge il progetto alla view
+        container.getChildren().add(pane);
         
         return pane;
     }
     
-    @FXML
-    private void avviaPomodoroTimer() throws IOException {
-        if(this.attivit√†Text.getText() != "") {
-            
-            // Cambia pulsanti
-            this.avviaBtn.setVisible(false);
-            this.resetBtn.setVisible(true);
-            Button btn = new Button();
-            btn.setText("PAUSA");
-            ImageView pausa = new ImageView();
-            pausa.setFitHeight(13);
-            pausa.setFitWidth(13);
-            pausa.setImage(new Image(getClass().getResource("/main/risorse/pause.png").toString()));
-            btn.setGraphic(pausa);
-            btn.setContentDisplay(ContentDisplay.RIGHT);
-            btn.setStyle("-fx-background-color: #E7515A; -fx-text-fill: #ffffff; -fx-font-size: 12; -fx-font-weight: 800;");
-            btn.setPadding(new Insets(10, 20, 10, 20));
-            
-            // Event handler per il pulsante di pausa
-            EventHandler<ActionEvent> eventHandlerBtn = new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    sospendiPomodoroTimer();
-                }
-            };
-            btn.addEventHandler(ActionEvent.ACTION, eventHandlerBtn);
-            
-            this.pauseBtnContainer.getChildren().add(btn);
-            this.pauseBtnContainer.setAlignment(Pos.CENTER);
-            this.pauseBtnContainer.setMinWidth(100);
-            
-            //this.aggiungiAttivit√†(new Attivit√†(new Date(), 5, this.attivit√†Text.getText()));
+    /**
+     * Cambia il progetto dell'attivit‡ corrente.
+     */
+    private void cambiaProgettoCorrente(IProgetto progetto) {
+    	
+    	// crea il label progetto
+    	Label label = TTHelper.creaLabelProgetto(progetto);
+        
+        // aggiunge il label alla view
+    	this.progetto = progetto;
+        this.boxProgetto.getChildren().clear(); 
+        this.boxProgetto.getChildren().add(label);
+
+    }
+    
+    /**
+     * Apre l'editor di aggiunta/modifica progetti.
+     * 
+     */
+    private void apriEditorProgetto(IProgetto progetto, boolean aggiunta) throws IOException {
+    	
+        // carica il dialog di aggiunta progetto
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorProgetto.fxml"));
+        DialogPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(editor);
+        
+        // ottiene il controller e imposta il progetto
+        EditorProgettoController controller = fxmlLoader.getController();
+        controller.setProgetto(progetto);
+        
+        // valida gli input
+    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+    		if(controller.getNome().isBlank()) {
+    			event.consume();
+    			throw new IllegalStateException("Perfavore, inserisci un nome per il progetto");
+        	}
+    	});
+    	
+        // imposta titolo e testo pulsanti dialog
+        if(aggiunta) {
+        	dialog.setTitle("Nuovo progetto");
+        	btOk.setText("Crea");
         } else {
-            System.out.println("Perfavore inserisci il nome di un'attivit√†.");
+        	dialog.setTitle("Modifica progetto");
+        	btOk.setText("Modifica");
+        }
+        
+        // Apre dialog popup e attende
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // quando l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+        	String nome = controller.getNome();
+        	Colori colore = controller.getColore();
+        	
+        	// aggiunge o modifica il colore
+        	if(aggiunta) {
+            	tt.aggiungiProgetto(new Progetto(nome, colore));
+        	} else {
+        		progetto.setNome(nome);
+        		progetto.setColore(colore);
+        	}
+        	
+        	chiudiMenuProgetti();
+        	aggiornaView();
         }
     }
     
+    /**
+     * Elimina un Progetto dal modello.
+     */
+    private void eliminaProgetto(IProgetto progetto) {
+    	
+        // elimina progetto dal modello
+    	tt.eliminaProgetto(progetto.getId());
+
+    	aggiornaView();
+    }
+    
+    /**
+     * Aggiorna la view dei progetti.
+     */
+    private void aggiornaView() {
+        listaGiorniAttivit‡.getChildren().clear();
+        creaCronologiaAttivit‡(tt.getGiorniAttivit‡(pagina));
+    }
+    
+    /**
+     * Aggiunge la cronologia delle attivit‡ alla view.
+     */
+    private void creaCronologiaAttivit‡(List<List<IAttivit‡>> giorni) {
+    	
+    	// resetto la view 
+    	listaGiorniAttivit‡.getChildren().clear();
+    	
+    	// aggiungo i giorni con le attivit‡ alla view
+        for(int i = 0; i < giorni.size(); i++) {
+            this.creaViewGiorno(giorni.get(i));
+        }
+        
+        // aggiungo il pulsante di paginazione alla fine
+        if(tt.getGiorniAttivit‡(1).size() == 10) {
+        	listaGiorniAttivit‡.getChildren().add(creaPageBtn());
+        }
+    }
+    
+    /**
+     * Aggiunge un giorno di attivit‡ alla view.
+     */
+    private void creaViewGiorno(List<IAttivit‡> giorno) {
+        
+        // crea un border pane
+        BorderPane pane = new BorderPane();
+        pane.getStyleClass().add("container-giorno");
+        pane.setPadding(new Insets(0, 0, 40, 0));
+        
+        // crea il container del giorno
+        VBox box = new VBox();
+        box.getStyleClass().add("giorno");
+        pane.setCenter(box);
+        
+        // crea l'header con le info relative al giorno
+        BorderPane header = TTHelper.creaHeaderGiorno(giorno);
+        header.setMinHeight(50);
+        box.getChildren().add(header);
+        
+        // crea il box con la lista di attivit‡
+        VBox box2 = new VBox();
+        for(int i = 0; i < giorno.size(); i++) {
+            IAttivit‡ attivit‡ = giorno.get(i);          
+            box2.getChildren().add(creaViewAttivit‡(attivit‡));
+        }
+        box.getChildren().add(box2);
+
+        // aggiunge il container alla view
+        this.listaGiorniAttivit‡.getChildren().add(pane);
+        
+    }
+    
+    /**
+     * Crea la view del pulsante di modifica.
+     */
+    private HBox creaViewEditBtn(Object obj) {
+    	
+    	// creo il pulsante
+        HBox editBtn = Helper.creaBtnEdit();
+        
+        // creo il menu dropdown
+        ContextMenu menu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Modifica");
+        MenuItem menuItem2 = new MenuItem("Elimina");
+        menuItem1.setOnAction((ActionEvent e) -> {
+        	try {
+        		if(obj instanceof Attivit‡) {
+        			apriEditorAttivit‡((IAttivit‡) obj);
+        		} else if(obj instanceof Progetto) {
+        			apriEditorProgetto((IProgetto) obj, false);
+        		}
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+        });
+        menuItem2.setOnAction((ActionEvent e) -> {
+        	if(obj instanceof Attivit‡) {
+    			eliminaAttivit‡((IAttivit‡) obj);
+    		} else if(obj instanceof Progetto) {
+    			eliminaProgetto((IProgetto) obj);
+    		}
+        });
+        menu.getItems().addAll(menuItem1, menuItem2);
+        
+        // Evento per il click del men˘ attivit‡
+        editBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+            	menu.show(editBtn, t.getScreenX(), t.getScreenY());
+            	t.consume();
+            }
+        }); 
+        
+        return editBtn;
+    }   
+    
+    /**
+     * Apre l'editor di modifica di un'attivit‡.
+     */
+    private void apriEditorAttivit‡(IAttivit‡ attivit‡) throws IOException {
+        
+    	// carica il dialog di modifica attivit‡
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorAttivit‡.fxml"));
+        DialogPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(editor);
+        dialog.setTitle("Modifica Attivit‡");
+        
+        // ottiene il controller e imposta l'attivit‡ da modificare
+        EditorAttivit‡Controller controller = fxmlLoader.getController();
+        controller.setListaProgetti(tt.getProgetti());
+        controller.setAttivit‡(attivit‡);
+        
+    	// valida gli input
+    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+    		if(controller.getNome().isBlank() || controller.getDurata() <= 0) {
+    			event.consume();			
+    			if(controller.getNome().isBlank()) {
+    				throw new IllegalStateException("Perfavore, inserisci un nome per l'attivit‡");
+    			} else if(controller.getDurata() <= 0) {
+    				throw new IllegalStateException("Perfavore, inserisci un durata valida per l'attivit‡");
+    			}
+        	}
+    	});
+        
+        // apre il dialog e attende
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        
+        // quando l'utente clicca OK.
+        if(clickedButton.get() == ButtonType.OK) {
+        	String nome = controller.getNome();
+        	IProgetto progetto = controller.getProgetto();
+        	LocalDate data = controller.getData();
+        	LocalTime ora = controller.getOra();
+        	long durata = controller.getDurata();
+            
+        	// modifica l'attivit‡
+        	IAttivit‡ a = new Attivit‡(nome, data, ora, durata, progetto);
+        	tt.aggiungiAttivit‡(a);
+        	
+        	aggiornaView();
+        }
+    }
+    
+    /**
+     * Elimina un'Attivit‡ dal modello.
+     */
+    private void eliminaAttivit‡(IAttivit‡ attivit‡) {
+    	
+    	// elimina attivit‡ dal modello
+        tt.eliminaAttivit‡(attivit‡);
+        
+        aggiornaView();
+    }
+    
+    private void decrementaPagina() {
+    	if(pagina > 1) {
+    		pagina--;
+    		aggiornaView();
+    	}
+    }
+    
+    private void incrementaPagina() {
+    	if(pagina * 10 < tt.getNumGiorni()) {
+    		pagina++;
+    		aggiornaView();
+    	}
+    }
+
+    /**
+     * Crea il pulsante di cambio pagina.
+     */
+    private HBox creaPageBtn() {
+    	int numGiorni = tt.getNumGiorni();
+    	
+    	// crea il container del pulsante
+        HBox form = new HBox();
+        form.setAlignment(Pos.CENTER_LEFT);
+        BorderPane pane = new BorderPane();
+        pane.getStyleClass().add("page-btn");
+        pane.setPadding(new Insets(0, 15, 0, 15));
+        form.getChildren().add(pane);
+        
+        // crea freccia sinistra
+        ImageView leftArrow = TTHelper.creaArrow(true);
+        pane.setLeft(leftArrow);
+        
+        // crea freccia destra
+        ImageView rightArrow = TTHelper.creaArrow(false);
+        pane.setRight(rightArrow);
+        
+        // disabilito le freccie se sono agli estremi
+        if(pagina == 1) {
+        	leftArrow.setDisable(true);
+        	leftArrow.setOpacity(0.35);
+        } else if(pagina * 10 >= numGiorni) {
+        	rightArrow.setDisable(true);
+        	rightArrow.setOpacity(0.35);
+        }
+        
+        // evento freccia sinistra
+        leftArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                decrementaPagina();
+            }
+        });
+        
+        // evento freccia destra
+        rightArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                incrementaPagina();
+            }
+        });
+        
+        // crea label
+        Label label = TTHelper.creaLabelPageBtn(pagina, numGiorni);
+        pane.setCenter(label);
+
+        return form;
+    }
+    
+    private void chiudiMenuProgetti() {
+    	if(menuProgettiAperto) {
+    		menuProgettiAperto = false;
+    		containerAttivit‡.getChildren().remove(menuProgettiCorrente);
+    		menuProgettiFormContainer.getChildren().clear();
+    	}
+    }
+    
+    private void toggleMenuProgetti(MouseEvent t, IAttivit‡ a, boolean menuForm) {
+    	if(!menuProgettiAperto) {
+    		BorderPane menu = creaMenuProgetti(t, a, menuForm);
+    		menuProgettiAperto = true;
+    		menuProgettiCorrente = menu;
+    	} else {
+    		chiudiMenuProgetti();
+    	}
+    }
+    
+    /**
+     * Apre e chiude il menu progetti per le singole attivit‡
+     */
+    private BorderPane creaMenuProgetti(MouseEvent t, IAttivit‡ a, boolean menuForm) {
+    	
+		// crea il men˘ dropdown
+		BorderPane menuProgetti = new BorderPane();
+		menuProgetti.getStyleClass().add("menu-progetti");
+        HBox box = new HBox();
+        box.setStyle("-fx-background-color: #1B2E4B;");
+        menuProgetti.setTop(box);
+        box.setAlignment(Pos.CENTER_LEFT);
+        Label label = new Label("Progetti");
+        label.getStyleClass().add("menu-progetti-titolo");
+        box.getChildren().add(label);
+        menuProgetti.setMinHeight(312);
+        menuProgetti.setMinWidth(230);
+        menuProgetti.setMaxHeight(312);
+        menuProgetti.setMaxWidth(230);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+        menuProgetti.setCenter(scrollPane);
+        VBox containerProgetti = new VBox();
+        containerProgetti.setStyle("-fx-background-color: #1B2E4B; -fx-padding: 10 0 0 0;");
+        scrollPane.setContent(containerProgetti);
+        scrollPane.setStyle("-fx-background-color: #1B2E4B;");
+        HBox box2 = Helper.creaBtnAggiunta("Crea nuovo progetto");
+        box2.setStyle("-fx-background-color: #1B2E4B; -fx-padding: 0 0 10 0;");
+        menuProgetti.setBottom(box2);
+        
+        // posiziona correttamente il men˘
+		AnchorPane container = containerAttivit‡;
+		if(menuForm) {
+			container = menuProgettiFormContainer;
+			AnchorPane.setRightAnchor(menuProgetti, 0.0);
+			AnchorPane.setTopAnchor(menuProgetti, 0.0);
+		} else {
+			menuProgetti.setLayoutX(t.getSceneX() - 280);
+	        menuProgetti.setLayoutY(t.getSceneY() - 270);
+		}
+		container.getChildren().add(menuProgetti);
+        
+        
+        // aggiunge event handler al pulsante di aggiunta
+        box2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	try {
+					aggiungiProgetto();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+            }
+        });
+        
+        // aggiunge evento click al di fuori
+        menuProgetti.requestFocus();
+        menuProgetti.focusedProperty().addListener((prop, oldNode, newNode) -> {
+        	if(!menuProgetti.isHover()) {
+        		chiudiMenuProgetti();
+        	}
+        });
+        
+        // aggiunge gli item al men˘ dropdown
+        for(int i = 0; i < tt.getProgetti().size(); i++) {
+            if(i > 0) {
+            	IProgetto p = tt.getProgetti().get(i);    	
+            	BorderPane pane = creaViewProgetto(p, containerProgetti);
+            	
+                // evento click del progetto
+                pane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent t) {
+                        if(menuForm) {
+                        	cambiaProgettoCorrente(p);
+                        } else {
+                        	a.setProgettoPadre(p);
+                        }
+                        aggiornaView();
+                        chiudiMenuProgetti();
+                    }
+                });
+                
+            }
+        }
+            
+        return menuProgetti;
+    }
+    
+    private void toggleTextField(TextField field, Label label, IAttivit‡ a) {
+		field.setVisible(false);
+        label.setVisible(true);
+        if(!field.getText().isBlank()) {
+        	a.setNome(field.getText());
+        }
+        creaCronologiaAttivit‡(tt.getGiorniAttivit‡(pagina));
+    }
+    
+    /**
+     * Crea la view di un'attivit‡.
+     */
+    private BorderPane creaViewAttivit‡(IAttivit‡ attivit‡) {
+        // crea un BorderPane.
+        BorderPane pane = new BorderPane();
+        pane.getStyleClass().add("attivita");
+        pane.setPadding(new Insets(0, 20, 0, 20));
+        pane.setMinHeight(60);
+        
+        // crea la parte sinistra del BorderPane.
+        BorderPane attivit‡Sinistra = new BorderPane();
+        attivit‡Sinistra.setMinWidth(250);
+        Label label2 = new Label(attivit‡.getNome());
+        BorderPane.setAlignment(label2, Pos.CENTER);
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.CENTER_LEFT);
+        stackPane.getChildren().add(label2);
+        TextField field = new TextField();
+        field.getStyleClass().add("text-field-attivita");
+        stackPane.getChildren().add(field);
+        field.setVisible(false);
+        label2.getStyleClass().add("nome-attivita");
+        label2.setPadding(new Insets(0, 20, 0, 20));
+        attivit‡Sinistra.setLeft(stackPane);
+        pane.setLeft(attivit‡Sinistra);
+        HBox btnProgetto = new HBox();
+        btnProgetto.setAlignment(Pos.CENTER);
+        if(attivit‡.getProgetto().getNome() != "Altro") {
+        	Label label5 = TTHelper.creaLabelProgetto(attivit‡.getProgetto());
+        	btnProgetto.getChildren().add(label5);
+        } else {
+        	btnProgetto = Helper.creaBtnAggiunta("Progetto");	
+        }
+        attivit‡Sinistra.setRight(btnProgetto);
+        
+        // aggiunge event handler al pulsante progetti
+        btnProgetto.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                toggleMenuProgetti(t, attivit‡, false);
+            }
+        });
+        
+        // aggiunge event handler al nome attivit‡
+        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                field.setVisible(true);
+                field.requestFocus();
+                label2.setVisible(false);
+            }
+        });
+        
+        // gestisce apertura input di testo su click nome attivit‡
+        field.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0) {
+				toggleTextField(field, label2, attivit‡);
+			}
+        	
+        });
+        
+        // gestisce chiusura input di testo quando perde il focus
+        field.focusedProperty().addListener((prop, oldNode, newNode) -> {
+        	if(!field.isFocused()) {
+        		toggleTextField(field, label2, attivit‡);
+        	}
+        });
+
+        // Crea la parte destra del BorderPane.
+        HBox attivit‡Destra = new HBox();
+        attivit‡Destra.setAlignment(Pos.CENTER);
+        attivit‡Destra.setFillHeight(true);
+        HBox box1 = new HBox();
+        box1.setAlignment(Pos.CENTER);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+        Label label3 = new Label(attivit‡.getOraInizio().format(formatter));
+        Label label7 = new Label("  -  ");
+        Label label6 = new Label(attivit‡.getOraFine().format(formatter));
+        label3.getStyleClass().add("data-attivita");
+        label6.getStyleClass().add("data-attivita");
+        label7.getStyleClass().add("data-attivita");
+        box1.getChildren().addAll(label3, label7, label6);
+        box1.getStyleClass().add("attivita-destra");
+        box1.setPadding(new Insets(20, 25, 20, 25));
+        Label label4 = new Label(TTHelper.formattaOrologio((int) attivit‡.getDurata()));
+        label4.getStyleClass().add("durata-attivita");
+        label4.setPadding(new Insets(20, 25, 20, 25));
+        pane.setRight(attivit‡Destra);
+        HBox btn = creaViewEditBtn(attivit‡);
+        HBox container = new HBox();
+        container.setAlignment(Pos.CENTER);
+        container.setPadding(new Insets(0, 25, 0, 0));
+        container.getChildren().add(box1);
+        container.getChildren().add(label4);
+        attivit‡Destra.getChildren().add(container);
+        attivit‡Destra.getChildren().add(btn);
+        
+        return pane;
+    }
+    
+    private void togglePulsantiTracker() {
+		startBtn.setVisible(!startBtn.isVisible());
+		stopBtn.setVisible(!stopBtn.isVisible());
+    }
+    
+    private void nascondiTrackers() {
+        formManuale.setVisible(false);
+        settingsBtn.setVisible(false);
+        formTimeTracker.setVisible(false);
+    }
+    
+    private void rimuoviEvidenziazionePulsanti() {
+    	String style = "-fx-background-color: #1B2A44";
+    	pomoBtn.setStyle(style);
+    	cronoBtn.setStyle(style);
+    	manualBtn.setStyle(style);
+    }
+	
+	private void impostaOrologio(int ore, int minuti, int secondi) {
+		oreLabel.setText(TTHelper.formattaDurata(ore));
+    	minutiLabel.setText(TTHelper.formattaDurata(minuti));
+    	secondiLabel.setText(TTHelper.formattaDurata(secondi));
+	}
+	
+	
+    //--------------------------- METODI PUBBLICI --------------------------------
+    public void setTimeTracker(ITimeTracker tt) {
+    	this.tt = tt;
+        this.creaCronologiaAttivit‡(tt.getGiorniAttivit‡(pagina));
+    }
+	
+	@Override
+	public void timerTerminato(long tempo) {
+		aggiornaView();
+	}
+	
+	@Override
+	public void secondoPassato(int ore, int minuti, int secondi) {
+		Platform.runLater(() -> {
+			impostaOrologio(ore, minuti, secondi);
+		});
+	}
+	
+	
+    //------------------------------ METODI FXML ----------------------------------
+	/**
+	 * Inizializza il controller.
+	 */
+    @FXML 
+    private void initialize() {        
+        scroll.setFitToHeight(true);
+        scroll.setFitToWidth(true);
+        scroll.setStyle("-fx-background-color: #122C49;");
+        scroll.getStyleClass().add("edge-to-edge");
+    }
+	
+    /**
+     * Apre men˘ progetti del form.
+     */
     @FXML
-    private void sospendiPomodoroTimer() {
-        this.avviaBtn.setVisible(true);
-        this.resetBtn.setVisible(false);
-        this.pauseBtnContainer.getChildren().clear();
-        this.pauseBtnContainer.setMinWidth(0);
+    private void apriMenuProgettiForm(MouseEvent t) {
+        toggleMenuProgetti(t, null, true);  
+    }
+    
+    /**
+     * Apre l'editor di aggiunta progetto.
+     */
+    @FXML
+    private void aggiungiProgetto() throws IOException {
+       apriEditorProgetto(new Progetto("", Colori.Giallo), true);
     }
     
     @FXML
-    private void resettaPomodoroTimer() {
-        this.avviaBtn.setVisible(true);
-        this.resetBtn.setVisible(false);
-        this.pauseBtnContainer.getChildren().clear();
-        this.pauseBtnContainer.setMinWidth(0);
+    private void attivaCronometro() {
+    	rimuoviEvidenziazionePulsanti();
+    	cronoBtn.setStyle("-fx-background-color: #3C4B63");
+    	tt.scegliTracker(TrackerEnum.CRONOMETRO);
+        nascondiTrackers();
+        formTimeTracker.setVisible(true);
+        impostaOrologio(0, 0, 0);
     }
     
-    @FXML private void impostaTimer() throws IOException {
+    @FXML
+    private void attivaPomodoro() {
+    	rimuoviEvidenziazionePulsanti();
+    	pomoBtn.setStyle("-fx-background-color: #3C4B63");
+    	tt.scegliTracker(TrackerEnum.POMODOROTIMER);
+    	nascondiTrackers();
+    	formTimeTracker.setVisible(true);
+    	settingsBtn.setVisible(true);
+    	PomodoroTimer p = (PomodoroTimer) tt.getTracker();
+    	int[] params = TTHelper.scomponiDurata(p.getDurataSessione());
+    	impostaOrologio(params[0], params[1], params[2]);
+    }
+    
+    @FXML
+    private void attivaManuale() {
+    	rimuoviEvidenziazionePulsanti();
+    	manualBtn.setStyle("-fx-background-color: #3C4B63");
+        nascondiTrackers();
+        orarioText1.setPromptText("" + LocalTime.now().getHour());
+        orarioText2.setPromptText("" + LocalTime.now().getMinute());
+        dataManuale.setValue(LocalDate.now());
+        formManuale.setVisible(true);
+    }
+	
+    /**
+     * Avvia il tracker.
+     */
+    @FXML
+    private void avviaTracker() throws IOException {
+    	if(this.attivit‡Text.getText() != "") {
+    		
+    		// cambia i pulsanti
+    		togglePulsantiTracker();
+    		
+    		// avvia il tracker
+    		String nome = this.attivit‡Text.getText();
+    		IAttivit‡ a = new Attivit‡(nome, LocalDate.now(), LocalTime.now(), 0L);
+    		if(this.progetto != null) {
+    			a.setProgettoPadre(this.progetto);
+    		}
+    		tt.avviaTracker(a);
+    		tt.getTracker().setAscoltatore(this);
+    		
+    	} else {
+    		System.out.println("Perfavore inserisci il nome di un'attivit‡.");
+    	}
+    }
+	
+    /**
+     * Termina il tracker.
+     */
+    @FXML
+    private void terminaTracker() {
+    	
+    	// termina il tracker
+    	tt.terminaTracker();
+ 
+    	// cambia i pulsanti
+    	togglePulsantiTracker();
+    	
+    	// aggiorna la cronologia attivit‡ nella view
+    	aggiornaView();
+    	
+    	// resetta view durata
+    	oreLabel.setText("00");
+    	minutiLabel.setText("00");
+    	secondiLabel.setText("00");
+    }
+    
+    @FXML 
+    private void impostaTimer() throws IOException {
+    	
         // Carica il file fxml e crea un nuovo popup Dialog
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/ImpostazioniTimer.fxml"));
         DialogPane editor = fxmlLoader.load();
         editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(editor);
         dialog.setTitle("Imposta Pomodoro Timer");
         
-        // Ottiene il controller EditorProgettoController associato alla view
+        // Ottiene il controller e setta le impostazioni di del pomodoro timer attuali
         ImpostazioniTimerController controller = fxmlLoader.getController();
-        controller.setPomodoro(this.pomodoro);
-        controller.setPausaBreve(this.pausaBreve);
-        controller.setPausaLunga(this.pausaLunga);
+        IPomodoroTimer pt = (IPomodoroTimer) tt.getTracker();
+        controller.setPomodoro(pt);
         
         // Apre dialog popup
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         
         // Se l'utente clicca OK.
         if(clickedButton.get() == ButtonType.OK) {
-            System.out.println("Impostazioni timer cambiate.");
-            System.out.println("Nuove impostazioni:");
-            System.out.println("Pomodoro: " + controller.getPomodoro());
-            System.out.println("Pausa breve: " + controller.getPausaBreve());
-            System.out.println("Pausa lunga: " + controller.getPausaLunga());
+        	
+        	// imposto il pomodoro timer nel modello
+        	pt.setDurataSessione(controller.getSessione());
+        	pt.setDurataPausaBreve(controller.getPausaBreve());
+        	pt.setDurataPausaLunga(controller.getPausaLunga());
+        	
+        	// refresh della view dell'orologio
+        	int[] params = TTHelper.scomponiDurata(controller.getSessione());
+        	impostaOrologio(params[0], params[1], params[2]);
         }
     }
     
+    /**
+     * Crea un'attivit‡ manualmente senza far partire il tracker.
+     */
     @FXML
-    private void creaAttivit√†Manualmente() throws IOException {
-        if(this.attivit√†Text.getText() == "") {
-            System.out.println("Perfavore inserisci il nome dell'attivit√†.");
+    private void creaAttivit‡Manualmente() throws IOException {
+        if(this.attivit‡Text.getText() == "") {
+            System.out.println("Perfavore inserisci il nome dell'attivit‡.");
             return;
         } else if (this.orarioText1.getText() == "" || this.orarioText2.getText() == "") {
-            System.out.println("Perfavore inserisci l'orario di inizio attivit√†.");
+            System.out.println("Perfavore inserisci l'orario di inizio attivit‡.");
             return;
         } else if (this.durataText1.getText() == "" || this.durataText2.getText() == "" || this.durataText3.getText() == "") {
-            System.out.println("Perfavore inserisci la durata dell'attivit√†.");
+            System.out.println("Perfavore inserisci la durata dell'attivit‡.");
+            return;
+        } else if(this.dataManuale.getValue() == null) {
+        	System.out.println("Perfavore inserisci una data per l'attivit‡.");
             return;
         }
-        
-        this.aggiungiAttivit√†(new Attivit√†Demo(new Date(), 5, this.attivit√†Text.getText(), new ProgettoDemo("Altro", "#E5E5E5")));
-    }
-    
-    private void cambiaTipoTracker(String tipo) {
-           switch (tipo) {
-            case "Cronometro" -> this.cambiaInTimeTracker();
-            case "Pomodoro" -> this.cambiaInPomodoro();
-            case "Manuale" -> this.cambiaInManuale();
-            default -> {
-            }
+        String nome = attivit‡Text.getText();
+        LocalDate data = dataManuale.getValue();
+        int ore = Integer.parseInt(durataText1.getText());
+        int minuti = Integer.parseInt(durataText2.getText());
+        int secondi = Integer.parseInt(durataText3.getText());
+        int ora1 = Integer.parseInt(this.orarioText1.getText());
+        int ora2 = Integer.parseInt(this.orarioText2.getText());
+        long durata = ore * 3600 + minuti * 60 + secondi;
+        LocalTime ora = LocalTime.of(ora1, ora2);
+        Attivit‡ a = new Attivit‡(nome, data, ora, durata); 
+        if(this.progetto != null) {
+        	a.setProgettoPadre(this.progetto);
         }
-    }
-    
-    private void cambiaInTimeTracker() {
         
-        // Nascondi gli altri form
-        this.formManuale.setVisible(false);
-        this.formPomodoro.setVisible(false);
-        
-        // Visualizza il form del pomodoro timer
-        this.formTimeTracker.setVisible(true);
-        
-    }
-    
-    private void cambiaInPomodoro() {
-        
-        // Nascondi gli altri form
-        this.formManuale.setVisible(false);
-        this.formTimeTracker.setVisible(false);
-        
-        // Visualizza il form del pomodoro timer
-        this.formPomodoro.setVisible(true);
-        
-    }
-    
-    private void cambiaInManuale() {
-        
-        // Nascondi gli altri form
-        this.formTimeTracker.setVisible(false);
-        this.formPomodoro.setVisible(false);
-        
-        // Visualizza il form del pomodoro timer
-        this.formManuale.setVisible(true);
-        
+    	// aggiunge attivit‡ al modello
+    	tt.aggiungiAttivit‡(a);
+    	
+    	aggiornaView();
     }
     
 }
