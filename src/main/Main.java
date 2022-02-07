@@ -33,6 +33,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import main.Controllers.Modal;
 import main.Controllers.Notifications.Notification;
 import main.Controllers.Notifications.NotificationType;
 import main.Models.accountmanager.classes.App;

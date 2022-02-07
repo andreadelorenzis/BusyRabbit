@@ -1,0 +1,39 @@
+.modal {
+	-fx-border-radius: 12;
+	-fx-background-radius: 12;
+	-fx-background-color: #0E1726;
+}
+
+.modal-header {
+	-fx-padding: 10 20 10 20;
+}
+
+.close-btn {
+	-fx-cursor: hand;
+}
+
+.modal-title {
+	-fx-font-size: 22;
+	-fx-font-weight: 800;
+	-fx-text-fill: #374667;
+}
+
+.modal-footer {
+	-fx-padding: 10 25 10 20;
+}
+
+.modal-footer .modal-btn {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 16px;
+	-fx-padding: 5 15 5 15;
+	-fx-font-weight: 800;
+	-fx-cursor: hand;
+}
+
+.modal-footer .ok-btn {
+	-fx-background-color: #4361EE;
+} 
+
+.modal-footer .cancel-btn {
+	-fx-background-color: #3B3F5C;
+} 

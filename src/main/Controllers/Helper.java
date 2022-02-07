@@ -13,6 +13,7 @@ import main.Main;
 public class Helper {
 	public static Image dotsIcon = new Image(Main.class.getResource("/main/risorse/dots.png").toString());
 	public static Image plusIcon = new Image(Main.class.getResource("/main/risorse/plus.png").toString());
+	public static Image closeIcon = new Image(Main.class.getResource("/main/risorse/close.png").toString());
 
     /**
      * Crea pulsante di aggiunta
@@ -30,6 +31,20 @@ public class Helper {
         box.getChildren().add(label);
         box.setAlignment(Pos.CENTER_LEFT);
         box.setPadding(new Insets(5, 5, 5, 0));
+        return box;
+    }
+    
+    public static HBox creaIconaChiusura() {
+    	HBox box = new HBox();
+        box.getStyleClass().add("close-btn");
+        ImageView closeImg = new ImageView();
+        closeImg.setFitHeight(18);
+        closeImg.setFitWidth(18);
+        closeImg.setImage(closeIcon);
+        box.getChildren().add(closeImg);
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(5, 5, 5, 5));
+        HBox.setMargin(box, new Insets(0, 5, 0, 0));
         return box;
     }
     

@@ -11,6 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import main.Controllers.AppController;
@@ -24,6 +27,7 @@ import main.Models.accountmanager.interfaces.IApp;
  *
  */
 public class PageController {
+	public static AnchorPane appContainer = null;
     
     private Stage stage;
     
@@ -115,6 +119,9 @@ public class PageController {
         	Parent root = loader.load();
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            
+            AnchorPane pane = (AnchorPane) root;
+            appContainer = pane;
             
             // passa l'istanza di app con i dati al controller dell'app
             AppController controller = loader.getController();

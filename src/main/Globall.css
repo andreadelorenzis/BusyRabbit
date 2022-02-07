@@ -230,3 +230,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 	-fx-cursor: hand;
 }
 
+.overlay {
+	-fx-background-color: black;
+	-fx-opacity: 0.5;
+}
+
