@@ -519,6 +519,7 @@ public class TimeTrackerController implements ITrackable {
         scrollPane.setContent(containerProgetti);
         scrollPane.setStyle("-fx-background-color: #1B2E4B;");
         HBox box2 = Helper.creaBtnAggiunta("Crea nuovo progetto");
+        box2.setAlignment(Pos.CENTER);
         box2.setStyle("-fx-background-color: #1B2E4B; -fx-padding: 0 0 10 0;");
         menuProgetti.setBottom(box2);
         

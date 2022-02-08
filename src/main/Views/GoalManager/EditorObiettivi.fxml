@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
@@ -15,16 +13,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="429.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.EditorObiettiviController">
-   <content>
-      <AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #0E1726;">
+
+<AnchorPane style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.EditorObiettiviController">
+   <children>
+      <AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="19.0" layoutY="12.0" text="Editor obiettivi" textFill="#374667">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER_LEFT" layoutX="19.0" layoutY="113.0" prefHeight="39.0" prefWidth="544.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="49.0">
+            <HBox alignment="CENTER_LEFT" layoutX="19.0" layoutY="114.0" prefHeight="39.0" prefWidth="544.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="39.0">
                <children>
                   <Label prefHeight="20.0" prefWidth="90.0" text="Data:" textFill="WHITE">
                      <font>
@@ -131,9 +125,5 @@
             </HBox>
          </children>
       </AnchorPane>
-   </content>
-   <buttonTypes>
-      <ButtonType fx:constant="OK" />
-      <ButtonType fx:constant="CANCEL" />
-   </buttonTypes>
-</DialogPane>
+   </children>
+</AnchorPane>

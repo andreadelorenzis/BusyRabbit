@@ -1,6 +1,7 @@
 package main.Controllers.HabitTracker;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +22,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -65,13 +67,14 @@ public class HabitTrackerController {
         List<IHabit> habits = ht.calculateTodayHabits(LocalDate.now());
         if(habits.size() > 0) {
             // crea container abitudini non completate
-            Label label1 = new Label("Da completare");
+            Label label1 = new Label("Da fare");
             label1.getStyleClass().add("daily-label");
             VBox vBox1 = new VBox();
             
             // crea container abitudini completate
             Label label2 = new Label("Completate");
             label2.getStyleClass().add("daily-label");
+            label2.setStyle("-fx-padding: 60 0 0 0;");
             VBox vBox2 = new VBox();
             
             // aggiunge le abitudini ai rispettivi container
@@ -284,30 +287,28 @@ public class HabitTrackerController {
         this.infoBox.getChildren().add(hBox2);
     }
     
-    private void apriEditorAbitudine(IHabit abitudine, boolean isNew) throws IOException {
+    private void apriEditorAbitudine(IHabit abitudine, boolean nuovo) throws IOException {
         
-        // carica il dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/HabitTracker/EditorAbitudine.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
+        // crea il modal
+    	URL fileUrl = Main.class.getResource("/main/Views/HabitTracker/EditorAbitudine.fxml");
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(fileUrl);
+    	AnchorPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/main/Views/HabitTracker/HabitTracker.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());  
+    	Modal modal = new Modal(editor, "");
+    	EditorAbitudineController controller = fxmlLoader.getController();
         
-        // Ottiene il controller e imposta l'abitudine
-        EditorAbitudineController controller = fxmlLoader.getController();
-        
-        // imposta il titolo e l'abitudine
-        if(isNew) {
-        	dialog.setTitle("Nuova abitudine");
+        // imposta il titolo del dialog
+        if(nuovo) {
+        	modal.setTitolo("Nuova abitudine");
         } else {
-        	dialog.setTitle("Modifica abitudine");
-        	controller.setAbitudine(abitudine);
+        	modal.setTitolo("Modifica abitudine");
         }
         
         // validazioen  degli input
-    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+        final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
+    	btnOk.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
     		if(controller.getNome().isBlank() 	||
     		   controller.getData() == null) {
     			event.consume();
@@ -319,18 +320,16 @@ public class HabitTrackerController {
         	}
     	});
         
-        // Apre dialog popup e attende
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
+    	// apre il dialog e attende
+        ButtonType btnCliccato = modal.show();
+        if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	String descrizione = controller.getDescrizione();
         	LocalDate data = controller.getData();
         	List<DayOfWeek> giorni = controller.getGiorni();
         	boolean isSessione = controller.isSessione();
         	int durata = controller.getDurata();
-        	if(isNew) {
+        	if(nuovo) {
         		// aggiunge abitudine 
         		IHabit newHabit;
         		if(isSessione) {

@@ -24,6 +24,3 @@ abitudine-sessione,xzc,zxc,5,2,2022,FRIDAY-FRIDAY-FRIDAY-FRIDAY-FRIDAY,1,1f10e85
 abitudine-semplice,sdfsdf,sdfsdf,5,2,2022,SATURDAY-SATURDAY,dae6b451-4780-4831-9cb5-ab687ed42d72
 ---storico-abitudini---
 1f10e856-83a1-4732-b1e9-16831d78ca97,2021-2-3-6-9-10-15-17-80,2022-3-4-5-8-10-45-90-300
----impostazioni---
-sfondo-chiaro,false
-username,andre

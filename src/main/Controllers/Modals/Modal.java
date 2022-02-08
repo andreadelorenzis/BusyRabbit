@@ -18,6 +18,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -164,9 +166,16 @@ public class Modal {
         closeImg.addEventHandler(MouseEvent.MOUSE_CLICKED, handlerChiusura); 
         
         // modal content
-        AnchorPane view = (AnchorPane) content;
+        AnchorPane view = (AnchorPane) this.content;
+        ScrollPane scroll = new ScrollPane();
+        scroll.setFitToHeight(true);
+        scroll.setFitToWidth(true);
+        scroll.setStyle("-fx-background-color: #0E1726;");
+        scroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+        scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        scroll.setContent(view);
         view.getStylesheets().add(getClass().getResource("/main/Views/Modal.css").toExternalForm());
-        container.setCenter(view);
+        container.setCenter(scroll);
         
         // modal footer
         HBox footer = new HBox();

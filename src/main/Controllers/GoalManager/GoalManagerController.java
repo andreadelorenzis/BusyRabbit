@@ -40,6 +40,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -56,6 +57,7 @@ import main.Giorno;
 import main.Main;
 import main.PageController;
 import main.Controllers.Helpers.Helper;
+import main.Controllers.Modals.Modal;
 import main.Models.accountmanager.classes.App;
 import main.Models.goalmanager.classes.Azione;
 import main.Models.goalmanager.classes.AzioneScomponibile;
@@ -118,8 +120,7 @@ public class GoalManagerController {
         	if(i == 0) {
         		pane.setStyle("-fx-border-width: 0 0 0 0;");
         	}
-        }
-            
+        }            
     }
     
     private void aggiornaView() {
@@ -154,6 +155,7 @@ public class GoalManagerController {
         pane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         pane.getStyleClass().add("obiettivo");
         VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER_LEFT);
         pane.setLeft(vBox);
         
         // aggiunge il checkbox
@@ -366,19 +368,21 @@ public class GoalManagerController {
      * Apre l'editor degli obiettivi in aggiunta/modifica.
      */
     private void apriEditorObiettivo(IObiettivo o, boolean nuovo, boolean isSottoObiettivo) throws IOException {
-        // carica il dialog di modifica obiettivo
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorObiettivi.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        Dialog<ButtonType> dialog = new Dialog<>(); 
-        dialog.setDialogPane(pane);
+    	
+        // crea il modal
+    	URL fileUrl = Main.class.getResource("/main/Views/GoalManager/EditorObiettivi.fxml");
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(fileUrl);
+    	AnchorPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/main/Views/GoalManager/GoalManager.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());  
+    	Modal modal = new Modal(editor, "");
         
         // imposta il titolo del dialog
         if(nuovo) {
-        	dialog.setTitle("Nuovo obiettivo");
+        	modal.setTitolo("Nuovo obiettivo");
         } else {
-        	dialog.setTitle("Modifica obiettivo");
+        	modal.setTitolo("Modifica obiettivo");
         }
         
         // ottiene il controller del dialog e imposta l'obiettivo se in modifica
@@ -388,8 +392,8 @@ public class GoalManagerController {
         }
         
         // valida gli input
-    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+    	final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
+    	btnOk.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
     		if(controller.getNome().isBlank() 									||
     		   (controller.isTipoAzione() && controller.getUnità().isBlank()) 	||
     		   controller.getData() == null) {
@@ -407,10 +411,8 @@ public class GoalManagerController {
     	});
         
         // apre il dialog e attende
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {  
+        ButtonType btnCliccato = modal.show();
+        if(btnCliccato == ButtonType.OK) {  
         	String nome = controller.getNome();
         	String descrizione = controller.getDescrizione();
         	LocalDate data = controller.getData();
@@ -451,19 +453,20 @@ public class GoalManagerController {
      */
     private void apriEditorAzione(IAzione azione, IObiettivo o, boolean nuovo) throws IOException {
     	
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/GoalManager/EditorAzioni.fxml"));
-        DialogPane pane = fxmlLoader.load();
-        pane.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
+        // crea il modal
+    	URL fileUrl = Main.class.getResource("/main/Views/GoalManager/EditorAzioni.fxml");
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(fileUrl);
+    	AnchorPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/main/Views/GoalManager/GoalManager.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());  
+    	Modal modal = new Modal(editor, "");
         
         // imposta titolo
         if(nuovo) {
-        	dialog.setTitle("Nuova azione");
+        	modal.setTitolo("Nuova azione");
         } else {
-        	dialog.setTitle("Modifica azione");
+        	modal.setTitolo("Modifica azione");
         }
         
         // Ottiene il controller e imposta l'azione se in modifica
@@ -473,8 +476,8 @@ public class GoalManagerController {
         }
         
         // valida gli input
-    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+        final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
+        btnOk.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
     		if(controller.getNome().isBlank() && controller.getData() == null){
     			event.consume();
     			if(controller.getNome().isBlank()) {
@@ -485,11 +488,9 @@ public class GoalManagerController {
         	}
     	});
         
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
+    	// apre il dialog e attende
+        ButtonType btnCliccato = modal.show();
+        if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	int valore = controller.getValore();
         	LocalDate data = controller.getData();
