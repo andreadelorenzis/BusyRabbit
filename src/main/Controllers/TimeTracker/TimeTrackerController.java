@@ -1,6 +1,7 @@
 package main.Controllers.TimeTracker;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +45,9 @@ import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 import main.Models.timetracker.interfaces.ITrackable;
 import main.Colori;
-import main.Controllers.Helper;
+import main.Main;
+import main.Controllers.Helpers.Helper;
+import main.Controllers.Modals.Modal;
 
 public class TimeTrackerController implements ITrackable {
     
@@ -169,43 +173,38 @@ public class TimeTrackerController implements ITrackable {
      * 
      */
     private void apriEditorProgetto(IProgetto progetto, boolean aggiunta) throws IOException {
-    	
-        // carica il dialog di aggiunta progetto
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorProgetto.fxml"));
-        DialogPane editor = fxmlLoader.load();
+    	URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/EditorProgetto.fxml");
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(fileUrl);
+    	AnchorPane editor = fxmlLoader.load();
         editor.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm());
-        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(editor);
-        
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());  
+    	Modal modal = new Modal(editor, "");
+    	
+    	if(aggiunta) {
+    		modal.setTitolo("Nuovo progetto");
+    		modal.getButton(ButtonType.OK).setText("Crea");
+    	} else {
+    		modal.setTitolo("Modifica progetto");
+    		modal.getButton(ButtonType.OK).setText("Modifica");
+    	}
+    	
         // ottiene il controller e imposta il progetto
         EditorProgettoController controller = fxmlLoader.getController();
         controller.setProgetto(progetto);
         
         // valida gli input
-    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+    	final HBox btnLookup = modal.getBtnLookup(ButtonType.OK);
+    	btnLookup.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
     		if(controller.getNome().isBlank()) {
     			event.consume();
     			throw new IllegalStateException("Perfavore, inserisci un nome per il progetto");
         	}
     	});
-    	
-        // imposta titolo e testo pulsanti dialog
-        if(aggiunta) {
-        	dialog.setTitle("Nuovo progetto");
-        	btOk.setText("Crea");
-        } else {
-        	dialog.setTitle("Modifica progetto");
-        	btOk.setText("Modifica");
-        }
         
-        // Apre dialog popup e attende
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // quando l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
+    	// apre il modal e attende l'input dell'utente
+    	ButtonType btnCliccato = modal.show();
+        if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	Colori colore = controller.getColore();
         	
@@ -303,6 +302,7 @@ public class TimeTrackerController implements ITrackable {
         
         // creo il menu dropdown
         ContextMenu menu = new ContextMenu();
+        menu.getStyleClass().add("edit-menu");
         MenuItem menuItem1 = new MenuItem("Modifica");
         MenuItem menuItem2 = new MenuItem("Elimina");
         menuItem1.setOnAction((ActionEvent e) -> {
@@ -341,25 +341,28 @@ public class TimeTrackerController implements ITrackable {
      * Apre l'editor di modifica di un'attività.
      */
     private void apriEditorAttività(IAttività attività) throws IOException {
-        
-    	// carica il dialog di modifica attività
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/EditorAttività.fxml"));
-        DialogPane editor = fxmlLoader.load();
+    	
+    	// crea il modal
+    	URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/EditorAttività.fxml");
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(fileUrl);
+    	AnchorPane editor = fxmlLoader.load();
         editor.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm());
-        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(editor);
-        dialog.setTitle("Modifica Attività");
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());  
+    	Modal modal = new Modal(editor, "");
         
         // ottiene il controller e imposta l'attività da modificare
         EditorAttivitàController controller = fxmlLoader.getController();
         controller.setListaProgetti(tt.getProgetti());
         controller.setAttività(attività);
         
+        // imposta il titolo del modal
+		modal.setTitolo("Nuovo progetto");
+		modal.getButton(ButtonType.OK).setText("Crea");
+        
     	// valida gli input
-    	final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-    	btOk.addEventFilter(ActionEvent.ACTION, event -> {
+    	final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
+    	btnOk.addEventFilter(ActionEvent.ACTION, event -> {
     		if(controller.getNome().isBlank() || controller.getDurata() <= 0) {
     			event.consume();			
     			if(controller.getNome().isBlank()) {
@@ -371,10 +374,10 @@ public class TimeTrackerController implements ITrackable {
     	});
         
         // apre il dialog e attende
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        ButtonType btnCliccato = modal.show();
         
         // quando l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
+        if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	IProgetto progetto = controller.getProgetto();
         	LocalDate data = controller.getData();
@@ -382,8 +385,9 @@ public class TimeTrackerController implements ITrackable {
         	long durata = controller.getDurata();
             
         	// modifica l'attività
-        	IAttività a = new Attività(nome, data, ora, durata, progetto);
-        	tt.aggiungiAttività(a);
+        	attività.setNome(nome);
+        	attività.setDurata(durata);
+        	attività.setProgettoPadre(progetto);
         	
         	aggiornaView();
         }
@@ -562,6 +566,12 @@ public class TimeTrackerController implements ITrackable {
                         if(menuForm) {
                         	cambiaProgettoCorrente(p);
                         } else {
+                        	
+                        	// rimuove la durata dell'attività dal vecchio progetto
+                        	IProgetto vecchioProgetto = a.getProgetto();
+                        	vecchioProgetto.eliminaDurata(a);
+                        	
+                        	// modifica il progetto
                         	a.setProgettoPadre(p);
                         }
                         aggiornaView();
@@ -836,26 +846,25 @@ public class TimeTrackerController implements ITrackable {
     
     @FXML 
     private void impostaTimer() throws IOException {
-    	
-        // Carica il file fxml e crea un nuovo popup Dialog
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/main/Views/TimeTracker/ImpostazioniTimer.fxml"));
-        DialogPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(editor);
-        dialog.setTitle("Imposta Pomodoro Timer");
         
-        // Ottiene il controller e setta le impostazioni di del pomodoro timer attuali
+        // crea il modal
+    	URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/ImpostazioniTimer.fxml");
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(fileUrl);
+    	AnchorPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm());
+        editor.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());  
+    	Modal modal = new Modal(editor, "");
+    	modal.setTitolo("Imposta pomodoro timer");
+        
+        // ottiene il controller e setta le impostazioni di del pomodoro timer attuali
         ImpostazioniTimerController controller = fxmlLoader.getController();
         IPomodoroTimer pt = (IPomodoroTimer) tt.getTracker();
         controller.setPomodoro(pt);
         
-        // Apre dialog popup
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-        
-        // Se l'utente clicca OK.
-        if(clickedButton.get() == ButtonType.OK) {
+        // apre il modal
+        ButtonType btnCliccato = modal.show();
+        if(btnCliccato == ButtonType.OK) {
         	
         	// imposto il pomodoro timer nel modello
         	pt.setDurataSessione(controller.getSessione());

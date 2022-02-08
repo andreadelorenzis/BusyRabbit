@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="140.0" prefWidth="354.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorProgettoController">
-   <content>
-      <BorderPane prefHeight="144.0" prefWidth="354.0">
+
+<AnchorPane prefHeight="284.0" prefWidth="438.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorProgettoController">
+   <children>
+      <BorderPane layoutX="25.0" layoutY="31.0" prefHeight="144.0" prefWidth="354.0">
          <top>
             <HBox BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="Editor progetto" textFill="#374667">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" />
                </BorderPane.margin>
             </HBox>
          </top>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #2B305B; -fx-border-width: 2 0 2 0;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <Label textFill="WHITE" />
                   <HBox alignment="CENTER_LEFT">
@@ -65,12 +58,5 @@
             </VBox>
          </center>
       </BorderPane>
-   </content>
-   <buttonTypes>
-      <ButtonType fx:constant="OK" />
-      <ButtonType fx:constant="CANCEL" />
-   </buttonTypes>
-   <padding>
-      <Insets left="15.0" right="15.0" />
-   </padding>
-</DialogPane>
+   </children>
+</AnchorPane>

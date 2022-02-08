@@ -31,8 +31,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
-import main.Controllers.Helper;
 import main.Controllers.GoalManager.GoalManagerController;
+import main.Controllers.Helpers.Helper;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.classes.HabitTracker;
 import main.Models.habittracker.interfaces.IHabitTracker;
@@ -242,7 +242,7 @@ public class ReportAbitudiniController {
         
         // visualizza label numero abitudini svolte
         String s = abitudini.size() == 1 ? "e " : "i ";
-        Label label = new Label("Svolto " + abitudini.size() + "abitudin" + s +  " su " + ht.getHabits().size());
+        Label label = new Label("Svolto " + abitudini.size() + " abitudin" + s +  " su " + ht.getHabits().size());
         label.setStyle("-fx-text-fill: #888EA8; -fx-font-size: 16;");
         label.setPadding(new Insets(0, 0, 15, 0));
         this.giornoBox.getChildren().add(label);

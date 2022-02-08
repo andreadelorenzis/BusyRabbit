@@ -77,6 +77,7 @@ public abstract class Azione implements IAzione {
         	completata = false;
         	obiettivo.setValoreAttuale(obiettivo.getValoreAttuale() - incremento);
         }
+        obiettivo.verificaCompletamento();
     }
 
     @Override

@@ -3,6 +3,7 @@ package main.Models.goalmanager.classes;
 import java.time.LocalDate;
 import java.util.UUID;
 import main.Models.goalmanager.interfaces.IObiettivo;
+import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 
 public abstract class Obiettivo implements IObiettivo {
     
@@ -35,7 +36,7 @@ public abstract class Obiettivo implements IObiettivo {
     /**
      * L'eventuale obiettivo padre di questo obiettivo, null altrimenti
      */
-    private IObiettivo obiettivoPadre = null;
+    private IObiettivoScomponibile obiettivoPadre = null;
     
     /**
      * Identificativo del obiettivo
@@ -87,6 +88,9 @@ public abstract class Obiettivo implements IObiettivo {
         if(!fallito) {
             completato = !completato;
         }
+        if(obiettivoPadre != null) {
+        	obiettivoPadre.verificaCompletamento();
+        }
     }
 
     @Override
@@ -129,8 +133,13 @@ public abstract class Obiettivo implements IObiettivo {
     }
     
     @Override
-    public IObiettivo getObiettivoPadre() {
+    public IObiettivoScomponibile getObiettivoPadre() {
         return obiettivoPadre;
+    }
+    
+    @Override
+    public void setCompletato(boolean completato) {
+    	this.completato = completato;
     }
 
     @Override
@@ -149,7 +158,7 @@ public abstract class Obiettivo implements IObiettivo {
     }
     
     @Override
-    public void setObiettivoPadre(IObiettivo obiettivo) {
+    public void setObiettivoPadre(IObiettivoScomponibile obiettivo) {
         obiettivoPadre = obiettivo;
     }
     

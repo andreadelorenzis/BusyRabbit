@@ -29,13 +29,19 @@
                                     <Insets right="30.0" />
                                  </VBox.margin>
                                  <children>
-                                    <StackedBarChart fx:id="stackedChart" alternativeColumnFillVisible="true" animated="false" layoutY="22.0" legendVisible="false" maxWidth="Infinity" minWidth="566.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0">
+                                    <StackedBarChart fx:id="stackedChart" alternativeColumnFillVisible="true" animated="false" layoutY="22.0" maxWidth="Infinity" minWidth="566.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0">
                                       <xAxis>
-                                        <CategoryAxis fx:id="mesiX" side="BOTTOM" tickLabelFill="WHITE" />
+                                        <CategoryAxis fx:id="mesiX" side="BOTTOM" tickLabelFill="WHITE">
+                                             <padding>
+                                                <Insets bottom="20.0" />
+                                             </padding></CategoryAxis>
                                       </xAxis>
                                       <yAxis>
                                         <NumberAxis fx:id="mesiY" side="LEFT" />
                                       </yAxis>
+                                       <padding>
+                                          <Insets bottom="20.0" />
+                                       </padding>
                                     </StackedBarChart>
                                  </children>
                               </AnchorPane>
@@ -47,7 +53,7 @@
                                        </BorderPane.margin></HBox>
                                  </left>
                                  <center>
-                                    <VBox fx:id="progressBarsContainer" fillWidth="true" prefHeight="288.0" prefWidth="399.0" BorderPane.alignment="CENTER">
+                                    <VBox fx:id="progressBarsContainer" fillWidth="true" prefHeight="222.0" prefWidth="235.0" BorderPane.alignment="CENTER">
                                        <BorderPane.margin>
                                           <Insets />
                                        </BorderPane.margin>
@@ -61,6 +67,9 @@
                                  </VBox.margin>
                               </BorderPane>
                            </children>
+                           <HBox.margin>
+                              <Insets bottom="20.0" />
+                           </HBox.margin>
                         </VBox>
                      </children>
                      <padding>

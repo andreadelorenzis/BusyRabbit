@@ -78,7 +78,19 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
     public double calcolaProgresso() {
+    	if(getCompletato()) {
+    		return 1.0;
+    	}
         return (double) valoreAttuale / valoreTotale;
+    }
+    
+    @Override
+    public void verificaCompletamento() {
+    	if(valoreAttuale / valoreTotale == 1) {
+    		this.completa();
+    	} else {
+    		this.setCompletato(false);
+    	}
     }
 
     @Override

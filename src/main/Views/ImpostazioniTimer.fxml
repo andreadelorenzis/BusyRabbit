@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ButtonType?>
-<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,20 +8,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="242.0" prefWidth="434.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.ImpostazioniTimerController">
-   <content>
-      <AnchorPane id="AnchorPane" prefHeight="244.0" prefWidth="434.0" style="-fx-background-color: #0E1726;">
+
+<AnchorPane style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.ImpostazioniTimerController">
+   <children>
+      <AnchorPane id="AnchorPane" prefHeight="260.0" prefWidth="434.0" style="-fx-background-color: #0E1726;">
          <children>
-            <HBox layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="399.0" style="-fx-border-color: #2B305B; -fx-border-width: 0 0 1 0;">
-               <children>
-                  <Label text="Impostazioni Pomodoro Timer" textFill="#374667">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <VBox layoutX="14.0" layoutY="50.0" prefHeight="148.0" prefWidth="390.0">
+            <VBox layoutX="14.0" layoutY="50.0" prefHeight="178.0" prefWidth="390.0">
                <children>
                   <Label text="Tempo (Minuti)" textFill="#bac4ca">
                      <font>
@@ -35,13 +25,19 @@
                   </Label>
                   <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="390.0">
                      <children>
-                        <Label text="Pomodoro:  " textFill="#bac4ca">
+                        <Label prefHeight="20.0" prefWidth="79.0" text="Pomodoro:  " textFill="#bac4ca">
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                         </Label>
                         <Spinner fx:id="pomodoroSpinner" editable="true" prefHeight="26.0" prefWidth="122.0" />
                      </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="390.0">
                      <children>
@@ -49,11 +45,14 @@
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                         </Label>
                         <Spinner fx:id="pausaBreveSpinner" editable="true" prefHeight="26.0" prefWidth="122.0" />
                      </children>
                      <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets bottom="20.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="390.0">
@@ -62,17 +61,19 @@
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                         </Label>
                         <Spinner fx:id="pausaLungaSpinner" editable="true" prefHeight="26.0" prefWidth="122.0" />
                      </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>
          </children>
       </AnchorPane>
-   </content>
-   <buttonTypes>
-      <ButtonType fx:constant="OK" />
-      <ButtonType fx:constant="CANCEL" />
-   </buttonTypes>
-</DialogPane>
+   </children>
+</AnchorPane>

@@ -25,8 +25,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.Main;
-import main.Controllers.Helper;
-import main.Controllers.Modal;
+import main.Controllers.Helpers.Helper;
+import main.Controllers.Modals.Modal;
 import main.Models.habittracker.classes.SessionHabit;
 import main.Models.habittracker.classes.SimpleHabit;
 import main.Models.habittracker.interfaces.IHabit;
@@ -58,13 +58,6 @@ public class HabitTrackerController {
     public void setHabitTracker(IHabitTracker ht) {
     	this.ht = ht;
     	visualizzaAbitudiniGiornaliere();
-        Modal modal = new Modal(Main.class.getResource("/main/Views/Modal.fxml"));
-        try {
-			modal.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     }
     
     private void visualizzaAbitudiniGiornaliere() {

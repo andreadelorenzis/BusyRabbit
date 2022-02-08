@@ -116,7 +116,7 @@ public class AppController {
     
     public void setAppData(IApp app) throws IOException {
     	this.app = app;
-    	apriPaginaHabitTracker();
+    	apriPaginaTimeTracker();
     }
     
     private void rimuoviEvidenziazionePulsanti() {

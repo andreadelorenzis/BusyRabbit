@@ -28,6 +28,8 @@ public interface IObiettivo {
      */
     public void completa();
     
+    public void verificaCompletamento();
+    
     /**
      * fa fallire questo obiettivo. Se un obiettivo fallisce il suo stato di completamento non 
      * può essere modificato. 
@@ -70,7 +72,9 @@ public interface IObiettivo {
      * 
      * @return l'obiettivo padre di questo obiettivo, null altrimenti
      */
-    public IObiettivo getObiettivoPadre();
+    public IObiettivoScomponibile getObiettivoPadre();
+    
+    public void setCompletato(boolean completato);
     
     /**
      * @param nome nome dell'obiettivo
@@ -92,6 +96,6 @@ public interface IObiettivo {
      * 
      * @param obiettivo l'obiettivo figlio
      */
-    public void setObiettivoPadre(IObiettivo obiettivo);
+    public void setObiettivoPadre(IObiettivoScomponibile obiettivo);
     
 }

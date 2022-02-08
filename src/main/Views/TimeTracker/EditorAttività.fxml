@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -15,30 +13,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="226.0" prefWidth="700.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorAttivitàController">
-   <content>
-      <AnchorPane prefHeight="298.0" prefWidth="700.0">
+
+<AnchorPane prefHeight="378.0" prefWidth="636.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorAttivitàController">
+   <children>
+      <AnchorPane layoutX="1.0" prefHeight="378.0" prefWidth="636.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <BorderPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="654.0">
+            <BorderPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="521.0">
                <top>
-                  <HBox prefHeight="33.0" prefWidth="375.0" BorderPane.alignment="CENTER_LEFT">
-                     <children>
-                        <Label style="-fx-font-weight: 800;" text="Editor attività" textFill="#374667">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" />
-                     </BorderPane.margin>
-                  </HBox>
-               </top>
-               <center>
-                  <VBox alignment="CENTER_LEFT" prefHeight="229.0" prefWidth="654.0" style="-fx-border-color: #2B305B; -fx-border-width: 2 0 0 0;" BorderPane.alignment="CENTER">
+                  <VBox alignment="CENTER_LEFT" prefHeight="354.0" prefWidth="676.0" BorderPane.alignment="CENTER">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="374.0">
                            <children>
@@ -68,7 +50,8 @@
                               <Label text="Progetto:" textFill="#bac4ca">
                                  <font>
                                     <Font size="16.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <HBox fx:id="btnProgetto" alignment="CENTER_LEFT" onMouseClicked="#toggleMenuProgetti" prefHeight="36.0" prefWidth="86.0">
                                  <children>
                                     <ImageView fitHeight="15.0" fitWidth="15.0">
@@ -95,11 +78,13 @@
                               <Label text="Data" textFill="#bac4ca">
                                  <font>
                                     <Font size="16.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="201.0" promptText="gg/mm/aaaa">
                                  <HBox.margin>
                                     <Insets left="40.0" />
-                                 </HBox.margin></DatePicker>
+                                 </HBox.margin>
+                              </DatePicker>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
@@ -110,7 +95,8 @@
                               <Label text="Ora" textFill="#bac4ca">
                                  <font>
                                     <Font size="16.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="oraField1" prefHeight="30.0" prefWidth="35.0" promptText="h" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">
                                  <HBox.margin>
                                     <Insets left="45.0" right="5.0" />
@@ -185,7 +171,7 @@
                         </HBox>
                      </children>
                   </VBox>
-               </center>
+               </top>
             </BorderPane>
             <BorderPane fx:id="menuProgetti" layoutX="70.0" layoutY="193.0" prefHeight="185.0" prefWidth="200.0" style="-fx-background-color: #1B2E4B;" visible="false">
                <top>
@@ -215,12 +201,8 @@
             </BorderPane>
          </children>
       </AnchorPane>
-   </content>
+   </children>
    <padding>
-      <Insets left="15.0" right="15.0" />
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
-   <buttonTypes>
-      <ButtonType fx:constant="CANCEL" />
-      <ButtonType fx:constant="OK" />
-   </buttonTypes>
-</DialogPane>
+</AnchorPane>

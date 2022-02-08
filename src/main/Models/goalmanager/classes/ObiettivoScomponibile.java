@@ -49,6 +49,35 @@ public class ObiettivoScomponibile extends Obiettivo implements IObiettivoScompo
 
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
+    public void completa() {
+        super.completa();
+        boolean sottoObCompletato;
+        if(this.getCompletato()) {
+        	sottoObCompletato = true;
+        } else {
+        	sottoObCompletato = false;
+        }
+        for(IObiettivo o : sottoObiettivi) {
+        	o.setCompletato(sottoObCompletato);
+        }
+    }
+    
+    @Override
+    public void verificaCompletamento() {
+    	boolean completato = true;
+    	for(IObiettivo o : sottoObiettivi) {
+    		if(!o.getCompletato()) {
+    			completato = false;
+    		}
+    	}
+    	if(completato) {
+    		completa();
+    	} else {
+    		setCompletato(false);
+    	}
+    }
+    
+    @Override
     public double calcolaProgresso() {
         int sottoObiettiviCompletati = 0;
         for(IObiettivo ob : sottoObiettivi) {

@@ -55,7 +55,7 @@ import javafx.util.Duration;
 import main.Giorno;
 import main.Main;
 import main.PageController;
-import main.Controllers.Helper;
+import main.Controllers.Helpers.Helper;
 import main.Models.accountmanager.classes.App;
 import main.Models.goalmanager.classes.Azione;
 import main.Models.goalmanager.classes.AzioneScomponibile;
@@ -79,8 +79,6 @@ public class GoalManagerController {
     private VBox boxObiettivi;    
     @FXML
     private BorderPane paginaAzioni;    
-    @FXML
-    private HBox azioneBtn;
     
 	//--------------------------------- CAMPI ------------------------------------
     /*
@@ -97,6 +95,8 @@ public class GoalManagerController {
      * Il container nella view dell'ultimo obiettivo cliccato.
      */
     private BorderPane paneObiettivoCliccato = null;
+    
+    private VBox listaSottoObiettiviAttiva = null;
     
     /*
      * Map che contiene quali menu sotto-obiettivi sono aperti
@@ -120,6 +120,15 @@ public class GoalManagerController {
         	}
         }
             
+    }
+    
+    private void aggiornaView() {
+    	aggiornaObiettivi();
+    	visualizzaAzioniGiornaliere();
+    	if(obiettivoCliccato != null) {
+    		this.resettaPaginaInfo();
+    		apriPaginaInfo(obiettivoCliccato);
+    	}
     }
     
     /**
@@ -150,11 +159,21 @@ public class GoalManagerController {
         // aggiunge il checkbox
         CheckBox check = new CheckBox();
         check.setText(o.getNome());
+        check.setSelected(o.getCompletato());
         check.getStyleClass().add("nome");
         check.setMaxWidth(300);
         check.setWrapText(true);
         vBox.getChildren().add(check);
         vBox.getStyleClass().add("obiettivo-content");
+        
+        // collega evento completamento obiettivo
+        check.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+            	t.consume();
+                o.completa();
+                aggiornaView();
+            }
+        });
         
         // aggiunge la data
         Label label = new Label("Ago, 07 2021");
@@ -165,7 +184,7 @@ public class GoalManagerController {
         HBox boxBtns = new HBox();
         boxBtns.setAlignment(Pos.CENTER_RIGHT);
         
-        // crea il centro del pane
+        // aggiunge un container vuoto al centro del pane
         HBox center = new HBox();
         center.getStyleClass().add("obiettivo-center");
         pane.setCenter(center);
@@ -207,6 +226,7 @@ public class GoalManagerController {
                 EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent t) {
                     	t.consume();
+                    	apriPaginaInfo(o);
                         toggleSottoObiettivi(os, boxSottoObiettivi);
                     }
                 };
@@ -218,8 +238,7 @@ public class GoalManagerController {
                 
     		}
     	} else {
-    		center.setCursor(Cursor.HAND);
-    		
+
     		// crea pulsante di aggiunta azioni
     		btnAggiunta = Helper.creaBtnAggiunta("Azione");
     		
@@ -234,21 +253,25 @@ public class GoalManagerController {
                     }
                 }
             });
-    		
-    		// collega evento visualizzazione azioni obiettivo
-    		center.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent t) {
-                	if(paneObiettivoCliccato != null) {
-                		paneObiettivoCliccato.setStyle("-fx-background-color: #0E1726");
-                	}
-                	pane.setStyle("-fx-background-color: #374856; -fx-background-radius: 10; -fx-border-radius: 10;");
-                	paneObiettivoCliccato = pane;
-                	obiettivoCliccato = o;
-                    apriPaginaAzioni(o);
-                }
-            });
     	}
         vBox.getChildren().add(btnAggiunta);
+        
+        center.setCursor(Cursor.HAND);
+		// collega evento visualizzazione azioni obiettivo
+		center.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	if(paneObiettivoCliccato != null) {
+            		paneObiettivoCliccato.setStyle("-fx-background-color: #0E1726");
+            	}
+            	if(!(o instanceof ObiettivoScomponibile) ||
+            	  (o instanceof ObiettivoScomponibile && ((IObiettivoScomponibile) o).getSottoObiettivi().size() == 0)) {
+            		pane.setStyle("-fx-background-color: #374856; -fx-background-radius: 10; -fx-border-radius: 10;");
+            	}
+            	paneObiettivoCliccato = pane;
+            	obiettivoCliccato = o;
+                apriPaginaInfo(o);
+            }
+        });
        
         // crea il pulsante di apertura menù dell'obiettivo
         HBox menuBtn = creaBtnMenu(o);
@@ -274,6 +297,7 @@ public class GoalManagerController {
             	int padding = 15;
             	box.setMaxWidth((boxObiettivi.getWidth() - padding) - prof * 60);
             	container.getChildren().add(box);
+            	listaSottoObiettiviAttiva = container;
             	
             	// aggiungo gli obiettivi al container di larghezza minore
                 for(int i = 0; i < o.getSottoObiettivi().size(); i++) {
@@ -288,6 +312,7 @@ public class GoalManagerController {
         	
         	// chiudo la lista sotto-obiettivi dell'obiettivo scomponibile
             container.getChildren().clear();
+            listaSottoObiettiviAttiva = null;
             obiettiviAperti.put(o.getId(), false);
         }
     }
@@ -302,6 +327,7 @@ public class GoalManagerController {
         
         // crea il menu dropdown
         ContextMenu menu = new ContextMenu();
+        menu.getStyleClass().add("edit-menu");
         MenuItem menuItem1 = new MenuItem("Modifica");
         MenuItem menuItem2 = new MenuItem("Elimina");
         menuItem1.setOnAction((ActionEvent e) -> {
@@ -417,7 +443,7 @@ public class GoalManagerController {
         	}
             
         // Aggiornare la view
-        this.aggiornaObiettivi();
+        this.aggiornaView();
     }
     
     /**
@@ -485,7 +511,7 @@ public class GoalManagerController {
         		nuovaAzione.setObiettivo(oa);
         		
         		// aggiorno la view
-        		apriPaginaAzioni(o);
+        		apriPaginaInfo(o);
         	} else {
         		
         		// modifico l'azione
@@ -498,7 +524,7 @@ public class GoalManagerController {
         		}
         		
         		// aggiorno la view
-        		apriPaginaAzioni(azione.getObiettivo());
+        		apriPaginaInfo(azione.getObiettivo());
         	}
             
         }
@@ -519,11 +545,11 @@ public class GoalManagerController {
     	}
     	
     	// aggiorna la view
-    	aggiornaObiettivi();
+    	aggiornaView();
     	
     }
     
-    private void resettaPaginaAzioni() {
+    private void resettaPaginaInfo() {
     	paginaAzioni.setTop(null);
     	paginaAzioni.setCenter(null);
     	paginaAzioni.setBottom(null);
@@ -532,42 +558,50 @@ public class GoalManagerController {
     /**
      * Visualizza la lista completa delle azioni collegate ad un obiettivo.
      */
-    private void apriPaginaAzioni(IObiettivo obiettivo) {
-    	IObiettivoAzione o = (ObiettivoAzione) obiettivo;
-        this.azioneBtn.setVisible(true);
-        this.obiettivoCliccato = obiettivo;
-        resettaPaginaAzioni();
+    private void apriPaginaInfo(IObiettivo o) {
+        this.obiettivoCliccato = o;
+        resettaPaginaInfo();
          
         // crea header
-        VBox header = creaHeaderAzioniObiettivo(obiettivo);
+        VBox header = creaHeaderAzioniObiettivo(o);
         paginaAzioni.setTop(header);
         
-        if(o.getAzioni().size() > 0) {
-        	// aggiunge le azioni alla view
-            this.visualizzaTotaleAzioniObiettivo(o);
-        } else {
-        	// crea messaggio
-            VBox vBox = new VBox();
-            vBox.setAlignment(Pos.CENTER);
-            Label label1 = new Label("Non hai ancora collegato nessuna azione a questo obiettivo.");
-            label1.getStyleClass().add("no-action-label");
-            Label label2 = new Label("Nuova azione");
-            label2.getStyleClass().add("new-action-btn");
-            vBox.getChildren().add(label1);
-            vBox.getChildren().add(label2);
-            paginaAzioni.setCenter(vBox);
-            
-            // aggiunge evento aggiutna nuova azione
-            label2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent t) {
-                	try {
-						aggiungiAzione();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-                }
-            }); 
+        // aggiunge le azioni
+        if(o instanceof ObiettivoAzione) {
+        	IObiettivoAzione oa = (ObiettivoAzione) o;
+            if(oa.getAzioni().size() > 0) {
+        		// aggiunge le azioni alla view
+                visualizzaTotaleAzioniObiettivo(oa);
+            } else {
+            	// crea messaggio
+                VBox vBox = new VBox();
+                vBox.setAlignment(Pos.CENTER);
+                Label label1 = new Label("Non hai ancora collegato nessuna azione a questo obiettivo.");
+                label1.getStyleClass().add("no-action-label");
+                Label label2 = new Label("Nuova azione");
+                label2.getStyleClass().add("new-action-btn");
+                vBox.getChildren().add(label1);
+                vBox.getChildren().add(label2);
+                paginaAzioni.setCenter(vBox);
+                
+                // aggiunge evento aggiutna nuova azione
+                label2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent t) {
+                    	try {
+    						aggiungiAzione();
+    					} catch (IOException e) {
+    						e.printStackTrace();
+    					}
+                    }
+                }); 
+            }
         }
+        
+        // visualizza il progresso dell'obiettivo
+        double progress = o.calcolaProgresso();
+        VBox bar = creaProgressBar(progress);
+        paginaAzioni.setBottom(bar);
+
     }
     
 	public static VBox creaHeaderAzioniGiornaliere() {
@@ -592,7 +626,6 @@ public class GoalManagerController {
 	 * Crea l'intestazione della pagina azioni.
 	 */
 	private VBox creaHeaderAzioniObiettivo(IObiettivo obiettivo) {
-		IObiettivoAzione o = (IObiettivoAzione) obiettivo;
 		
 		// crea l'intestazione
         VBox header = new VBox();
@@ -603,7 +636,7 @@ public class GoalManagerController {
         hBox2.setAlignment(Pos.CENTER);
         Label label3 = new Label("Visualizza tutte le azioni giornaliere");
         label3.getStyleClass().add("tutte-azioni-btn");
-        Label label4 = new Label(o.getNome());
+        Label label4 = new Label(obiettivo.getNome());
         label4.getStyleClass().add("nome-obiettivo");
         hBox.getChildren().add(label3);
         hBox2.getChildren().add(label4);
@@ -623,42 +656,45 @@ public class GoalManagerController {
         }); 
         
         // crea la descrizione
-        Label desc = new Label(o.getDescrizione());
+        Label desc = new Label(obiettivo.getDescrizione());
         desc.getStyleClass().add("descrizione-label");
         header.getChildren().add(desc);
-          
-        // crea i pulsanti "Tutte" e "Oggi"
-        if(o.getAzioni().size() > 0) {
-            HBox hBox3 = new HBox();
-            hBox3.setStyle("-fx-padding: 0 0 20 0;");
-            hBox3.setAlignment(Pos.CENTER_LEFT);
-            Label label5 = new Label("Tutte");
-            label5.setStyle("-fx-text-fill: #2196F3;");
-            Label label6 = new Label("Oggi");
-            label5.getStyleClass().add("azioni-obiettivo-btn");
-            label6.getStyleClass().add("azioni-obiettivo-btn");
-            hBox3.getChildren().addAll(label5, label6);
-            header.getChildren().add(hBox3);
-            
-            // collega evento visualizzazione azioni obiettivo giornaliere
-            label5.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent t) {
-                	label5.setStyle("-fx-text-fill: #2196F3;");
-                	label6.setStyle("-fx-text-fill: #ffffff;");
-                	visualizzaTotaleAzioniObiettivo(o);
-                }
-            });
-            
-            // collega evento visualizzazione totale azioni obiettivo
-            label6.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent t) {
-                	label6.setStyle("-fx-text-fill: #2196F3;");
-                	label5.setStyle("-fx-text-fill: #ffffff;");
-                	visualizzaAzioniObiettivoGiornaliere(o);
-                }
-            }); 
+        
+        if(obiettivo instanceof ObiettivoAzione) {
+        	IObiettivoAzione o = (IObiettivoAzione) obiettivo;
+        	
+            // crea i pulsanti "Tutte" e "Oggi"
+            if(o.getAzioni().size() > 0) {
+                HBox hBox3 = new HBox();
+                hBox3.setStyle("-fx-padding: 0 0 20 0;");
+                hBox3.setAlignment(Pos.CENTER_LEFT);
+                Label label5 = new Label("Tutte");
+                label5.setStyle("-fx-text-fill: #2196F3;");
+                Label label6 = new Label("Oggi");
+                label5.getStyleClass().add("azioni-obiettivo-btn");
+                label6.getStyleClass().add("azioni-obiettivo-btn");
+                hBox3.getChildren().addAll(label5, label6);
+                header.getChildren().add(hBox3);
+                
+                // collega evento visualizzazione azioni obiettivo giornaliere
+                label5.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent t) {
+                    	label5.setStyle("-fx-text-fill: #2196F3;");
+                    	label6.setStyle("-fx-text-fill: #ffffff;");
+                    	visualizzaTotaleAzioniObiettivo(o);
+                    }
+                });
+                
+                // collega evento visualizzazione totale azioni obiettivo
+                label6.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent t) {
+                    	label6.setStyle("-fx-text-fill: #2196F3;");
+                    	label5.setStyle("-fx-text-fill: #ffffff;");
+                    	visualizzaAzioniObiettivoGiornaliere(o);
+                    }
+                }); 
+            }
         }
-      
         return header;
 	}
     
@@ -789,7 +825,7 @@ public class GoalManagerController {
     	azione.getObiettivo().eliminaAzione(azione.getId());
     	
     	// aggiorna view
-    	this.apriPaginaAzioni(azione.getObiettivo());
+    	this.apriPaginaInfo(azione.getObiettivo());
     	
     }
     
@@ -834,7 +870,8 @@ public class GoalManagerController {
     	a.completa();
     	
     	// aggiorna view
-    	this.visualizzaAzioniGiornaliere();
+    	obiettivoCliccato = null;
+    	aggiornaView();
     }
     
     //------------------------------ METODI FXML ----------------------------------
@@ -867,7 +904,7 @@ public class GoalManagerController {
      */
     public void setGoalManager(IGoalManager gm) {
     	this.gm = gm;
-    	aggiornaObiettivi();
+    	aggiornaView();
     	visualizzaAzioniGiornaliere();
     }
     

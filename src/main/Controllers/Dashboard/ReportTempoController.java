@@ -1,16 +1,23 @@
 package main.Controllers.Dashboard;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -21,15 +28,23 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import main.Controllers.TimeTracker.TTHelper;
+import main.Models.goalmanager.classes.Azione;
+import main.Models.goalmanager.classes.Obiettivo;
+import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
@@ -195,9 +210,13 @@ public class ReportTempoController implements Initializable {
             this.stackedChart.getData().add(dati.get(i));
         }
         
-        // aggiungo le classi di stile per i colori
+        // aggiungo i colori alle sezione del grafico a torta
+        List<IProgetto> progettiMisurati = tt.getProgetti().stream()
+        												   .filter(p -> !(isProgettoVuoto(p, isAnno)))
+        												   .collect(Collectors.toList());
+        
         for(int i = 0; i < dati.size(); i++) {
-            this.stackedChart.getStyleClass().add(tt.getProgetti().get(i).getColore().toString() + i);
+	    	stackedChart.getStyleClass().add(progettiMisurati.get(i).getColore().toString() + i);
         }
         
     }
@@ -228,7 +247,6 @@ public class ReportTempoController implements Initializable {
         // creo il grafico a torta
         PieChart chart = new PieChart(pieData); 
         chart.getStyleClass().add("pie-chart");
-        chart.setStyle("-fx-background-color: transparent;");
         chart.setLabelLineLength(10);
         chart.setLabelsVisible(false);
         chart.setLegendVisible(false);
@@ -236,9 +254,24 @@ public class ReportTempoController implements Initializable {
         chart.setMinWidth(550);
         chart.setTranslateX(-50);
         
-        // aggiungo le classi di stile
+        // aggiungo i colori alle sezione del grafico a torta
+        List<IProgetto> progettiMisurati = tt.getProgetti().stream()
+        												   .filter(p -> !(isProgettoVuoto(p, isAnno)))
+        												   .collect(Collectors.toList());
+        
         for(int i = 0; i < pieData.size(); i++) {
-            chart.getStyleClass().add(tt.getProgetti().get(i).getColore().toString() + i);
+	        chart.getStyleClass().add(progettiMisurati.get(i).getColore().toString() + i);
+        } 
+        
+        // creo tooltip percentuale
+        double total = 0;
+        for(final PieChart.Data data : chart.getData()) {
+        	total += data.getPieValue();
+        }
+        for (final PieChart.Data data : chart.getData()) {
+        	String percentage = String.format("%2.2f%%", (data.getPieValue() / total) * 100);
+        	Tooltip tooltipo = new Tooltip(percentage);
+        	Tooltip.install(data.getNode(), tooltipo);
         }
         
         this.pieChartContainer.setAlignment(Pos.TOP_CENTER);
@@ -274,8 +307,24 @@ public class ReportTempoController implements Initializable {
             tempoTotale += this.calcolaTempoTotaleProgetto(p, isAnno);
         }
         
+        List<IProgetto> progettiSorted = tt.getProgetti().stream()
+        												 .map(p -> (Progetto) p)
+        												 .sorted(new Comparator<Progetto>() {
+															@Override
+															public int compare(Progetto p1, Progetto p2) {
+																long durataP1 = calcolaTempoTotaleProgetto(p1, isAnno);
+																long durataP2 = calcolaTempoTotaleProgetto(p2, isAnno);
+																if(durataP1 <= durataP2) {
+																	return 1;
+																} else {
+																	return -1;
+																}
+															} 
+        												 })
+        												 .collect(Collectors.toList());
+        
         // crea le progress bars per ogni progetto
-        for(IProgetto progetto : tt.getProgetti()) {
+        for(IProgetto progetto : progettiSorted) {
         	if(!isProgettoVuoto(progetto, isAnno)) {
         		long durata = this.calcolaTempoTotaleProgetto(progetto, isAnno);
         		
@@ -330,5 +379,13 @@ public class ReportTempoController implements Initializable {
     private boolean isProgettoVuoto(IProgetto progetto, boolean isAnno) {
     	long tempoProgetto = calcolaTempoTotaleProgetto(progetto, isAnno);
     	return tempoProgetto <= 0;
+    }
+    
+    private void aggiornaView() {
+    	meseChoice.setValue("ALL");
+    	this.annoSpinner.getValueFactory().setValue(LocalDate.now().getYear());
+        this.visualizzaStackedBarChart(true);
+        this.visualizzaPieChart(true);
+        this.visualizzaProgressBars(true);
     }
 }

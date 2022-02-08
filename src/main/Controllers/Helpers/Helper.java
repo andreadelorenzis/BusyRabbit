@@ -1,4 +1,4 @@
-package main.Controllers;
+package main.Controllers.Helpers;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +29,7 @@ public class Helper {
         label.getStyleClass().add("add-btn-label");
         box.getChildren().add(img);
         box.getChildren().add(label);
-        box.setAlignment(Pos.CENTER_LEFT);
+        box.setAlignment(Pos.CENTER);
         box.setPadding(new Insets(5, 5, 5, 0));
         return box;
     }

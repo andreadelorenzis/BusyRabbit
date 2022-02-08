@@ -77,25 +77,6 @@
                            </font>
                         </Label>
                      </left>
-                     <right>
-                        <HBox fx:id="azioneBtn" alignment="CENTER_LEFT" onMouseClicked="#aggiungiAzione" prefHeight="35.0" prefWidth="122.0" style="-fx-cursor: hand;" visible="false" BorderPane.alignment="CENTER_LEFT">
-                           <children>
-                              <ImageView fitHeight="20.0" fitWidth="20.0">
-                                 <image>
-                                    <Image url="@/main/risorse/plus.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Nuova azione" textFill="#2196f3">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </right>
                      <padding>
                         <Insets left="25.0" right="25.0" />
                      </padding>

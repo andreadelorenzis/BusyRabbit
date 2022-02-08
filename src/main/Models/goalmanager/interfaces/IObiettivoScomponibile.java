@@ -30,4 +30,6 @@ public interface IObiettivoScomponibile extends IObiettivo {
      */
     public void eliminaSottoObiettivo(String idObiettivo);
     
+    public void verificaCompletamento();
+    
 }
