@@ -1,8 +1,11 @@
 package main.Controllers.Impostazioni;
 
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import main.Controllers.Notifications.Notification;
+import main.Controllers.Notifications.NotificationType;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IApp;
@@ -37,16 +40,19 @@ public class ImpostazioniController {
 		
 		if(email.isBlank() || password.isBlank()) {
 			if(newEmailField.getText().isBlank()) {
-				System.out.println("Perfavore inserisci una email.");
+				new Notification("Perfavore inserisci una email.", NotificationType.ERROR).show();
 			} else if(passField1.getText().isBlank()) {
-				System.out.println("Perfavore inserisci la password");
+				new Notification("Perfavore inserisci la password", NotificationType.ERROR).show();
 			}
 			return;
 		}
 		try {
 			app.cambiaEmail(email, password);
 		} catch (ExistingAccountException | WrongCredentialsException e) {
-			e.printStackTrace();
+			if(e instanceof ExistingAccountException) {
+				new Notification("E' già presente un'altro account con questa email.", NotificationType.ERROR).show();
+			}
+			
 		}
 	}
 	
@@ -56,16 +62,16 @@ public class ImpostazioniController {
 		
 		if(vecchia.isBlank() || nuova.isBlank()) {
 			if(oldPassField.getText().isBlank()) {
-				System.out.println("Perfavore inserisci la vecchia password da cambiare.");
+				new Notification("Perfavore inserisci la vecchia password da cambiare.", NotificationType.ERROR).show();
 			} else if(newPassField.getText().isBlank()) {
-				System.out.println("Perfavore inserisci la nuova password.");
+				new Notification("Perfavore inserisci la nuova password.", NotificationType.ERROR).show();
 			}
 			return;
 		}
 		try {
 			app.cambiaPassword(vecchia, nuova);
 		} catch (WrongCredentialsException e) {
-			e.printStackTrace();
+			new Notification("La password non è corretta", NotificationType.ERROR).show();
 		}
 	}
 	
@@ -73,12 +79,12 @@ public class ImpostazioniController {
 		String password = passField2.getText();
 		
 		if(password.isBlank()) {
-			System.out.println("Perfavore inserisci la password dell'account.");
+			new Notification("Perfavore inserisci la password dell'account", NotificationType.ERROR).show();
 		}
 		try {
 			app.eliminaAccount(app.getEmail(), password);
 		} catch (WrongCredentialsException e) {
-			e.printStackTrace();
+			new Notification("La password non è corretta", NotificationType.ERROR).show();
 		}
 	}
 }

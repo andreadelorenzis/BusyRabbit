@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -25,14 +28,29 @@ public class Notification {
 	private String messaggio;
 	private NotificationType tipo;
 	
-	public Notification(String messaggio, NotificationType tipo) {
-		this.messaggio = messaggio;
+	public Notification(NotificationType tipo) {
+		this.messaggio = "";
 		this.tipo = tipo;
 	}
 	
+	public Notification(String messaggio, NotificationType tipo) {
+		this(tipo);
+		this.messaggio = messaggio;
+	}
+	
+	public void setMessaggio(String s) {
+		this.messaggio = s;
+	}
+	
+	private void close(Stage stage) {
+		stage.close();
+		NotificationsManager.getInstance().decrementaNumNotifiche();
+	}
+	
 	public void show() {
-		NotificationsManager.incrementaNumNotifiche();
-		int numNotifiche = NotificationsManager.getNumNotifiche();
+		NotificationsManager manager = NotificationsManager.getInstance();
+		manager.incrementaNumNotifiche();
+		int numNotifiche = manager.getNumNotifiche();
 		
 		// crea la view della notifica
         AnchorPane pane = new AnchorPane();
@@ -55,16 +73,16 @@ public class Notification {
         // cambia il colore in base al tipo della notifica
         if(tipo == NotificationType.ERROR) {
         	pane.setStyle("-fx-background-color: #A93C3A;");
-        	label.setTextFill(Color.web("#E73D39"));
-        	label2.setTextFill(Color.web("#E73D39"));
+        	label.setTextFill(Color.web("#E9817F"));
+        	label2.setTextFill(Color.web("#E9817F"));
         } else if(tipo == NotificationType.SUCCESS) {
         	pane.setStyle("-fx-background-color: #33726A;");
-        	label.setTextFill(Color.web("#14AF9C"));
-        	label2.setTextFill(Color.web("#14AF9C"));
+        	label.setTextFill(Color.web("#65E1D2"));
+        	label2.setTextFill(Color.web("#65E1D2"));
         } else if(tipo == NotificationType.INFO) {
         	pane.setStyle("-fx-background-color: #866E2A;");
-        	label.setTextFill(Color.web("#C5A039"));
-        	label2.setTextFill(Color.web("#C5A039"));
+        	label.setTextFill(Color.web("#EACC7B"));
+        	label2.setTextFill(Color.web("#EACC7B"));
         }
         
         // crea un nuovo stage
@@ -80,19 +98,29 @@ public class Notification {
         scene.getStylesheets().add(css);
         stage.setResizable(false);
         stage.setScene(scene);
-        stage.show();
+        stage.setAlwaysOnTop(true); 
         
         // aggiunge un tempo di visualizzazione della notifica
     	Timer timer = new Timer(3000, new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				Platform.runLater(() -> {
-			        stage.close();
-			        NotificationsManager.decrementaNumNotifiche();
+			        close(stage);
 			    });
 			}	
     	});
     	timer.start();
+    	timer.setRepeats(false);
+    	
+        // collega evento chiusura notifica
+        label2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+            	close(stage);
+            	timer.stop();
+            }
+        });
 
+    	stage.show();
 	}
 	
 }

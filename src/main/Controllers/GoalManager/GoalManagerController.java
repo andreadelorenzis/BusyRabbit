@@ -58,6 +58,8 @@ import main.Main;
 import main.PageController;
 import main.Controllers.Helpers.Helper;
 import main.Controllers.Modals.Modal;
+import main.Controllers.Notifications.Notification;
+import main.Controllers.Notifications.NotificationType;
 import main.Models.accountmanager.classes.App;
 import main.Models.goalmanager.classes.Azione;
 import main.Models.goalmanager.classes.AzioneScomponibile;
@@ -173,6 +175,9 @@ public class GoalManagerController {
             public void handle(ActionEvent t) {
             	t.consume();
                 o.completa();
+                if(o.getCompletato()) {
+                	new Notification("Obiettivo completato.", NotificationType.SUCCESS).show();
+                }
                 aggiornaView();
             }
         });
@@ -399,12 +404,12 @@ public class GoalManagerController {
     		   controller.getData() == null) {
     			event.consume();
     			if(controller.getNome().isBlank()) {
-    				throw new IllegalStateException("Perfavore, inserisci un nome per l'obiettivo");
+    				new Notification("Inserisci un nome per l'obiettivo", NotificationType.ERROR).show();
     			} else if(controller.isTipoAzione() && controller.getUnità().isBlank()) {
-    				throw new IllegalStateException("Perfavore, inserisci un'unità di misura per l'obiettivo");
+    				new Notification("Inserisci un'unità di misura per l'obiettivo", NotificationType.ERROR).show();
     			}
     			else if(controller.getData() == null) {
-    				throw new IllegalStateException("Perfavore, scegli una data di raggiungimento per l'obiettivo");
+    				new Notification("Scegli una data di raggiungimento per l'obiettivo", NotificationType.ERROR).show();
     			}
     			
         	}
@@ -429,8 +434,10 @@ public class GoalManagerController {
         		}
         		if(isSottoObiettivo) {
         			((ObiettivoScomponibile) o).aggiungiSottoObiettivo(nuovoObiettivo);
+        			new Notification("Nuovo sotto-obiettivo aggiunto.", NotificationType.SUCCESS).show();
         		} else {
         			gm.aggiungiObiettivo(nuovoObiettivo);
+        			new Notification("Nuovo obiettivo aggiunto.", NotificationType.SUCCESS).show();
         		}
         	} else {
         			
@@ -442,6 +449,7 @@ public class GoalManagerController {
         			((ObiettivoAzione) o).setUnita(unità);
         			((ObiettivoAzione) o).setValoreTotale(valore);
         		}
+        		new Notification("Obiettivo modificato con successo.", NotificationType.SUCCESS).show();
         	}
             
         // Aggiornare la view
@@ -481,9 +489,9 @@ public class GoalManagerController {
     		if(controller.getNome().isBlank() && controller.getData() == null){
     			event.consume();
     			if(controller.getNome().isBlank()) {
-    				throw new IllegalStateException("Perfavore, inserisci un nome per l'azione");
+    				new Notification("Inserisci un nome per l'azione", NotificationType.ERROR).show();
     			} else if(controller.getData() == null) {
-    				throw new IllegalStateException("Perfavore, inserisci una data di inizio per l'azione");
+    				new Notification("Inserisci una data di inizio per l'azione", NotificationType.ERROR).show();
     			}
         	}
     	});
@@ -510,6 +518,7 @@ public class GoalManagerController {
         		}
         		oa.collegaAzione(nuovaAzione);
         		nuovaAzione.setObiettivo(oa);
+        		new Notification("Azione collegata.", NotificationType.SUCCESS).show();
         		
         		// aggiorno la view
         		apriPaginaInfo(o);
@@ -523,6 +532,7 @@ public class GoalManagerController {
         		if(azione instanceof AzioneSessione) {
         			((AzioneSessione) azione).setDurata(durata);
         		}
+        		new Notification("Azione modificata.", NotificationType.SUCCESS).show();
         		
         		// aggiorno la view
         		apriPaginaInfo(azione.getObiettivo());
@@ -541,8 +551,10 @@ public class GoalManagerController {
     	if(sottoObiettivo) { 
     		IObiettivoScomponibile obPadre = (IObiettivoScomponibile) obiettivo.getObiettivoPadre();
     		obPadre.eliminaSottoObiettivo(obiettivo.getId());
+    		new Notification("Sotto-obiettivo eliminato.", NotificationType.INFO).show();
     	} else {
         	gm.eliminaObiettivo(obiettivo.getId());
+        	new Notification("Obiettivo eliminato.", NotificationType.INFO).show();
     	}
     	
     	// aggiorna la view
@@ -821,13 +833,9 @@ public class GoalManagerController {
      * Elimina un'azione dal modello.
      */
     private void eliminaAzione(IAzione azione) {
-    	
-    	// elimina azione dal modello
     	azione.getObiettivo().eliminaAzione(azione.getId());
-    	
-    	// aggiorna view
     	this.apriPaginaInfo(azione.getObiettivo());
-    	
+    	new Notification("Azione eliminata.", NotificationType.INFO).show();  	
     }
     
     /**
@@ -852,6 +860,9 @@ public class GoalManagerController {
                 public void handle(ActionEvent t) {
                 	t.consume();
                     completaAzione(azione);
+                    if(azione.getCompletata()) {
+                    	new Notification("Azione completata.", NotificationType.SUCCESS).show();
+                    }
                 }
             });
         } else {

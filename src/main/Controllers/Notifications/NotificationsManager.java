@@ -1,18 +1,34 @@
 package main.Controllers.Notifications;
 
 public class NotificationsManager {
-
-	public static int num = 0;
 	
-	public static void incrementaNumNotifiche() {
+	private static NotificationsManager istanza = null;
+	
+	private int num;
+	
+	private NotificationsManager() {
+		num = 0;
+	}
+	
+	public static NotificationsManager getInstance() {
+		if(istanza == null) {
+			istanza = new NotificationsManager();
+		}
+		
+		return istanza;
+	}
+	
+	public void incrementaNumNotifiche() {
 		num++;
 	}
 	
-	public static void decrementaNumNotifiche() {
-		num--;
+	public void decrementaNumNotifiche() {
+		if(num > 0) {
+			num--;
+		}
 	}
 	
-	public static int getNumNotifiche() {
+	public int getNumNotifiche() {
 		return num;
 	}
 	

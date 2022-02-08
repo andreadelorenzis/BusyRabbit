@@ -48,6 +48,8 @@ import main.Colori;
 import main.Main;
 import main.Controllers.Helpers.Helper;
 import main.Controllers.Modals.Modal;
+import main.Controllers.Notifications.Notification;
+import main.Controllers.Notifications.NotificationType;
 
 public class TimeTrackerController implements ITrackable {
     
@@ -198,7 +200,8 @@ public class TimeTrackerController implements ITrackable {
     	btnLookup.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
     		if(controller.getNome().isBlank()) {
     			event.consume();
-    			throw new IllegalStateException("Perfavore, inserisci un nome per il progetto");
+    			Notification n = new Notification("Perfavore, inserisci un nome per il progetto", NotificationType.ERROR);
+    			n.show();
         	}
     	});
         
@@ -211,9 +214,11 @@ public class TimeTrackerController implements ITrackable {
         	// aggiunge o modifica il colore
         	if(aggiunta) {
             	tt.aggiungiProgetto(new Progetto(nome, colore));
+            	new Notification("Nuovo progetto aggiunto", NotificationType.SUCCESS).show();
         	} else {
         		progetto.setNome(nome);
         		progetto.setColore(colore);
+        		new Notification("Progetto modificato", NotificationType.SUCCESS).show();
         	}
         	
         	chiudiMenuProgetti();
@@ -225,10 +230,8 @@ public class TimeTrackerController implements ITrackable {
      * Elimina un Progetto dal modello.
      */
     private void eliminaProgetto(IProgetto progetto) {
-    	
-        // elimina progetto dal modello
     	tt.eliminaProgetto(progetto.getId());
-
+    	new Notification("Progetto eliminato", NotificationType.INFO).show();
     	aggiornaView();
     }
     
@@ -364,12 +367,14 @@ public class TimeTrackerController implements ITrackable {
     	final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
     	btnOk.addEventFilter(ActionEvent.ACTION, event -> {
     		if(controller.getNome().isBlank() || controller.getDurata() <= 0) {
-    			event.consume();			
+    			event.consume();	
+    			Notification n = new Notification(NotificationType.ERROR);
     			if(controller.getNome().isBlank()) {
-    				throw new IllegalStateException("Perfavore, inserisci un nome per l'attivit‡");
+    				n.setMessaggio("Perfavore, inserisci un nome per l'attivit‡");
     			} else if(controller.getDurata() <= 0) {
-    				throw new IllegalStateException("Perfavore, inserisci un durata valida per l'attivit‡");
+    				n.setMessaggio("Perfavore, inserisci un durata valida per l'attivit‡");
     			}
+    			n.show();
         	}
     	});
         
@@ -389,6 +394,7 @@ public class TimeTrackerController implements ITrackable {
         	attivit‡.setDurata(durata);
         	attivit‡.setProgettoPadre(progetto);
         	
+        	new Notification("Attivit‡ modificata con successo", NotificationType.SUCCESS).show();
         	aggiornaView();
         }
     }
@@ -397,10 +403,8 @@ public class TimeTrackerController implements ITrackable {
      * Elimina un'Attivit‡ dal modello.
      */
     private void eliminaAttivit‡(IAttivit‡ attivit‡) {
-    	
-    	// elimina attivit‡ dal modello
         tt.eliminaAttivit‡(attivit‡);
-        
+        new Notification("Attivit‡ eliminata", NotificationType.INFO).show();
         aggiornaView();
     }
     
@@ -574,6 +578,8 @@ public class TimeTrackerController implements ITrackable {
                         	
                         	// modifica il progetto
                         	a.setProgettoPadre(p);
+                        	
+                        	new Notification("Attivit‡ modificata", NotificationType.SUCCESS).show();
                         }
                         aggiornaView();
                         chiudiMenuProgetti();
@@ -589,10 +595,11 @@ public class TimeTrackerController implements ITrackable {
     private void toggleTextField(TextField field, Label label, IAttivit‡ a) {
 		field.setVisible(false);
         label.setVisible(true);
-        if(!field.getText().isBlank()) {
+        if(!field.getText().isBlank() && !(field.getText().equals(a.getNome()))) {
         	a.setNome(field.getText());
+        	new Notification("Attivit‡ modificata", NotificationType.SUCCESS).show();
+        	creaCronologiaAttivit‡(tt.getGiorniAttivit‡(pagina));
         }
-        creaCronologiaAttivit‡(tt.getGiorniAttivit‡(pagina));
     }
     
     /**
@@ -644,6 +651,7 @@ public class TimeTrackerController implements ITrackable {
                 field.setVisible(true);
                 field.requestFocus();
                 label2.setVisible(false);
+                field.setText(attivit‡.getNome());
             }
         });
         
@@ -658,7 +666,8 @@ public class TimeTrackerController implements ITrackable {
         // gestisce chiusura input di testo quando perde il focus
         field.focusedProperty().addListener((prop, oldNode, newNode) -> {
         	if(!field.isFocused()) {
-        		toggleTextField(field, label2, attivit‡);
+        		field.setVisible(false);
+		        label2.setVisible(true);
         	}
         });
 
@@ -727,6 +736,8 @@ public class TimeTrackerController implements ITrackable {
 	
 	@Override
 	public void timerTerminato(long tempo) {
+		new Notification("Sessione terminata", NotificationType.SUCCESS).show();
+		new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
 		aggiornaView();
 	}
 	
@@ -794,8 +805,8 @@ public class TimeTrackerController implements ITrackable {
     	rimuoviEvidenziazionePulsanti();
     	manualBtn.setStyle("-fx-background-color: #3C4B63");
         nascondiTrackers();
-        orarioText1.setPromptText("" + LocalTime.now().getHour());
-        orarioText2.setPromptText("" + LocalTime.now().getMinute());
+        orarioText1.setText("" + LocalTime.now().getHour());
+        orarioText2.setText("" + LocalTime.now().getMinute());
         dataManuale.setValue(LocalDate.now());
         formManuale.setVisible(true);
     }
@@ -820,7 +831,7 @@ public class TimeTrackerController implements ITrackable {
     		tt.getTracker().setAscoltatore(this);
     		
     	} else {
-    		System.out.println("Perfavore inserisci il nome di un'attivit‡.");
+    		new Notification("Perfavore inserisci il nome di un'attivit‡.", NotificationType.ERROR).show();
     	}
     }
 	
@@ -843,6 +854,9 @@ public class TimeTrackerController implements ITrackable {
     	oreLabel.setText("00");
     	minutiLabel.setText("00");
     	secondiLabel.setText("00");
+    	
+    	new Notification("Timer terminato", NotificationType.SUCCESS).show();
+    	new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
     }
     
     @FXML 
@@ -875,6 +889,8 @@ public class TimeTrackerController implements ITrackable {
         	// refresh della view dell'orologio
         	int[] params = TTHelper.scomponiDurata(controller.getSessione());
         	impostaOrologio(params[0], params[1], params[2]);
+        	
+        	new Notification("Pomodoro timer modificato", NotificationType.SUCCESS).show();
         }
     }
     
@@ -884,16 +900,16 @@ public class TimeTrackerController implements ITrackable {
     @FXML
     private void creaAttivit‡Manualmente() throws IOException {
         if(this.attivit‡Text.getText() == "") {
-            System.out.println("Perfavore inserisci il nome dell'attivit‡.");
+        	new Notification("Perfavore inserisci il nome dell'attivit‡.", NotificationType.ERROR).show();
             return;
         } else if (this.orarioText1.getText() == "" || this.orarioText2.getText() == "") {
-            System.out.println("Perfavore inserisci l'orario di inizio attivit‡.");
+        	new Notification("Perfavore inserisci l'orario di inizio attivit‡.", NotificationType.ERROR).show();
             return;
         } else if (this.durataText1.getText() == "" || this.durataText2.getText() == "" || this.durataText3.getText() == "") {
-            System.out.println("Perfavore inserisci la durata dell'attivit‡.");
+        	new Notification("Perfavore inserisci la durata dell'attivit‡.", NotificationType.ERROR).show();
             return;
         } else if(this.dataManuale.getValue() == null) {
-        	System.out.println("Perfavore inserisci una data per l'attivit‡.");
+        	new Notification("Perfavore inserisci una data per l'attivit‡", NotificationType.ERROR).show();
             return;
         }
         String nome = attivit‡Text.getText();
@@ -913,6 +929,7 @@ public class TimeTrackerController implements ITrackable {
     	// aggiunge attivit‡ al modello
     	tt.aggiungiAttivit‡(a);
     	
+    	new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
     	aggiornaView();
     }
     

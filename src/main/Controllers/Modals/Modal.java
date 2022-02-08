@@ -63,7 +63,7 @@ public class Modal {
 	
 	private void toggleOverlay() {
 		BorderPane overlay = new BorderPane();
-		if(ModalsManager.isModalOpen()) {
+		if(ModalsManager.getInstance().isModalOpen()) {
 	        // black overlay
 	        overlay.getStyleClass().add("overlay");
 	        AnchorPane.setBottomAnchor(overlay, 0.0);
@@ -104,7 +104,7 @@ public class Modal {
 	
 	public void close(Stage stage) {
 		stage.close();
-        ModalsManager.chiudiModal();
+        ModalsManager.getInstance().chiudiModal();
         toggleOverlay();
 	}
 	
@@ -113,7 +113,7 @@ public class Modal {
 	}
 	
 	public ButtonType show() throws IOException {
-		ModalsManager.apriModal();
+		ModalsManager.getInstance().apriModal();
 		toggleOverlay();
 		
 		// crea la view del modal

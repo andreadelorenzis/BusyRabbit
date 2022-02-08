@@ -29,6 +29,8 @@ import javafx.scene.layout.VBox;
 import main.Main;
 import main.Controllers.Helpers.Helper;
 import main.Controllers.Modals.Modal;
+import main.Controllers.Notifications.Notification;
+import main.Controllers.Notifications.NotificationType;
 import main.Models.habittracker.classes.SessionHabit;
 import main.Models.habittracker.classes.SimpleHabit;
 import main.Models.habittracker.interfaces.IHabit;
@@ -162,6 +164,9 @@ public class HabitTrackerController {
                 public void handle(ActionEvent t) {
                 	t.consume();
                 	abitudine.complete();
+                	if(abitudine.isCompleted()) {
+                		new Notification("Abitudine completata.", NotificationType.SUCCESS).show();
+                	}
                     aggiornaView();
                 }
             }); 
@@ -313,9 +318,9 @@ public class HabitTrackerController {
     		   controller.getData() == null) {
     			event.consume();
     			if(controller.getNome().isBlank()) {
-    				throw new IllegalStateException("Perfavore, inserisci un nome per l'obiettivo");
+    				new Notification("Perfavore, inserisci un nome per l'abitudine", NotificationType.ERROR).show();
     			}else if(controller.getData() == null) {
-    				throw new IllegalStateException("Perfavore, scegli una data di raggiungimento per l'obiettivo");
+    				new Notification("Perfavore, la data di partenza dell'abitudine", NotificationType.ERROR).show();
     			}
         	}
     	});
@@ -338,6 +343,7 @@ public class HabitTrackerController {
         			newHabit = new SimpleHabit(nome, descrizione, data, giorni);
         		}
         		ht.addHabit(newHabit);
+        		new Notification("Abitudine aggiunta.", NotificationType.SUCCESS).show();
         		this.visualizzaInfoAbitudine(newHabit);
         	} else {
         		// modifica abitudine
@@ -348,6 +354,7 @@ public class HabitTrackerController {
         		if(isSessione) {
         			((ISessionHabit) abitudine).setDuration(durata);
         		}
+        		new Notification("Abitudine modificata.", NotificationType.SUCCESS).show();
         		this.visualizzaInfoAbitudine(abitudine);
         	} 
             aggiornaView();
@@ -356,6 +363,7 @@ public class HabitTrackerController {
     
     private void eliminaAbitudine(IHabit abitudine) {
         ht.removeHabit(abitudine.getId());
+        new Notification("Abitudine eliminata.", NotificationType.INFO).show();
         aggiornaView();
     }
     

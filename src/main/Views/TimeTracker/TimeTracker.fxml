@@ -138,7 +138,7 @@
                               <Insets top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#impostaTimer" style="-fx-background-color: #122C49;" text=" Settings" textFill="#58698d" visible="false">
+                              <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#impostaTimer" style="-fx-background-color: #122C49; -fx-cursor: hand;" text=" Settings" textFill="#58698d" visible="false">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -173,7 +173,7 @@
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="orarioText1" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;">
+                                    <TextField fx:id="orarioText1" prefHeight="30.0" prefWidth="39.0" promptText="hh" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -186,7 +186,7 @@
                                           <Insets left="3.0" right="3.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="orarioText2" prefHeight="50.0" prefWidth="34.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" />
+                                    <TextField fx:id="orarioText2" prefHeight="31.0" prefWidth="40.0" promptText="mm" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" />
                                     <Label text="Data:" textFill="#58698d">
                                        <HBox.margin>
                                           <Insets left="35.0" right="10.0" />

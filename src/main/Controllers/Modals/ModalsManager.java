@@ -1,17 +1,30 @@
 package main.Controllers.Modals;
 
 public class ModalsManager {
-	private static boolean isModalOpen = false;
+	private static ModalsManager instance = null;
 	
-	public static void apriModal() {
+	private boolean isModalOpen;
+	
+	private ModalsManager() {
+		this.isModalOpen = false;
+	}
+	
+	public static ModalsManager getInstance() {
+		if(instance == null) {
+			instance = new ModalsManager();
+		}
+		return instance;
+	}
+	
+	public void apriModal() {
 		isModalOpen = true;
 	}
 	
-	public static void chiudiModal() {
+	public void chiudiModal() {
 		isModalOpen = false;
 	}
 	
-	public static boolean isModalOpen() {
+	public boolean isModalOpen() {
 		return isModalOpen;
 	}
 }
