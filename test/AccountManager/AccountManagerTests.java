@@ -33,6 +33,8 @@ import main.Models.timetracker.interfaces.ITimeTracker;
  */
 class AccountManagerTests {	
 	
+	IApp app = null;
+	
 	private void accedi(IApp app) {
 		// accede all'account presente nel database
 		try {
@@ -44,7 +46,7 @@ class AccountManagerTests {
 
 	@Test
 	public void testAccesso() {
-		IApp app = new App();
+		app = new App();
 		
 		// prova ad accedere ad un account sbagliando email
 		assertThrows(WrongCredentialsException.class, () -> app.accedi("test@gmail.co", "pass123"));
@@ -64,7 +66,7 @@ class AccountManagerTests {
 	
 	@Test
 	public void testRegistrazione() {
-		IApp app = new App();
+		app = new App();
 		
 		// prova a creare un nuovo account, ma le due password non corrispondono
 		assertThrows(WrongCredentialsException.class, () -> app.registraAccount("Andre", "andre@gmail.com", "pass123", "pass124"));
@@ -93,7 +95,7 @@ class AccountManagerTests {
 	
 	@Test 
 	public void testEliminazione() {
-		IApp app = new App();
+		app = new App();
 		
 		// crea un nuovo account
 		try {
@@ -120,7 +122,7 @@ class AccountManagerTests {
 	 */
 	@Test
 	public void testLetturaTimeTracker() {
-		IApp app = new App();
+		app = new App();
 		ITimeTracker tt = app.getTT();
 		
 		// accede all'account presente nel database
@@ -144,7 +146,7 @@ class AccountManagerTests {
 		assertEquals(2022, a.getData().getYear());
 		assertEquals(7200, a.getDurata());
 		assertEquals(LocalTime.of(23, 1), a.getOraInizio());
-		assertEquals("idP1", a.getProgetto().getId());
+		assertEquals("idP2", a.getProgetto().getId());
 		assertEquals("idA1", a.getId());
 		
 	}
@@ -154,7 +156,7 @@ class AccountManagerTests {
 	 */
 	@Test
 	public void testLetturaObiettivi() {
-		IApp app = new App();
+		app = new App();
 		IGoalManager gm = app.getGM();
 		
 		// accede all'account presente nel database
@@ -189,7 +191,7 @@ class AccountManagerTests {
 	
 	@Test 
 	public void testLetturaAbitudini() {
-		IApp app = new App();
+		app = new App();
 		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
@@ -215,7 +217,7 @@ class AccountManagerTests {
 	
 	@Test
 	public void testLetturaStoricoAbitudini() {
-		IApp app = new App();
+		app = new App();
 		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
