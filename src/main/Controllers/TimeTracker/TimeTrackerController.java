@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
@@ -35,9 +37,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.PomodoroTimer;
 import main.Models.timetracker.classes.Progetto;
+import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.classes.TrackerEnum;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IPomodoroTimer;
@@ -159,14 +167,19 @@ public class TimeTrackerController implements ITrackable {
      * Cambia il progetto dell'attività corrente.
      */
     private void cambiaProgettoCorrente(IProgetto progetto) {
-    	
-    	// crea il label progetto
-    	Label label = TTHelper.creaLabelProgetto(progetto);
-        
-        // aggiunge il label alla view
-    	this.progetto = progetto;
-        this.boxProgetto.getChildren().clear(); 
-        this.boxProgetto.getChildren().add(label);
+    	this.boxProgetto.getChildren().clear(); 
+    	if(progetto != null) {
+        	// crea il label progetto
+        	Label label = TTHelper.creaLabelProgetto(progetto);
+        	
+            // aggiunge il label alla view
+        	this.progetto = progetto;
+            this.boxProgetto.getChildren().add(label);
+    	} else {
+    		HBox box = Helper.creaBtnAggiunta("Progetto");
+    		this.boxProgetto.getChildren().add(box);
+    		this.progetto = TimeTracker.progettoDefault;
+    	}
 
     }
     
@@ -232,6 +245,7 @@ public class TimeTrackerController implements ITrackable {
     private void eliminaProgetto(IProgetto progetto) {
     	tt.eliminaProgetto(progetto.getId());
     	new Notification("Progetto eliminato", NotificationType.INFO).show();
+    	chiudiMenuProgetti();
     	aggiornaView();
     }
     
@@ -358,9 +372,9 @@ public class TimeTrackerController implements ITrackable {
         EditorAttivitàController controller = fxmlLoader.getController();
         controller.setListaProgetti(tt.getProgetti());
         controller.setAttività(attività);
-        
+         
         // imposta il titolo del modal
-		modal.setTitolo("Nuovo progetto");
+		modal.setTitolo("Modifica attività");
 		modal.getButton(ButtonType.OK).setText("Crea");
         
     	// valida gli input
@@ -528,18 +542,41 @@ public class TimeTrackerController implements ITrackable {
         menuProgetti.setBottom(box2);
         
         // posiziona correttamente il menù
-		AnchorPane container = containerAttività;
+        final Stage stage = new Stage();
 		if(menuForm) {
-			container = menuProgettiFormContainer;
-			AnchorPane.setRightAnchor(menuProgetti, 0.0);
+			
+			// posiziona il menù nel form attività
+			AnchorPane container = menuProgettiFormContainer;
+			AnchorPane.setRightAnchor(menuProgetti, 14.0);
 			AnchorPane.setTopAnchor(menuProgetti, 0.0);
+			container.getChildren().add(menuProgetti);
 		} else {
-			menuProgetti.setLayoutX(t.getSceneX() - 280);
-	        menuProgetti.setLayoutY(t.getSceneY() - 270);
+			
+			// posiziona il menù in corrispondenza della rispettiva attività
+	    	stage.initStyle(StageStyle.TRANSPARENT);
+	    	stage.initModality(Modality.WINDOW_MODAL);
+	        Scene scene = new Scene(menuProgetti, 250, 320);
+	        scene.setFill(Color.TRANSPARENT);
+	        String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
+	        String css2 = this.getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm();
+	        scene.getStylesheets().addAll(css, css2);
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        stage.setAlwaysOnTop(true); 
+	        stage.setX(t.getScreenX());
+	        stage.setY(t.getScreenY());
+	        stage.show();
 		}
-		container.getChildren().add(menuProgetti);
         
-        
+        // aggiunge evento click al di fuori
+        menuProgetti.requestFocus(); 
+        menuProgetti.focusedProperty().addListener((prop, oldNode, newNode) -> {
+        	if(!menuProgetti.isHover()) {
+        		chiudiMenuProgetti();
+        		stage.close();
+        	}
+        });
+		
         // aggiunge event handler al pulsante di aggiunta
         box2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
@@ -551,15 +588,38 @@ public class TimeTrackerController implements ITrackable {
             }
         });
         
-        // aggiunge evento click al di fuori
-        menuProgetti.requestFocus();
-        menuProgetti.focusedProperty().addListener((prop, oldNode, newNode) -> {
-        	if(!menuProgetti.isHover()) {
-        		chiudiMenuProgetti();
-        	}
+        // aggiunge gli item al menù dropdown
+        BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("lista-progetti-elem");
+        Label label2 = new Label("Nessun progetto");
+        label2.getStyleClass().add("no-project-btn");
+        borderPane.setLeft(label2);
+        containerProgetti.getChildren().add(borderPane);
+        
+        // evento click pulsante no-project
+        borderPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                if(menuForm) {
+                	cambiaProgettoCorrente(null);
+                } else {
+                	
+                	// rimuove la durata dell'attività dal vecchio progetto
+                	IProgetto vecchioProgetto = a.getProgetto();
+                	vecchioProgetto.eliminaDurata(a);
+                	
+                	if(!(vecchioProgetto.getId().equals(TimeTracker.progettoDefault.getId()))) {
+                		new Notification("Attività modificata", NotificationType.SUCCESS).show();
+                	}
+                	
+                	// modifica il progetto
+                	a.setProgettoPadre(TimeTracker.progettoDefault);
+                	
+                }
+                aggiornaView();
+                chiudiMenuProgetti();
+            }
         });
         
-        // aggiunge gli item al menù dropdown
         for(int i = 0; i < tt.getProgetti().size(); i++) {
             if(i > 0) {
             	IProgetto p = tt.getProgetti().get(i);    	
@@ -610,7 +670,7 @@ public class TimeTrackerController implements ITrackable {
         BorderPane pane = new BorderPane();
         pane.getStyleClass().add("attivita");
         pane.setPadding(new Insets(0, 20, 0, 20));
-        pane.setMinHeight(60);
+        pane.setMinHeight(70);
         
         // crea la parte sinistra del BorderPane.
         BorderPane attivitàSinistra = new BorderPane();
@@ -630,7 +690,7 @@ public class TimeTrackerController implements ITrackable {
         pane.setLeft(attivitàSinistra);
         HBox btnProgetto = new HBox();
         btnProgetto.setAlignment(Pos.CENTER);
-        if(attività.getProgetto().getNome() != "Altro") {
+        if(!attività.getProgetto().getId().equals(TimeTracker.progettoDefault.getId())) {
         	Label label5 = TTHelper.creaLabelProgetto(attività.getProgetto());
         	btnProgetto.getChildren().add(label5);
         } else {
@@ -731,12 +791,12 @@ public class TimeTrackerController implements ITrackable {
     //--------------------------- METODI PUBBLICI --------------------------------
     public void setTimeTracker(ITimeTracker tt) {
     	this.tt = tt;
+    	this.progetto = TimeTracker.progettoDefault;
         this.creaCronologiaAttività(tt.getGiorniAttività(pagina));
     }
 	
 	@Override
 	public void timerTerminato(long tempo) {
-		new Notification("Sessione terminata", NotificationType.SUCCESS).show();
 		new Notification("Attività aggiunta", NotificationType.SUCCESS).show();
 		aggiornaView();
 	}
@@ -852,10 +912,9 @@ public class TimeTrackerController implements ITrackable {
     	
     	// resetta view durata
     	oreLabel.setText("00");
-    	minutiLabel.setText("00");
+    	minutiLabel.setText("00"); 
     	secondiLabel.setText("00");
     	
-    	new Notification("Timer terminato", NotificationType.SUCCESS).show();
     	new Notification("Attività aggiunta", NotificationType.SUCCESS).show();
     }
     

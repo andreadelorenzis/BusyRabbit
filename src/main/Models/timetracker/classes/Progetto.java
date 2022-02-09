@@ -86,7 +86,10 @@ public class Progetto implements IProgetto {
 		int anno = a.getData().getYear();
 	
 		AnnoProgetto aProgetto = anniProgetto.get(anno);
-		aProgetto.eliminaDurata(a);
+		if(aProgetto != null) {
+			aProgetto.eliminaDurata(a);
+		}
+		
 	}
 
 	@Override

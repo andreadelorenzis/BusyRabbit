@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="378.0" prefWidth="636.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorAttivitàController">
    <children>
       <AnchorPane layoutX="1.0" prefHeight="378.0" prefWidth="636.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -22,6 +21,11 @@
                <top>
                   <VBox alignment="CENTER_LEFT" prefHeight="354.0" prefWidth="676.0" BorderPane.alignment="CENTER">
                      <children>
+                        <Label text="Informazioni attività" textFill="#bac4ca">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
                         <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="374.0">
                            <children>
                               <Label text="Nome:" textFill="#bac4ca">
@@ -29,7 +33,7 @@
                                     <Insets right="18.0" />
                                  </HBox.margin>
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="14.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="nameField" prefHeight="31.0" prefWidth="288.0" promptText="Inserisci nome attività" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
@@ -49,7 +53,7 @@
                            <children>
                               <Label text="Progetto:" textFill="#bac4ca">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="14.0" />
                                  </font>
                               </Label>
                               <HBox fx:id="btnProgetto" alignment="CENTER_LEFT" onMouseClicked="#toggleMenuProgetti" prefHeight="36.0" prefWidth="86.0">
@@ -77,7 +81,7 @@
                            <children>
                               <Label text="Data" textFill="#bac4ca">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="14.0" />
                                  </font>
                               </Label>
                               <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="201.0" promptText="gg/mm/aaaa">
@@ -94,7 +98,7 @@
                            <children>
                               <Label text="Ora" textFill="#bac4ca">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="14.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="oraField1" prefHeight="30.0" prefWidth="35.0" promptText="h" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">
@@ -127,7 +131,7 @@
                            <children>
                               <Label text="Durata" textFill="#bac4ca">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="14.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="durataField1" prefHeight="30.0" prefWidth="35.0" promptText="h" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">

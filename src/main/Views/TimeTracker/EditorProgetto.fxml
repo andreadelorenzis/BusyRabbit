@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="284.0" prefWidth="438.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorProgettoController">
    <children>
       <BorderPane layoutX="25.0" layoutY="31.0" prefHeight="144.0" prefWidth="354.0">
@@ -27,7 +26,13 @@
                   <Label textFill="WHITE" />
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label text="Nome:" textFill="WHITE" />
+                        <Label text="Nome:" textFill="#bac4ca">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Label>
                         <TextField fx:id="nameField" prefHeight="26.0" prefWidth="174.0" promptText="Inserisci nome progetto" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
@@ -40,7 +45,13 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label text="Colore" textFill="WHITE" />
+                        <Label text="Colore" textFill="#bac4ca">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Label>
                         <ChoiceBox fx:id="colorChoice" prefWidth="150.0" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;">
                            <HBox.margin>
                               <Insets left="10.0" />
@@ -48,7 +59,7 @@
                         </ChoiceBox>
                      </children>
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
                   </HBox>
                </children>
@@ -58,5 +69,10 @@
             </VBox>
          </center>
       </BorderPane>
+      <Label layoutX="25.0" layoutY="35.0" text="Informazioni progetto" textFill="#bac4ca">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

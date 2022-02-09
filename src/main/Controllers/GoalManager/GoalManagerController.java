@@ -68,10 +68,12 @@ import main.Models.goalmanager.classes.Obiettivo;
 import main.Models.goalmanager.classes.ObiettivoAzione;
 import main.Models.goalmanager.classes.ObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.IAzione;
+import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
+import main.Models.goalmanager.interfaces.Item;
 
 
 public class GoalManagerController {
@@ -838,6 +840,13 @@ public class GoalManagerController {
     	new Notification("Azione eliminata.", NotificationType.INFO).show();  	
     }
     
+    private CheckBox creaCheckbox(String s, boolean completata) {
+        CheckBox check = new CheckBox();
+        check.setText(s);
+        check.setSelected(completata);
+        return check;
+    }
+    
     /**
      * Crea la view di una singola azione.
      */
@@ -845,26 +854,61 @@ public class GoalManagerController {
     	
     	// crea il container
         BorderPane pane = new BorderPane();
-        pane.getStyleClass().add("azione");
+        pane.getStyleClass().add("azione"); 
         
         if(todo) {
-        	// crea checkbox
-            CheckBox check = new CheckBox();
-            check.setText(azione.getNome());
-            check.setSelected(azione.getCompletata());
-            check.getStyleClass().add("nome");
-            pane.setLeft(check);
-            
-            // collega evento click checkbox
-            check.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent t) {
-                	t.consume();
-                    completaAzione(azione);
-                    if(azione.getCompletata()) {
-                    	new Notification("Azione completata.", NotificationType.SUCCESS).show();
+        	VBox container = new VBox();
+        	pane.setLeft(container);
+        	
+        	if(azione instanceof AzioneScomponibile) {
+        		IAzioneScomponibile as = (IAzioneScomponibile) azione;
+        		
+        		// crea checkbox
+                CheckBox azioneCheck = creaCheckbox(azione.getNome(), azione.getCompletata());
+                azioneCheck.getStyleClass().add("nome");
+                container.getChildren().add(azioneCheck);
+                
+                // collega evento click checkbox azione
+                azioneCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent t) {
+                    	t.consume();
+                        completaAzione(azione);
+                        if(azione.getCompletata()) {
+                        	new Notification("Azione completata.", NotificationType.SUCCESS).show();
+                        }
                     }
+                });
+                
+                // aggiunge gli item dell'azione scomponibile
+                if(as.getItems().size() > 0) {
+                	VBox itemContainer = new VBox();
+                	container.getChildren().add(itemContainer);
+                	HBox hBox = Helper.creaBtnAggiunta("Item");
+                	itemContainer.getChildren().add(hBox); 
+                	for(Item item : as.getItems()) {
+                		CheckBox itemCheck = creaCheckbox(item.getNome(), item.getCompletato());
+                		itemContainer.getChildren().add(itemCheck);
+                		
+                        // collega evento click checkbox azione
+                        azioneCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                            public void handle(ActionEvent t) {
+                            	t.consume();
+                                item.completa();
+                                itemCheck.setSelected(true);
+                            }
+                        });
+                        
+                        // collega evento aggiunta item
+                        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                            public void handle(MouseEvent t) {
+                            	System.out.println("Aggiunta item");
+                            }
+                        });
+                	}
                 }
-            });
+        	} else if(azione instanceof AzioneSessione) {
+        		
+        	}
         } else {
         	pane.setLeft(Helper.creaElementoLista(azione.getNome()));
         }

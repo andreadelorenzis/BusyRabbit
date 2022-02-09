@@ -24,7 +24,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	/*
 	 * Progetto di default in cui vanno le attività senza progetto
 	 */
-	public static IProgetto progettoDefault;
+	public final static IProgetto progettoDefault = new Progetto("Altro", Colori.Grigio);
 	
 	/*
 	 * Lista di progetti
@@ -70,7 +70,6 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	
     //---------------------------- COSTRUTTORI -------------------------------
 	private TimeTracker() {
-		progettoDefault = new Progetto("Altro", Colori.Grigio);
 		progetti.add(progettoDefault);
 		cronometro = new Cronometro();
 		pomodoroTimer = new PomodoroTimer();

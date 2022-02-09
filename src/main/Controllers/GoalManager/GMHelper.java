@@ -46,14 +46,17 @@ public class GMHelper {
             public void handle(MouseEvent t) {
             	t.consume();
             	double rotation = arrow.getRotate();
-                if(rotation == 0) {
+                if(rotation == 0) { 
                 	arrow.setRotate(180);
                 } else {
                 	arrow.setRotate(0);
                 }
             }
         };
-        box.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+        if(box != null) {
+        	box.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+        }
+        
         hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
         
         return hBox;

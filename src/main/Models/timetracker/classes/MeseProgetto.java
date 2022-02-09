@@ -48,11 +48,14 @@ public class MeseProgetto {
 	
 	public void eliminaDurata(IAttività a) {
 		int giorno = a.getData().getDayOfMonth();
-		tempiMese.put(giorno, tempiMese.get(giorno) - a.getDurata());
 		
-		// rimuove il giorno se la durata è uguale a zero
-		if(tempiMese.get(giorno) == 0) {
-			tempiMese.remove(giorno);
+		if(tempiMese.containsKey(giorno)) {
+			tempiMese.put(giorno, tempiMese.get(giorno) - a.getDurata());
+			
+			// rimuove il giorno se la durata è uguale a zero
+			if(tempiMese.get(giorno) == 0) {
+				tempiMese.remove(giorno);
+			}
 		}
 	}
 	

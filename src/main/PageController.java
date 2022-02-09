@@ -38,7 +38,7 @@ public class PageController {
     
     @FXML
     private TextField emailLogField;
-    @FXML
+    @FXML 
     private TextField passLogField;
     @FXML
     private TextField emailRegField;

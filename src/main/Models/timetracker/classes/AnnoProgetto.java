@@ -50,15 +50,20 @@ public class AnnoProgetto {
 	
 	public void eliminaDurata(IAttività a) {
 		int mese = a.getData().getMonth().getValue();
-		tempiAnno.put(mese, tempiAnno.get(mese) - a.getDurata());
-		
-		// rimuove il mese se la durata è uguale a zero
-		if(tempiAnno.get(mese) == 0) {
-			tempiAnno.remove(mese);
+		if(tempiAnno.containsKey(mese)) {
+			tempiAnno.put(mese, tempiAnno.get(mese) - a.getDurata());
+			
+			// rimuove il mese se la durata è uguale a zero
+			if(tempiAnno.get(mese) == 0) {
+				tempiAnno.remove(mese);
+			}
 		}
 		
 		// rimuove la durata dal MeseProgetto
-		mesiProgetto.get(mese).eliminaDurata(a);
+		if(mesiProgetto.containsKey(mese)) {
+			mesiProgetto.get(mese).eliminaDurata(a);
+		}
+		
 	}
 	
 	public Map<Integer, MeseProgetto> getMesiProgetto() {

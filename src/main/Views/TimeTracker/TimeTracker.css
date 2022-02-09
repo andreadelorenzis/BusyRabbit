@@ -9,6 +9,12 @@
 	-fx-cursor: hand;
 }
 
+.no-project-btn {
+	-fx-text-fill: #BAC4CA;
+	-fx-font-size: 14;
+	-fx-padding: 10 10 10 10;
+}
+
 .container-giorno {
 	-fx-border-radius: 14;
 	-fx-background-radius: 12;

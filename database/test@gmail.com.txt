@@ -1,10 +1,10 @@
 password,pass123
 ---progetti---
-PMO,Blu,d7ef6cc1-0a48-4ca2-8bc5-9fa554a12635
-Esercizi,Giallo,74b74581-091a-45a2-9a4b-472e9e405839
+PMO,Blu,idP1
+Analisi,Giallo,idP2
 ---attivita---
-Studiare analisi,25,5,2022,23,17,7200,74b74581-091a-45a2-9a4b-472e9e405839,74b74581-091a-45a2-9a4b-472e9e4058
-Studiare teoria PMO,29,1,2022,12,45,7200,d7ef6cc1-0a48-4ca2-8bc5-9fa554a12635,d7ef6cc1-0a48-4ca2-8bc5-9fa554a1
+Studiare analisi,25,5,2022,23,17,7200,idP2,idA1
+Studiare teoria,29,1,2022,12,45,7200,idP1,idA2
 ---obiettivi---
 obiettivo-azione,false,sdfs,sdfsdf,14,1,2022,3,sdfsdf,6b1fc359-09c6-4999-9ae3-1f33fb94b7a8
 azione-scomponibile,6b1fc359-09c6-4999-9ae3-1f33fb94b7a8,action,1,1,2,2022,,b6a96b7b-872a-4dc8-9623-11acddbbe70b

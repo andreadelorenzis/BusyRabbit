@@ -17,7 +17,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="panePrincipale" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.TimeTrackerController">
    <children>
-      <BorderPane fx:id="formTracker" layoutX="50.0" layoutY="63.0" prefHeight="131.0" prefWidth="758.0" style="-fx-background-color: #0E1726;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="63.0">
+      <BorderPane fx:id="formTracker" layoutX="66.0" layoutY="63.0" prefHeight="132.0" prefWidth="846.0" style="-fx-background-color: #0E1726;" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="63.0">
          <top>
             <BorderPane prefHeight="45.0" prefWidth="532.0" style="-fx-background-color: #1B2E4B; -fx-background-radius: 10; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
                <left>
@@ -240,7 +240,7 @@
             </StackPane>
          </bottom>
       </BorderPane>
-      <Label layoutX="50.0" layoutY="210.0" text="Cronologia Attività" textFill="#374667" AnchorPane.leftAnchor="50.0">
+      <Label layoutX="50.0" layoutY="210.0" text="Cronologia Attività" textFill="#374667" AnchorPane.leftAnchor="65.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -249,10 +249,13 @@
          <children>
             <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" prefHeight="462.0" prefWidth="758.0" style="-fx-background-color: #122C49;" styleClass="edge-to-edge" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <AnchorPane fx:id="containerAttività" style="-fx-background-color: #333333;">
+                  <AnchorPane fx:id="containerAttività" style="-fx-background-color: #060818;">
                      <children>
                         <VBox fx:id="listaGiorniAttività" prefHeight="462.0" prefWidth="860.0" style="-fx-background-color: #060818;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
+                     <padding>
+                        <Insets left="15.0" right="15.0" />
+                     </padding>
                   </AnchorPane>
                </content>
             </ScrollPane>
