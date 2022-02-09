@@ -16,14 +16,18 @@
          <top>
             <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="600.0" style="-fx-background-color: #1A1C2D;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="20.0" fitWidth="20.0">
-                     <image>
-                        <Image url="@/main/risorse/menu.png" />
-                     </image>
+                  <HBox alignment="CENTER" onMouseClicked="#toggleSidebar" prefHeight="46.0" prefWidth="29.0" style="-fx-cursor: hand;">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
-                  </ImageView>
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                           <image>
+                              <Image url="@/main/risorse/menu.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                   <ImageView fitHeight="40.0" fitWidth="40.0">
                      <image>
                         <Image url="@/main/risorse/logo.png" />
@@ -44,7 +48,7 @@
             </HBox>
          </top>
          <left>
-            <VBox prefHeight="539.0" prefWidth="209.0" style="-fx-border-color: #2B305B; -fx-background-color: #060818;" BorderPane.alignment="CENTER">
+            <VBox fx:id="sidebar" prefHeight="539.0" prefWidth="209.0" style="-fx-border-color: #2B305B; -fx-background-color: #060818;" BorderPane.alignment="CENTER">
                <children>
                   <Label style="-fx-text-fill: #374667;" text="Strumenti" textFill="WHITE">
                      <font>
@@ -54,7 +58,7 @@
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox fx:id="timeHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaTimeTracker" prefHeight="42.0" prefWidth="130.0" style="-fx-border-radius: 12; -fx-background-color: #374856; -fx-border-style: solid; -fx-border-color: #060818; -fx-background-radius: 12;">
+                  <HBox fx:id="timeHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaTimeTracker" prefHeight="42.0" prefWidth="130.0" style="-fx-border-radius: 12; -fx-background-color: #374856; -fx-border-style: solid; -fx-border-color: #060818; -fx-background-radius: 12; -fx-cursor: hand;" styleClass="timetracker-btn">
                      <children>
                         <ImageView fx:id="timeImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -80,7 +84,7 @@
                         <Insets />
                      </opaqueInsets>
                   </HBox>
-                  <HBox fx:id="goalHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaGoalManager" prefHeight="42.0" prefWidth="153.0">
+                  <HBox fx:id="goalHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaGoalManager" prefHeight="42.0" prefWidth="153.0" style="-fx-cursor: hand;" styleClass="goalmanager-btn">
                      <children>
                         <ImageView fx:id="goalImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -100,7 +104,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox fx:id="habitHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaHabitTracker" prefHeight="42.0" prefWidth="153.0">
+                  <HBox fx:id="habitHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaHabitTracker" prefHeight="42.0" prefWidth="153.0" style="-fx-cursor: hand;">
                      <children>
                         <ImageView fx:id="habitImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -128,7 +132,7 @@
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox fx:id="dashboardHBox" alignment="CENTER_LEFT" onMouseClicked="#toggleMenuDashboard" prefHeight="42.0" prefWidth="153.0">
+                  <HBox fx:id="dashboardHBox" alignment="CENTER_LEFT" onMouseClicked="#toggleMenuDashboard" prefHeight="42.0" prefWidth="153.0" style="-fx-cursor: hand;">
                      <children>
                         <ImageView fx:id="dashboardImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -172,7 +176,7 @@
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox fx:id="impostazioniHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaImpostazioni" prefHeight="42.0" prefWidth="153.0">
+                  <HBox fx:id="impostazioniHBox" alignment="CENTER_LEFT" onMouseClicked="#apriPaginaImpostazioni" prefHeight="42.0" prefWidth="153.0" style="-fx-cursor: hand;">
                      <children>
                         <ImageView fx:id="impostazioniImg" fitHeight="20.0" fitWidth="20.0">
                            <image>

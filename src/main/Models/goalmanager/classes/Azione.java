@@ -16,7 +16,7 @@ public abstract class Azione implements IAzione {
      * Nome dell'azione
      */
     private String nome;
-    
+
     /**
      * Se l'azione è completata o meno
      */

@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import main.Controllers.AppController;
@@ -122,9 +123,10 @@ public class PageController {
         	FXMLLoader loader = new FXMLLoader();
         	URL fileUrl = Main.class.getResource("/main/Views/App.fxml");
         	loader.setLocation(fileUrl);
-        	Parent root = loader.load();
+        	Pane root = loader.load();
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            root.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
             
             AnchorPane pane = (AnchorPane) root;
             appContainer = pane;

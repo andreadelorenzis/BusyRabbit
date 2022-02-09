@@ -2,6 +2,9 @@ package main.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
+
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import main.Controllers.Dashboard.ReportAbitudiniController;
 import main.Controllers.Dashboard.ReportTempoController;
 import main.Controllers.GoalManager.GoalManagerController;
@@ -53,6 +57,16 @@ public class AppController {
     private VBox dashboardBtns;
     @FXML
     private ImageView dashboardArrow;
+    @FXML
+    private HBox impostazioniHBox;
+    @FXML
+    private Label impostazioniLabel;
+    @FXML
+    private ImageView impostazioniImg;               
+    @FXML
+    private BorderPane panePrincipale;
+    @FXML
+    private VBox sidebar;
     
     private HBox timeReportBox = new HBox();
     private Label timeReportLabel = new Label("Report Tempo");
@@ -61,17 +75,7 @@ public class AppController {
     private Label abitudiniReportLabel = new Label("Report Abitudini");
     
     private boolean dashboardMenuAperto = false;
-    
-    @FXML
-    private HBox impostazioniHBox;
-    @FXML
-    private Label impostazioniLabel;
-    @FXML
-    private ImageView impostazioniImg;
-                    
-    @FXML
-    private BorderPane panePrincipale;
-    
+    private boolean sidebarAperta = true;
     private IApp app;
     
     @FXML 
@@ -156,6 +160,17 @@ public class AppController {
                 + "-fx-background-radius:12;");
         label.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
         imageView.setImage(new Image(getClass().getResource("/main/risorse/" + imgFile + ".png").toString()));
+    }
+    
+    @FXML
+    private void toggleSidebar() {
+    	if(sidebarAperta) {
+    		sidebarAperta = false;
+        	panePrincipale.setLeft(null);
+    	} else {
+    		sidebarAperta = true;
+        	panePrincipale.setLeft(sidebar);
+    	}
     }
     
     @FXML

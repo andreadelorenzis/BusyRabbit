@@ -13,13 +13,21 @@ import main.Models.goalmanager.interfaces.IObiettivoAzione;
 
 public class GoalManager implements IGoalManager {
     // CAMPI
+    private static GoalManager goalManager = null;
     
     private List<IObiettivo> obiettivi = new ArrayList<>();
     
     // COSTRUTTORI
-    public GoalManager() {
+    private GoalManager() {
         
     };
+    
+    public static GoalManager getInstance() {
+    	if(goalManager == null) {
+    		goalManager = new GoalManager();
+    	}
+    	return goalManager;
+    }
     
     @Override
     public void aggiungiObiettivo(IObiettivo obiettivo) {

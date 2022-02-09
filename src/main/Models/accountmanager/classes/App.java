@@ -16,7 +16,7 @@ import main.Models.timetracker.interfaces.ITimeTracker;
 
 public class App implements IApp {
 	private ITimeTracker tt = new TimeTracker();
-	private IGoalManager gm = new GoalManager();
+	private IGoalManager gm = GoalManager.getInstance();
 	private IHabitTracker ht = new HabitTracker();
 	private String email = "";
 	private String password = "";

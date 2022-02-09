@@ -11,6 +11,8 @@ import java.util.List;
  * obiettivi "scomponibili" e sia obiettivi "azione".
  */
 public interface IObiettivoScomponibile extends IObiettivo {
+	
+	public void completaSottoObiettivi();
     
     /**
      * Aggiunge un sotto-obiettivo al seguente obiettivo scomponibile. 

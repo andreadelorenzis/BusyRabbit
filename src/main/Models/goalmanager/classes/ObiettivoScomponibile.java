@@ -48,9 +48,9 @@ public class ObiettivoScomponibile extends Obiettivo implements IObiettivoScompo
 
 
     //--------------------------- METODI PUBBLICI ------------------------------
+    
     @Override
-    public void completa() {
-        super.completa();
+    public void completaSottoObiettivi() {
         boolean sottoObCompletato;
         if(this.getCompletato()) {
         	sottoObCompletato = true;

@@ -82,6 +82,8 @@ public abstract class Obiettivo implements IObiettivo {
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
     public abstract double calcolaProgresso();
+    
+    public abstract void verificaCompletamento();
 
     @Override
     public void completa() {
@@ -90,6 +92,9 @@ public abstract class Obiettivo implements IObiettivo {
         }
         if(obiettivoPadre != null) {
         	obiettivoPadre.verificaCompletamento();
+        }
+        if(this instanceof ObiettivoScomponibile) {
+        	((ObiettivoScomponibile) this).completaSottoObiettivi();
         }
     }
 
