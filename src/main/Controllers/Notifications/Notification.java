@@ -10,20 +10,25 @@ import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import main.Main;
 
 public class Notification {
 	
@@ -82,26 +87,32 @@ public class Notification {
         AnchorPane.setRightAnchor(container, 0.0);
         AnchorPane.setLeftAnchor(container, 0.0);
         Label label = new Label(messaggio);
-        Label label2 = new Label("CLOSE");
         label.getStyleClass().add("notification-label");
-        label2.getStyleClass().add("notification-close-btn");
+        HBox imgContainer = new HBox();
+        ImageView closeImg = new ImageView();
+        imgContainer.getChildren().add(closeImg);
+        closeImg.setFitHeight(18);
+        closeImg.setFitWidth(18);
+        imgContainer.getStyleClass().add("notification-close-img");
+        imgContainer.setPadding(new Insets(0, 20, 0, 0));
+        imgContainer.setAlignment(Pos.CENTER);
         container.setCenter(label);
-        container.setRight(label2);
-        BorderPane.setAlignment(label2, Pos.CENTER);
+        container.setRight(imgContainer);
+        BorderPane.setAlignment(imgContainer, Pos.CENTER);
         
         // cambia il colore in base al tipo della notifica
         if(tipo == NotificationType.ERROR) {
         	pane.setStyle("-fx-background-color: #A93C3A;");
         	label.setTextFill(Color.web("#E9817F"));
-        	label2.setTextFill(Color.web("#E9817F"));
+        	closeImg.setImage(new Image(Main.class.getResource("/main/risorse/close-red.png").toString()));
         } else if(tipo == NotificationType.SUCCESS) {
         	pane.setStyle("-fx-background-color: #33726A;");
         	label.setTextFill(Color.web("#65E1D2"));
-        	label2.setTextFill(Color.web("#65E1D2"));
+        	closeImg.setImage(new Image(Main.class.getResource("/main/risorse/close-green.png").toString()));
         } else if(tipo == NotificationType.INFO) {
         	pane.setStyle("-fx-background-color: #866E2A;");
         	label.setTextFill(Color.web("#EACC7B"));
-        	label2.setTextFill(Color.web("#EACC7B"));
+        	closeImg.setImage(new Image(Main.class.getResource("/main/risorse/close-yellow.png").toString()));
         }
         
         // crea un nuovo stage
@@ -129,7 +140,7 @@ public class Notification {
     	timer.setRepeats(false);
     	
         // collega evento chiusura notifica
-        label2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+    	imgContainer.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
             	close(stage);

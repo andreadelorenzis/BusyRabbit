@@ -215,18 +215,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 	-fx-background-color: #A93C3A;
 }
 
-.notification-box {
-
-}
-
-.notification-label,
-.notification-close-btn {
+.notification-label {
 	-fx-font-size: 16;
 	-fx-font-weight: 800;
 }
 
-.notification-close-btn {
-	-fx-padding: 0 20 0 0;
+.notification-close-img {
 	-fx-cursor: hand;
 }
 
