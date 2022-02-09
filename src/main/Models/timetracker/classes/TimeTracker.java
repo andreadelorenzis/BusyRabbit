@@ -66,13 +66,22 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	 */
 	private int nGiorni = 0;
 	
+	private static TimeTracker timeTracker = null;
+	
     //---------------------------- COSTRUTTORI -------------------------------
-	public TimeTracker() {
+	private TimeTracker() {
 		progettoDefault = new Progetto("Altro", Colori.Grigio);
 		progetti.add(progettoDefault);
 		cronometro = new Cronometro();
 		pomodoroTimer = new PomodoroTimer();
 		tracker = cronometro;
+	}
+	
+	public static TimeTracker getInstance() {
+		if(timeTracker == null) {
+			timeTracker = new TimeTracker();
+		}
+		return timeTracker;
 	}
 
     //--------------------------- METODI PRIVATI -----------------------------

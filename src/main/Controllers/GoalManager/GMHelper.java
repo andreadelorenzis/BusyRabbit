@@ -59,20 +59,4 @@ public class GMHelper {
         return hBox;
 	}
 	
-    /**
-     * 
-     * @param data la data da comparare
-     * @param giorni la lista di giorni
-     * @return se il giorno della data è presente nella lista di giorni
-     */
-    public static boolean giornoPresente(LocalDate data, List<Giorno> giorni) {
-        boolean presente = false;
-        for(Giorno giorno : giorni) {
-            if(data.getDayOfWeek().toString().equals(giorno.toString())) {
-                presente = true;
-            }
-        }
-        return presente;
-    }
-	
 }

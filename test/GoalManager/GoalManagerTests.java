@@ -1,14 +1,13 @@
 package GoalManager;
 
 import static org.junit.Assert.*;
-
+import org.junit.Before;
+import org.junit.Test;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Test;
-
 import main.Giorno;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
@@ -72,12 +71,22 @@ public class GoalManagerTests {
                                                          7200));
     }
     
+    @Before
+    public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+    	Field instance = GoalManager.class.getDeclaredField("goalManager");
+    	instance.setAccessible(true);
+    	instance.set(instance, null);
+    }
+    
     /**
      * Verifica la presenza degli obiettivi
+     * @throws SecurityException 
+     * @throws NoSuchFieldException 
      */
     @Test
-    public void testObiettivi() {
-        g = new GoalManager();
+    public void testObiettivi() throws NoSuchFieldException, SecurityException {
+    	g = GoalManager.getInstance();
+        
         // non ci sono obiettivi nel goal manager
         assertTrue(g.getObiettivi().isEmpty());
         inizializzaGoalManager(g);
@@ -94,7 +103,7 @@ public class GoalManagerTests {
      */
     @Test
     public void testSottoObiettivi() {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiSottoObiettivi(g);
         IObiettivoScomponibile obiettivoScomp = (IObiettivoScomponibile) g.getObiettivi().get(0);
@@ -126,7 +135,7 @@ public class GoalManagerTests {
      */
     @Test
     public void testScadenzaObiettivi() {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         
         // calcolo quali obiettivi sono scaduti alla data del 3 Febbraio 2022
@@ -144,7 +153,7 @@ public class GoalManagerTests {
      */
     @Test
     public void testAzioni() {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
@@ -173,7 +182,7 @@ public class GoalManagerTests {
      */
     @Test
     public void testPresenzaAzioniGiornaliere() {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         
@@ -190,7 +199,7 @@ public class GoalManagerTests {
      */
     @Test
     public void testCompletamentoObiettivoAzione() {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
@@ -208,7 +217,7 @@ public class GoalManagerTests {
     // Verifica l'aggiunta ed il completamento di Item in un'AzioneScomponibile
     @Test 
     public void testAzioneScomponibile() {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
@@ -236,7 +245,7 @@ public class GoalManagerTests {
     // Verifica il completamento di un'AzioneSessione
     @Test
     public void testAzioneSessione() throws InterruptedException {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
@@ -268,7 +277,7 @@ public class GoalManagerTests {
      */
     @Test
     public void testEliminazione() {
-    	g = new GoalManager();
+    	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         aggiungiSottoObiettivi(g);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import main.Giorno;
 import main.Controllers.GoalManager.GMHelper;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
@@ -110,7 +111,7 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
         this.azioni.stream()
         	  .forEach(az -> {
         		  if((az.getDataInizio().isBefore(data) || az.getDataInizio().isEqual(data)) 
-        			 && GMHelper.giornoPresente(data, az.getGiorniRipetizione()) 
+        			 && GoalManager.giornoPresente(data, az.getGiorniRipetizione()) 
         			 && !super.getCompletato()) {
         			  azioni.add(az);
         		  }

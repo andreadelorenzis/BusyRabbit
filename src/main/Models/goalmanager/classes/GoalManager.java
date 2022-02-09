@@ -22,6 +22,22 @@ public class GoalManager implements IGoalManager {
         
     };
     
+    /**
+     * 
+     * @param data la data da comparare
+     * @param giorni la lista di giorni
+     * @return se il giorno della data è presente nella lista di giorni
+     */
+    public static boolean giornoPresente(LocalDate data, List<Giorno> giorni) {
+        boolean presente = false;
+        for(Giorno giorno : giorni) {
+            if(data.getDayOfWeek().toString().equals(giorno.toString())) {
+                presente = true;
+            }
+        }
+        return presente;
+    }
+    
     public static GoalManager getInstance() {
     	if(goalManager == null) {
     		goalManager = new GoalManager();
@@ -60,7 +76,7 @@ public class GoalManager implements IGoalManager {
                         obAzione.getAzioni().stream()
                                             .forEach(azione -> {
                                                if((azione.getDataInizio().isBefore(data) || azione.getDataInizio().isEqual(data))
-                                                  && GMHelper.giornoPresente(data, azione.getGiorniRipetizione())
+                                                  && giornoPresente(data, azione.getGiorniRipetizione())
                                                   && !ob.getCompletato()) {
                                                    azioni.add(azione);
                                                } 

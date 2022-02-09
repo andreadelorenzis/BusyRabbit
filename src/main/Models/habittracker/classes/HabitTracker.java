@@ -14,13 +14,24 @@ import main.Models.habittracker.interfaces.IHabitTracker;
 
 public class HabitTracker implements IHabitTracker {
 
-    //------------------------------- CAMPI ----------------------------------
 	/*
 	 * List of all habits
 	 */
 	private List<IHabit> habits = new ArrayList<>();
 	
-    //---------------------------- METODI PUBBLICI -----------------------------
+	private static HabitTracker habitTracker = null;
+	
+	private HabitTracker() {
+		
+	}
+	
+	public static HabitTracker getInstance() {
+		if(habitTracker == null) {
+			habitTracker = new HabitTracker();
+		}
+		return habitTracker;
+	}
+	
 	@Override
 	public void addHabit(IHabit habit) {
 		habits.add(habit);

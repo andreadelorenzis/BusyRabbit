@@ -15,9 +15,9 @@ import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
 public class App implements IApp {
-	private ITimeTracker tt = new TimeTracker();
+	private ITimeTracker tt = TimeTracker.getInstance();
 	private IGoalManager gm = GoalManager.getInstance();
-	private IHabitTracker ht = new HabitTracker();
+	private IHabitTracker ht = HabitTracker.getInstance();
 	private String email = "";
 	private String password = "";
 	private boolean accessoEffettuato = false;

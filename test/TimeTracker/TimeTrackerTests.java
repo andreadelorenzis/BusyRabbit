@@ -1,17 +1,21 @@
 package TimeTracker;
 
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-
 import main.Colori;
+import main.Models.goalmanager.classes.GoalManager;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.classes.TimeTracker;
@@ -72,13 +76,20 @@ public class TimeTrackerTests {
 		}
 	};
 	
+    @Before
+    public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InstantiationException, InvocationTargetException {
+    	Field instance = TimeTracker.class.getDeclaredField("timeTracker");
+    	instance.setAccessible(true);
+    	instance.set(instance, null);
+    }
+	
 	/**
 	 * Verifica l'aggiunta di attività e progetti
 	 */
 	@Order(1)
 	@Test
 	public void testAttivita() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		inizializza(t);
 		
 		// ci sono 4 attività
@@ -118,7 +129,7 @@ public class TimeTrackerTests {
 	@Test
 	@Order(2)
 	public void testProgetto() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		inizializza(t);
 		IProgetto p = t.getProgetti().get(1);
 		
@@ -157,7 +168,7 @@ public class TimeTrackerTests {
 	@Test
 	@Order(3)
 	public void testEliminazioneProgetti() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		inizializza(t);
 		
 		// il time tracker contiene 2 progetti
@@ -179,7 +190,7 @@ public class TimeTrackerTests {
 	@Test 
 	@Order(4)
 	public void testEliminazioneAttività() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		inizializza(t);
 		
 		// ci sono 4 giorni di attività
@@ -224,7 +235,7 @@ public class TimeTrackerTests {
 	@Test
 	@Order(5)
 	public void verificaPaginazione() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		aggiungiAttività(t);
 		
 		// ottengo la prima pagina con i primi 10 giorni di attività
@@ -254,7 +265,7 @@ public class TimeTrackerTests {
 	@Test
 	@Order(6)
 	public void verificaPomodoro1() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		t.scegliTracker(TrackerEnum.POMODOROTIMER);
 		
 		// il timer di default ha
@@ -298,7 +309,7 @@ public class TimeTrackerTests {
 	@Test
 	@Order(7)
 	public void verificaPomodoro2() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		t.scegliTracker(TrackerEnum.POMODOROTIMER);
 		IPomodoroTimer tracker = (IPomodoroTimer) t.getTracker();
 		
@@ -378,7 +389,7 @@ public class TimeTrackerTests {
 	@Test 
 	@Order(8)
 	public void verificaCronometro() {
-		t = new TimeTracker();
+		t = TimeTracker.getInstance();
 		t.scegliTracker(TrackerEnum.CRONOMETRO);
 		ICronometro c = (ICronometro) t.getTracker();
 		
