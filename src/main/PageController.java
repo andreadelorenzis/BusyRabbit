@@ -17,6 +17,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import main.Controllers.AppController;
+import main.Controllers.Notifications.Notification;
+import main.Controllers.Notifications.NotificationType;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IApp;
@@ -61,7 +63,7 @@ public class PageController {
 				app.accedi("newemail@gmail.com", "pass123");
 				apriSchermataPrincipale(event);
 			} catch (WrongCredentialsException e) {
-				e.printStackTrace();
+				new Notification("Email o password incorrette.", NotificationType.ERROR).show();
 			}
     	}
     }
@@ -77,7 +79,11 @@ public class PageController {
 				app.registraAccount(nome, email, password, confirmation);
 				apriSchermataPrincipale(event);
 			} catch (WrongCredentialsException | ExistingAccountException e) {
-				e.printStackTrace();
+				if(e instanceof WrongCredentialsException) {
+					new Notification("Le due password non coincidono.", NotificationType.ERROR).show();
+				} else if(e instanceof ExistingAccountException) {
+					new Notification("L'email è già utilizzata da un altro account.", NotificationType.ERROR).show();
+				}
 			}
     	}
     }

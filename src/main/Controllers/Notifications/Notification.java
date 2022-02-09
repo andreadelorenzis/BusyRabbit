@@ -4,6 +4,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -19,6 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class Notification {
 	
@@ -43,8 +48,22 @@ public class Notification {
 	}
 	
 	private void close(Stage stage) {
-		stage.close();
-		NotificationsManager.getInstance().decrementaNumNotifiche();
+        Animation transition = new Transition() {
+            {
+                setCycleDuration(Duration.millis(1000));
+                setInterpolator(Interpolator.LINEAR);
+            }
+            @Override
+            protected void interpolate(double frac) {
+            	if(stage.getY() > 0) {
+            		stage.setY(stage.getY() - frac * 200);    
+            	} else {
+            		stage.close();
+            		NotificationsManager.getInstance().decrementaNumNotifiche();
+            	}
+            }
+        };
+        transition.play();
 	}
 	
 	public void show() {
@@ -88,8 +107,6 @@ public class Notification {
         // crea un nuovo stage
     	Stage stage = new Stage();
     	Rectangle2D dimSchermo = Screen.getPrimary().getVisualBounds();
-    	stage.setX((dimSchermo.getWidth() / 2) - LARGHEZZA / 2);
-    	stage.setY((numNotifiche * (ALTEZZA + 10)) + 15);
     	stage.initStyle(StageStyle.TRANSPARENT);
     	stage.initModality(Modality.WINDOW_MODAL);
         Scene scene = new Scene(pane, LARGHEZZA, ALTEZZA);
@@ -101,7 +118,7 @@ public class Notification {
         stage.setAlwaysOnTop(true); 
         
         // aggiunge un tempo di visualizzazione della notifica
-    	Timer timer = new Timer(3000, new ActionListener() {
+    	Timer timer = new Timer(2000, new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				Platform.runLater(() -> {
 			        close(stage);
@@ -119,8 +136,26 @@ public class Notification {
             	timer.stop();
             }
         });
-
-    	stage.show();
+        
+        stage.show();
+        stage.setX((dimSchermo.getWidth() / 2) - LARGHEZZA / 2);
+        stage.setY(0 - ALTEZZA);
+    	double maxPosition = (numNotifiche * (ALTEZZA + 10));
+        Animation transition = new Transition() {
+            {
+                setCycleDuration(Duration.millis(1000));
+                setInterpolator(Interpolator.LINEAR);
+            }
+            @Override
+            protected void interpolate(double frac) {
+            	if(stage.getY() < maxPosition) {
+            		stage.setY(stage.getY() + frac * 200);    
+            	}            
+            }
+        };
+        transition.play();
+        
+        
 	}
 	
 }
