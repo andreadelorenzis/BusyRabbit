@@ -1,4 +1,4 @@
-package main.Controllers.TimeTracker;
+package main.Views.TimeTracker.classes;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,10 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import main.Controllers.TimeTracker.TTHelper;
 import main.Models.timetracker.interfaces.IAttivit‡;
 import main.Models.timetracker.interfaces.IProgetto;
 
-public class EditorAttivit‡Controller {
+public class EditorAttivit‡ViewImpl {
     
     @FXML
     private TextField nameField;

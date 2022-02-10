@@ -1,4 +1,4 @@
-package main.Controllers.TimeTracker;
+package main.Views.TimeTracker.classes;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import main.Colori;
 import main.Models.timetracker.interfaces.IProgetto;
 
-public class EditorProgettoController {
+public class EditorProgettoViewImpl {
     
     @FXML
     private ChoiceBox<String> colorChoice;

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="284.0" prefWidth="438.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.EditorProgettoController">
+<AnchorPane prefHeight="284.0" prefWidth="438.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Views.TimeTracker.classes.EditorProgettoViewImpl">
    <children>
       <BorderPane layoutX="25.0" layoutY="31.0" prefHeight="144.0" prefWidth="354.0">
          <top>

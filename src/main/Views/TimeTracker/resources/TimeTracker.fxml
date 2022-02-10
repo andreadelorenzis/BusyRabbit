@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="panePrincipale" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.TimeTracker.TimeTrackerController">
+<AnchorPane id="AnchorPane" fx:id="panePrincipale" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Views.TimeTracker.classes.TimeTrackerViewImpl">
    <children>
-      <BorderPane fx:id="formTracker" layoutX="66.0" layoutY="63.0" prefHeight="132.0" prefWidth="846.0" style="-fx-background-color: #0E1726;" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="63.0">
+      <BorderPane layoutX="66.0" layoutY="63.0" prefHeight="132.0" prefWidth="846.0" style="-fx-background-color: #0E1726;" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="63.0">
          <top>
             <BorderPane prefHeight="45.0" prefWidth="532.0" style="-fx-background-color: #1B2E4B; -fx-background-radius: 10; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
                <left>
@@ -100,7 +100,7 @@
                                     <Insets />
                                  </HBox.margin>
                                  <children>
-                                    <Button fx:id="startBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#avviaTracker" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800; -fx-cursor: hand;" text="START " textFill="WHITE">
+                                    <Button fx:id="startBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#trackerAvviato" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #1ABC9C; -fx-font-weight: 800; -fx-cursor: hand;" text="START " textFill="WHITE">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0">
                                              <image>
@@ -112,7 +112,7 @@
                                           <Insets top="2.0" />
                                        </padding>
                                     </Button>
-                                    <Button fx:id="stopBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#terminaTracker" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #E7515A; -fx-font-weight: 800; -fx-cursor: hand;" text="STOP" textFill="WHITE" visible="false">
+                                    <Button fx:id="stopBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#trackerTerminato" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #E7515A; -fx-font-weight: 800; -fx-cursor: hand;" text="STOP" textFill="WHITE" visible="false">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0">
                                              <image>
@@ -245,7 +245,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="listaAttività" layoutX="33.0" layoutY="240.0" prefHeight="462.0" prefWidth="772.0" AnchorPane.bottomAnchor="19.600000000000023" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="240.0">
+      <AnchorPane layoutX="33.0" layoutY="240.0" prefHeight="462.0" prefWidth="772.0" AnchorPane.bottomAnchor="19.600000000000023" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="240.0">
          <children>
             <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" prefHeight="462.0" prefWidth="758.0" style="-fx-background-color: #122C49;" styleClass="edge-to-edge" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
@@ -264,7 +264,7 @@
       <AnchorPane fx:id="menuProgettiFormContainer" layoutX="875.0" layoutY="118.0" prefHeight="9.0" prefWidth="236.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="118.0" />
       <HBox alignment="CENTER" layoutX="48.0" layoutY="18.0" prefHeight="35.0" prefWidth="847.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="18.0">
          <children>
-            <Button fx:id="cronoBtn" mnemonicParsing="false" onAction="#attivaCronometro" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #3C4B63;" styleClass="formBtn" text="Cronometro" textFill="WHITE">
+            <Button fx:id="cronoBtn" mnemonicParsing="false" onAction="#cronometroScelto" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #3C4B63;" styleClass="formBtn" text="Cronometro" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -272,7 +272,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="pomoBtn" mnemonicParsing="false" onAction="#attivaPomodoro" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #1B2A44;" styleClass="formBtn" text="Pomodoro" textFill="WHITE">
+            <Button fx:id="pomoBtn" mnemonicParsing="false" onAction="#pomodoroScelto" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #1B2A44;" styleClass="formBtn" text="Pomodoro" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -280,7 +280,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="manualBtn" mnemonicParsing="false" onAction="#attivaManuale" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #1B2A44;" styleClass="formBtn" text="Manuale" textFill="WHITE">
+            <Button fx:id="manualBtn" mnemonicParsing="false" onAction="#formManualeScelto" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #1B2A44;" styleClass="formBtn" text="Manuale" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

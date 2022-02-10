@@ -25,7 +25,10 @@ import main.Controllers.GoalManager.GoalManagerController;
 import main.Controllers.HabitTracker.HabitTrackerController;
 import main.Controllers.Impostazioni.ImpostazioniController;
 import main.Controllers.TimeTracker.TimeTrackerController;
+import main.Controllers.TimeTracker.TimeTrackerControllerImpl;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.TimeTracker.classes.TimeTrackerViewImpl;
+import main.Views.TimeTracker.interfaces.TimeTrackerView;
 import main.Main;
 
 public class AppController {
@@ -87,7 +90,7 @@ public class AppController {
         
         this.timeReportBox.getChildren().add(this.timeReportLabel);
         this.timeReportBox.setMinHeight(40);
-        this.timeReportBox.setAlignment(Pos.CENTER_LEFT);
+        this.timeReportBox.setAlignment(Pos.CENTER_LEFT); 
         this.timeReportBox.setPadding(new Insets(0, 0, 0, 10));
         this.abitudiniReportBox.getChildren().add(this.abitudiniReportLabel);
         this.abitudiniReportBox.setMinHeight(40);
@@ -181,19 +184,14 @@ public class AppController {
         this.evidenziaPulsante(this.timeHBox, this.timeLabel, this.timeImg, "clock-white");
         this.chiudiMenuDashboard();
         
-        // Cambia la pagina all'interno del BorderPane
+        // crea la view
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/TimeTracker.fxml");
+        URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/resources/TimeTracker.fxml");
         fxmlLoader.setLocation(fileUrl);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/TimeTracker.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/resources/TimeTracker.css").toExternalForm());
         view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        TimeTrackerController controller = fxmlLoader.getController();
-        controller.setTimeTracker(app.getTT());
-
     } 
     
     @FXML

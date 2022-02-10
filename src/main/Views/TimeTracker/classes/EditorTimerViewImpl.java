@@ -1,4 +1,4 @@
-package main.Controllers.TimeTracker;
+package main.Views.TimeTracker.classes;
 
 
 import javafx.beans.value.ChangeListener;
@@ -8,7 +8,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import main.Models.timetracker.interfaces.IPomodoroTimer;
 
-public class ImpostazioniTimerController {
+public class EditorTimerViewImpl {
 	
 	//--------------------------------- CAMPI ------------------------------------
     @FXML 
