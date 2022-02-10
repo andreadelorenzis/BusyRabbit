@@ -15,6 +15,8 @@ import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
 public class App implements IApp {
+	private static App app = null;
+	
 	private ITimeTracker tt = TimeTracker.getInstance();
 	private IGoalManager gm = GoalManager.getInstance();
 	private IHabitTracker ht = HabitTracker.getInstance();
@@ -24,6 +26,17 @@ public class App implements IApp {
     private AppWriter writerApp = new AppWriter(tt, gm, ht);
     private AppReader readerApp = new AppReader(tt, gm, ht);
 
+    private App() {
+
+    }
+    
+    public static App getInstance() {
+    	if(app == null) {
+    		app = new App();
+    	}
+    	return app;
+    }
+    
 	@Override
 	public void registraAccount(String nome, String email, String password, String ripetiPass) throws WrongCredentialsException, 
 																									   ExistingAccountException {

@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import main.Controllers.TimeTracker.TTHelper;
 import main.Models.timetracker.interfaces.IAttivit‡;
 import main.Models.timetracker.interfaces.IProgetto;
 
@@ -75,7 +74,7 @@ public class EditorAttivit‡ViewImpl {
         // crea nome e pallino progetto nella parte sinistra
         HBox nome = new HBox();
         nome.setAlignment(Pos.CENTER);
-        Label label1 = TTHelper.creaLabelProgetto(progetto);
+        Label label1 = ViewHelper.creaLabelProgetto(progetto);
         nome.getChildren().add(label1);
         pane.setLeft(nome);
 
@@ -98,7 +97,7 @@ public class EditorAttivit‡ViewImpl {
     private void cambiaProgetto(IProgetto progetto) {
 
     	// modifica progetto
-        Label label = TTHelper.creaLabelProgetto(progetto);
+        Label label = ViewHelper.creaLabelProgetto(progetto);
         this.progetto = progetto;
         
         // aggiorna il pulsante nella view.

@@ -1,4 +1,4 @@
-package main.Controllers.TimeTracker;
+package main.Views.TimeTracker.classes;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -15,7 +15,7 @@ import main.Main;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 
-public class TTHelper {
+public class ViewHelper {
 	public static Image dotsIcon = new Image(Main.class.getResource("/main/risorse/plus.png").toString());
 	public static Image plusIcon = new Image(Main.class.getResource("/main/risorse/plus.png").toString());
 	public static Image arrowIcon = new Image(Main.class.getResource("/main/risorse/arrow.png").toString());

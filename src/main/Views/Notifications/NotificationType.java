@@ -1,4 +1,4 @@
-package main.Controllers.Notifications;
+package main.Views.Notifications;
 
 public enum NotificationType {
 	SUCCESS, ERROR, INFO;

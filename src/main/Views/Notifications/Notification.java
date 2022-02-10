@@ -1,4 +1,4 @@
-package main.Controllers.Notifications;
+package main.Views.Notifications;
 
 import java.awt.event.ActionListener;
 

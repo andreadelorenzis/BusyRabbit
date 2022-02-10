@@ -1,4 +1,4 @@
-package main.Controllers.Modals;
+package main.Views.Modals;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -35,8 +35,8 @@ import main.Main;
 import main.PageController;
 import main.Controllers.GoalManager.GoalManagerController;
 import main.Controllers.Helpers.Helper;
-import main.Controllers.Notifications.NotificationType;
-import main.Controllers.Notifications.NotificationsManager;
+import main.Views.Notifications.NotificationType;
+import main.Views.Notifications.NotificationsManager;
 
 public class Modal {
 	

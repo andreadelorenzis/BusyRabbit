@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.Impostazioni.ImpostazioniController">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Views.Impostazioni.classes.ImpostazioniViewImpl">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="663.0" prefWidth="617.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -125,7 +125,7 @@
                         </Label>
                         <VBox layoutX="21.0" layoutY="420.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="27.799999999999955">
                            <children>
-                              <HBox fx:id="pass2Field" alignment="CENTER_LEFT" maxWidth="700.0" prefHeight="33.0" prefWidth="451.0">
+                              <HBox alignment="CENTER_LEFT" maxWidth="700.0" prefHeight="33.0" prefWidth="451.0">
                                  <children>
                                     <Label prefHeight="20.0" prefWidth="121.0" text="Password:" textFill="#bac4ca">
                                        <font>
@@ -146,7 +146,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" maxWidth="700.0">
                                  <children>
-                                    <Button fx:id="eliminaBtn" mnemonicParsing="false" onAction="#eliminaAccount" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #E7515A; -fx-font-weight: 800; -fx-cursor: hand;" text="Elimina" textFill="WHITE">
+                                    <Button mnemonicParsing="false" onAction="#eliminaAccount" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #E7515A; -fx-font-weight: 800; -fx-cursor: hand;" text="Elimina" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

@@ -18,11 +18,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import main.Controllers.AppController;
-import main.Controllers.Notifications.Notification;
-import main.Controllers.Notifications.NotificationType;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.Notifications.Notification;
+import main.Views.Notifications.NotificationType;
 
 /**
  * 

@@ -41,12 +41,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import main.Controllers.TimeTracker.TTHelper;
 import main.Models.goalmanager.classes.Azione;
 import main.Models.goalmanager.classes.Obiettivo;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
+import main.Views.TimeTracker.classes.ViewHelper;
 
 public class ReportTempoController implements Initializable {
     
@@ -345,7 +345,7 @@ public class ReportTempoController implements Initializable {
                 // crea il label durata
                 Label nome = new Label(progetto.getNome());
                 nome.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 14; -fx-font-weight: 800;");
-                Label ore = new Label("" + TTHelper.formattaOrologio((int)durata));
+                Label ore = new Label("" + ViewHelper.formattaOrologio((int)durata));
                 ore.setStyle(stile);
                 ore.setPadding(new Insets(0, 10, 0, 10));
                 HBox container = new HBox();

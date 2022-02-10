@@ -1,4 +1,4 @@
-package main.Controllers.Modals;
+package main.Views.Modals;
 
 public class ModalsManager {
 	private static ModalsManager instance = null;

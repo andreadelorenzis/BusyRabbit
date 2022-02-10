@@ -33,17 +33,16 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import main.Controllers.Modals.Modal;
-import main.Controllers.Notifications.Notification;
-import main.Controllers.Notifications.NotificationType;
 import main.Models.accountmanager.classes.App;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.Notifications.Notification;
+import main.Views.Notifications.NotificationType;
 
 /**
  *
  * @author Mars_DB
  */
-public class Main extends Application {
+public class Main extends Application { 
     
     public static LocalDate dataUltimoAccesso;
     public IApp app;
@@ -60,7 +59,7 @@ public class Main extends Application {
             
             // passa l'istanza di app al controller delle pagine di accesso
             PageController controller = fxmlLoader.getController();
-            app = new App();
+            app = App.getInstance();
             controller.setApp(app);
             
             // Aggiunge l'icona.

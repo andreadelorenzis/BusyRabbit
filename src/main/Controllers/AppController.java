@@ -276,16 +276,12 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Impostazioni/Impostazioni.fxml");
+        URL fileUrl = Main.class.getResource("/main/Views/Impostazioni/resources/Impostazioni.fxml");
         fxmlLoader.setLocation(fileUrl);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/Impostazioni/Impostazioni.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Views/Impostazioni/resources/Impostazioni.css").toExternalForm());
         view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
-        
-        // imposta l'istanza del time tracker
-        ImpostazioniController controller = fxmlLoader.getController();
-        controller.setApp(this.app);
     } 
     
     private void apriPaginaReportAbitudini() throws IOException {
