@@ -19,14 +19,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import main.Controllers.Dashboard.ReportAbitudiniController;
-import main.Controllers.Dashboard.ReportTempoController;
 import main.Controllers.GoalManager.GoalManagerController;
-import main.Controllers.HabitTracker.HabitTrackerController;
+import main.Controllers.HabitTracker.HabitTrackerControllerImpl;
 import main.Controllers.Impostazioni.ImpostazioniController;
 import main.Controllers.TimeTracker.TimeTrackerController;
 import main.Controllers.TimeTracker.TimeTrackerControllerImpl;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.Dashboard.classes.ReportTempoViewImpl;
 import main.Views.TimeTracker.classes.TimeTrackerViewImpl;
 import main.Views.TimeTracker.interfaces.TimeTrackerView;
 import main.Main;
@@ -204,16 +203,12 @@ public class AppController {
        
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/HabitTracker/HabitTracker.fxml");
+        URL fileUrl = Main.class.getResource("/main/Views/HabitTracker/resources/HabitTracker.fxml");
         fxmlLoader.setLocation(fileUrl);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/HabitTracker/HabitTracker.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Views/HabitTracker/resources/HabitTracker.css").toExternalForm());
         view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        HabitTrackerController controller = fxmlLoader.getController();
-        controller.setHabitTracker(app.getHT());
     } 
     
     @FXML
@@ -253,16 +248,12 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportTempo.fxml");
+        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/resources/ReportTempo.fxml");
         fxmlLoader.setLocation(fileUrl);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/Dashboard.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/resources/Dashboard.css").toExternalForm());
         view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
-        
-        // imposta l'istanza del time tracker
-        ReportTempoController controller = fxmlLoader.getController();
-        controller.setTimeTracker(app.getTT());
         
     }
     
@@ -299,16 +290,12 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/ReportAbitudini.fxml");
+        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/resources/ReportAbitudini.fxml");
         fxmlLoader.setLocation(fileUrl);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/ReportAbitudini.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/resources/ReportAbitudini.css").toExternalForm());
         view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
-        
-        // imposta l'istanza del habit tracker
-        ReportAbitudiniController controller = fxmlLoader.getController();
-        controller.setHabitTracker(app.getHT());
     }
     
     @FXML

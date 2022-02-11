@@ -1,4 +1,4 @@
-package main.Controllers.HabitTracker;
+package main.Views.HabitTracker.classes;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -16,14 +16,11 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import main.Models.goalmanager.classes.AzioneSessione;
-import main.Models.goalmanager.interfaces.IAzioneSessione;
 import main.Models.habittracker.classes.SessionHabit;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.ISessionHabit;
 
-public class EditorAbitudineController {
+public class EditorAbitudineViewImpl {
     
     @FXML
     private TextField abitudineField;

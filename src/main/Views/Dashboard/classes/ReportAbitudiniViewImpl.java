@@ -1,22 +1,11 @@
-package main.Controllers.Dashboard;
+package main.Views.Dashboard.classes;
 
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -24,21 +13,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
-import main.Controllers.GoalManager.GoalManagerController;
 import main.Controllers.Helpers.Helper;
-import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.classes.HabitTracker;
-import main.Models.habittracker.interfaces.IHabitTracker;
+import main.Models.habittracker.interfaces.IHabit;
+import main.Views.Dashboard.interfaces.ReportAbitudiniView;
 
-public class ReportAbitudiniController {
-    
+public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
+
     @FXML
     private TilePane tilePane;
     @FXML
@@ -52,11 +39,9 @@ public class ReportAbitudiniController {
     
     private int annoSelezionato = LocalDate.now().getYear();
     
-    private IHabitTracker ht; 
-    
-    public void setHabitTracker(IHabitTracker ht) {
-    	this.ht = ht;
- 
+    @FXML
+    private void initialize() {
+    	
     	// aggiunge pulsanti selezione anno
     	for(int i = 0; i < 3; i++) {
     		int anno = annoSelezionato - i;
@@ -66,7 +51,7 @@ public class ReportAbitudiniController {
     		// collega evento selezione anno
     		labelAnno.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent t) {
-                    visualizzaDatiAnno(anno);
+                	visualizzaDiagrammaAnnuale(anno);
                 }
             });
     		
@@ -77,7 +62,7 @@ public class ReportAbitudiniController {
     	visualizzaDatiUltimaSettimana();
     	
     	// visualizza dati anno corrente
-    	visualizzaDatiAnno(annoSelezionato);
+    	visualizzaDiagrammaAnnuale(annoSelezionato);
     }
     
     private AnchorPane creaViewProgressCircle(int totHabits, List<IHabit> completedHabits, LocalDate data) {
@@ -162,12 +147,12 @@ public class ReportAbitudiniController {
         return container;
     }
     
-    private void visualizzaDatiUltimaSettimana() {
+    public void visualizzaDatiUltimaSettimana() {
         this.settimanaBox.getChildren().clear();
         
         // crea la view dei cerchi
-        int totHabits = ht.getHabits().size();
-        Map<Integer, List<IHabit>> datiSettimana = ht.getWeekRecords();
+        int totHabits = HabitTracker.getInstance().getHabits().size();
+        Map<Integer, List<IHabit>> datiSettimana = HabitTracker.getInstance().getWeekRecords();
         List<LocalDate> lastWeek = HabitTracker.getLastWeek();
         for(LocalDate data : lastWeek) {
         	AnchorPane circle = creaViewProgressCircle(totHabits, datiSettimana.get(data.getDayOfYear()), data);
@@ -192,12 +177,12 @@ public class ReportAbitudiniController {
         return colore;
     }
     
-    private void visualizzaDatiAnno(int anno) {
+    public void visualizzaDiagrammaAnnuale(int anno) {
         double dimCaselle = 13;
         this.tilePane.getChildren().clear();
-        int nTotHabits = ht.getHabits().size();
+        int nTotHabits = HabitTracker.getInstance().getHabits().size();
         
-        Map<Integer, List<IHabit>> datiAnno = ht.getYearRecords(anno);
+        Map<Integer, List<IHabit>> datiAnno = HabitTracker.getInstance().getYearRecords(anno);
         // itera tutti i giorni dell'anno
         for(int giorno : datiAnno.keySet()) {
         	LocalDate data = LocalDate.ofYearDay(anno, giorno);
@@ -230,7 +215,7 @@ public class ReportAbitudiniController {
         }
     }
     
-    private void visualizzaDatiGiorno(LocalDate data, List<IHabit> abitudini) {
+    public void visualizzaDatiGiorno(LocalDate data, List<IHabit> abitudini) {
         this.giornoBox.getChildren().clear();
         
         // visualizza label giorno
@@ -242,7 +227,7 @@ public class ReportAbitudiniController {
         
         // visualizza label numero abitudini svolte
         String s = abitudini.size() == 1 ? "e " : "i ";
-        Label label = new Label("Svolto " + abitudini.size() + " abitudin" + s +  " su " + ht.getHabits().size());
+        Label label = new Label("Svolto " + abitudini.size() + " abitudin" + s +  " su " + HabitTracker.getInstance().getHabits().size());
         label.setStyle("-fx-text-fill: #888EA8; -fx-font-size: 16;");
         label.setPadding(new Insets(0, 0, 15, 0));
         this.giornoBox.getChildren().add(label);

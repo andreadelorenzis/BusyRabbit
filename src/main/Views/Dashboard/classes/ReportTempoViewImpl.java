@@ -1,6 +1,5 @@
-package main.Controllers.Dashboard;
+package main.Views.Dashboard.classes;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -16,8 +15,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -28,27 +25,22 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import main.Models.goalmanager.classes.Azione;
-import main.Models.goalmanager.classes.Obiettivo;
 import main.Models.timetracker.classes.Progetto;
+import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.interfaces.IProgetto;
-import main.Models.timetracker.interfaces.ITimeTracker;
+import main.Views.Dashboard.interfaces.ReportTempoView;
 import main.Views.TimeTracker.classes.ViewHelper;
 
-public class ReportTempoController implements Initializable {
+public class ReportTempoViewImpl implements Initializable, ReportTempoView {
     
 	//-------------------------------- CAMPI FXML -----------------------------------
     @FXML
@@ -76,11 +68,6 @@ public class ReportTempoController implements Initializable {
      * Il mese per cui visualizzare le statistiche sul tempo.
      */
     private String meseSelezionato = LocalDate.now().getMonth().toString();
-
-    /*
-     * L'istanza del time tracker contenente i dati.
-     */
-    private ITimeTracker tt;
     
     //--------------------------- METODI PUBBLICI --------------------------------
     @Override
@@ -126,13 +113,7 @@ public class ReportTempoController implements Initializable {
                 visualizzaProgressBars(true);
             }
         });
-    }
-    
-    /**
-     * Imposta l'istanza del time tracker.
-     */
-    public void setTimeTracker(ITimeTracker tt) {
-    	this.tt = tt;
+        
         this.visualizzaStackedBarChart(true);
         this.visualizzaPieChart(true);
         this.visualizzaProgressBars(true);
@@ -144,7 +125,7 @@ public class ReportTempoController implements Initializable {
      */
     private ArrayList<XYChart.Series<String, Double>> calcolaTempoAnno() {
         ArrayList<XYChart.Series<String, Double>> datiAnno = new ArrayList<XYChart.Series<String, Double>>();
-        for(IProgetto progetto : tt.getProgetti()) {
+        for(IProgetto progetto : TimeTracker.getInstance().getProgetti()) {
         	if(!isProgettoVuoto(progetto, true)) {
                 XYChart.Series<String, Double> tempiProgetto = new XYChart.Series<>();
                 tempiProgetto.setName(progetto.getNome());
@@ -167,7 +148,7 @@ public class ReportTempoController implements Initializable {
      */
     private ArrayList<XYChart.Series<String, Double>> calcolaTempoMese() {
         ArrayList<XYChart.Series<String, Double>> datiMese = new ArrayList<XYChart.Series<String, Double>>();
-        for(IProgetto progetto : tt.getProgetti()) {
+        for(IProgetto progetto : TimeTracker.getInstance().getProgetti()) {
         	if(!isProgettoVuoto(progetto, false)) {
                 XYChart.Series<String, Double> tempiProgetto = new XYChart.Series<>();
                 tempiProgetto.setName(progetto.getNome());
@@ -211,7 +192,7 @@ public class ReportTempoController implements Initializable {
         }
         
         // aggiungo i colori alle sezione del grafico a torta
-        List<IProgetto> progettiMisurati = tt.getProgetti().stream()
+        List<IProgetto> progettiMisurati = TimeTracker.getInstance().getProgetti().stream()
         												   .filter(p -> !(isProgettoVuoto(p, isAnno)))
         												   .collect(Collectors.toList());
         
@@ -226,7 +207,7 @@ public class ReportTempoController implements Initializable {
      */
     private ObservableList<PieChart.Data> calcolaTempiTotaliProgetti(boolean anno) {
         ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
-        for(IProgetto progetto : tt.getProgetti()) {
+        for(IProgetto progetto : TimeTracker.getInstance().getProgetti()) {
         	if(!isProgettoVuoto(progetto, anno)) {
                 long tempoTotale = this.calcolaTempoTotaleProgetto(progetto, anno);
                 pieData.add(new PieChart.Data(progetto.getNome(), tempoTotale));
@@ -255,7 +236,7 @@ public class ReportTempoController implements Initializable {
         chart.setTranslateX(-50);
         
         // aggiungo i colori alle sezione del grafico a torta
-        List<IProgetto> progettiMisurati = tt.getProgetti().stream()
+        List<IProgetto> progettiMisurati = TimeTracker.getInstance().getProgetti().stream()
         												   .filter(p -> !(isProgettoVuoto(p, isAnno)))
         												   .collect(Collectors.toList());
         
@@ -303,11 +284,11 @@ public class ReportTempoController implements Initializable {
     	
     	// fa la somma dei tempi misurati nel periodo
         long tempoTotale = 0;
-        for(IProgetto p : tt.getProgetti()) {
+        for(IProgetto p : TimeTracker.getInstance().getProgetti()) {
             tempoTotale += this.calcolaTempoTotaleProgetto(p, isAnno);
         }
         
-        List<IProgetto> progettiSorted = tt.getProgetti().stream()
+        List<IProgetto> progettiSorted = TimeTracker.getInstance().getProgetti().stream()
         												 .map(p -> (Progetto) p)
         												 .sorted(new Comparator<Progetto>() {
 															@Override
@@ -381,7 +362,7 @@ public class ReportTempoController implements Initializable {
     	return tempoProgetto <= 0;
     }
     
-    private void aggiornaView() {
+    public void aggiornaView() {
     	meseChoice.setValue("ALL");
     	this.annoSpinner.getValueFactory().setValue(LocalDate.now().getYear());
         this.visualizzaStackedBarChart(true);
