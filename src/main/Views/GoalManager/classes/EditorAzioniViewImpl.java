@@ -1,4 +1,4 @@
-package main.Controllers.GoalManager;
+package main.Views.GoalManager.classes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IAzioneSessione;
 
-public class EditorAzioniController {
+public class EditorAzioniViewImpl {
     @FXML
     private TextField azioneField;
     @FXML

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import main.Giorno;
-import main.Controllers.GoalManager.GMHelper;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
+import main.Views.GoalManager.classes.ViewHelper;
 
 public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     

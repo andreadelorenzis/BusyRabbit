@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import main.Controllers.GoalManager.GoalManagerController;
+import main.Controllers.GoalManager.GoalManagerControllerImpl;
 import main.Controllers.HabitTracker.HabitTrackerControllerImpl;
 import main.Controllers.Impostazioni.ImpostazioniController;
 import main.Controllers.TimeTracker.TimeTrackerController;
@@ -221,16 +221,12 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/GoalManager/GoalManager.fxml");
+        URL fileUrl = Main.class.getResource("/main/Views/GoalManager/resources/GoalManager.fxml");
         fxmlLoader.setLocation(fileUrl);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/GoalManager/GoalManager.css").toExternalForm());
+        view.getStylesheets().add(getClass().getResource("/main/Views/GoalManager/resources/GoalManager.css").toExternalForm());
         view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
         panePrincipale.setCenter(view);
-        
-        // Ottiene il controller EditorProgettoController associato alla view
-        GoalManagerController controller = fxmlLoader.getController();
-        controller.setGoalManager(app.getGM());
     } 
     
     private void apriPaginaReportTempo() throws IOException {

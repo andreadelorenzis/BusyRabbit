@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import main.Giorno;
-import main.Controllers.GoalManager.GMHelper;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
+import main.Views.GoalManager.classes.ViewHelper;
 
 public class GoalManager implements IGoalManager {
     // CAMPI

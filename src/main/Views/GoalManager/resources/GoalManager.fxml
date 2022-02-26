@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="859.0" style="-fx-background-color: #060818;" stylesheets="@GoalManager.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.GoalManagerController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="859.0" style="-fx-background-color: #060818;" stylesheets="@GoalManager.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Views.GoalManager.classes.GoalManagerViewImpl">
    <children>
       <Label layoutX="53.0" layoutY="14.0" text="Goal tracker" textFill="#374667">
          <font>

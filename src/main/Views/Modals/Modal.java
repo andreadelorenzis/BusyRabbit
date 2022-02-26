@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Main;
 import main.PageController;
-import main.Controllers.GoalManager.GoalManagerController;
+import main.Controllers.GoalManager.GoalManagerControllerImpl;
 import main.Controllers.Helpers.Helper;
 import main.Views.Notifications.NotificationType;
 import main.Views.Notifications.NotificationsManager;

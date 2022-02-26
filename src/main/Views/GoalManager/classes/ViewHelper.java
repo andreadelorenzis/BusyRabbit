@@ -1,4 +1,4 @@
-package main.Controllers.GoalManager;
+package main.Views.GoalManager.classes;
 
 
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ import main.Main;
 import main.Models.goalmanager.classes.Obiettivo;
 import main.Models.goalmanager.interfaces.IObiettivo;
 
-public class GMHelper {
+public class ViewHelper {
 	public static Image arrowIcon = new Image(Main.class.getResource("/main/risorse/arrow-down-white.png").toString());
 	
 	public static HBox creaSottoObiettiviBtn(int size, HBox box) {

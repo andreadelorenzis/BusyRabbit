@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="629.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controllers.GoalManager.EditorAzioniController">
+<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="629.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Views.GoalManager.classes.EditorAzioniViewImpl">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="101.0" prefHeight="32.0" prefWidth="558.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="20.600000000000023">
          <children>
