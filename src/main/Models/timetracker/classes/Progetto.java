@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
 
-import main.Colori;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
+import main.Views.Colore;
 
 public class Progetto implements IProgetto {
 	
@@ -21,7 +21,7 @@ public class Progetto implements IProgetto {
 	/*
 	 * Colore del progetto
 	 */
-	private Colori colore;
+	private Colore colore;
 	
 	/*
 	 * Gli anni in cui il progetto è stato monitorato
@@ -34,13 +34,13 @@ public class Progetto implements IProgetto {
 	private String id;
 	
     //----------------------------- COSTRUTTORI --------------------------------
-	public Progetto(String nome, Colori colore) {
+	public Progetto(String nome, Colore colore) {
 		this.nome = nome;
 		this.colore = colore;
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public Progetto(String nome, Colori colore, String id) {
+	public Progetto(String nome, Colore colore, String id) {
 		this(nome, colore);
 		this.id = id;
 	}
@@ -121,12 +121,12 @@ public class Progetto implements IProgetto {
 	}
 
 	@Override
-	public void setColore(Colori colore) {
+	public void setColore(Colore colore) {
 		this.colore = colore;
 	}
 
 	@Override
-	public Colori getColore() {
+	public Colore getColore() {
 		return colore;
 	}
 

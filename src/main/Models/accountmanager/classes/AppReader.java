@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import main.Colori;
+
 import main.Giorno;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
@@ -33,6 +33,7 @@ import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
+import main.Views.Colore;
 
 /**
  *
@@ -65,7 +66,7 @@ public class AppReader {
 		while(!line.equals("---attivita---")) {
 			String[] params = line.split(",");
 			String nome = params[0];
-			Colori colore = Colori.valueOf(params[1]);
+			Colore colore = Colore.valueOf(params[1]);
 			String id = params[2];
 			IProgetto p = new Progetto(nome, colore, id);
 			tt.aggiungiProgetto(p);

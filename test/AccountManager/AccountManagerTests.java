@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import main.Colori;
 import main.Models.accountmanager.classes.App;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
@@ -25,6 +24,7 @@ import main.Models.habittracker.interfaces.ISimpleHabit;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
+import main.Views.Colore;
 
 /**
  * TODO:
@@ -133,7 +133,7 @@ class AccountManagerTests {
 		// controlla primo progetto letto
 		IProgetto p = tt.getProgetti().get(1);
 		assertEquals("PMO", p.getNome());
-		assertEquals(Colori.Blu, p.getColore());
+		assertEquals(Colore.Blu, p.getColore());
 		assertEquals("idP1", p.getId());
 		
 		// sono presenti 2 attività

@@ -6,9 +6,9 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAmount;
 import java.util.UUID;
 
-import main.Colori;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
+import main.Views.Colore;
 
 public class Attività implements IAttività {
 	

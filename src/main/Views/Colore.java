@@ -1,6 +1,6 @@
-package main;
+package main.Views;
 
-public enum Colori {
+public enum Colore {
     Rosso("#FF4560"),
     Verde("#00E396"),
     Giallo("#FEB019"),
@@ -10,7 +10,7 @@ public enum Colori {
     
     public final String hex;
     
-    private Colori(String hex) {
+    private Colore(String hex) {
         this.hex = hex;
     }
 }

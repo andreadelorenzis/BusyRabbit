@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Map;
 
-import main.Colori;
+import main.Views.Colore;
 
 /**
  * 
@@ -62,13 +62,13 @@ public interface IProgetto {
      * 
      * @param colore del progetto
      */
-    public void setColore(Colori colore);
+    public void setColore(Colore colore);
     
     /**
      * 
      * @return colore del progetto
      */
-    public Colori getColore();
+    public Colore getColore();
     
     /**
      * 

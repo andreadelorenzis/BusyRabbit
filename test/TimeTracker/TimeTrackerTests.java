@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 
-import main.Colori;
 import main.Models.goalmanager.classes.GoalManager;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
@@ -25,6 +24,8 @@ import main.Models.timetracker.interfaces.ICronometro;
 import main.Models.timetracker.interfaces.IPomodoroTimer;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
+import main.Views.Colore;
+
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,8 @@ public class TimeTrackerTests {
 	
 	private void inizializza(ITimeTracker t) {
 		// creo 2 progetti
-		t.aggiungiProgetto(new Progetto("Analisi", Colori.Rosso));
-		t.aggiungiProgetto(new Progetto("Allenamento", Colori.Verde));
+		t.aggiungiProgetto(new Progetto("Analisi", Colore.Rosso));
+		t.aggiungiProgetto(new Progetto("Allenamento", Colore.Verde));
 
 		// aggiungo 3 attività al primo progetto
 		t.aggiungiAttività(new Attività("Studiare",
@@ -64,7 +65,7 @@ public class TimeTrackerTests {
 	private void aggiungiAttività(ITimeTracker t) {
 		
 		// creo un nuovo progetto
-		t.aggiungiProgetto(new Progetto("Progetto", Colori.Rosso));
+		t.aggiungiProgetto(new Progetto("Progetto", Colore.Rosso));
 		
 		// aggiungo 30 attività, in 30 giorni diversi, associate al progetto
 		for(int i = 1; i <= 31; i++) {

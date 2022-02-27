@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import main.Colori;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.ICronometro;
 import main.Models.timetracker.interfaces.IPomodoroTimer;
@@ -17,6 +16,7 @@ import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 import main.Models.timetracker.interfaces.ITrackable;
 import main.Models.timetracker.interfaces.ITracker;
+import main.Views.Colore;
 
 public class TimeTracker implements ITimeTracker, ITrackable {
 	
@@ -24,7 +24,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	/*
 	 * Progetto di default in cui vanno le attività senza progetto
 	 */
-	public final static IProgetto progettoDefault = new Progetto("Altro", Colori.Grigio);
+	public final static IProgetto progettoDefault = new Progetto("Altro", Colore.Grigio);
 	
 	/*
 	 * Lista di progetti

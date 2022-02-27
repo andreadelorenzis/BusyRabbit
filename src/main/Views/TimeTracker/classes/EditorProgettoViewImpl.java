@@ -5,8 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import main.Colori;
 import main.Models.timetracker.interfaces.IProgetto;
+import main.Views.Colore;
 
 public class EditorProgettoViewImpl {
     
@@ -19,7 +19,7 @@ public class EditorProgettoViewImpl {
     /*
      * Colore del progetto
      */
-    private Colori colore;
+    private Colore colore;
     
     @FXML
     private void initialize() {
@@ -32,7 +32,7 @@ public class EditorProgettoViewImpl {
         colorChoice.getSelectionModel().selectedIndexProperty().addListener(
                  (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
                 	String stringColore = (String) colorChoice.getItems().get((Integer) new_val);
-                    colore = Colori.valueOf(stringColore);
+                    colore = Colore.valueOf(stringColore);
         });
     }
     
@@ -46,7 +46,7 @@ public class EditorProgettoViewImpl {
     	return nameField.getText();
     }
     
-    public Colori getColore() {
+    public Colore getColore() {
     	return colore;
     }
     

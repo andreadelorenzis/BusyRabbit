@@ -36,9 +36,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.Colori;
 import main.Main;
 import main.Controllers.Helpers.Helper;
+import main.Views.Colore;
 import main.Views.Modals.Modal;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
@@ -300,7 +300,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     	ButtonType btnCliccato = modal.show();
         if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
-        	Colori colore = controller.getColore();
+        	Colore colore = controller.getColore();
         	
         	// aggiunge o modifica il colore
         	if(aggiunta) {
@@ -782,7 +782,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
      */
     @FXML
     private void aggiungiProgetto() throws IOException {
-       apriEditorProgetto(new Progetto("", Colori.Giallo), true);
+       apriEditorProgetto(new Progetto("", Colore.Giallo), true);
     }
 	
     /**
