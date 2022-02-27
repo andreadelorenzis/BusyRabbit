@@ -43,6 +43,8 @@ public class Modal {
 	@FXML
 	private BorderPane modal;
 	
+	public final URL modalCss = getClass().getResource("/main/Views/Modals/resources/Modal.css");
+	
 	public static final int LARGHEZZA = 800;
 	public static final int ALTEZZA = 600;
 	
@@ -118,7 +120,7 @@ public class Modal {
 		
 		// crea la view del modal
         AnchorPane pane = new AnchorPane();
-        pane.getStylesheets().add(getClass().getResource("/main/Views/Modal.css").toExternalForm());
+        pane.getStylesheets().add(modalCss.toExternalForm());
         pane.getStyleClass().add("modal");
         BorderPane container = new BorderPane();
         container.getStyleClass().add("modal-container");
@@ -174,7 +176,7 @@ public class Modal {
         scroll.setHbarPolicy(ScrollBarPolicy.NEVER);
         scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         scroll.setContent(view);
-        view.getStylesheets().add(getClass().getResource("/main/Views/Modal.css").toExternalForm());
+        view.getStylesheets().add(modalCss.toExternalForm());
         container.setCenter(scroll);
         
         // modal footer
