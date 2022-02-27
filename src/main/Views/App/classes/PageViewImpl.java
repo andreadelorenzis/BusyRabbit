@@ -1,4 +1,4 @@
-package main;
+package main.Views.App.classes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,19 +17,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import main.Main;
+import main.Controllers.App.PageController;
+import main.Controllers.App.PageControllerImpl;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IApp;
-import main.Views.App.classes.AppViewImpl;
+import main.Views.App.interfaces.PageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
-/**
- * 
- * Controller per le view di login, registrazione e schermata principale.
- *
- */
-public class PageController {
+public class PageViewImpl implements PageView {
 	public static AnchorPane appContainer = null;
     
     private Stage stage;
@@ -49,7 +47,13 @@ public class PageController {
     @FXML
     private TextField confPassRegField;
     
+    private PageController controller;
     private IApp app;
+    
+    @FXML
+    private void initialize() {
+    	controller = new PageControllerImpl(this);
+    }
     
     public void setApp(IApp app) {
     	this.app = app;
@@ -96,7 +100,7 @@ public class PageController {
         scene = new Scene(root);
         
         //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-        String css = this.getClass().getResource("Globall.css").toExternalForm();
+        String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
         scene.getStylesheets().add(css);
         
         stage.setScene(scene);
@@ -110,7 +114,7 @@ public class PageController {
         scene = new Scene(root);
         
         //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-        String css = this.getClass().getResource("Globall.css").toExternalForm();
+        String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
         scene.getStylesheets().add(css);
         
         stage.setScene(scene);
@@ -136,7 +140,7 @@ public class PageController {
             controller.setAppData(app);
             
             //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-            String css = this.getClass().getResource("Globall.css").toExternalForm();
+            String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
             scene.getStylesheets().add(css);
             
             Rectangle2D dimSchermo = Screen.getPrimary().getVisualBounds();

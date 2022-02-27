@@ -1,7 +1,5 @@
 package main;
 
-
-
 import java.awt.event.ActionListener;
 
 /*
@@ -35,6 +33,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import main.Models.accountmanager.classes.App;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.App.classes.PageViewImpl;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
@@ -58,7 +57,7 @@ public class Main extends Application {
             Scene scene = new Scene(root, 650, 600);
             
             // passa l'istanza di app al controller delle pagine di accesso
-            PageController controller = fxmlLoader.getController();
+            PageViewImpl controller = fxmlLoader.getController();
             app = App.getInstance();
             controller.setApp(app);
             

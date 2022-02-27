@@ -32,9 +32,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Main;
-import main.PageController;
 import main.Controllers.GoalManager.GoalManagerControllerImpl;
 import main.Controllers.Helpers.Helper;
+import main.Views.App.classes.PageViewImpl;
 import main.Views.Notifications.NotificationType;
 import main.Views.Notifications.NotificationsManager;
 
@@ -72,10 +72,10 @@ public class Modal {
 	        AnchorPane.setTopAnchor(overlay, 0.0);
 	        AnchorPane.setLeftAnchor(overlay, 0.0);
 	        AnchorPane.setRightAnchor(overlay, 0.0);
-	        PageController.appContainer.getChildren().add(overlay);
+	        PageViewImpl.appContainer.getChildren().add(overlay);
 		} else {
-			int indice = PageController.appContainer.getChildren().size() - 1;
-			PageController.appContainer.getChildren().remove(indice);
+			int indice = PageViewImpl.appContainer.getChildren().size() - 1;
+			PageViewImpl.appContainer.getChildren().remove(indice);
 		}
 	}
 	
