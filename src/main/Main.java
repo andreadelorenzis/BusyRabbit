@@ -52,7 +52,7 @@ public class Main extends Application {
         try {
             // Carica la pagina di login.
         	FXMLLoader fxmlLoader = new FXMLLoader();
-        	URL fileUrl = Main.class.getResource("/main/Views/Account/Login.fxml");
+        	URL fileUrl = Main.class.getResource("/main/Views/Account/resources/Login.fxml");
         	fxmlLoader.setLocation(fileUrl);
         	Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 650, 600);

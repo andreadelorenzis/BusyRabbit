@@ -1,4 +1,4 @@
-package main.Controllers;
+package main.Views.App.classes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,18 +19,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import main.Controllers.App.AppController;
+import main.Controllers.App.AppControllerImpl;
 import main.Controllers.GoalManager.GoalManagerControllerImpl;
 import main.Controllers.HabitTracker.HabitTrackerControllerImpl;
 import main.Controllers.Impostazioni.ImpostazioniController;
 import main.Controllers.TimeTracker.TimeTrackerController;
 import main.Controllers.TimeTracker.TimeTrackerControllerImpl;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.App.interfaces.AppView;
 import main.Views.Dashboard.classes.ReportTempoViewImpl;
 import main.Views.TimeTracker.classes.TimeTrackerViewImpl;
 import main.Views.TimeTracker.interfaces.TimeTrackerView;
 import main.Main;
 
-public class AppController {
+public class AppViewImpl implements AppView {
     @FXML
     private HBox timeHBox;
     @FXML
@@ -70,14 +73,45 @@ public class AppController {
     @FXML
     private VBox sidebar;
     
+    /*
+     * Risorse fxml
+     */
+    private final URL timeTracker = Main.class.getResource("/main/Views/TimeTracker/resources/TimeTracker.fxml");
+    private final URL goalManager = Main.class.getResource("/main/Views/GoalManager/resources/GoalManager.fxml");
+    private final URL habitTracker = Main.class.getResource("/main/Views/HabitTracker/resources/HabitTracker.fxml");
+    private final URL impostazioni = Main.class.getResource("/main/Views/Impostazioni/resources/Impostazioni.fxml");
+    private final URL reportTempo = Main.class.getResource("/main/Views/Dashboard/resources/ReportTempo.fxml");
+    private final URL reportAbitudini = Main.class.getResource("/main/Views/Dashboard/resources/ReportAbitudini.fxml");
+    
+    /*
+     * Risorse css
+     */
+    private final URL timeTrackerCss = Main.class.getResource("/main/Views/TimeTracker/resources/TimeTracker.css");
+    private final URL goalManagerCss = Main.class.getResource("/main/Views/GoalManager/resources/GoalManager.css");
+    private final URL habitTrackerCss = Main.class.getResource("/main/Views/HabitTracker/resources/HabitTracker.css");
+    private final URL impostazioniCss = Main.class.getResource("/main/Views/Impostazioni/resources/Impostazioni.css");
+    private final URL reportTempoCss = Main.class.getResource("/main/Views/Dashboard/resources/ReportTempo.css");
+    private final URL reportAbitudiniCss = Main.class.getResource("/main/Views/Dashboard/resources/ReportAbitudini.css");
+    private final URL dashboardCss = Main.class.getResource("/main/Views/Dashboard/resources/Dashboard.css");
+    private final URL globalCss = Main.class.getResource("/main/Globall.css");
+    
+    /*
+     * Immagini
+     */
+    public final Image clockImg = new Image(getClass().getResource("/main/risorse/clock.png").toString());
+    public final Image dartsImg = new Image(getClass().getResource("/main/risorse/darts.png").toString());
+    public final Image refreshImg = new Image(getClass().getResource("/main/risorse/refresh.png").toString());
+    public final Image tilesImg = new Image(getClass().getResource("/main/risorse/dashboard.png").toString());
+    public final Image arrowDownImg = new Image(getClass().getResource("/main/risorse/arrow-down.png").toString());
+    public final Image settingsImg = new Image(getClass().getResource("/main/risorse/settings.png").toString());
+    
     private HBox timeReportBox = new HBox();
     private Label timeReportLabel = new Label("Report Tempo");
-    
     private HBox abitudiniReportBox = new HBox();
     private Label abitudiniReportLabel = new Label("Report Abitudini");
-    
     private boolean dashboardMenuAperto = false;
     private boolean sidebarAperta = true;
+    private AppController controller;
     private IApp app;
     
     @FXML 
@@ -118,6 +152,8 @@ public class AppController {
             }
         };
         this.abitudiniReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
+        
+        this.controller = new AppControllerImpl(this);
     }
     
     public void setAppData(IApp app) throws IOException {
@@ -128,25 +164,25 @@ public class AppController {
     private void rimuoviEvidenziazionePulsanti() {
         timeHBox.setStyle("-fx-background-color: #060818;");
         timeLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        timeImg.setImage(new Image(getClass().getResource("/main/risorse/clock.png").toString()));
+        timeImg.setImage(clockImg);
         
         goalHBox.setStyle("-fx-background-color: #060818;");
         goalLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        goalImg.setImage(new Image(getClass().getResource("/main/risorse/darts.png").toString()));
+        goalImg.setImage(dartsImg);
         
         habitHBox.setStyle("-fx-background-color: #060818;");
         habitLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        habitImg.setImage(new Image(getClass().getResource("/main/risorse/refresh.png").toString()));
+        habitImg.setImage(refreshImg);
         
         dashboardHBox.setStyle("-fx-background-color: #060818;");
         dashboardLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        dashboardImg.setImage(new Image(getClass().getResource("/main/risorse/dashboard.png").toString()));
-        this.dashboardArrow.setImage(new Image(getClass().getResource("/main/risorse/arrow-down.png").toString()));
+        dashboardImg.setImage(tilesImg);
+        this.dashboardArrow.setImage(arrowDownImg);
         this.dashboardArrow.setRotate(0);
         
         impostazioniHBox.setStyle("-fx-background-color: #060818;");
         impostazioniLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        impostazioniImg.setImage(new Image(getClass().getResource("/main/risorse/settings.png").toString()));
+        impostazioniImg.setImage(settingsImg);
         
         this.timeReportBox.setStyle("-fx-background-color: #060818;");
         this.timeReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
@@ -185,11 +221,10 @@ public class AppController {
         
         // crea la view
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/TimeTracker/resources/TimeTracker.fxml");
-        fxmlLoader.setLocation(fileUrl);
+        fxmlLoader.setLocation(timeTracker);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/TimeTracker/resources/TimeTracker.css").toExternalForm());
-        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        view.getStylesheets().add(timeTrackerCss.toExternalForm());
+        view.getStylesheets().add(globalCss.toExternalForm());
         panePrincipale.setCenter(view);
     } 
     
@@ -203,11 +238,10 @@ public class AppController {
        
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/HabitTracker/resources/HabitTracker.fxml");
-        fxmlLoader.setLocation(fileUrl);
+        fxmlLoader.setLocation(habitTracker);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/HabitTracker/resources/HabitTracker.css").toExternalForm());
-        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        view.getStylesheets().add(habitTrackerCss.toExternalForm());
+        view.getStylesheets().add(globalCss.toExternalForm());
         panePrincipale.setCenter(view);
     } 
     
@@ -221,11 +255,10 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/GoalManager/resources/GoalManager.fxml");
-        fxmlLoader.setLocation(fileUrl);
+        fxmlLoader.setLocation(goalManager);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/GoalManager/resources/GoalManager.css").toExternalForm());
-        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        view.getStylesheets().add(goalManagerCss.toExternalForm());
+        view.getStylesheets().add(globalCss.toExternalForm());
         panePrincipale.setCenter(view);
     } 
     
@@ -244,11 +277,10 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/resources/ReportTempo.fxml");
-        fxmlLoader.setLocation(fileUrl);
+        fxmlLoader.setLocation(reportTempo);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/resources/Dashboard.css").toExternalForm());
-        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        view.getStylesheets().add(dashboardCss.toExternalForm());
+        view.getStylesheets().add(globalCss.toExternalForm());
         panePrincipale.setCenter(view);
         
     }
@@ -263,11 +295,10 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Impostazioni/resources/Impostazioni.fxml");
-        fxmlLoader.setLocation(fileUrl);
+        fxmlLoader.setLocation(impostazioni);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/Impostazioni/resources/Impostazioni.css").toExternalForm());
-        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        view.getStylesheets().add(impostazioniCss.toExternalForm());
+        view.getStylesheets().add(globalCss.toExternalForm());
         panePrincipale.setCenter(view);
     } 
     
@@ -286,11 +317,10 @@ public class AppController {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fileUrl = Main.class.getResource("/main/Views/Dashboard/resources/ReportAbitudini.fxml");
-        fxmlLoader.setLocation(fileUrl);
+        fxmlLoader.setLocation(reportAbitudini);
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(getClass().getResource("/main/Views/Dashboard/resources/ReportAbitudini.css").toExternalForm());
-        view.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+        view.getStylesheets().add(reportAbitudiniCss.toExternalForm());
+        view.getStylesheets().add(globalCss.toExternalForm());
         panePrincipale.setCenter(view);
     }
     

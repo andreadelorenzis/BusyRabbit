@@ -17,10 +17,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import main.Controllers.AppController;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.App.classes.AppViewImpl;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
@@ -91,7 +91,7 @@ public class PageController {
     
     @FXML
     private void apriPaginaLogin(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/resources/Login.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         
@@ -105,7 +105,7 @@ public class PageController {
     
     @FXML
     private void apriPaginaRegistrazione(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/Registrazione.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/resources/Registrazione.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         
@@ -121,7 +121,7 @@ public class PageController {
     	if(app.getAccessoEffettuato()) {
         	// carica la schermata principale
         	FXMLLoader loader = new FXMLLoader();
-        	URL fileUrl = Main.class.getResource("/main/Views/App.fxml");
+        	URL fileUrl = Main.class.getResource("/main/Views/App/resources/App.fxml");
         	loader.setLocation(fileUrl);
         	Pane root = loader.load();
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -132,7 +132,7 @@ public class PageController {
             appContainer = pane;
             
             // passa l'istanza di app con i dati al controller dell'app
-            AppController controller = loader.getController();
+            AppViewImpl controller = loader.getController();
             controller.setAppData(app);
             
             //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
