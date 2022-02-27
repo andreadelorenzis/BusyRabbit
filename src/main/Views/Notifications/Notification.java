@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import main.Main;
+import main.Views.LoaderRisorse;
 
 public class Notification {
 	
@@ -104,15 +105,15 @@ public class Notification {
         if(tipo == NotificationType.ERROR) {
         	pane.setStyle("-fx-background-color: #A93C3A;");
         	label.setTextFill(Color.web("#E9817F"));
-        	closeImg.setImage(new Image(Main.class.getResource("/main/risorse/close-red.png").toString()));
+        	closeImg.setImage(LoaderRisorse.closeRed);
         } else if(tipo == NotificationType.SUCCESS) {
         	pane.setStyle("-fx-background-color: #33726A;");
         	label.setTextFill(Color.web("#65E1D2"));
-        	closeImg.setImage(new Image(Main.class.getResource("/main/risorse/close-green.png").toString()));
+        	closeImg.setImage(LoaderRisorse.closeGreen);
         } else if(tipo == NotificationType.INFO) {
         	pane.setStyle("-fx-background-color: #866E2A;");
         	label.setTextFill(Color.web("#EACC7B"));
-        	closeImg.setImage(new Image(Main.class.getResource("/main/risorse/close-yellow.png").toString()));
+        	closeImg.setImage(LoaderRisorse.closeYellow);
         }
         
         // crea un nuovo stage
@@ -122,8 +123,7 @@ public class Notification {
     	stage.initModality(Modality.WINDOW_MODAL);
         Scene scene = new Scene(pane, LARGHEZZA, ALTEZZA);
         scene.setFill(Color.TRANSPARENT);
-        String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
-        scene.getStylesheets().add(css);
+        scene.getStylesheets().add(LoaderRisorse.globalCss);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setAlwaysOnTop(true); 

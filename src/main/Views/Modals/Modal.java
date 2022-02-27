@@ -34,6 +34,7 @@ import javafx.stage.StageStyle;
 import main.Main;
 import main.Controllers.GoalManager.GoalManagerControllerImpl;
 import main.Controllers.Helpers.Helper;
+import main.Views.LoaderRisorse;
 import main.Views.App.classes.PageViewImpl;
 import main.Views.Notifications.NotificationType;
 import main.Views.Notifications.NotificationsManager;
@@ -42,8 +43,6 @@ public class Modal {
 	
 	@FXML
 	private BorderPane modal;
-	
-	public final URL modalCss = getClass().getResource("/main/Views/Modals/resources/Modal.css");
 	
 	public static final int LARGHEZZA = 800;
 	public static final int ALTEZZA = 600;
@@ -120,7 +119,7 @@ public class Modal {
 		
 		// crea la view del modal
         AnchorPane pane = new AnchorPane();
-        pane.getStylesheets().add(modalCss.toExternalForm());
+        pane.getStylesheets().add(LoaderRisorse.modalCss);
         pane.getStyleClass().add("modal");
         BorderPane container = new BorderPane();
         container.getStyleClass().add("modal-container");
@@ -176,7 +175,7 @@ public class Modal {
         scroll.setHbarPolicy(ScrollBarPolicy.NEVER);
         scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         scroll.setContent(view);
-        view.getStylesheets().add(modalCss.toExternalForm());
+        view.getStylesheets().add(LoaderRisorse.modalCss);
         container.setCenter(scroll);
         
         // modal footer

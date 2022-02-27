@@ -47,6 +47,7 @@ import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.Item;
+import main.Views.LoaderRisorse;
 import main.Views.GoalManager.interfaces.GoalManagerView;
 import main.Views.Modals.Modal;
 import main.Views.Notifications.Notification;
@@ -62,14 +63,6 @@ public class GoalManagerViewImpl implements GoalManagerView {
     private VBox boxObiettivi;    
     @FXML
     private BorderPane paginaAzioni;    
-    
-    /*
-     * Risorse utilizzate
-     */
-    private final URL editorObiettivi = Main.class.getResource("/main/Views/GoalManager/resources/EditorObiettivi.fxml");
-    private final URL editorAzioni = Main.class.getResource("/main/Views/GoalManager/resources/EditorAzioni.fxml");
-    private final URL goalManagerCss = Main.class.getResource("/main/Views/GoalManager/resources/GoalManager.css");
-    private final URL globalCss = Main.class.getResource("/main/Globall.css");
     
     /*
      * Observer della view
@@ -372,10 +365,10 @@ public class GoalManagerViewImpl implements GoalManagerView {
     	
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(editorObiettivi);
+    	fxmlLoader.setLocation(LoaderRisorse.editorObiettivi);
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(goalManagerCss.toExternalForm());
-        editor.getStylesheets().add(globalCss.toExternalForm());  
+        editor.getStylesheets().add(LoaderRisorse.goalManagerCss);
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
         
         // imposta il titolo del dialog
@@ -453,10 +446,10 @@ public class GoalManagerViewImpl implements GoalManagerView {
     	
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(editorAzioni);
+    	fxmlLoader.setLocation(LoaderRisorse.editorAzioni);
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(goalManagerCss.toExternalForm());
-        editor.getStylesheets().add(globalCss.toExternalForm());  
+        editor.getStylesheets().add(LoaderRisorse.goalManagerCss);
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
         
         // imposta titolo

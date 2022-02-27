@@ -39,6 +39,7 @@ import javafx.stage.StageStyle;
 import main.Main;
 import main.Controllers.Helpers.Helper;
 import main.Views.Colore;
+import main.Views.LoaderRisorse;
 import main.Views.Modals.Modal;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
@@ -109,15 +110,6 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     private Button pomoBtn;
     @FXML
     private Button cronoBtn;
-	
-    /*
-     * Risorse utilizzate
-     */
-    private final URL editorAttività = Main.class.getResource("/main/Views/TimeTracker/resources/EditorAttività.fxml");
-    private final URL editorTimer = Main.class.getResource("/main/Views/TimeTracker/resources/ImpostazioniTimer.fxml");
-    private final URL editorProgetti = Main.class.getResource("/main/Views/TimeTracker/resources/EditorProgetto.fxml");
-    private final URL timeTrackerCss = Main.class.getResource("/main/Views/TimeTracker/resources/TimeTracker.css");
-    private final URL globalCss = Main.class.getResource("/main/Globall.css");
     
     /*
      * Observer di questa view
@@ -217,10 +209,10 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     	
     	// crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(editorAttività);
+    	fxmlLoader.setLocation(LoaderRisorse.editorAttività);
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(timeTrackerCss.toExternalForm());
-        editor.getStylesheets().add(globalCss.toExternalForm());  
+        editor.getStylesheets().add(LoaderRisorse.timeTrackerCss);
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
         
         // ottiene il controller e imposta l'attività da modificare
@@ -268,10 +260,10 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     
     private void apriEditorProgetto(IProgetto progetto, boolean aggiunta) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(editorProgetti);
+    	fxmlLoader.setLocation(LoaderRisorse.editorProgetti);
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(timeTrackerCss.toExternalForm());
-        editor.getStylesheets().add(globalCss.toExternalForm());  
+        editor.getStylesheets().add(LoaderRisorse.timeTrackerCss);
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
     	
     	if(aggiunta) {
@@ -590,8 +582,8 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
 	    	stage.initModality(Modality.WINDOW_MODAL);
 	        Scene scene = new Scene(menuProgetti, 250, 320);
 	        scene.setFill(Color.TRANSPARENT);
-	        String css = globalCss.toExternalForm();
-	        String css2 = timeTrackerCss.toExternalForm();
+	        String css = LoaderRisorse.globalCss;
+	        String css2 = LoaderRisorse.timeTrackerCss;
 	        scene.getStylesheets().addAll(css, css2);
 	        stage.setResizable(false);
 	        stage.setScene(scene);
@@ -829,10 +821,10 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(editorTimer);
+    	fxmlLoader.setLocation(LoaderRisorse.editorTimer);
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(timeTrackerCss.toExternalForm());
-        editor.getStylesheets().add(globalCss.toExternalForm());  
+        editor.getStylesheets().add(LoaderRisorse.timeTrackerCss);
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
     	modal.setTitolo("Imposta pomodoro timer");
         

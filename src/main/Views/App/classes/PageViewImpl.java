@@ -23,6 +23,7 @@ import main.Controllers.App.PageControllerImpl;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.LoaderRisorse;
 import main.Views.App.interfaces.PageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
@@ -95,28 +96,20 @@ public class PageViewImpl implements PageView {
     
     @FXML
     private void apriPaginaLogin(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/resources/Login.fxml"));
+        Parent root = FXMLLoader.load(LoaderRisorse.login);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        
-        //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-        String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
-        scene.getStylesheets().add(css);
-        
+        scene.getStylesheets().add(LoaderRisorse.globalCss);
         stage.setScene(scene);
         stage.show();
     }
     
     @FXML
     private void apriPaginaRegistrazione(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/main/Views/Account/resources/Registrazione.fxml"));
+        Parent root = FXMLLoader.load(LoaderRisorse.registrazione);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        
-        //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-        String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
-        scene.getStylesheets().add(css);
-        
+        scene.getStylesheets().add(LoaderRisorse.globalCss);
         stage.setScene(scene);
         stage.show();
     } 
@@ -125,12 +118,11 @@ public class PageViewImpl implements PageView {
     	if(app.getAccessoEffettuato()) {
         	// carica la schermata principale
         	FXMLLoader loader = new FXMLLoader();
-        	URL fileUrl = Main.class.getResource("/main/Views/App/resources/App.fxml");
-        	loader.setLocation(fileUrl);
+        	loader.setLocation(LoaderRisorse.app);
         	Pane root = loader.load();
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
-            root.getStylesheets().add(getClass().getResource("/main/Globall.css").toExternalForm());
+            root.getStylesheets().add(LoaderRisorse.globalCss);
             
             AnchorPane pane = (AnchorPane) root;
             appContainer = pane;
@@ -138,10 +130,8 @@ public class PageViewImpl implements PageView {
             // passa l'istanza di app con i dati al controller dell'app
             AppViewImpl controller = loader.getController();
             controller.setAppData(app);
-            
-            //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-            String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
-            scene.getStylesheets().add(css);
+
+            scene.getStylesheets().add(LoaderRisorse.globalCss);
             
             Rectangle2D dimSchermo = Screen.getPrimary().getVisualBounds();
             

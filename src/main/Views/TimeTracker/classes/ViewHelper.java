@@ -14,12 +14,10 @@ import javafx.scene.shape.Circle;
 import main.Main;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
+import main.Views.LoaderRisorse;
 
 public class ViewHelper {
-	public static Image dotsIcon = new Image(Main.class.getResource("/main/risorse/plus.png").toString());
-	public static Image plusIcon = new Image(Main.class.getResource("/main/risorse/plus.png").toString());
-	public static Image arrowIcon = new Image(Main.class.getResource("/main/risorse/arrow.png").toString());
-    
+	
 	public static BorderPane creaPaneProgetto(IProgetto progetto) {
 		
 		// crea contenitore progetto
@@ -147,7 +145,7 @@ public class ViewHelper {
         	arrow.setRotate(90);
         	arrow.getStyleClass().add("right-arrow");
         }
-        arrow.setImage(arrowIcon);
+        arrow.setImage(LoaderRisorse.arrowIcon);
         BorderPane.setAlignment(arrow, Pos.CENTER);
         return arrow;
     }

@@ -30,6 +30,7 @@ import main.Models.habittracker.classes.HabitTracker;
 import main.Models.habittracker.classes.SessionHabit;
 import main.Models.habittracker.classes.SimpleHabit;
 import main.Models.habittracker.interfaces.IHabit;
+import main.Views.LoaderRisorse;
 import main.Views.HabitTracker.interfaces.HabitTrackerView;
 import main.Views.Modals.Modal;
 import main.Views.Notifications.Notification;
@@ -45,10 +46,6 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     private Label giornaliereBtn;
     @FXML
     private Label tutteBtn;
-    
-    private final URL editorAbitudine = Main.class.getResource("/main/Views/HabitTracker/resources/EditorAbitudine.fxml");
-    private final URL habitTrackerCss = Main.class.getResource("/main/Views/HabitTracker/resources/HabitTracker.css");
-    private final URL globalCss = Main.class.getResource("/main/Globall.css");
     
     private IHabit abitudineCliccata = null;
     
@@ -297,10 +294,10 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(editorAbitudine);
+    	fxmlLoader.setLocation(LoaderRisorse.editorAbitudine);
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(habitTrackerCss.toExternalForm());
-        editor.getStylesheets().add(globalCss.toExternalForm());  
+        editor.getStylesheets().add(LoaderRisorse.habitTrackerCss);
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
     	EditorAbitudineViewImpl controller = fxmlLoader.getController();
         

@@ -33,6 +33,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import main.Models.accountmanager.classes.App;
 import main.Models.accountmanager.interfaces.IApp;
+import main.Views.LoaderRisorse;
 import main.Views.App.classes.PageViewImpl;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
@@ -51,8 +52,7 @@ public class Main extends Application {
         try {
             // Carica la pagina di login.
         	FXMLLoader fxmlLoader = new FXMLLoader();
-        	URL fileUrl = Main.class.getResource("/main/Views/Account/resources/Login.fxml");
-        	fxmlLoader.setLocation(fileUrl);
+        	fxmlLoader.setLocation(LoaderRisorse.login);
         	Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 650, 600);
             
@@ -62,12 +62,8 @@ public class Main extends Application {
             controller.setApp(app);
             
             // Aggiunge l'icona.
-            Image icon = new Image("/main/logo.png");
-            primaryStage.getIcons().add(icon);
-            
-            //scene.getStylesheets().add(getClass().getResource("Registrazione.css").toExternalForm());
-            String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
-            scene.getStylesheets().add(css);
+            primaryStage.getIcons().add(LoaderRisorse.logoImg);
+            scene.getStylesheets().add(LoaderRisorse.globalCss);
             
             primaryStage.setResizable(false);
             primaryStage.setTitle("BusyRabbit");
