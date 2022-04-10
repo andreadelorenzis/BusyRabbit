@@ -270,5 +270,16 @@ public class Habit implements IHabit {
 	public Map<Integer, List<Integer>> getYearData() {
 		return yearRecords;
 	}
-
+	
+    public boolean equalss(Object obj) {
+  	      if (obj == this) {
+  	         return true;
+  	      }
+  	      if (!(obj instanceof Habit)) {
+  	         return false;
+  	      }
+  	    
+  	      IHabit o = (IHabit) obj;
+  	      return this.id.equals(o.getId());
+   }
 }
