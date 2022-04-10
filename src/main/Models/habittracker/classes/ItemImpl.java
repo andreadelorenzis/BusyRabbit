@@ -59,5 +59,16 @@ public class ItemImpl implements Item {
 	public void setHabit(ISimpleHabit habit) {
 		this.habit = habit;
 	}
-
+	
+	@Override
+    public boolean equals(Object obj) {
+  	      if (obj == this) {
+  	         return true;
+  	      }
+  	      if (!(obj instanceof Item)) {
+  	         return false;
+  	      }
+  	      Item o = (Item) obj;
+  	      return this.id.equals(o.getId());
+   }
 }
