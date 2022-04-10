@@ -38,10 +38,7 @@ import main.Views.App.classes.PageViewImpl;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
-/**
- *
- * @author Mars_DB
- */
+
 public class Main extends Application { 
     
     public static LocalDate dataUltimoAccesso;

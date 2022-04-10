@@ -23,14 +23,14 @@
                      <children>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@/main/risorse/menu.png" />
+                              <Image url="@/main/views/risorse/menu.png" />
                            </image>
                         </ImageView>
                      </children>
                   </HBox>
                   <ImageView fitHeight="40.0" fitWidth="40.0">
                      <image>
-                        <Image url="@/main/risorse/logo.png" />
+                        <Image url="@/main/views/risorse/logo.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -62,7 +62,7 @@
                      <children>
                         <ImageView fx:id="timeImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@/main/risorse/clock-white.png" />
+                              <Image url="@/main/views/risorse/clock-white.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="20.0" right="15.0" />
@@ -88,7 +88,7 @@
                      <children>
                         <ImageView fx:id="goalImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@/main/risorse/darts.png" />
+                              <Image url="@/main/views/risorse/darts.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="20.0" right="15.0" />
@@ -108,7 +108,7 @@
                      <children>
                         <ImageView fx:id="habitImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@/main/risorse/refresh.png" />
+                              <Image url="@/main/views/risorse/refresh.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="20.0" right="15.0" />
@@ -136,7 +136,7 @@
                      <children>
                         <ImageView fx:id="dashboardImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@/main/risorse/dashboard.png" />
+                              <Image url="@/main/views/risorse/dashboard.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="20.0" right="15.0" />
@@ -152,7 +152,7 @@
                         </Label>
                         <ImageView fx:id="dashboardArrow" fitHeight="14.0" fitWidth="14.0">
                            <image>
-                              <Image url="@/main/risorse/arrow-down.png" />
+                              <Image url="@/main/views/risorse/arrow-down.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="15.0" top="2.0" />
@@ -180,7 +180,7 @@
                      <children>
                         <ImageView fx:id="impostazioniImg" fitHeight="20.0" fitWidth="20.0">
                            <image>
-                              <Image url="@/main/risorse/settings.png" />
+                              <Image url="@/main/views/risorse/settings.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="20.0" right="15.0" />
