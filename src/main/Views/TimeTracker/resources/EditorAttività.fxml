@@ -60,7 +60,7 @@
                                  <children>
                                     <ImageView fitHeight="15.0" fitWidth="15.0">
                                        <image>
-                                          <Image url="@../risorse/plus.png" />
+                                          <Image url="@/main/views/risorse/plus.png" />
                                        </image>
                                        <HBox.margin>
                                           <Insets right="10.0" />
