@@ -18,9 +18,10 @@ import main.Giorno;
 import main.Main;
 import main.Models.goalmanager.classes.Obiettivo;
 import main.Models.goalmanager.interfaces.IObiettivo;
+import main.Views.LoaderRisorse;
 
 public class ViewHelper {
-	public static Image arrowIcon = new Image(Main.class.getResource("/main/risorse/arrow-down-white.png").toString());
+	public static Image arrowIcon = LoaderRisorse.arrowIcon;
 	
 	public static HBox creaSottoObiettiviBtn(int size, HBox box) {
 		

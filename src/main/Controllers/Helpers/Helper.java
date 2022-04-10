@@ -9,11 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import main.Main;
+import main.Views.LoaderRisorse;
 
 public class Helper {
-	public static Image dotsIcon = new Image(Main.class.getResource("/main/risorse/dots.png").toString());
-	public static Image plusIcon = new Image(Main.class.getResource("/main/risorse/plus.png").toString());
-	public static Image closeIcon = new Image(Main.class.getResource("/main/risorse/close.png").toString());
+	public static Image dotsIcon = LoaderRisorse.dotsIcon;
+	public static Image plusIcon = LoaderRisorse.plusIcon;
+	public static Image closeIcon = LoaderRisorse.close;
 
     /**
      * Crea pulsante di aggiunta

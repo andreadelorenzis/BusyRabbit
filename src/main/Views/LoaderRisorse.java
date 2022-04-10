@@ -55,6 +55,7 @@ public class LoaderRisorse {
 	public static final Image dotsIcon = new Image(Main.class.getResource(PATH_IMGS + "dots.png").toString());
 	public static final Image plusIcon = new Image(Main.class.getResource(PATH_IMGS + "plus.png").toString());
 	public static final Image arrowIcon = new Image(Main.class.getResource(PATH_IMGS + "arrow.png").toString());
+	public static final Image close = new Image(Main.class.getResource(PATH_IMGS + "close.png").toString());
 	public static final Image closeRed = new Image(Main.class.getResource(PATH_IMGS + "close-red.png").toString());
 	public static final Image closeGreen = new Image(Main.class.getResource(PATH_IMGS + "close-green.png").toString());
 	public static final Image closeYellow = new Image(Main.class.getResource(PATH_IMGS + "close-yellow.png").toString());
