@@ -271,14 +271,14 @@ public class Habit implements IHabit {
 		return yearRecords;
 	}
 	
-    public boolean equalss(Object obj) {
+	@Override
+    public boolean equals(Object obj) {
   	      if (obj == this) {
   	         return true;
   	      }
   	      if (!(obj instanceof Habit)) {
   	         return false;
   	      }
-  	    
   	      IHabit o = (IHabit) obj;
   	      return this.id.equals(o.getId());
    }
