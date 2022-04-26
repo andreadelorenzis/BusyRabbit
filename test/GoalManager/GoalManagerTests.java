@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import java.lang.reflect.Field;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-import main.Giorno;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.classes.GoalManager;
@@ -63,11 +63,11 @@ public class GoalManagerTests {
         obiettivoAzione.collegaAzione(new AzioneScomponibile("Leggere 10 pagine",
                                                              5,
                                                              LocalDate.of(2022, Month.JANUARY, 2),
-                                                             new ArrayList<>(List.of(Giorno.TUESDAY))));
+                                                             new ArrayList<>(List.of(DayOfWeek.TUESDAY))));
         obiettivoAzione.collegaAzione(new AzioneSessione("Studiare 2 ore",
                                                          2,
                                                          LocalDate.of(2022, Month.JANUARY, 2),
-                                                         new ArrayList<>(List.of(Giorno.FRIDAY, Giorno.SUNDAY)),
+                                                         new ArrayList<>(List.of(DayOfWeek.FRIDAY, DayOfWeek.SUNDAY)),
                                                          7200));
     }
     

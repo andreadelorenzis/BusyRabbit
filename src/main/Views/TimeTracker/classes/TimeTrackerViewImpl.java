@@ -864,10 +864,10 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         if(this.attivit‡Text.getText() == "") {
         	new Notification("Perfavore inserisci il nome dell'attivit‡.", NotificationType.ERROR).show();
             return;
-        } else if (this.orarioText1.getText() == "" || this.orarioText2.getText() == "") {
+        } else if (this.orarioText1.getText() == "" && this.orarioText2.getText() == "") {
         	new Notification("Perfavore inserisci l'orario di inizio attivit‡.", NotificationType.ERROR).show();
             return;
-        } else if (this.durataText1.getText() == "" || this.durataText2.getText() == "" || this.durataText3.getText() == "") {
+        } else if (this.durataText1.getText() == "" && this.durataText2.getText() == "" && this.durataText3.getText() == "") {
         	new Notification("Perfavore inserisci la durata dell'attivit‡.", NotificationType.ERROR).show();
             return;
         } else if(this.dataManuale.getValue() == null) {
@@ -876,11 +876,31 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         }
         String nome = attivit‡Text.getText();
         LocalDate data = dataManuale.getValue();
-        int ore = Integer.parseInt(durataText1.getText());
-        int minuti = Integer.parseInt(durataText2.getText());
-        int secondi = Integer.parseInt(durataText3.getText());
-        int ora1 = Integer.parseInt(this.orarioText1.getText());
-        int ora2 = Integer.parseInt(this.orarioText2.getText());
+        String sOre = durataText1.getText();
+        String sMinuti = durataText2.getText();
+        String sSecondi = durataText3.getText();
+        int ore = 0;
+        int minuti = 0;
+        int secondi = 0;
+        if(!sOre.isBlank()) {
+        	ore = Integer.parseInt(durataText1.getText());
+        }
+        if(!sMinuti.isBlank()) {
+        	minuti = Integer.parseInt(durataText2.getText());
+        }
+        if(!sSecondi.isBlank()) {
+        	secondi = Integer.parseInt(durataText3.getText());
+        }
+        String sOra1 = this.orarioText1.getText();
+        String sOra2 = this.orarioText2.getText();
+        int ora1 = 0;
+        int ora2 = 0;
+        if(!sOra1.isBlank()) {
+        	ora1 = Integer.parseInt(this.orarioText1.getText());
+        }
+        if(!sOra2.isBlank()) {
+        	ora2 = Integer.parseInt(this.orarioText2.getText());
+        }
         long durata = ore * 3600 + minuti * 60 + secondi;
         LocalTime ora = LocalTime.of(ora1, ora2);
         Attivit‡ a = new Attivit‡(nome, data, ora, durata); 

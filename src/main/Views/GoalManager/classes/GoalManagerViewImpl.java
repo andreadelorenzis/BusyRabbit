@@ -2,13 +2,13 @@ package main.Views.GoalManager.classes;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import main.Giorno;
 import main.Main;
 import main.Controllers.GoalManager.GoalManagerController;
 import main.Controllers.GoalManager.GoalManagerControllerImpl;
@@ -484,7 +483,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
         	String nome = controller.getNome();
         	int valore = controller.getValore();
         	LocalDate data = controller.getData();
-        	List<Giorno> giorni = controller.getGiorni();
+        	List<DayOfWeek> giorni = controller.getGiorni();
         	boolean isTipoSessione = controller.isTipoSessione();
         	int durata = controller.getDurata();
             

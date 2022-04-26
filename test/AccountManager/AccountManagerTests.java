@@ -3,12 +3,12 @@ package AccountManager;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
-
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
-
 import main.Models.accountmanager.classes.App;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
@@ -32,8 +32,7 @@ import main.Views.Colore;
  * 
  */
 class AccountManagerTests {	
-	
-	IApp app = null;
+	App app = null;
 	
 	private void accedi(IApp app) {
 		// accede all'account presente nel database
@@ -43,10 +42,17 @@ class AccountManagerTests {
 			e.printStackTrace();
 		}
 	}
+	
+    @Before
+    public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+    	Field instance = App.class.getDeclaredField("app");
+    	instance.setAccessible(true);
+    	instance.set(instance, null);
+    }
 
 	@Test
 	public void testAccesso() {
-		app = new App();
+		app = App.getInstance();
 		
 		// prova ad accedere ad un account sbagliando email
 		assertThrows(WrongCredentialsException.class, () -> app.accedi("test@gmail.co", "pass123"));
@@ -66,7 +72,7 @@ class AccountManagerTests {
 	
 	@Test
 	public void testRegistrazione() {
-		app = new App();
+		app = App.getInstance();
 		
 		// prova a creare un nuovo account, ma le due password non corrispondono
 		assertThrows(WrongCredentialsException.class, () -> app.registraAccount("Andre", "andre@gmail.com", "pass123", "pass124"));
@@ -95,7 +101,7 @@ class AccountManagerTests {
 	
 	@Test 
 	public void testEliminazione() {
-		app = new App();
+		app = App.getInstance();
 		
 		// crea un nuovo account
 		try {
@@ -122,7 +128,7 @@ class AccountManagerTests {
 	 */
 	@Test
 	public void testLetturaTimeTracker() {
-		app = new App();
+		app = App.getInstance();
 		ITimeTracker tt = app.getTT();
 		
 		// accede all'account presente nel database
@@ -156,7 +162,7 @@ class AccountManagerTests {
 	 */
 	@Test
 	public void testLetturaObiettivi() {
-		app = new App();
+		app = App.getInstance();
 		IGoalManager gm = app.getGM();
 		
 		// accede all'account presente nel database
@@ -191,7 +197,7 @@ class AccountManagerTests {
 	
 	@Test 
 	public void testLetturaAbitudini() {
-		app = new App();
+		app = App.getInstance();
 		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
@@ -217,7 +223,7 @@ class AccountManagerTests {
 	
 	@Test
 	public void testLetturaStoricoAbitudini() {
-		app = new App();
+		app = App.getInstance();
 		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database

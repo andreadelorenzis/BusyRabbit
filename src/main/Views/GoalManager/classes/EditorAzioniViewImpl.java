@@ -1,11 +1,9 @@
 package main.Views.GoalManager.classes;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -16,9 +14,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import main.Giorno;
-import main.Models.goalmanager.classes.Azione;
-import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IAzioneSessione;
@@ -55,7 +50,7 @@ public class EditorAzioniViewImpl {
     
     // giorni della settimana selezionati
     private boolean lun, mar, mer, gio, ven, sab, dom = false;
-    private List<Giorno> giorni = new ArrayList<>();
+    private List<DayOfWeek> giorni = new ArrayList<>();
     
     @FXML
     private void initialize() {
@@ -84,31 +79,31 @@ public class EditorAzioniViewImpl {
         switch(btnGiornoCliccato) {
             case "lunBtn": 
                 toggleBtn(lunBtn, lun);
-                giorni.add(Giorno.MONDAY);
+                giorni.add(DayOfWeek.MONDAY);
                 break;
             case "marBtn": 
             	toggleBtn(marBtn, mar);
-            	giorni.add(Giorno.TUESDAY);
+            	giorni.add(DayOfWeek.TUESDAY);
             	break;
             case "merBtn": 
             	toggleBtn(merBtn, mer);
-            	giorni.add(Giorno.WEDNESDAY);
+            	giorni.add(DayOfWeek.WEDNESDAY);
             	break;
             case "gioBtn": 
             	toggleBtn(gioBtn, gio);
-            	giorni.add(Giorno.THURSDAY);
+            	giorni.add(DayOfWeek.THURSDAY);
             	break;
             case "venBtn": 
             	toggleBtn(venBtn, ven);
-            	giorni.add(Giorno.FRIDAY);
+            	giorni.add(DayOfWeek.FRIDAY);
             	break;
             case "sabBtn": 
             	toggleBtn(sabBtn, sab);
-            	giorni.add(Giorno.SATURDAY);
+            	giorni.add(DayOfWeek.SATURDAY);
             	break;
             case "domBtn": 
             	toggleBtn(domBtn, dom);
-            	giorni.add(Giorno.SUNDAY);
+            	giorni.add(DayOfWeek.SUNDAY);
             	break;
         }
     }
@@ -125,7 +120,7 @@ public class EditorAzioniViewImpl {
     public void setAzione(IAzione azione) {
         this.azioneField.setText(azione.getNome());
         this.valoreSpinner.getValueFactory().setValue(azione.getIncremento());
-        List<Giorno> giorni = azione.getGiorniRipetizione();
+        List<DayOfWeek> giorni = azione.getGiorniRipetizione();
         for(int i = 0; i < giorni.size(); i++) {
             switch(giorni.get(i)) {
                 case MONDAY: 
@@ -169,7 +164,7 @@ public class EditorAzioniViewImpl {
     	return valoreSpinner.getValue();
     }
     
-    public List<Giorno> getGiorni() {
+    public List<DayOfWeek> getGiorni() {
     	return giorni;
     }
     

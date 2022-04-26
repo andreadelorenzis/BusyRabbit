@@ -7,8 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import main.Giorno;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.classes.ItemImpl;
@@ -204,11 +202,11 @@ public class AppReader {
 				int giorno = Integer.parseInt(params[4]);
 				int mese = Integer.parseInt(params[5]);
 				int anno = Integer.parseInt(params[6]);
-				List<Giorno> giorni = new ArrayList<>();
+				List<DayOfWeek> giorni = new ArrayList<>();
 				if(!params[7].isBlank()) {
 					String[] stringheGiorni = params[7].split("-");
 					for(int i = 0; i < stringheGiorni.length; i++) {
-						giorni.add(Giorno.valueOf(stringheGiorni[i]));
+						giorni.add(DayOfWeek.valueOf(stringheGiorni[i]));
 					}
 				}
 				String id = params[8];
@@ -231,10 +229,10 @@ public class AppReader {
 				int giorno = Integer.parseInt(params[4]);
 				int mese = Integer.parseInt(params[5]);
 				int anno = Integer.parseInt(params[6]);
-				List<Giorno> giorni = new ArrayList<>();
+				List<DayOfWeek> giorni = new ArrayList<>();
 				String[] stringheGiorni = params[7].split("-");
 				for(int i = 0; i < stringheGiorni.length; i++) {
-					giorni.add(Giorno.valueOf(stringheGiorni[i]));
+					giorni.add(DayOfWeek.valueOf(stringheGiorni[i]));
 				}
 				int durata = Integer.parseInt(params[8]);
 				String id = params[9];

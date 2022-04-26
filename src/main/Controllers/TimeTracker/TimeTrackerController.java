@@ -2,9 +2,7 @@ package main.Controllers.TimeTracker;
 
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
-import main.Models.timetracker.interfaces.ITimeTracker;
 import main.Models.timetracker.interfaces.ITrackable;
-import main.Views.Colore;
 
 public interface TimeTrackerController extends ITrackable {
 	

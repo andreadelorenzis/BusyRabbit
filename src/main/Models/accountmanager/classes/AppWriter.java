@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Map;
-import main.Giorno;
 import main.Models.goalmanager.classes.AzioneScomponibile;
 import main.Models.goalmanager.classes.AzioneSessione;
 import main.Models.goalmanager.classes.ObiettivoAzione;
@@ -105,12 +104,12 @@ public class AppWriter {
 							stringaObiettivo = "obiettivo-azione" + "," + true + "," + idPadre
 							+ "," + oa.getNome() + "," + oa.getDescrizione() + "," + oa.getData().getDayOfMonth()
 							+ "," + oa.getData().getMonthValue() + "," + oa.getData().getYear() 
-							+ "," + oa.getValoreTotale() + "," + oa.getUnita() + "," + oa.getId() + "\n";
+							+ "," + oa.getValoreTotale() + "," + oa.getUnità() + "," + oa.getId() + "\n";
 						} else {
 							stringaObiettivo = "obiettivo-azione" + "," + false + "," + oa.getNome() + 
 									"," + oa.getDescrizione() + "," + oa.getData().getDayOfMonth()
 									+ "," + oa.getData().getMonthValue() + "," + oa.getData().getYear() 
-									+ "," + oa.getValoreTotale() + "," + oa.getUnita() + "," + oa.getId() + "\n";
+									+ "," + oa.getValoreTotale() + "," + oa.getUnità() + "," + oa.getId() + "\n";
 						}
 						
 						writer.write(stringaObiettivo);
@@ -120,7 +119,7 @@ public class AppWriter {
 							String stringaAzione = "";
 							String stringaGiorni = "";
 							int i = 0;
-							for(Giorno g : a.getGiorniRipetizione()) {
+							for(DayOfWeek g : a.getGiorniRipetizione()) {
 								stringaGiorni += g + "-";
 								if(i == a.getGiorniRipetizione().size() - 1) {
 									stringaGiorni += g;

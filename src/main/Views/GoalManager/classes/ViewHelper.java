@@ -1,9 +1,5 @@
 package main.Views.GoalManager.classes;
 
-
-import java.time.LocalDate;
-import java.util.List;
-
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,17 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import main.Giorno;
-import main.Main;
-import main.Models.goalmanager.classes.Obiettivo;
-import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Views.LoaderRisorse;
 
 public class ViewHelper {
-	public static Image arrowIcon = LoaderRisorse.arrowIcon;
+	public static Image arrowIcon = LoaderRisorse.arrowDownWhiteImg;
 	
 	public static HBox creaSottoObiettiviBtn(int size, HBox box) {
 		

@@ -1,7 +1,6 @@
 package main.Models.goalmanager.classes;
 
 import java.util.UUID;
-import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.Item;
 
 public class ItemImpl implements Item {

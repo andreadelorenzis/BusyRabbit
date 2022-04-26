@@ -4,11 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import main.Giorno;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
-import main.Views.GoalManager.classes.ViewHelper;
 
 public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     
@@ -31,7 +28,7 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     /**
      * L'unit√† di misura del valore di questo obiettivo
      */
-    private String unita;
+    private String unit‡;
 
     //----------------------------- COSTRUTTORI --------------------------------
     /**
@@ -41,10 +38,10 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
      * @param valore
      * @param unita
      */
-    public ObiettivoAzione(String nome, LocalDate data, int valore, String unita) {
+    public ObiettivoAzione(String nome, LocalDate data, int valore, String unit‡) {
     	super(nome, data);
     	this.valoreTotale = valore;
-    	this.unita = unita;
+    	this.unit‡ = unit‡;
     }
     
     /**
@@ -55,10 +52,10 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
      * @param valoreTotale
      * @param unita
      */
-    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unita) {
+    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unit‡) {
         super(nome, descrizione, data);
         this.valoreTotale = valoreTotale;
-    	this.unita = unita;
+    	this.unit‡ = unit‡;
     }
     
     /**
@@ -70,10 +67,10 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
      * @param unita
      * @param id
      */
-    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unita, String id) {
+    public ObiettivoAzione(String nome, String descrizione, LocalDate data, int valoreTotale, String unit‡, String id) {
         super(nome, descrizione, data, id);
         this.valoreTotale = valoreTotale;
-    	this.unita = unita;
+    	this.unit‡ = unit‡;
     }
 
     //--------------------------- METODI PUBBLICI ------------------------------
@@ -127,13 +124,13 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     }
 
     @Override
-    public String getUnita() {
-        return unita;
+    public String getUnit‡() {
+        return unit‡;
     }
 
     @Override
-    public void setUnita(String unita) {
-        this.unita = unita;
+    public void setUnita(String unit‡) {
+        this.unit‡ = unit‡;
     }
 
     @Override

@@ -6,15 +6,11 @@ import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-
-import main.Models.goalmanager.classes.GoalManager;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.classes.TimeTracker;
@@ -89,7 +85,7 @@ public class TimeTrackerTests {
 	 */
 	@Order(1)
 	@Test
-	public void testAttivita() {
+	public void testAttività() {
 		t = TimeTracker.getInstance();
 		inizializza(t);
 		
@@ -314,14 +310,14 @@ public class TimeTrackerTests {
 		t.scegliTracker(TrackerEnum.POMODOROTIMER);
 		IPomodoroTimer tracker = (IPomodoroTimer) t.getTracker();
 		
-		// imposto il timer: sessione 2s, pausa breve 1s, pausa lunga 1s, nCicli 1
-		tracker.setDurataSessione(2);
+		// imposto il timer: sessione 1s, pausa breve 1s, pausa lunga 1s, nCicli 1
+		tracker.setDurataSessione(1);
 		tracker.setDurataPausaBreve(1);
 		tracker.setDurataPausaLunga(1);
 		tracker.setNCicli(1);
 		
 		// le impostazioni del timer sono corrette
-		assertEquals(2, tracker.getDurataSessione());
+		assertEquals(1, tracker.getDurataSessione());
 		assertEquals(1, tracker.getDurataPausaBreve());
 		assertEquals(1, tracker.getDurataPausaLunga());
 		assertEquals(1, tracker.getNCicli());
@@ -333,21 +329,21 @@ public class TimeTrackerTests {
 									7200L,
 									t.getProgetti().get(0)));
 		
-		// Prima sessione, attendo 3 secondi e qualcosa in modo che termini
+		// Prima sessione, attendo 2 secondi e qualcosa in modo che termini
 		try {
-			Thread.sleep(3100);
+			Thread.sleep(2100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
-		// è presente un giorno attività, con un'attività "Studiare", durata 2s, data 5 Gennaio 2021
+		// è presente un giorno attività, con un'attività "Studiare", durata 1s, data 5 Gennaio 2021
 		List<List<IAttività>> giorni = t.getGiorniAttività(1);
 		assertEquals(1, giorni.get(0).size());
 		assertEquals("Studiare", giorni.get(0).get(0).getNome());
 		assertEquals(2021, giorni.get(0).get(0).getData().getYear());
 		assertEquals(Month.JANUARY, giorni.get(0).get(0).getData().getMonth());
 		assertEquals(5, giorni.get(0).get(0).getData().getDayOfMonth());
-		assertEquals(2, giorni.get(0).get(0).getDurata());
+		assertEquals(1, giorni.get(0).get(0).getDurata());
 		
 		// timer in pausa breve (1s) e lunga (1s), attendo 2 secondi e qualcosa
 		try {
@@ -362,19 +358,19 @@ public class TimeTrackerTests {
 		
 		// timer in sessione, attendo 2 secondi e qualcosa
 		try {
-			Thread.sleep(4100);
+			Thread.sleep(3100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
-		// è stata aggiunta un'altra attività, "Studiare", durata 2s, nello stesso giorno 2 Gennaio 2021
+		// è stata aggiunta un'altra attività, "Studiare", durata 1s, nello stesso giorno 2 Gennaio 2021
 		giorni = t.getGiorniAttività(1);
 		assertEquals(2, giorni.get(0).size());
 		assertEquals("Studiare", giorni.get(0).get(1).getNome());
 		assertEquals(2021, giorni.get(0).get(1).getData().getYear());
 		assertEquals(Month.JANUARY, giorni.get(0).get(1).getData().getMonth());
 		assertEquals(5, giorni.get(0).get(1).getData().getDayOfMonth());
-		assertEquals(2, giorni.get(0).get(1).getDurata());
+		assertEquals(1, giorni.get(0).get(1).getDurata());
 		
 		// termino il timer
 		t.terminaTracker();

@@ -10,7 +10,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import main.Models.goalmanager.classes.Obiettivo;
 import main.Models.goalmanager.classes.ObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivo;
 
@@ -59,7 +58,7 @@ public class EditorObiettiviViewImpl {
             	tipoBtn2.setSelected(true);
             	tipoBtn1.setDisable(true);
             	this.formObiettivoMisurabile.setVisible(true);
-                this.unit‡Field.setText(((ObiettivoAzione) obiettivo).getUnita());
+                this.unit‡Field.setText(((ObiettivoAzione) obiettivo).getUnit‡());
                 this.valoreSpinner.getValueFactory().setValue(((ObiettivoAzione) obiettivo).getValoreTotale());
             } else {
             	tipoBtn2.setDisable(true);

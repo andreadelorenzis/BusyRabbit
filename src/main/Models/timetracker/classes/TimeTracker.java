@@ -190,7 +190,6 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 			// aggiungi un nuovo anno
 			anni.put(anno, creaAnno(attività));
 		}
-
 	}
 
 	@Override

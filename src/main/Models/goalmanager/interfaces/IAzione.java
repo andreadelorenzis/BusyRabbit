@@ -4,9 +4,9 @@
  */
 package main.Models.goalmanager.interfaces;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-import main.Giorno;
 
 /**
  * Le azioni collegabili agli ObiettiviAzione. Queste azioni si attivano nei giorni scelti e 
@@ -54,7 +54,7 @@ public interface IAzione {
      * 
      * @return i giorni in cui l'azione si ripete
      */
-    public List<Giorno> getGiorniRipetizione();
+    public List<DayOfWeek> getGiorniRipetizione();
     
     /**
      * 
@@ -72,7 +72,7 @@ public interface IAzione {
      * 
      * @param giorni i giorni in cui l'azione si ripete
      */
-    public void setGiorniRipetizione(List<Giorno> giorni);
+    public void setGiorniRipetizione(List<DayOfWeek> giorni);
     
     /**
      * 

@@ -1,10 +1,10 @@
 package main.Models.goalmanager.classes;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import main.Giorno;
 import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.Item;
 
@@ -24,11 +24,11 @@ public class AzioneScomponibile extends Azione implements IAzioneScomponibile {
      * @param dataInizio 
      * @param giorni 
      */
-    public AzioneScomponibile(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni) {
+    public AzioneScomponibile(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni) {
         super(nome, incremento, dataInizio, giorni);
     }
     
-    public AzioneScomponibile(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni, String id) {
+    public AzioneScomponibile(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, String id) {
         super(nome, incremento, dataInizio, giorni, id);
     }
 

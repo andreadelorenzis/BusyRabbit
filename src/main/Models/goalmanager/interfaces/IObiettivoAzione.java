@@ -55,13 +55,13 @@ public interface IObiettivoAzione extends IObiettivo {
      * 
      * @return l'unit√† di misura dell'obiettivo
      */
-    public String getUnita();
+    public String getUnit‡();
 
     /**
      * 
      * @param unit√† l'unit√† di misura dell'obiettivo
      */
-    public void setUnita(String unita);
+    public void setUnita(String unit‡);
     
     /**
      * 

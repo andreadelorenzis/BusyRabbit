@@ -1,12 +1,11 @@
 package main.Models.goalmanager.classes;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import main.Giorno;
 import main.Models.goalmanager.interfaces.IAzione;
-import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 
 public abstract class Azione implements IAzione {
@@ -30,7 +29,7 @@ public abstract class Azione implements IAzione {
     /**
      * I giorni di ripetizione dell'azione
      */
-    private List<Giorno> giorni = new ArrayList<>();
+    private List<DayOfWeek> giorni = new ArrayList<>();
     
     /**
      * La data di partenza dell'azione
@@ -54,7 +53,7 @@ public abstract class Azione implements IAzione {
      * @param incremento
      * @param dataInizio 
      */
-    public Azione(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni) {
+    public Azione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni) {
         this.nome = nome;
         this.incremento = incremento;
         this.dataInizio = dataInizio;
@@ -62,7 +61,7 @@ public abstract class Azione implements IAzione {
         this.id = UUID.randomUUID().toString();
     }
     
-    public Azione(String nome, int incremento, LocalDate dataInizio, List<Giorno> giorni, String id) {
+    public Azione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, String id) {
         this(nome, incremento, dataInizio, giorni);
         this.id = id;
     }
@@ -106,7 +105,7 @@ public abstract class Azione implements IAzione {
     }
 
     @Override
-    public List<Giorno> getGiorniRipetizione() {
+    public List<DayOfWeek> getGiorniRipetizione() {
         return giorni;
     }
 
@@ -121,13 +120,13 @@ public abstract class Azione implements IAzione {
     }
 
     @Override
-    public void setGiorniRipetizione(List<Giorno> giorni) {
+    public void setGiorniRipetizione(List<DayOfWeek> giorni) {
         this.giorni = giorni;
     }
 
     @Override
     public void setDataInizio(LocalDate date) {
-        this.dataInizio = dataInizio;
+        this.dataInizio = date;
     }
 
     @Override

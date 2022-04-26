@@ -1,15 +1,14 @@
 package main.Models.goalmanager.classes;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import main.Giorno;
 import main.Models.goalmanager.interfaces.IAzione;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
-import main.Views.GoalManager.classes.ViewHelper;
 
 public class GoalManager implements IGoalManager {
     // CAMPI
@@ -28,9 +27,9 @@ public class GoalManager implements IGoalManager {
      * @param giorni la lista di giorni
      * @return se il giorno della data è presente nella lista di giorni
      */
-    public static boolean giornoPresente(LocalDate data, List<Giorno> giorni) {
+    public static boolean giornoPresente(LocalDate data, List<DayOfWeek> giorni) {
         boolean presente = false;
-        for(Giorno giorno : giorni) {
+        for(DayOfWeek giorno : giorni) {
             if(data.getDayOfWeek().toString().equals(giorno.toString())) {
                 presente = true;
             }
