@@ -138,7 +138,7 @@ public class Modal {
     	stage.initModality(Modality.WINDOW_MODAL);
         Scene scene = new Scene(pane, larghezza, altezza);
         scene.setFill(Color.TRANSPARENT);
-        String css = this.getClass().getResource("/main/Globall.css").toExternalForm();
+        String css = LoaderRisorse.globalCss;
         scene.getStylesheets().add(css);
         stage.setResizable(false);
         stage.setScene(scene);

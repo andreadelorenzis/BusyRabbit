@@ -71,7 +71,7 @@ public class Main extends Application {
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent arg0) {
-					app.salvaDati();
+					//app.salvaDati();
 				}
             });
         } catch (IOException ex) {

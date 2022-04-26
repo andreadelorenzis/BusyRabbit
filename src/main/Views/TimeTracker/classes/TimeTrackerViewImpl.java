@@ -301,6 +301,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         	} else {
         		IProgetto progettoModificato = new Progetto(nome, colore);
         		ttc.modificaProgetto(progetto, progettoModificato);
+        		cambiaProgettoCorrente(progettoModificato);
         		new Notification("Progetto modificato", NotificationType.SUCCESS).show();
         	}
         	
@@ -627,7 +628,6 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
                 if(menuForm) {
                 	cambiaProgettoCorrente(TimeTracker.progettoDefault);
                 } else {
-                	
                 	IAttivit‡ copia = getCopiaAttivit‡(a);
                 	IProgetto vecchioProgetto = a.getProgetto();
                 	copia.setProgettoPadre(TimeTracker.progettoDefault);
@@ -638,6 +638,8 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
                 	
                 }
                 chiudiMenuProgetti();
+                stage.close();
+                aggiornaView(TimeTracker.getInstance().getGiorniAttivit‡(ttc.getPagina()), ttc.getPagina());
             }
         });
         
@@ -663,6 +665,8 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
                         	new Notification("Attivit‡ modificata", NotificationType.SUCCESS).show();
                         }
                         chiudiMenuProgetti();
+                        stage.close();
+                        aggiornaView(TimeTracker.getInstance().getGiorniAttivit‡(ttc.getPagina()), ttc.getPagina());
                     }
                 });
                 
@@ -674,13 +678,18 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     
     private void cambiaProgettoCorrente(IProgetto progetto) {
     	this.boxProgetto.getChildren().clear(); 
-    	if(progetto != null) {
+    	IProgetto progettoDefault = TimeTracker.getInstance().progettoDefault;
+    	if(progetto != null && !progetto.equals(progettoDefault)) {
+    		this.progetto = progetto;
+    		
         	// crea il label progetto
         	Label label = ViewHelper.creaLabelProgetto(progetto);
         	
             // aggiunge il label alla view
             this.boxProgetto.getChildren().add(label);
     	} else {
+    		this.progetto = progettoDefault;
+    		
     		HBox box = Helper.creaBtnAggiunta("Progetto");
     		this.boxProgetto.getChildren().add(box);
     	}
@@ -710,6 +719,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     	ttc.scegliCronometro();
         nascondiTrackers();
         formTimeTracker.setVisible(true);
+        visualizzaOrologio(0, 0, 0);
 	}
 
 	@FXML
@@ -782,14 +792,14 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
      */
     @FXML
     private void trackerAvviato() throws IOException {
-    	if(this.attivit‡Text.getText() != "") {
+    	if(attivit‡Text.getText() != "") {
     		
     		// cambia i pulsanti
     		togglePulsantiTracker();
     		
     		// avvia il tracker
-    		String nome = this.attivit‡Text.getText();
-    		ttc.avviaTracker(nome);
+    		String nome = attivit‡Text.getText();
+    		ttc.avviaTracker(nome, progetto);
     		
     	} else {
     		new Notification("Perfavore inserisci il nome di un'attivit‡.", NotificationType.ERROR).show();

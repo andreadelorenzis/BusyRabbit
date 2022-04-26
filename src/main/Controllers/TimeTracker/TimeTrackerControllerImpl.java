@@ -123,10 +123,15 @@ public class TimeTrackerControllerImpl implements TimeTrackerController, ITracka
     		aggiornaView();
     	}
 	}
+	
+	@Override
+	public int getPagina() {
+		return pagina;
+	}
 
 	@Override
-	public void avviaTracker(String nome) {
-		IAttività a = new Attività(nome, LocalDate.now(), LocalTime.now(), 0L);
+	public void avviaTracker(String nome, IProgetto p) {
+		IAttività a = new Attività(nome, LocalDate.now(), LocalTime.now(), 0L, p);
 		tt.avviaTracker(a);
 		tt.getTracker().setAscoltatore(this);
 	}

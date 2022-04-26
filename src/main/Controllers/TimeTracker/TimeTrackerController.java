@@ -24,7 +24,9 @@ public interface TimeTrackerController extends ITrackable {
 	
 	public void decrementaPagina();
 	
-	public void avviaTracker(String nome);
+	public int getPagina();
+	
+	public void avviaTracker(String nome, IProgetto p);
 	
 	public void terminaTracker();
 	
