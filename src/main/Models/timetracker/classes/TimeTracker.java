@@ -92,7 +92,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 		GiornoAttività g = new GiornoAttività(a.getData().getDayOfMonth());
 		g.aggiungiAttività(a);
 		this.attività.add(a);
-		a.getProgetto().aggiungiDurata(a);
+		a.getProgetto().aggiungiAttività(a);
 		nGiorni++;
 		return g;
 	}
@@ -144,11 +144,11 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 	
 	@Override
-	public void scegliTracker(TrackerEnum t) {	
+	public void scegliTracker(TrackerType t) {	
 		if(!tracker.getAvviato()) {
-			if(t.equals(TrackerEnum.CRONOMETRO)) {
+			if(t.equals(TrackerType.CRONOMETRO)) {
 				tracker = cronometro;
-			} else if(t.equals(TrackerEnum.POMODOROTIMER)) {
+			} else if(t.equals(TrackerType.POMODOROTIMER)) {
 				tracker = pomodoroTimer;
 			}
 			tracker.setAscoltatore(this);
@@ -177,7 +177,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 					// aggiungi attività alla lista di attività
 					this.attività.add(attività);
 					// aggiunge durata al progetto
-					attività.getProgetto().aggiungiDurata(attività);
+					attività.getProgetto().aggiungiAttività(attività);
 				} else {
 					// aggiungi un nuovo giorno attività
 					meseAttività.aggiungiGiorno(creaGiorno(attività));

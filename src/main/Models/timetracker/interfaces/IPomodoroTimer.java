@@ -14,58 +14,58 @@ public interface IPomodoroTimer extends ITracker {
 	/**
 	 * Ogni volta che termina una sessione notifica l'ascoltatore, inviandogli la durata di tempo monitorata
 	 */
-	public void terminaSessione();
+	public void sessioneTerminata();
 	
 	/**
 	 * Imposta la durata della sessione di lavoro
 	 * 
 	 * @param durata
 	 */
-    public void setDurataSessione(int durata);
+    public void setSessione(int durata);
     
     /**
      * Imposta la durata della pausa breve
      * 
      * @param durata
      */
-    public void setDurataPausaBreve(int durata);
+    public void setPausaBreve(int durata);
   
     /**
      * Imposta la durata della pausa lunga
      * 
      * @param durata
      */
-    public void setDurataPausaLunga(int durata);
+    public void setPausaLunga(int durata);
   
     /**
      * Imposta i cicli (sessione-pausaBreve) dopo i quali inizia una pausa lunga
      * 
      * @param nCicli cicli prima di una pausa lunga
      */
-    public void setNCicli(int nCicli);
+    public void setCicli(int nCicli);
     
     /**
      * 
      * @return durata di una sessione di lavoro
      */
-    public int getDurataSessione();
+    public int getSessione();
     
     /**
      * 
      * @return durata di una pausa breve
      */
-    public int getDurataPausaBreve();
+    public int getPausaBreve();
     
     /**
      * 
      * @return durata di una pausa lunga in secondi
      */
-    public int getDurataPausaLunga();
+    public int getPausaLunga();
     
     /**
      * 
      * @return cicli prima di una pausa lunga
      */
-    public int getNCicli();
+    public int getCicli();
      
 }

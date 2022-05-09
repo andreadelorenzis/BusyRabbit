@@ -1,5 +1,5 @@
 package main.Models.timetracker.classes;
 
-public enum TrackerEnum {
+public enum TrackerType {
 	POMODOROTIMER, CRONOMETRO;
 }

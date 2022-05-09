@@ -14,7 +14,7 @@ import java.time.Month;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.classes.TimeTracker;
-import main.Models.timetracker.classes.TrackerEnum;
+import main.Models.timetracker.classes.TrackerType;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.ICronometro;
 import main.Models.timetracker.interfaces.IPomodoroTimer;
@@ -263,7 +263,7 @@ public class TimeTrackerTests {
 	@Order(6)
 	public void verificaPomodoro1() {
 		t = TimeTracker.getInstance();
-		t.scegliTracker(TrackerEnum.POMODOROTIMER);
+		t.scegliTracker(TrackerType.POMODOROTIMER);
 		
 		// il timer di default ha
 		// sessione: 30M
@@ -271,10 +271,10 @@ public class TimeTrackerTests {
 		// pausa lunga: 10M
 		// cicli prima della pausa lunga: 3
 		IPomodoroTimer tracker = (IPomodoroTimer) t.getTracker();
-		assertEquals(30*60, tracker.getDurataSessione());
-		assertEquals(5*60, tracker.getDurataPausaBreve());
-		assertEquals(10*60, tracker.getDurataPausaLunga());
-		assertEquals(3, tracker.getNCicli());
+		assertEquals(30*60, tracker.getSessione());
+		assertEquals(5*60, tracker.getPausaBreve());
+		assertEquals(10*60, tracker.getPausaLunga());
+		assertEquals(3, tracker.getCicli());
 		
 		// Avvio il tracker sull'attività "Studiare"
 		t.avviaTracker(new Attività("Studiare",
@@ -307,20 +307,20 @@ public class TimeTrackerTests {
 	@Order(7)
 	public void verificaPomodoro2() {
 		t = TimeTracker.getInstance();
-		t.scegliTracker(TrackerEnum.POMODOROTIMER);
+		t.scegliTracker(TrackerType.POMODOROTIMER);
 		IPomodoroTimer tracker = (IPomodoroTimer) t.getTracker();
 		
 		// imposto il timer: sessione 1s, pausa breve 1s, pausa lunga 1s, nCicli 1
-		tracker.setDurataSessione(1);
-		tracker.setDurataPausaBreve(1);
-		tracker.setDurataPausaLunga(1);
-		tracker.setNCicli(1);
+		tracker.setSessione(1);
+		tracker.setPausaBreve(1);
+		tracker.setPausaLunga(1);
+		tracker.setCicli(1);
 		
 		// le impostazioni del timer sono corrette
-		assertEquals(1, tracker.getDurataSessione());
-		assertEquals(1, tracker.getDurataPausaBreve());
-		assertEquals(1, tracker.getDurataPausaLunga());
-		assertEquals(1, tracker.getNCicli());
+		assertEquals(1, tracker.getSessione());
+		assertEquals(1, tracker.getPausaBreve());
+		assertEquals(1, tracker.getPausaLunga());
+		assertEquals(1, tracker.getCicli());
 		
 		// avvio il tracker sull'attività "Studiare"
 		t.avviaTracker(new Attività("Studiare",
@@ -387,7 +387,7 @@ public class TimeTrackerTests {
 	@Order(8)
 	public void verificaCronometro() {
 		t = TimeTracker.getInstance();
-		t.scegliTracker(TrackerEnum.CRONOMETRO);
+		t.scegliTracker(TrackerType.CRONOMETRO);
 		ICronometro c = (ICronometro) t.getTracker();
 		
 		// Avvio il tracker sull'attività "Studiare"

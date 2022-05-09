@@ -27,7 +27,7 @@ public interface ITracker {
 	
     /**
      * 
-     * @param ascoltatore che verra informato quando una sessione del timer termina
+     * @param ascoltatore che verra informato quando il tracker termina
      */
     public void setAscoltatore(ITrackable ascoltatore);
 	

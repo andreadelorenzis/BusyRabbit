@@ -26,7 +26,7 @@ import main.Controllers.HabitTracker.HabitTrackerControllerImpl;
 import main.Controllers.Impostazioni.ImpostazioniController;
 import main.Controllers.TimeTracker.TimeTrackerController;
 import main.Controllers.TimeTracker.TimeTrackerControllerImpl;
-import main.Models.accountmanager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
 import main.Views.App.interfaces.AppView;
 import main.Views.Dashboard.classes.ReportTempoViewImpl;
@@ -81,7 +81,7 @@ public class AppViewImpl implements AppView {
     private boolean dashboardMenuAperto = false;
     private boolean sidebarAperta = true;
     private AppController controller;
-    private IApp app;
+    private IAccountManager app;
     
     @FXML 
     private void initialize() throws IOException {
@@ -125,7 +125,7 @@ public class AppViewImpl implements AppView {
         this.controller = new AppControllerImpl(this);
     }
     
-    public void setAppData(IApp app) throws IOException {
+    public void setAppData(IAccountManager app) throws IOException {
     	this.app = app;
     	apriPaginaTimeTracker();
     }

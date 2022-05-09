@@ -32,7 +32,7 @@ public interface IObiettivo {
     
     /**
      * fa fallire questo obiettivo. Se un obiettivo fallisce il suo stato di completamento non 
-     * puÃ² essere modificato. 
+     * può essere modificato. 
      */
     public void faiFallire();
     
@@ -58,13 +58,13 @@ public interface IObiettivo {
     
     /**
      * 
-     * @return se l'obiettivo Ã¨ completato o no
+     * @return se l'obiettivo è completato o no
      */
     public boolean getCompletato();
     
     /**
      * 
-     * @return se l'obiettivo Ã¨ fallito o no
+     * @return se l'obiettivo è fallito o no
      */
     public boolean getFallimento();
     

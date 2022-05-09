@@ -58,7 +58,7 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 					ascoltatore.secondoPassato(ore, minuti, secondi);
 				} else {
 					if(sessione) {
-						terminaSessione();
+						sessioneTerminata();
 					}
 					faseSuccessiva(); 
 				}
@@ -105,47 +105,47 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 	}
 	
 	@Override
-	public void terminaSessione() {
+	public void sessioneTerminata() {
 		ascoltatore.timerTerminato(tempoPassato / 1000);
 	}
 	
 	@Override
-	public void setDurataSessione(int durata) {
+	public void setSessione(int durata) {
 		this.durataSessione = durata;
 	}
 
 	@Override
-	public void setDurataPausaBreve(int durata) {
+	public void setPausaBreve(int durata) {
 		this.durataPausaBreve = durata;
 	}
 
 	@Override
-	public void setDurataPausaLunga(int durata) {
+	public void setPausaLunga(int durata) {
 		this.durataPausaLunga = durata;
 	}
 
 	@Override
-	public void setNCicli(int nCicli) {
+	public void setCicli(int nCicli) {
 		this.nCicli = nCicli;
 	}
 
 	@Override
-	public int getDurataSessione() {
+	public int getSessione() {
 		return durataSessione;
 	}
 
 	@Override
-	public int getDurataPausaBreve() {
+	public int getPausaBreve() {
 		return durataPausaBreve;
 	}
 
 	@Override
-	public int getDurataPausaLunga() {
+	public int getPausaLunga() {
 		return durataPausaLunga;
 	}
 
 	@Override
-	public int getNCicli() {
+	public int getCicli() {
 		return nCicli;
 	}
 

@@ -1,9 +1,9 @@
 package main.Controllers.Impostazioni;
 
-import main.Models.accountmanager.classes.App;
+import main.Models.accountmanager.classes.AccountManager;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
-import main.Models.accountmanager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.Impostazioni.interfaces.ImpostazioniView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
@@ -12,11 +12,11 @@ public class ImpostazioniControllerImpl implements ImpostazioniController {
 
 	private ImpostazioniView view;
 	
-	private IApp app;
+	private IAccountManager app;
 	
 	public ImpostazioniControllerImpl(ImpostazioniView view) {
 		this.view = view;
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 	}
 
 	@Override

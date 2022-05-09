@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import main.Models.timetracker.classes.TrackerEnum;
+import main.Models.timetracker.classes.TrackerType;
 
 /**
  * 
@@ -31,7 +31,7 @@ public interface ITimeTracker {
 	 * 
 	 * @param t lo strumento da attivare
 	 */
-	public void scegliTracker(TrackerEnum t);
+	public void scegliTracker(TrackerType t);
     
 	/**
 	 * Attività da aggiungere. Contiene l'id del progetto in cui inserirla

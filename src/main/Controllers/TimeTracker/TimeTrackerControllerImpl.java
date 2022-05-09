@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import javafx.application.Platform;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.TimeTracker;
-import main.Models.timetracker.classes.TrackerEnum;
+import main.Models.timetracker.classes.TrackerType;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IPomodoroTimer;
 import main.Models.timetracker.interfaces.IProgetto;
@@ -86,10 +86,10 @@ public class TimeTrackerControllerImpl implements TimeTrackerController, ITracka
 		a1.setDurata(durata);
 		if(!(vecchioProgetto.getId().equals(nuovoProgetto.getId()))) {
 			// elimino durata dal vecchio progetto
-			vecchioProgetto.eliminaDurata(a1);
+			vecchioProgetto.eliminaAttività(a1);
 			
 			// aggiungo durata al nuovo progetto
-			nuovoProgetto.aggiungiDurata(a1);
+			nuovoProgetto.aggiungiAttività(a1);
 			
 			// cambio il progetto nell'attività
 			a1.setProgettoPadre(nuovoProgetto);
@@ -100,7 +100,7 @@ public class TimeTrackerControllerImpl implements TimeTrackerController, ITracka
 	@Override
 	public void eliminaAttività(IAttività a) {
 		// elimina durata dal progetto
-		a.getProgetto().eliminaDurata(a);
+		a.getProgetto().eliminaAttività(a);
 		
 		// elimina attività dal modello
 		tt.eliminaAttività(a);
@@ -144,20 +144,20 @@ public class TimeTrackerControllerImpl implements TimeTrackerController, ITracka
 
 	@Override
 	public void scegliCronometro() {
-		tt.scegliTracker(TrackerEnum.CRONOMETRO);
+		tt.scegliTracker(TrackerType.CRONOMETRO);
 	}
 
 	@Override
 	public void scegliPomodoro() {
-		tt.scegliTracker(TrackerEnum.POMODOROTIMER);
+		tt.scegliTracker(TrackerType.POMODOROTIMER);
 	}
 
 	@Override
 	public void impostaPomodoroTimer(int sessione, int pausaBreve, int pausaLunga) {
 		IPomodoroTimer pt = (IPomodoroTimer) tt.getTracker();
-		pt.setDurataSessione(sessione);
-		pt.setDurataPausaBreve(pausaBreve);
-		pt.setDurataPausaLunga(pausaLunga);
+		pt.setSessione(sessione);
+		pt.setPausaBreve(pausaBreve);
+		pt.setPausaLunga(pausaLunga);
 		aggiornaView();
 	}
     

@@ -16,18 +16,12 @@ public interface IGoalManager {
     public void aggiungiObiettivo(IObiettivo obiettivo);
     
     /**
-     * 
-     * @return la lista di tutti gli obiettivi 
-     */
-    public List<IObiettivo> getObiettivi();
-    
-    /**
      * Verifica alla data passata se qualche obiettivo è scaduto e, in caso affermativo, fa fallire tali obiettivi
      * 
      * @param data la data di oggi
      * @return la lista degli obiettivi da completare oggi
      */
-    public void calcolaScadenzeObiettivi(LocalDate data);
+    public void verificaScadenzeObiettivi(LocalDate data);
 
     /**
      * Calcola l'elenco delle azioni collegate da svolgere nella data specificata.
@@ -44,5 +38,11 @@ public interface IGoalManager {
      * @param ID Identificativo dell'obiettivo.
      */
     public void eliminaObiettivo(String idObiettivo);
+    
+    /**
+     * 
+     * @return la lista di tutti gli obiettivi 
+     */
+    public List<IObiettivo> getObiettivi();
     
 }

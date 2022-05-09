@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import main.Models.accountmanager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Models.goalmanager.classes.GoalManager;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.habittracker.classes.HabitTracker;
@@ -14,8 +14,8 @@ import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
-public class App implements IApp {
-	private static App app = null;
+public class AccountManager implements IAccountManager {
+	private static AccountManager app = null;
 	
 	private ITimeTracker tt = TimeTracker.getInstance();
 	private IGoalManager gm = GoalManager.getInstance();
@@ -23,16 +23,16 @@ public class App implements IApp {
 	private String email = "";
 	private String password = "";
 	private boolean accessoEffettuato = false;
-    private AppWriter writerApp = new AppWriter(tt, gm, ht);
-    private AppReader readerApp = new AppReader(tt, gm, ht);
+    private AccountWriter writerApp = new AccountWriter(tt, gm, ht);
+    private AccountReader readerApp = new AccountReader(tt, gm, ht);
 
-    private App() {
+    private AccountManager() {
 
     }
     
-    public static App getInstance() {
+    public static AccountManager getInstance() {
     	if(app == null) {
-    		app = new App();
+    		app = new AccountManager();
     	}
     	return app;
     }

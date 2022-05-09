@@ -139,7 +139,7 @@ public class GoalManagerTests {
         inizializzaGoalManager(g);
         
         // calcolo quali obiettivi sono scaduti alla data del 3 Febbraio 2022
-        g.calcolaScadenzeObiettivi(LocalDate.of(2022, Month.FEBRUARY, 3));
+        g.verificaScadenzeObiettivi(LocalDate.of(2022, Month.FEBRUARY, 3));
         
         // il primo obiettivo NON è ancora scaduto
         assertFalse(g.getObiettivi().get(0).getFallimento());

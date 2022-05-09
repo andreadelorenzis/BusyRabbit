@@ -37,12 +37,12 @@ import main.Views.Colore;
  *
  * @author Mars_DB
  */
-public class AppReader {
+public class AccountReader {
 	private ITimeTracker tt;
 	private IGoalManager gm;
 	private IHabitTracker ht;
 	
-	public AppReader(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
+	public AccountReader(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
 		this.tt = tt;
 		this.gm = gm;
 		this.ht = ht;

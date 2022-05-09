@@ -54,7 +54,7 @@ public class Progetto implements IProgetto {
 
     //---------------------------- METODI PUBBLICI -----------------------------
 	@Override
-	public void aggiungiDurata(IAttività a) {
+	public void aggiungiAttività(IAttività a) {
 		
 		// aggiungo la durata al giusto AnnoProgetto
 		int anno = a.getData().getYear();
@@ -81,7 +81,7 @@ public class Progetto implements IProgetto {
 	}
 
 	@Override
-	public void eliminaDurata(IAttività a) {
+	public void eliminaAttività(IAttività a) {
 		int anno = a.getData().getYear();
 	
 		AnnoProgetto aProgetto = anniProgetto.get(anno);

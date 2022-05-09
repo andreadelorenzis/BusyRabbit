@@ -55,7 +55,7 @@ public class GoalManager implements IGoalManager {
     }
 
     @Override
-    public void calcolaScadenzeObiettivi(LocalDate data) {
+    public void verificaScadenzeObiettivi(LocalDate data) {
     	int i = 0;
         for(IObiettivo ob : obiettivi) {
         	if(ob.getData().isBefore(data) || ob.getData().isEqual(data)) {

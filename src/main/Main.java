@@ -31,8 +31,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import main.Models.accountmanager.classes.App;
-import main.Models.accountmanager.interfaces.IApp;
+import main.Models.accountmanager.classes.AccountManager;
+import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
 import main.Views.App.classes.PageViewImpl;
 import main.Views.Notifications.Notification;
@@ -42,11 +42,11 @@ import main.Views.Notifications.NotificationType;
 public class Main extends Application { 
     
     public static LocalDate dataUltimoAccesso;
-    public IApp app;
+    public IAccountManager app;
     
     @Override
     public void start(Stage primaryStage) {
-        try {
+        try { 
             // Carica la pagina di login.
         	FXMLLoader fxmlLoader = new FXMLLoader();
         	fxmlLoader.setLocation(LoaderRisorse.login);
@@ -55,7 +55,7 @@ public class Main extends Application {
             
             // passa l'istanza di app al controller delle pagine di accesso
             PageViewImpl controller = fxmlLoader.getController();
-            app = App.getInstance();
+            app = AccountManager.getInstance();
             controller.setApp(app);
             
             // Aggiunge l'icona.

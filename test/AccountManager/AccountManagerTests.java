@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import main.Models.accountmanager.classes.App;
+import main.Models.accountmanager.classes.AccountManager;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
-import main.Models.accountmanager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Models.goalmanager.classes.ObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.IGoalManager;
@@ -32,9 +32,9 @@ import main.Views.Colore;
  * 
  */
 class AccountManagerTests {	
-	App app = null;
+	AccountManager app = null;
 	
-	private void accedi(IApp app) {
+	private void accedi(IAccountManager app) {
 		// accede all'account presente nel database
 		try {
 			app.accedi("test@gmail.com", "pass123");
@@ -45,14 +45,14 @@ class AccountManagerTests {
 	
     @Before
     public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-    	Field instance = App.class.getDeclaredField("app");
+    	Field instance = AccountManager.class.getDeclaredField("app");
     	instance.setAccessible(true);
     	instance.set(instance, null);
     }
 
 	@Test
 	public void testAccesso() {
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 		
 		// prova ad accedere ad un account sbagliando email
 		assertThrows(WrongCredentialsException.class, () -> app.accedi("test@gmail.co", "pass123"));
@@ -72,7 +72,7 @@ class AccountManagerTests {
 	
 	@Test
 	public void testRegistrazione() {
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 		
 		// prova a creare un nuovo account, ma le due password non corrispondono
 		assertThrows(WrongCredentialsException.class, () -> app.registraAccount("Andre", "andre@gmail.com", "pass123", "pass124"));
@@ -101,7 +101,7 @@ class AccountManagerTests {
 	
 	@Test 
 	public void testEliminazione() {
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 		
 		// crea un nuovo account
 		try {
@@ -128,7 +128,7 @@ class AccountManagerTests {
 	 */
 	@Test
 	public void testLetturaTimeTracker() {
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 		ITimeTracker tt = app.getTT();
 		
 		// accede all'account presente nel database
@@ -162,7 +162,7 @@ class AccountManagerTests {
 	 */
 	@Test
 	public void testLetturaObiettivi() {
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 		IGoalManager gm = app.getGM();
 		
 		// accede all'account presente nel database
@@ -197,7 +197,7 @@ class AccountManagerTests {
 	
 	@Test 
 	public void testLetturaAbitudini() {
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
@@ -223,7 +223,7 @@ class AccountManagerTests {
 	
 	@Test
 	public void testLetturaStoricoAbitudini() {
-		app = App.getInstance();
+		app = AccountManager.getInstance();
 		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database

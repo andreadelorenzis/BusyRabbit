@@ -27,11 +27,11 @@ import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
-public class AppWriter {
+public class AccountWriter {
 	private ITimeTracker tt;
 	private IHabitTracker ht;
 	
-	public AppWriter(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
+	public AccountWriter(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
 		this.tt = tt;
 		this.ht = ht;
 	}

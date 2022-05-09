@@ -9,7 +9,7 @@ import main.Models.timetracker.interfaces.ITimeTracker;
 /**
  * Permette di recuperare e salvare le informazioni degli account comunicando con il database
  */
-public interface IApp {
+public interface IAccountManager {
     
     /**
      * Aggiunge un nuovo account al database, identificato dall'email, se l'email
@@ -86,6 +86,10 @@ public interface IApp {
      */
     public boolean getAccessoEffettuato();
     
+    /**
+     * 
+     * @return l'email dell'account
+     */
     public String getEmail();
     
 }

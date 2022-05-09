@@ -43,9 +43,9 @@ public class EditorTimerViewImpl {
         SpinnerValueFactory<Integer> valueFactory3 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
         
         // imposto i valori iniziali (gli stessi del pomodoro)
-        sessione = p.getDurataSessione() / 60;
-        pausaBreve = p.getDurataPausaBreve() / 60;
-        pausaLunga = p.getDurataPausaLunga() / 60;
+        sessione = p.getSessione() / 60;
+        pausaBreve = p.getPausaBreve() / 60;
+        pausaLunga = p.getPausaLunga() / 60;
         valueFactory1.setValue(sessione);
         valueFactory2.setValue(pausaBreve);
         valueFactory3.setValue(pausaLunga);

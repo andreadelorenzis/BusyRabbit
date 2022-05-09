@@ -18,6 +18,18 @@ public interface IAttività {
     
     /**
      * 
+     * @param durata durata in secondi
+     */
+    public void setDurata(long durata);
+    
+    /**
+     * 
+     * @param id del progetto di cui fa parte questa attività
+     */
+    public void setProgettoPadre(IProgetto progetto);
+    
+    /**
+     * 
      * @return nome dell'attività
      */
     public String getNome();
@@ -48,18 +60,6 @@ public interface IAttività {
     
     /**
      * 
-     * @param durata durata in secondi
-     */
-    public void setDurata(long durata);
-    
-    /**
-     * 
-     * @param id del progetto di cui fa parte questa attività
-     */
-    public void setProgettoPadre(IProgetto progetto);
-        
-    /**
-     * 
      * @return identificativo
      */
     public String getId();
@@ -69,4 +69,5 @@ public interface IAttività {
      * @return id del progetto di cui fa parte questa attività
      */
     public IProgetto getProgetto();
+        
 }

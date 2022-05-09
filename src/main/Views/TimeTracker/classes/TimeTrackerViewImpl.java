@@ -657,7 +657,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
                         	
                         	// rimuove la durata dell'attività dal vecchio progetto
                         	IProgetto vecchioProgetto = a.getProgetto();
-                        	vecchioProgetto.eliminaDurata(a);
+                        	vecchioProgetto.eliminaAttività(a);
                         	
                         	// modifica il progetto
                         	a.setProgettoPadre(p);
@@ -731,7 +731,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     	formTimeTracker.setVisible(true);
     	settingsBtn.setVisible(true);
     	PomodoroTimer p = (PomodoroTimer) TimeTracker.getInstance().getTracker();
-    	int[] params = ViewHelper.scomponiDurata(p.getDurataSessione());
+    	int[] params = ViewHelper.scomponiDurata(p.getSessione());
     	visualizzaOrologio(params[0], params[1], params[2]);
 	}
 

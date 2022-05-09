@@ -22,7 +22,7 @@ import main.Controllers.App.PageController;
 import main.Controllers.App.PageControllerImpl;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
-import main.Models.accountmanager.interfaces.IApp;
+import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
 import main.Views.App.interfaces.PageView;
 import main.Views.Notifications.Notification;
@@ -49,14 +49,14 @@ public class PageViewImpl implements PageView {
     private TextField confPassRegField;
     
     private PageController controller;
-    private IApp app;
+    private IAccountManager app;
     
     @FXML
     private void initialize() {
     	controller = new PageControllerImpl(this);
     }
     
-    public void setApp(IApp app) {
+    public void setApp(IAccountManager app) {
     	this.app = app;
     }
     

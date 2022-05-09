@@ -3,17 +3,11 @@ package main.Models.habittracker.classes;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.TreeMap;
 import java.util.UUID;
-
 import main.Models.habittracker.interfaces.IHabit;
-import main.Models.habittracker.interfaces.IHabitDay;
-import main.Models.habittracker.interfaces.IHabitTracker;
 
 public class Habit implements IHabit {
 	
