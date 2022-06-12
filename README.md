@@ -14,22 +14,24 @@ BusyRabbit è un'app per la produttività personale per studenti e freelancer. E
 
 Monitorare le tue attività tra diversi progetti.
 
-<img src="/src/main/views/risorse/timetracker.png" width="700"> 
+<img src="/src/main/views/risorse/timetracker.PNG" width="700"> 
 
 ## ### Goal manager
 
 Crea, monitora e gestisci  i tuoi obiettivi personali.
 
-<img src="/src/main/views/risorse/goalmanager.png" width="700"> 
+<img src="/src/main/views/risorse/goalmanager.PNG" width="700"> 
 
 ### Habit tracker
 
 Crea delle abitudini e controlla il tuo andamento nel tempo. 
 
-<img src="/src/main/views/risorse/habittracker.png" width="700"> 
+src/main/views/risorse/habittracker.PNG
+
+<img src="/src/main/views/risorse/habittracker.PNG" width="700"> 
 
 ### Dashboard
 
 Visualizza i tempi e le abitudini in diversi modi.
 
-<img src="/src/main/views/risorse/report_tempo.png" width="700"><img src="/src/main/views/risorse/report_abitudini.png" width="700">
+<img src="/src/main/views/risorse/report_tempo.PNG" width="700"><img src="/src/main/views/risorse/report_abitudini.PNG" width="700">
