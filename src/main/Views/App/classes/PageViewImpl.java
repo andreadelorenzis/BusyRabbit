@@ -18,17 +18,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import main.Main;
-import main.Controllers.App.PageController;
-import main.Controllers.App.PageControllerImpl;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
-import main.Views.App.interfaces.PageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
-public class PageViewImpl implements PageView {
+public class PageViewImpl {
 	public static AnchorPane appContainer = null;
     
     private Stage stage;
@@ -48,13 +45,7 @@ public class PageViewImpl implements PageView {
     @FXML
     private TextField confPassRegField;
     
-    private PageController controller;
     private IAccountManager app;
-    
-    @FXML
-    private void initialize() {
-    	controller = new PageControllerImpl(this);
-    }
     
     public void setApp(IAccountManager app) {
     	this.app = app;

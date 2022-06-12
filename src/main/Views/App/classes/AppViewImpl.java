@@ -19,6 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import main.Controllers.Controller;
+import main.Controllers.AccountManager.AccessController;
 import main.Controllers.App.AppController;
 import main.Controllers.App.AppControllerImpl;
 import main.Controllers.GoalManager.GoalManagerControllerImpl;
@@ -28,13 +30,14 @@ import main.Controllers.TimeTracker.TimeTrackerController;
 import main.Controllers.TimeTracker.TimeTrackerControllerImpl;
 import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
+import main.Views.View;
 import main.Views.App.interfaces.AppView;
 import main.Views.Dashboard.classes.ReportTempoViewImpl;
 import main.Views.TimeTracker.classes.TimeTrackerViewImpl;
 import main.Views.TimeTracker.interfaces.TimeTrackerView;
 import main.Main;
 
-public class AppViewImpl implements AppView {
+public class AppViewImpl implements View {
     @FXML
     private HBox timeHBox;
     @FXML
@@ -80,7 +83,7 @@ public class AppViewImpl implements AppView {
     private Label abitudiniReportLabel = new Label("Report Abitudini");
     private boolean dashboardMenuAperto = false;
     private boolean sidebarAperta = true;
-    private AppController controller;
+    private Controller controller;
     private IAccountManager app;
     
     @FXML 
@@ -121,8 +124,6 @@ public class AppViewImpl implements AppView {
             }
         };
         this.abitudiniReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
-        
-        this.controller = new AppControllerImpl(this);
     }
     
     public void setAppData(IAccountManager app) throws IOException {
@@ -319,5 +320,17 @@ public class AppViewImpl implements AppView {
         this.dashboardMenuAperto = false;
         this.dashboardImg.setImage(LoaderRisorse.dashboardImg);
     }
+
+	@Override
+	public void setController(Controller c) {
+		this.controller = c;
+	}
+
+	@Override
+	public Controller getController() {
+		return this.controller;
+	}
+
+
     
 }
