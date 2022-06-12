@@ -1,6 +1,6 @@
 package main.controller.accountmanager;
 
-import main.Controller.Controller;
+import main.controller.Controller;
 
 public interface IAccessController extends Controller {
 	
