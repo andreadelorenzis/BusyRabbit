@@ -1,6 +1,8 @@
 package main.Models.goalmanager.classes;
 
 import java.util.UUID;
+
+import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.Item;
 
 public class ItemImpl implements Item {
@@ -76,4 +78,16 @@ public class ItemImpl implements Item {
     public void setPadre(Object padre) {
         this.padre = padre;
     }
+    
+	@Override
+    public boolean equals(Object obj) {
+  	      if (obj == this) {
+  	         return true;
+  	      }
+  	      if (!(obj instanceof Item)) {
+  	         return false;
+  	      }
+  	      Item o = (Item) obj;
+  	      return this.id.equals(o.getId());
+   }
 }

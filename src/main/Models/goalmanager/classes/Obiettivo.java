@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
+import main.Models.habittracker.classes.Habit;
+import main.Models.habittracker.interfaces.IHabit;
 
 public abstract class Obiettivo implements IObiettivo {
     
@@ -166,5 +168,17 @@ public abstract class Obiettivo implements IObiettivo {
     public void setObiettivoPadre(IObiettivoScomponibile obiettivo) {
         obiettivoPadre = obiettivo;
     }
+    
+	@Override
+    public boolean equals(Object obj) {
+  	      if (obj == this) {
+  	         return true;
+  	      }
+  	      if (!(obj instanceof Obiettivo)) {
+  	         return false;
+  	      }
+  	      IObiettivo o = (IObiettivo) obj;
+  	      return this.id.equals(o.getId());
+   }
     
 }

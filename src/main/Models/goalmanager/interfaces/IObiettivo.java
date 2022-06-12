@@ -23,15 +23,20 @@ public interface IObiettivo {
     public double calcolaProgresso();
     
     /**
-     * completa questo obiettivo. Gli obiettivi completati possono essere riportati allo stato
+     * Completa questo obiettivo. Gli obiettivi completati possono essere riportati allo stato
      * di non completamento in ogni momento
      */
     public void completa();
     
+    /**
+     * Completa l'obiettivo se si verifica una determinata condizione. Nel caso di ObiettivoScomponibile,
+     * verifica se tutti i sotto-obiettivi sono stati completati. Nel caso di ObiettivoAzione, verifica se
+     * il valore delle azioni completate ha raggiunto il valore dell'obiettivo.
+     */
     public void verificaCompletamento();
     
     /**
-     * fa fallire questo obiettivo. Se un obiettivo fallisce il suo stato di completamento non 
+     * Fa fallire questo obiettivo. Se un obiettivo fallisce il suo stato di completamento non 
      * può essere modificato. 
      */
     public void faiFallire();

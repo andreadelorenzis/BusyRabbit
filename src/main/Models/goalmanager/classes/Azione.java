@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import main.Models.goalmanager.interfaces.IAzione;
+import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 
 public abstract class Azione implements IAzione {
@@ -138,5 +139,17 @@ public abstract class Azione implements IAzione {
     public IObiettivoAzione getObiettivo() {
         return obiettivo;
     }
+    
+	@Override
+    public boolean equals(Object obj) {
+  	      if (obj == this) {
+  	         return true;
+  	      }
+  	      if (!(obj instanceof Azione)) {
+  	         return false;
+  	      }
+  	      IAzione o = (IAzione) obj;
+  	      return this.id.equals(o.getId());
+   }
     
 }

@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAmount;
 import java.util.UUID;
 
+import main.Models.goalmanager.classes.Obiettivo;
+import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Views.Colore;
@@ -139,5 +141,17 @@ public class Attività implements IAttività {
 	public IProgetto getProgetto() {
 		return progetto;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+  	      if (obj == this) {
+  	         return true;
+  	      }
+  	      if (!(obj instanceof Attività)) {
+  	         return false;
+  	      }
+  	      IAttività o = (IAttività) obj;
+  	      return this.id.equals(o.getId());
+   }
 
 }
