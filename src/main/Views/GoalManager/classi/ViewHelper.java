@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import main.Views.LoaderRisorse;
 
 public class ViewHelper {
-	public static Image arrowIcon = LoaderRisorse.arrowDownWhiteImg;
+	public static Image arrowIcon = LoaderRisorse.getImg("arrow-down-white.png");
 	
 	public static HBox creaSottoObiettiviBtn(int size, HBox box) {
 		

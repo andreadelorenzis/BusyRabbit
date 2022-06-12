@@ -294,9 +294,9 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(LoaderRisorse.editorAbitudine);
+    	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.HT, "EditorAbitudine"));
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(LoaderRisorse.habitTrackerCss);
+        editor.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.HT, "HabitTracker"));
         editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
     	EditorAbitudineViewImpl controller = fxmlLoader.getController();
