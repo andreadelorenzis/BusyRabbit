@@ -4,7 +4,7 @@ import main.Controllers.Controller;
 
 public interface IAccessController extends Controller {
 	
-	public void accedi(String email, String password);
+	public boolean accedi(String email, String password);
 	
-	public void registraAccount(String email, String password, String confirmPass);
+	public boolean registraAccount(String nome, String email, String password, String confirmPass);
 }

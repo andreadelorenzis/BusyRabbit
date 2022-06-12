@@ -1,7 +1,6 @@
 package main.Views.App.classes;
 
 import java.io.IOException;
-import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,20 +11,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import main.Main;
-import main.Models.accountmanager.classes.ExistingAccountException;
-import main.Models.accountmanager.classes.WrongCredentialsException;
-import main.Models.accountmanager.interfaces.IAccountManager;
+import main.Controllers.Controller;
+import main.Controllers.AccountManager.AccessController;
+import main.Models.accountmanager.classes.AccountManager;
 import main.Views.LoaderRisorse;
+import main.Views.App.interfacce.IPageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
-public class PageViewImpl {
+public class PageView implements IPageView {
 	public static AnchorPane appContainer = null;
     
     private Stage stage;
@@ -45,43 +42,42 @@ public class PageViewImpl {
     @FXML
     private TextField confPassRegField;
     
-    private IAccountManager app;
+    private Controller controller;
     
-    public void setApp(IAccountManager app) {
-    	this.app = app;
+    private AccountManager app = AccountManager.getInstance();
+    
+    @FXML
+    private void initialize() {
+        setController(new AccessController());
     }
     
     @FXML
     private void accedi(ActionEvent event) throws IOException {
+    	AccessController accessController = (AccessController) controller;
     	String email = emailLogField.getText();
     	String password = passLogField.getText();
     	if(/*!email.isBlank() && !password.isBlank()*/true) {
-    		try {
-				app.accedi("newemail@gmail.com", "pass123");
-				apriSchermataPrincipale(event);
-			} catch (WrongCredentialsException e) {
-				new Notification("Email o password incorrette.", NotificationType.ERROR).show();
-			}
+	    	boolean result = accessController.accedi("newemail@gmail.com", "pass123");
+	    	if(result) {
+	    		apriSchermataPrincipale(event);	
+	    	}
     	}
     }
     
     @FXML
     private void registrati(ActionEvent event) throws IOException {
+    	AccessController accessController = (AccessController) controller;
     	String nome = nameRegField.getText();
     	String email = emailRegField.getText();
     	String password = passRegField.getText();
     	String confirmation = confPassRegField.getText();
-    	if(!email.isBlank() && !password.isBlank() && !nome.isBlank() && !confirmation.isBlank()) {
-    		try {
-				app.registraAccount(nome, email, password, confirmation);
-				apriSchermataPrincipale(event);
-			} catch (WrongCredentialsException | ExistingAccountException e) {
-				if(e instanceof WrongCredentialsException) {
-					new Notification("Le due password non coincidono.", NotificationType.ERROR).show();
-				} else if(e instanceof ExistingAccountException) {
-					new Notification("L'email è già utilizzata da un altro account.", NotificationType.ERROR).show();
-				}
-			}
+    	if(!nome.isBlank() && !email.isBlank() && !password.isBlank() && !confirmation.isBlank()) {
+        	boolean result = accessController.registraAccount(nome, email, password, confirmation);
+        	if(result) {
+        		apriSchermataPrincipale(event);
+        	} 
+    	} else {
+    		new Notification("Perfavore, compila tutti i campi.", NotificationType.ERROR).show();
     	}
     }
     
@@ -119,7 +115,7 @@ public class PageViewImpl {
             appContainer = pane;
             
             // passa l'istanza di app con i dati al controller dell'app
-            AppViewImpl controller = loader.getController();
+            AppView controller = loader.getController();
             controller.setAppData(app);
 
             scene.getStylesheets().add(LoaderRisorse.globalCss);
@@ -135,5 +131,31 @@ public class PageViewImpl {
             stage.show();
     	}
     }
+    
+	@Override
+	public void setController(Controller c) {
+		this.controller = c;
+		controller.setView(this);
+	}
+
+	@Override
+	public Controller getController() {
+		return this.controller;
+	}
+
+	@Override
+	public void erroreConfermaPassword() {
+		new Notification("Le due password non coincidono.", NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void erroreEmailEsistente() {
+		new Notification("L'email è già utilizzata da un altro account.", NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void erroreCredenzialiSbagliate() {
+		new Notification("Email o password incorrette.", NotificationType.ERROR).show();
+	}
     
 }

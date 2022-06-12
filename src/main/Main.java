@@ -34,7 +34,7 @@ import javafx.stage.WindowEvent;
 import main.Models.accountmanager.classes.AccountManager;
 import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
-import main.Views.App.classes.PageViewImpl;
+import main.Views.App.classes.PageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
@@ -54,9 +54,7 @@ public class Main extends Application {
             Scene scene = new Scene(root, 650, 600);
             
             // passa l'istanza di app al controller delle pagine di accesso
-            PageViewImpl controller = fxmlLoader.getController();
-            app = AccountManager.getInstance();
-            controller.setApp(app);
+            PageView controller = fxmlLoader.getController();
             
             // Aggiunge l'icona.
             primaryStage.getIcons().add(LoaderRisorse.logoImg);

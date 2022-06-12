@@ -1,43 +1,25 @@
 package main.Views.App.classes;
 
 import java.io.IOException;
-import java.net.URL;
-
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import main.Controllers.Controller;
 import main.Controllers.AccountManager.AccessController;
-import main.Controllers.App.AppController;
-import main.Controllers.App.AppControllerImpl;
-import main.Controllers.GoalManager.GoalManagerControllerImpl;
-import main.Controllers.HabitTracker.HabitTrackerControllerImpl;
-import main.Controllers.Impostazioni.ImpostazioniController;
-import main.Controllers.TimeTracker.TimeTrackerController;
-import main.Controllers.TimeTracker.TimeTrackerControllerImpl;
 import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
 import main.Views.View;
-import main.Views.App.interfaces.AppView;
-import main.Views.Dashboard.classes.ReportTempoViewImpl;
-import main.Views.TimeTracker.classes.TimeTrackerViewImpl;
-import main.Views.TimeTracker.interfaces.TimeTrackerView;
-import main.Main;
 
-public class AppViewImpl implements View {
+public class AppView {
     @FXML
     private HBox timeHBox;
     @FXML
@@ -321,16 +303,4 @@ public class AppViewImpl implements View {
         this.dashboardImg.setImage(LoaderRisorse.dashboardImg);
     }
 
-	@Override
-	public void setController(Controller c) {
-		this.controller = c;
-	}
-
-	@Override
-	public Controller getController() {
-		return this.controller;
-	}
-
-
-    
 }

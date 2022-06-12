@@ -35,7 +35,7 @@ import main.Main;
 import main.Controllers.GoalManager.GoalManagerControllerImpl;
 import main.Controllers.Helpers.Helper;
 import main.Views.LoaderRisorse;
-import main.Views.App.classes.PageViewImpl;
+import main.Views.App.classes.PageView;
 import main.Views.Notifications.NotificationType;
 import main.Views.Notifications.NotificationsManager;
 
@@ -71,10 +71,10 @@ public class Modal {
 	        AnchorPane.setTopAnchor(overlay, 0.0);
 	        AnchorPane.setLeftAnchor(overlay, 0.0);
 	        AnchorPane.setRightAnchor(overlay, 0.0);
-	        PageViewImpl.appContainer.getChildren().add(overlay);
+	        PageView.appContainer.getChildren().add(overlay);
 		} else {
-			int indice = PageViewImpl.appContainer.getChildren().size() - 1;
-			PageViewImpl.appContainer.getChildren().remove(indice);
+			int indice = PageView.appContainer.getChildren().size() - 1;
+			PageView.appContainer.getChildren().remove(indice);
 		}
 	}
 	
