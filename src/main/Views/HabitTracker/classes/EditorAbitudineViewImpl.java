@@ -64,12 +64,13 @@ public class EditorAbitudineViewImpl {
     }
     
     private void toggleBtn(Label label, boolean giorno) {
-        if(!giorno) {
-            giorno = true;
-            label.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
-        } else {
-            giorno = false;
+    	System.out.println(giorno);
+        if(giorno) {
+        	// deselezionare
             label.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE; -fx-border-color: #4361EE;");
+        } else {
+        	// selezionare
+            label.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
         }
     }
     
@@ -79,30 +80,37 @@ public class EditorAbitudineViewImpl {
         switch(btnGiornoCliccato) {
             case "lunBtn": 
                 toggleBtn(lunBtn, lun);
+                lun = !lun;
                 giorni.add(DayOfWeek.MONDAY);
                 break;
             case "marBtn": 
             	toggleBtn(marBtn, mar);
+            	mar = !mar;
             	giorni.add(DayOfWeek.TUESDAY);
             	break;
             case "merBtn": 
             	toggleBtn(merBtn, mer);
+            	mer = !mer;
             	giorni.add(DayOfWeek.WEDNESDAY);
             	break;
             case "gioBtn": 
             	toggleBtn(gioBtn, gio);
+            	gio = !gio;
             	giorni.add(DayOfWeek.THURSDAY);
             	break;
             case "venBtn": 
             	toggleBtn(venBtn, ven);
+            	ven = !ven;
             	giorni.add(DayOfWeek.FRIDAY);
             	break;
             case "sabBtn": 
             	toggleBtn(sabBtn, sab);
+            	sab = !sab;
             	giorni.add(DayOfWeek.SATURDAY);
             	break;
             case "domBtn": 
             	toggleBtn(domBtn, dom);
+            	dom = !dom;
             	giorni.add(DayOfWeek.SUNDAY);
             	break;
         }
