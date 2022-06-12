@@ -11,9 +11,9 @@ import javafx.scene.shape.Circle;
 import main.views.LoaderRisorse;
 
 public class Helper {
-	public static Image dotsIcon = LoaderRisorse.getImg("dots");
-	public static Image plusIcon = LoaderRisorse.getImg("plus");
-	public static Image closeIcon = LoaderRisorse.getImg("close");
+	public static Image dotsIcon = LoaderRisorse.getImg("dots.png");
+	public static Image plusIcon = LoaderRisorse.getImg("plus.png");
+	public static Image closeIcon = LoaderRisorse.getImg("close.png");
 
     /**
      * Crea pulsante di aggiunta

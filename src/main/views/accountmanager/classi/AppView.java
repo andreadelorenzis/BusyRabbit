@@ -168,7 +168,7 @@ public class AppView {
 
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(this.timeHBox, this.timeLabel, this.timeImg, "clock-white");
+        this.evidenziaPulsante(this.timeHBox, this.timeLabel, this.timeImg, "clock-white.png");
         this.chiudiMenuDashboard();
         
         // crea la view
@@ -185,7 +185,7 @@ public class AppView {
        
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(habitHBox, habitLabel, habitImg, "refresh-white");
+        this.evidenziaPulsante(habitHBox, habitLabel, habitImg, "refresh-white.png");
         this.chiudiMenuDashboard();
        
         // Cambia la pagina all'interno del BorderPane
@@ -202,7 +202,7 @@ public class AppView {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(goalHBox, goalLabel, goalImg, "darts-white");
+        this.evidenziaPulsante(goalHBox, goalLabel, goalImg, "darts-white.png");
         this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
@@ -218,8 +218,8 @@ public class AppView {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
-        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white"));
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white.png");
+        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white.png"));
         this.dashboardArrow.setRotate(180);
         this.timeReportBox.setStyle("-fx-background-color: #374856;"
                 + "-fx-border-radius:12;"
@@ -242,7 +242,7 @@ public class AppView {
         
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings-white");
+        this.evidenziaPulsante(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings-white.png");
         this.chiudiMenuDashboard();
         
         // Cambia la pagina all'interno del BorderPane
@@ -258,8 +258,8 @@ public class AppView {
     
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
-        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white"));
+        this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white.png");
+        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white.png"));
         this.dashboardArrow.setRotate(180);
         this.abitudiniReportBox.setStyle("-fx-background-color: #374856;"
                 + "-fx-border-radius:12;"
@@ -281,8 +281,8 @@ public class AppView {
         if(!this.dashboardMenuAperto) {
             // Evidenza il pulsante della Dashboard
             this.rimuoviEvidenziazionePulsanti();
-            this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
-            this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white"));
+            this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white.png");
+            this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white.png"));
             this.dashboardArrow.setRotate(180);
             
             // Fa comparire i pulsanti nel sotto-menu del pulsante dashboard.

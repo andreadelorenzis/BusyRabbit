@@ -86,6 +86,7 @@ public class LoaderRisorse {
 	}
 	
 	public static URL getFXML(String sezione, String file) {
+		System.out.println("/main/views/" + sezione + "/risorse/" + file + ".fxml");
 		return Main.class.getResource("/main/views/" + sezione + "/risorse/" + file + ".fxml");
 	}
 	
