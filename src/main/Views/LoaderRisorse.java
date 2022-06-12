@@ -7,15 +7,17 @@ import main.Main;
 
 public class LoaderRisorse {
 	
+	/* PATH immagini */
 	public static final String PATH_IMGS = "/main/views/risorse/";
-
+	
     /*
      * Risorse fxml
      */
-    public static final URL timeTracker = Main.class.getResource("/main/Views/TimeTracker/resources/TimeTracker.fxml");
-    public static final URL editorAttività = Main.class.getResource("/main/Views/TimeTracker/resources/EditorAttività.fxml");
-    public static final URL editorTimer = Main.class.getResource("/main/Views/TimeTracker/resources/ImpostazioniTimer.fxml");
-    public static final URL editorProgetti = Main.class.getResource("/main/Views/TimeTracker/resources/EditorProgetto.fxml");
+	/*
+    public static final URL timeTracker = Main.class.getResource(PATH_RISORSE_TT + "TimeTracker.fxml");
+    public static final URL editorAttività = Main.class.getResource(PATH_RISORSE_TT + "EditorAttività.fxml");
+    public static final URL editorTimer = Main.class.getResource(PATH_RISORSE_TT + "ImpostazioniTimer.fxml");
+    public static final URL editorProgetti = Main.class.getResource(PATH_RISORSE_TT + "EditorProgetto.fxml");
     public static final URL goalManager = Main.class.getResource("/main/Views/GoalManager/resources/GoalManager.fxml");
     public static final URL editorObiettivi = Main.class.getResource("/main/Views/GoalManager/resources/EditorObiettivi.fxml");
     public static final URL editorAzioni = Main.class.getResource("/main/Views/GoalManager/resources/EditorAzioni.fxml");
@@ -27,10 +29,11 @@ public class LoaderRisorse {
     public static final URL login = Main.class.getResource("/main/Views/Account/resources/Login.fxml");
     public static final URL registrazione = Main.class.getResource("/main/Views/Account/resources/Registrazione.fxml");
     public static final URL app = Main.class.getResource("/main/Views/App/resources/App.fxml");
-    
+    */
     /*
      * Risorse css
      */
+	/*
     public static final String timeTrackerCss = Main.class.getResource("/main/Views/TimeTracker/resources/TimeTracker.css").toExternalForm();
     public static final String goalManagerCss = Main.class.getResource("/main/Views/GoalManager/resources/GoalManager.css").toExternalForm();
     public static final String habitTrackerCss = Main.class.getResource("/main/Views/HabitTracker/resources/HabitTracker.css").toExternalForm();
@@ -40,10 +43,11 @@ public class LoaderRisorse {
     public static final String dashboardCss = Main.class.getResource("/main/Views/Dashboard/resources/Dashboard.css").toExternalForm();
     public static final String modalCss = Main.class.getResource("/main/Views/Modals/resources/Modal.css").toExternalForm();
     public static final String globalCss = Main.class.getResource("/main/Views/Globall.css").toExternalForm();
-    
+    */
     /*
      * Immagini
      */
+	/*
     public static final Image dashboardImg = new Image(Main.class.getResource(PATH_IMGS + "dashboard.png").toString());
     public static final Image clockImg = new Image(Main.class.getResource(PATH_IMGS + "clock.png").toString());
     public static final Image dartsImg = new Image(Main.class.getResource(PATH_IMGS + "darts.png").toString());
@@ -60,9 +64,17 @@ public class LoaderRisorse {
 	public static final Image closeGreen = new Image(Main.class.getResource(PATH_IMGS + "close-green.png").toString());
 	public static final Image closeYellow = new Image(Main.class.getResource(PATH_IMGS + "close-yellow.png").toString());
 	public static final Image logoImg = new Image(Main.class.getResource(PATH_IMGS + "logo.png").toString());
-	
-	public static Image cercaImg(String imgName) {
+	*/
+	public static Image getImg(String imgName) {
 		return new Image(Main.class.getResource(PATH_IMGS + imgName + ".png").toString());
+	}
+	
+	public static String cercaCSS(String section, String file) {
+		return Main.class.getResource("/main/Views/" + section + "/risorse/" + file).toExternalForm();
+	}
+	
+	public static URL cercaFXML(String section, String file) {
+		return Main.class.getResource("/main/Views/" + section + "/risorse/" + file);
 	}
 	
 }

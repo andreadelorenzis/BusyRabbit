@@ -228,3 +228,78 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 	-fx-background-color: black;
 	-fx-opacity: 0.5;
 }
+
+
+/*  DatePicker  */
+* {
+	-fx-primary-color: #1B2E4B;
+	-fx-secondary-color: #007acc;
+	-fx-light-grey-color: #d1d1d1;
+    
+	-fx-focus-color: #ffffff;
+}
+
+.date-picker > .text-field {
+	-fx-background-color: #1B2E4B;
+	-fx-text-fill: #ffffff;
+}
+.date-picker .arrow-button {
+	-fx-background-color: -fx-primary-color;
+	-fx-background-radius: 0;
+}
+.date-picker .arrow-button:hover {
+	-fx-background-color: -fx-secondary-color;
+}
+.date-picker .arrow-button .arrow {
+	-fx-background-color: white;
+}
+.date-picker .cell {
+	-fx-background-color: white;
+}
+.date-picker .cell:hover {
+	-fx-background-color: -fx-light-grey-color;
+}
+.date-picker .cell:focused {
+	-fx-background-color: -fx-light-grey-color;
+}
+.date-picker .selected {
+	-fx-background-color: -fx-primary-color;
+	-fx-text-fill: white;
+}
+.date-picker .selected:focused {
+	-fx-background-color: -fx-primary-color;
+	-fx-text-fill: white;
+}
+.date-picker-popup  {
+	-fx-border-color: transparent;
+}
+.date-picker-popup .month-year-pane {
+	-fx-background-color: -fx-primary-color;
+}
+.date-picker-popup .month-year-pane .label {
+	-fx-text-fill: white;
+}
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: -fx-secondary-color;
+}
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+	-fx-background-color: white;
+}
+
+/* TextArea */
+.text-area {
+	-fx-background-color:  #1B2E4B;
+	-fx-text-fill: #ffffff;
+}
+.text-area .content {
+	-fx-background-color:  #1B2E4B;
+	-fx-background-insets: 0;
+	-fx-background-radius: 0;
+}
+.text-area:focused .content {
+	-fx-background-color:  #1B2E4B;
+	-fx-background-insets: 0;
+	-fx-background-radius: 0;
+}
+

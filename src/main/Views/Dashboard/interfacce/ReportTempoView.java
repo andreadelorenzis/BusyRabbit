@@ -1,4 +1,4 @@
-package main.Views.Dashboard.interfaces;
+package main.Views.Dashboard.interfacce;
 
 public interface ReportTempoView {
 	public void aggiornaView();

@@ -1,4 +1,4 @@
-package main.Views.Dashboard.classes;
+package main.Views.Dashboard.classi;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +22,7 @@ import javafx.scene.shape.Circle;
 import main.Controllers.Helpers.Helper;
 import main.Models.habittracker.classes.AbitudineTracker;
 import main.Models.habittracker.interfaces.IHabit;
-import main.Views.Dashboard.interfaces.ReportAbitudiniView;
+import main.Views.Dashboard.interfacce.ReportAbitudiniView;
 
 public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
 

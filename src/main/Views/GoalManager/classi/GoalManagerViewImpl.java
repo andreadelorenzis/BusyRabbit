@@ -1,4 +1,4 @@
-package main.Views.GoalManager.classes;
+package main.Views.GoalManager.classi;
 
 import java.io.IOException;
 import java.net.URL;

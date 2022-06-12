@@ -1,4 +1,4 @@
-package main.Views.App.classes;
+package main.Views.AccountManager.classi;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -18,7 +18,7 @@ import main.Controllers.Controller;
 import main.Controllers.AccountManager.AccessController;
 import main.Models.accountmanager.classes.AccountManager;
 import main.Views.LoaderRisorse;
-import main.Views.App.interfacce.IPageView;
+import main.Views.AccountManager.interfacce.IPageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 

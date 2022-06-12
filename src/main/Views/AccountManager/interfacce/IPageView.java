@@ -1,4 +1,4 @@
-package main.Views.App.interfacce;
+package main.Views.AccountManager.interfacce;
 
 import main.Views.View;
 

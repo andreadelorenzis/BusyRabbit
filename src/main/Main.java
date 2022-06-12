@@ -34,7 +34,7 @@ import javafx.stage.WindowEvent;
 import main.Models.accountmanager.classes.AccountManager;
 import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.LoaderRisorse;
-import main.Views.App.classes.PageView;
+import main.Views.AccountManager.classi.PageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 
@@ -49,7 +49,7 @@ public class Main extends Application {
         try { 
             // Carica la pagina di login.
         	FXMLLoader fxmlLoader = new FXMLLoader();
-        	fxmlLoader.setLocation(LoaderRisorse.login);
+        	fxmlLoader.setLocation(LoaderRisorse.cercaFXML("AccountManager", "Login"));
         	Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 650, 600);
             

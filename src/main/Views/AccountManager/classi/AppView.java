@@ -1,4 +1,4 @@
-package main.Views.App.classes;
+package main.Views.AccountManager.classi;
 
 import java.io.IOException;
 import javafx.event.EventHandler;
@@ -149,7 +149,7 @@ public class AppView {
                 + "-fx-border-style:solid;"
                 + "-fx-background-radius:12;");
         label.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
-        imageView.setImage(LoaderRisorse.cercaImg(imgFile));
+        imageView.setImage(LoaderRisorse.getImg(imgFile));
     }
     
     @FXML

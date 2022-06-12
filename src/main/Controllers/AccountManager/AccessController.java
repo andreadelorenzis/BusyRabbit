@@ -8,7 +8,7 @@ import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Views.View;
-import main.Views.App.interfacce.IPageView;
+import main.Views.AccountManager.interfacce.IPageView;
 import main.Views.Notifications.Notification;
 import main.Views.Notifications.NotificationType;
 

@@ -1,4 +1,4 @@
-package main.Views.Dashboard.classes;
+package main.Views.Dashboard.classi;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -37,7 +37,7 @@ import javafx.scene.layout.VBox;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.interfaces.IProgetto;
-import main.Views.Dashboard.interfaces.ReportTempoView;
+import main.Views.Dashboard.interfacce.ReportTempoView;
 import main.Views.TimeTracker.classes.ViewHelper;
 
 public class ReportTempoViewImpl implements Initializable, ReportTempoView {

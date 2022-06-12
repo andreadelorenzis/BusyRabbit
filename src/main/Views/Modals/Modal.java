@@ -35,7 +35,7 @@ import main.Main;
 import main.Controllers.GoalManager.GoalManagerControllerImpl;
 import main.Controllers.Helpers.Helper;
 import main.Views.LoaderRisorse;
-import main.Views.App.classes.PageView;
+import main.Views.AccountManager.classi.PageView;
 import main.Views.Notifications.NotificationType;
 import main.Views.Notifications.NotificationsManager;
 
