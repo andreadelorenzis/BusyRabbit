@@ -927,7 +927,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
 
 	@Override
 	public void aggiorna(List<IObiettivo> obiettivi) {
-		this.aggiorna(obiettivi);
+		this.aggiornaView(obiettivi);
 	}
 
 	@Override
