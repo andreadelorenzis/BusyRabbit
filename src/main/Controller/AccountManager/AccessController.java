@@ -8,9 +8,9 @@ import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.View;
-import main.views.AccountManager.interfacce.IPageView;
-import main.views.Notifications.Notification;
-import main.views.Notifications.NotificationType;
+import main.views.accountmanager.interfacce.IPageView;
+import main.views.notification.Notification;
+import main.views.notification.NotificationType;
 
 public class AccessController implements IAccessController {
 	

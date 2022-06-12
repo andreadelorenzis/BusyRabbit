@@ -37,8 +37,8 @@ import javafx.scene.layout.VBox;
 import main.model.timetracker.classi.Progetto;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.IProgetto;
-import main.views.Dashboard.interfacce.ReportTempoView;
-import main.views.TimeTracker.classes.ViewHelper;
+import main.views.dashboard.interfacce.ReportTempoView;
+import main.views.timetracker.classi.ViewHelper;
 
 public class ReportTempoViewImpl implements Initializable, ReportTempoView {
     

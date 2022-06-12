@@ -6,7 +6,7 @@ import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
-import main.views.GoalManager.interfaces.GoalManagerView;
+import main.views.goalmanager.interfacce.GoalManagerView;
 
 public class GoalManagerControllerImpl implements GoalManagerController {
     /*

@@ -32,12 +32,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Main;
-import main.Controller.GoalManager.GoalManagerControllerImpl;
-import main.Controller.Helpers.Helper;
+import main.controller.goalmanager.GoalManagerControllerImpl;
+import main.controller.helpers.Helper;
 import main.views.LoaderRisorse;
-import main.views.AccountManager.classi.PageView;
-import main.views.Notifications.NotificationType;
-import main.views.Notifications.NotificationsManager;
+import main.views.accountmanager.classi.PageView;
+import main.views.notification.NotificationType;
+import main.views.notification.NotificationsManager;
 
 public class Modal {
 	

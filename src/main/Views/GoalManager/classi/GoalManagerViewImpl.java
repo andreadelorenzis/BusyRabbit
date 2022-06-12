@@ -31,9 +31,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import main.Main;
-import main.Controller.GoalManager.GoalManagerController;
-import main.Controller.GoalManager.GoalManagerControllerImpl;
-import main.Controller.Helpers.Helper;
+import main.controller.goalmanager.GoalManagerController;
+import main.controller.goalmanager.GoalManagerControllerImpl;
+import main.controller.helpers.Helper;
 import main.model.goalmanager.classi.Azione;
 import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.AzioneSessione;
@@ -48,10 +48,10 @@ import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 import main.model.goalmanager.interfacce.Item;
 import main.views.LoaderRisorse;
-import main.views.GoalManager.interfaces.GoalManagerView;
-import main.views.Modals.Modal;
-import main.views.Notifications.Notification;
-import main.views.Notifications.NotificationType;
+import main.views.goalmanager.interfacce.GoalManagerView;
+import main.views.modal.Modal;
+import main.views.notification.Notification;
+import main.views.notification.NotificationType;
 
 public class GoalManagerViewImpl implements GoalManagerView {
 

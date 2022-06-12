@@ -11,7 +11,7 @@ import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
 import main.model.timetracker.interfacce.ITrackable;
-import main.views.TimeTracker.interfaces.TimeTrackerView;
+import main.views.timetracker.interfacce.TimeTrackerView;
 
 public class TimeTrackerControllerImpl implements TimeTrackerController, ITrackable {
 

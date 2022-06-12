@@ -4,9 +4,9 @@ import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.accountmanager.interfacce.IAccountManager;
-import main.views.Impostazioni.interfaces.ImpostazioniView;
-import main.views.Notifications.Notification;
-import main.views.Notifications.NotificationType;
+import main.views.impostazioni.interfacce.ImpostazioniView;
+import main.views.notification.Notification;
+import main.views.notification.NotificationType;
 
 public class ImpostazioniControllerImpl implements ImpostazioniController {
 

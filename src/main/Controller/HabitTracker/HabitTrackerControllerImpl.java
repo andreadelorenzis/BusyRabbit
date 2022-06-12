@@ -7,7 +7,7 @@ import java.util.List;
 import main.model.habittracker.classi.AbitudineTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineTracker;
-import main.views.HabitTracker.interfaces.HabitTrackerView;
+import main.views.habittracker.interfacce.HabitTrackerView;
 
 public class HabitTrackerControllerImpl implements HabitTrackerController {
     

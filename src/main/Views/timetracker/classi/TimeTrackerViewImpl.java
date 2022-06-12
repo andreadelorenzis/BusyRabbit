@@ -37,9 +37,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Main;
-import main.Controller.Helpers.Helper;
-import main.Controller.TimeTracker.TimeTrackerController;
-import main.Controller.TimeTracker.TimeTrackerControllerImpl;
+import main.controller.helpers.Helper;
+import main.controller.timetracker.TimeTrackerController;
+import main.controller.timetracker.TimeTrackerControllerImpl;
 import main.model.timetracker.classi.Attività;
 import main.model.timetracker.classi.PomodoroTimer;
 import main.model.timetracker.classi.Progetto;
@@ -49,10 +49,10 @@ import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.Colore;
 import main.views.LoaderRisorse;
-import main.views.Modals.Modal;
-import main.views.Notifications.Notification;
-import main.views.Notifications.NotificationType;
-import main.views.TimeTracker.interfaces.TimeTrackerView;
+import main.views.modal.Modal;
+import main.views.notification.Notification;
+import main.views.notification.NotificationType;
+import main.views.timetracker.interfacce.TimeTrackerView;
 
 public class TimeTrackerViewImpl implements TimeTrackerView {
 	

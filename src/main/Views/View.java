@@ -1,6 +1,6 @@
 package main.views;
 
-import main.controller.controller;
+import main.controller.Controller;
 
 public interface View {
 	
