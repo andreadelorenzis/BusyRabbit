@@ -1,6 +1,6 @@
 # # BusyRabbit
 
-<img src="/src/main/views/risorse/logo.png" width="200">
+<img src="/src/main/views/risorse/logo.png" width="200" class="center">
 
 <p align="center"><em>Un'app per la produttività.</em></p>
 
