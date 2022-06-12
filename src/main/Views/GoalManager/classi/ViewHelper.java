@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import main.Views.LoaderRisorse;
+import main.views.LoaderRisorse;
 
 public class ViewHelper {
 	public static Image arrowIcon = LoaderRisorse.getImg("arrow-down-white.png");

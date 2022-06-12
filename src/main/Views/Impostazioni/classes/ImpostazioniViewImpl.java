@@ -3,15 +3,15 @@ package main.Views.Impostazioni.classes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import main.Controllers.Impostazioni.ImpostazioniController;
-import main.Controllers.Impostazioni.ImpostazioniControllerImpl;
-import main.Controllers.TimeTracker.TimeTrackerController;
-import main.Controllers.TimeTracker.TimeTrackerControllerImpl;
-import main.Models.accountmanager.classes.ExistingAccountException;
-import main.Models.accountmanager.classes.WrongCredentialsException;
-import main.Views.Impostazioni.interfaces.ImpostazioniView;
-import main.Views.Notifications.Notification;
-import main.Views.Notifications.NotificationType;
+import main.Controller.Impostazioni.ImpostazioniController;
+import main.Controller.Impostazioni.ImpostazioniControllerImpl;
+import main.Controller.TimeTracker.TimeTrackerController;
+import main.Controller.TimeTracker.TimeTrackerControllerImpl;
+import main.model.accountmanager.classi.ExistingAccountException;
+import main.model.accountmanager.classi.WrongCredentialsException;
+import main.views.Impostazioni.interfaces.ImpostazioniView;
+import main.views.Notifications.Notification;
+import main.views.Notifications.NotificationType;
 
 public class ImpostazioniViewImpl implements ImpostazioniView {
 	

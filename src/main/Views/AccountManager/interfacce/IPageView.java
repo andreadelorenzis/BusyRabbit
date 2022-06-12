@@ -1,6 +1,6 @@
 package main.Views.AccountManager.interfacce;
 
-import main.Views.View;
+import main.views.View;
 
 public interface IPageView extends View {
 	public void erroreConfermaPassword();

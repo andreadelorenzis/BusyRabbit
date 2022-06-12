@@ -16,9 +16,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import main.Models.habittracker.classes.AbitudineSessione;
-import main.Models.habittracker.interfaces.IHabit;
-import main.Models.habittracker.interfaces.ISessionHabit;
+import main.model.habittracker.classi.AbitudineSessione;
+import main.model.habittracker.interfacce.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudineSessione;
 
 public class EditorAbitudineViewImpl {
     
@@ -124,7 +124,7 @@ public class EditorAbitudineViewImpl {
             formSessione.setVisible(true);
         }
     }
-    public void setAbitudine(IHabit abitudine) {
+    public void setAbitudine(IAbitudine abitudine) {
         abitudineField.setText(abitudine.getName());
         List<DayOfWeek> giorni = abitudine.getDays();
         for(int i = 0; i < giorni.size(); i++) {
@@ -153,7 +153,7 @@ public class EditorAbitudineViewImpl {
             }      
         }
         if(abitudine instanceof AbitudineSessione) {
-        	ISessionHabit abitudineSessione = (ISessionHabit) abitudine;
+        	IAbitudineSessione abitudineSessione = (IAbitudineSessione) abitudine;
         	tipoRadio2.setSelected(true);
         	tipoRadio1.setDisable(true);
         	durataSpinner.getValueFactory().setValue(abitudineSessione.getDuration());
