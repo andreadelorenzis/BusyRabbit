@@ -16,9 +16,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import main.Models.habittracker.classes.AbitudineSessione;
-import main.Models.habittracker.interfaces.IAbitudine;
-import main.Models.habittracker.interfaces.IAbitudineSessione;
+import main.model.habittracker.classi.AbitudineSessione;
+import main.model.habittracker.interfacce.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudineSessione;
 
 public class EditorAbitudineViewImpl {
     

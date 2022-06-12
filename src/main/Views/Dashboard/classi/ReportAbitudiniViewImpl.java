@@ -19,10 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
-import main.Controllers.Helpers.Helper;
-import main.Models.habittracker.classes.AbitudineTracker;
-import main.Models.habittracker.interfaces.IAbitudine;
-import main.Views.Dashboard.interfacce.ReportAbitudiniView;
+import main.Controller.Helpers.Helper;
+import main.model.habittracker.classi.AbitudineTracker;
+import main.model.habittracker.interfacce.IAbitudine;
+import main.views.Dashboard.interfacce.ReportAbitudiniView;
 
 public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
 

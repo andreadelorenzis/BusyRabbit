@@ -2,8 +2,8 @@ package main.Views.GoalManager.interfaces;
 
 import java.util.List;
 
-import main.Models.goalmanager.interfaces.IAzione;
-import main.Models.goalmanager.interfaces.IObiettivo;
+import main.model.goalmanager.interfacce.IAzione;
+import main.model.goalmanager.interfacce.IObiettivo;
 
 public interface GoalManagerView {
 	public void aggiorna(List<IObiettivo> obiettivi);

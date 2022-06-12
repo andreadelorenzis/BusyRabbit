@@ -1,4 +1,4 @@
-package main.Views;
+package main.views;
 
 public enum Colore {
     Rosso("#FF4560"),

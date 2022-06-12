@@ -13,11 +13,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import main.Controllers.Controller;
-import main.Controllers.AccountManager.AccessController;
-import main.Models.accountmanager.interfaces.IAccountManager;
-import main.Views.LoaderRisorse;
-import main.Views.View;
+import main.Controller.Controller;
+import main.controller.accountManager.AccessController;
+import main.model.accountmanager.interfacce.IAccountManager;
+import main.views.LoaderRisorse;
+import main.views.View;
 
 public class AppView {
     @FXML

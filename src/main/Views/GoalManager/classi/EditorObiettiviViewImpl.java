@@ -10,8 +10,8 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import main.Models.goalmanager.classes.ObiettivoAzione;
-import main.Models.goalmanager.interfaces.IObiettivo;
+import main.model.goalmanager.classi.ObiettivoAzione;
+import main.model.goalmanager.interfacce.IObiettivo;
 
 public class EditorObiettiviViewImpl {
     

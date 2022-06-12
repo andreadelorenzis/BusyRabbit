@@ -31,12 +31,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import main.Models.accountmanager.classes.AccountManager;
-import main.Models.accountmanager.interfaces.IAccountManager;
-import main.Views.LoaderRisorse;
-import main.Views.AccountManager.classi.PageView;
-import main.Views.Notifications.Notification;
-import main.Views.Notifications.NotificationType;
+import main.model.accountmanager.classi.AccountManager;
+import main.model.accountmanager.interfacce.IAccountManager;
+import main.views.LoaderRisorse;
+import main.views.AccountManager.classi.PageView;
+import main.views.Notifications.Notification;
+import main.views.Notifications.NotificationType;
 
 
 public class Main extends Application { 

@@ -10,15 +10,16 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import main.Models.habittracker.classes.AbitudineTracker;
-import main.Models.goalmanager.classes.ItemImpl;
-import main.Models.habittracker.classes.AbitudineSessione;
-import main.Models.habittracker.classes.AbitudineScomponibile;
-import main.Models.habittracker.interfaces.IAbitudine;
-import main.Models.habittracker.interfaces.IAbitudineTracker;
-import main.Models.habittracker.interfaces.IAbitudineSessione;
-import main.Models.habittracker.interfaces.IAbitudineScomponibile;
-import main.Models.goalmanager.interfaces.Item;
+
+import main.model.goalmanager.classi.ItemImpl;
+import main.model.goalmanager.interfacce.Item;
+import main.model.habittracker.classi.AbitudineScomponibile;
+import main.model.habittracker.classi.AbitudineSessione;
+import main.model.habittracker.classi.AbitudineTracker;
+import main.model.habittracker.interfacce.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudineScomponibile;
+import main.model.habittracker.interfacce.IAbitudineSessione;
+import main.model.habittracker.interfacce.IAbitudineTracker;
 
 /**
  * TODO:

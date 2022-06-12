@@ -9,17 +9,18 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-import main.Models.goalmanager.classes.AzioneScomponibile;
-import main.Models.goalmanager.classes.AzioneSessione;
-import main.Models.goalmanager.classes.GoalManager;
-import main.Models.goalmanager.classes.ItemImpl;
-import main.Models.goalmanager.classes.ObiettivoAzione;
-import main.Models.goalmanager.classes.ObiettivoScomponibile;
-import main.Models.goalmanager.interfaces.IAzione;
-import main.Models.goalmanager.interfaces.IAzioneScomponibile;
-import main.Models.goalmanager.interfaces.IAzioneSessione;
-import main.Models.goalmanager.interfaces.IObiettivoAzione;
-import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
+
+import main.model.goalmanager.classi.AzioneScomponibile;
+import main.model.goalmanager.classi.AzioneSessione;
+import main.model.goalmanager.classi.GoalManager;
+import main.model.goalmanager.classi.ItemImpl;
+import main.model.goalmanager.classi.ObiettivoAzione;
+import main.model.goalmanager.classi.ObiettivoScomponibile;
+import main.model.goalmanager.interfacce.IAzione;
+import main.model.goalmanager.interfacce.IAzioneScomponibile;
+import main.model.goalmanager.interfacce.IAzioneSessione;
+import main.model.goalmanager.interfacce.IObiettivoAzione;
+import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 
 /**
  * TODO:

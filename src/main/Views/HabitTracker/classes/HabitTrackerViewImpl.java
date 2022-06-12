@@ -23,18 +23,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.Main;
-import main.Controllers.HabitTracker.HabitTrackerController;
-import main.Controllers.HabitTracker.HabitTrackerControllerImpl;
-import main.Controllers.Helpers.Helper;
-import main.Models.habittracker.classes.AbitudineTracker;
-import main.Models.habittracker.classes.AbitudineSessione;
-import main.Models.habittracker.classes.AbitudineScomponibile;
-import main.Models.habittracker.interfaces.IAbitudine;
-import main.Views.LoaderRisorse;
-import main.Views.HabitTracker.interfaces.HabitTrackerView;
-import main.Views.Modals.Modal;
-import main.Views.Notifications.Notification;
-import main.Views.Notifications.NotificationType;
+import main.Controller.HabitTracker.HabitTrackerController;
+import main.Controller.HabitTracker.HabitTrackerControllerImpl;
+import main.Controller.Helpers.Helper;
+import main.model.habittracker.classi.AbitudineScomponibile;
+import main.model.habittracker.classi.AbitudineSessione;
+import main.model.habittracker.classi.AbitudineTracker;
+import main.model.habittracker.interfacce.IAbitudine;
+import main.views.LoaderRisorse;
+import main.views.HabitTracker.interfaces.HabitTrackerView;
+import main.views.Modals.Modal;
+import main.views.Notifications.Notification;
+import main.views.Notifications.NotificationType;
 
 public class HabitTrackerViewImpl implements HabitTrackerView {
 

@@ -11,16 +11,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import main.Models.timetracker.classes.Attività;
-import main.Models.timetracker.classes.Progetto;
-import main.Models.timetracker.classes.TimeTracker;
-import main.Models.timetracker.classes.TrackerType;
-import main.Models.timetracker.interfaces.IAttività;
-import main.Models.timetracker.interfaces.ICronometro;
-import main.Models.timetracker.interfaces.IPomodoroTimer;
-import main.Models.timetracker.interfaces.IProgetto;
-import main.Models.timetracker.interfaces.ITimeTracker;
-import main.Views.Colore;
+
+import main.model.timetracker.classi.Attività;
+import main.model.timetracker.classi.Progetto;
+import main.model.timetracker.classi.TimeTracker;
+import main.model.timetracker.classi.TrackerType;
+import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.ICronometro;
+import main.model.timetracker.interfacce.IPomodoroTimer;
+import main.model.timetracker.interfacce.IProgetto;
+import main.model.timetracker.interfacce.ITimeTracker;
+import main.views.Colore;
 
 import java.util.List;
 import java.util.Map;

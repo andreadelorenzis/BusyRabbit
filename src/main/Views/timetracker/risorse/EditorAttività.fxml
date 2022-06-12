@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="378.0" prefWidth="636.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.timetracker.classi.EditorAttivitàViewImpl">
+   <children>
+      <AnchorPane layoutX="1.0" prefHeight="378.0" prefWidth="636.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <BorderPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="521.0">
+               <top>
+                  <VBox alignment="CENTER_LEFT" prefHeight="354.0" prefWidth="676.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Informazioni attività" textFill="#bac4ca">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="374.0">
+                           <children>
+                              <Label text="Nome:" textFill="#bac4ca">
+                                 <HBox.margin>
+                                    <Insets right="18.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="nameField" prefHeight="31.0" prefWidth="288.0" promptText="Inserisci nome attività" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff;" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">
+                           <children>
+                              <Label text="Progetto:" textFill="#bac4ca">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <HBox fx:id="btnProgetto" alignment="CENTER_LEFT" onMouseClicked="#toggleMenuProgetti" prefHeight="36.0" prefWidth="86.0">
+                                 <children>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0">
+                                       <image>
+                                          <Image url="@/main/views/risorse/plus.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <Label text="Progetto" textFill="#2196f3" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">
+                           <children>
+                              <Label text="Data" textFill="#bac4ca">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="201.0" promptText="gg/mm/aaaa">
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">
+                           <children>
+                              <Label text="Ora" textFill="#bac4ca">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="oraField1" prefHeight="30.0" prefWidth="35.0" promptText="h" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">
+                                 <HBox.margin>
+                                    <Insets left="45.0" right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Label text=":" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="oraField2" prefHeight="30.0" prefWidth="35.0" promptText="m" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">
+                           <children>
+                              <Label text="Durata" textFill="#bac4ca">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="durataField1" prefHeight="30.0" prefWidth="35.0" promptText="h" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="22.0" right="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Label text=":" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="durataField2" prefHeight="30.0" prefWidth="35.0" promptText="m" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Label text=":" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="durataField3" prefHeight="30.0" prefWidth="35.0" promptText="s" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-border-radius: 3; -fx-background-radius: 3;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </top>
+            </BorderPane>
+            <BorderPane fx:id="menuProgetti" layoutX="70.0" layoutY="193.0" prefHeight="185.0" prefWidth="200.0" style="-fx-background-color: #1B2E4B;" visible="false">
+               <top>
+                  <HBox prefHeight="42.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="82.0" text="Progetti" textFill="#374667">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1B2E4B;" BorderPane.alignment="CENTER">
+                     <content>
+                        <VBox fx:id="listaProgetti" prefHeight="155.0" prefWidth="198.0" style="-fx-background-color: #1B2E4B;" />
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</AnchorPane>

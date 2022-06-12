@@ -3,7 +3,7 @@ package main.Views.Dashboard.interfacce;
 import java.time.LocalDate;
 import java.util.List;
 
-import main.Models.habittracker.interfaces.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudine;
 
 public interface ReportAbitudiniView {
 	public void visualizzaDiagrammaAnnuale(int anno);

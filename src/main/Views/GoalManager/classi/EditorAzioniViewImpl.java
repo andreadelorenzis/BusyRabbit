@@ -14,9 +14,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import main.Models.goalmanager.classes.AzioneSessione;
-import main.Models.goalmanager.interfaces.IAzione;
-import main.Models.goalmanager.interfaces.IAzioneSessione;
+import main.model.goalmanager.classi.AzioneSessione;
+import main.model.goalmanager.interfacce.IAzione;
+import main.model.goalmanager.interfacce.IAzioneSessione;
 
 public class EditorAzioniViewImpl {
     @FXML

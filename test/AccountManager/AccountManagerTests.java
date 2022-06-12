@@ -9,22 +9,23 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import main.Models.accountmanager.classes.AccountManager;
-import main.Models.accountmanager.classes.ExistingAccountException;
-import main.Models.accountmanager.classes.WrongCredentialsException;
-import main.Models.accountmanager.interfaces.IAccountManager;
-import main.Models.goalmanager.classes.ObiettivoScomponibile;
-import main.Models.goalmanager.interfaces.IAzioneScomponibile;
-import main.Models.goalmanager.interfaces.IGoalManager;
-import main.Models.goalmanager.interfaces.IObiettivoAzione;
-import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
-import main.Models.habittracker.interfaces.IAbitudine;
-import main.Models.habittracker.interfaces.IAbitudineTracker;
-import main.Models.habittracker.interfaces.IAbitudineScomponibile;
-import main.Models.timetracker.interfaces.IAttività;
-import main.Models.timetracker.interfaces.IProgetto;
-import main.Models.timetracker.interfaces.ITimeTracker;
-import main.Views.Colore;
+
+import main.model.accountmanager.classi.AccountManager;
+import main.model.accountmanager.classi.ExistingAccountException;
+import main.model.accountmanager.classi.WrongCredentialsException;
+import main.model.accountmanager.interfacce.IAccountManager;
+import main.model.goalmanager.classi.ObiettivoScomponibile;
+import main.model.goalmanager.interfacce.IAzioneScomponibile;
+import main.model.goalmanager.interfacce.IGoalManager;
+import main.model.goalmanager.interfacce.IObiettivoAzione;
+import main.model.goalmanager.interfacce.IObiettivoScomponibile;
+import main.model.habittracker.interfacce.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudineScomponibile;
+import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IProgetto;
+import main.model.timetracker.interfacce.ITimeTracker;
+import main.views.Colore;
 
 /**
  * TODO:

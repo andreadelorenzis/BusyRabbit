@@ -14,13 +14,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import main.Controllers.Controller;
-import main.Controllers.AccountManager.AccessController;
-import main.Models.accountmanager.classes.AccountManager;
-import main.Views.LoaderRisorse;
-import main.Views.AccountManager.interfacce.IPageView;
-import main.Views.Notifications.Notification;
-import main.Views.Notifications.NotificationType;
+import main.Controller.Controller;
+import main.controller.accountManager.AccessController;
+import main.model.accountmanager.classi.AccountManager;
+import main.views.LoaderRisorse;
+import main.views.AccountManager.interfacce.IPageView;
+import main.views.Notifications.Notification;
+import main.views.Notifications.NotificationType;
 
 public class PageView implements IPageView {
 	public static AnchorPane appContainer = null;

@@ -34,11 +34,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import main.Models.timetracker.classes.Progetto;
-import main.Models.timetracker.classes.TimeTracker;
-import main.Models.timetracker.interfaces.IProgetto;
-import main.Views.Dashboard.interfacce.ReportTempoView;
-import main.Views.TimeTracker.classes.ViewHelper;
+import main.model.timetracker.classi.Progetto;
+import main.model.timetracker.classi.TimeTracker;
+import main.model.timetracker.interfacce.IProgetto;
+import main.views.Dashboard.interfacce.ReportTempoView;
+import main.views.TimeTracker.classes.ViewHelper;
 
 public class ReportTempoViewImpl implements Initializable, ReportTempoView {
     
