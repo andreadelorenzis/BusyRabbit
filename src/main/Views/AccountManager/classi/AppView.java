@@ -116,25 +116,25 @@ public class AppView {
     private void rimuoviEvidenziazionePulsanti() {
         timeHBox.setStyle("-fx-background-color: #060818;");
         timeLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        timeImg.setImage(LoaderRisorse.clockImg);
+        timeImg.setImage(LoaderRisorse.getImg("clock.png"));
         
         goalHBox.setStyle("-fx-background-color: #060818;");
         goalLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        goalImg.setImage(LoaderRisorse.dartsImg);
+        goalImg.setImage(LoaderRisorse.getImg("darts.png"));
         
         habitHBox.setStyle("-fx-background-color: #060818;");
         habitLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        habitImg.setImage(LoaderRisorse.refreshImg);
+        habitImg.setImage(LoaderRisorse.getImg("refresh.png"));
         
         dashboardHBox.setStyle("-fx-background-color: #060818;");
         dashboardLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        dashboardImg.setImage(LoaderRisorse.tilesImg);
-        this.dashboardArrow.setImage(LoaderRisorse.arrowDownImg);
+        dashboardImg.setImage(LoaderRisorse.getImg("dashboard.png"));
+        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down.png"));
         this.dashboardArrow.setRotate(0);
         
         impostazioniHBox.setStyle("-fx-background-color: #060818;");
         impostazioniLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        impostazioniImg.setImage(LoaderRisorse.settingsImg);
+        impostazioniImg.setImage(LoaderRisorse.getImg("settings.png"));
         
         this.timeReportBox.setStyle("-fx-background-color: #060818;");
         this.timeReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
@@ -173,9 +173,9 @@ public class AppView {
         
         // crea la view
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(LoaderRisorse.timeTracker);
+        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.TT, "TimeTracker"));
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(LoaderRisorse.timeTrackerCss);
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.TT, "TimeTracker"));
         view.getStylesheets().add(LoaderRisorse.globalCss);
         panePrincipale.setCenter(view);
     } 
@@ -190,9 +190,9 @@ public class AppView {
        
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(LoaderRisorse.habitTracker);
+        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.HT, "HabitTracker"));
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(LoaderRisorse.habitTrackerCss);
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.HT, "HabitTracker"));
         view.getStylesheets().add(LoaderRisorse.globalCss);
         panePrincipale.setCenter(view);
     } 
@@ -207,9 +207,9 @@ public class AppView {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(LoaderRisorse.goalManager);
+        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.GM, "GoalManager"));
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(LoaderRisorse.goalManagerCss);
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.GM, "GoalManager"));
         view.getStylesheets().add(LoaderRisorse.globalCss);
         panePrincipale.setCenter(view);
     } 
@@ -219,7 +219,7 @@ public class AppView {
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
-        this.dashboardArrow.setImage(LoaderRisorse.arrowDownWhiteImg);
+        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white"));
         this.dashboardArrow.setRotate(180);
         this.timeReportBox.setStyle("-fx-background-color: #374856;"
                 + "-fx-border-radius:12;"
@@ -229,9 +229,9 @@ public class AppView {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(LoaderRisorse.reportTempo);
+        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.DASHBOARD, "ReportTempo"));
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(LoaderRisorse.dashboardCss);
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.DASHBOARD, "Dashboard"));
         view.getStylesheets().add(LoaderRisorse.globalCss);
         panePrincipale.setCenter(view);
         
@@ -247,9 +247,9 @@ public class AppView {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(LoaderRisorse.impostazioni);
+        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.IMPOSTAZIONI, "Impostazioni"));
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(LoaderRisorse.impostazioniCss);
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.IMPOSTAZIONI, "Impostazioni"));
         view.getStylesheets().add(LoaderRisorse.globalCss);
         panePrincipale.setCenter(view);
     } 
@@ -259,7 +259,7 @@ public class AppView {
         // Cambia stile pulsanti navigazione
         this.rimuoviEvidenziazionePulsanti();
         this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
-        this.dashboardArrow.setImage(LoaderRisorse.arrowDownWhiteImg);
+        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white"));
         this.dashboardArrow.setRotate(180);
         this.abitudiniReportBox.setStyle("-fx-background-color: #374856;"
                 + "-fx-border-radius:12;"
@@ -269,9 +269,9 @@ public class AppView {
         
         // Cambia la pagina all'interno del BorderPane
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(LoaderRisorse.reportAbitudini);
+        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.DASHBOARD, "ReportAbitudini"));
         Pane view = fxmlLoader.load();
-        view.getStylesheets().add(LoaderRisorse.reportAbitudiniCss);
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.DASHBOARD, "ReportAbitudini"));
         view.getStylesheets().add(LoaderRisorse.globalCss);
         panePrincipale.setCenter(view);
     }
@@ -282,7 +282,7 @@ public class AppView {
             // Evidenza il pulsante della Dashboard
             this.rimuoviEvidenziazionePulsanti();
             this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white");
-            this.dashboardArrow.setImage(LoaderRisorse.arrowDownWhiteImg);
+            this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white"));
             this.dashboardArrow.setRotate(180);
             
             // Fa comparire i pulsanti nel sotto-menu del pulsante dashboard.
@@ -300,7 +300,7 @@ public class AppView {
     private void chiudiMenuDashboard() {
         this.dashboardBtns.getChildren().clear();
         this.dashboardMenuAperto = false;
-        this.dashboardImg.setImage(LoaderRisorse.dashboardImg);
+        this.dashboardImg.setImage(LoaderRisorse.getImg("dashboard.png"));
     }
 
 }

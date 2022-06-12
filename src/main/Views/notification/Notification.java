@@ -105,15 +105,15 @@ public class Notification {
         if(tipo == NotificationType.ERROR) {
         	pane.setStyle("-fx-background-color: #A93C3A;");
         	label.setTextFill(Color.web("#E9817F"));
-        	closeImg.setImage(LoaderRisorse.closeRed);
+        	closeImg.setImage(LoaderRisorse.getImg("close-red.png"));
         } else if(tipo == NotificationType.SUCCESS) {
         	pane.setStyle("-fx-background-color: #33726A;");
         	label.setTextFill(Color.web("#65E1D2"));
-        	closeImg.setImage(LoaderRisorse.closeGreen);
+        	closeImg.setImage(LoaderRisorse.getImg("close-green.png"));
         } else if(tipo == NotificationType.INFO) {
         	pane.setStyle("-fx-background-color: #866E2A;");
         	label.setTextFill(Color.web("#EACC7B"));
-        	closeImg.setImage(LoaderRisorse.closeYellow);
+        	closeImg.setImage(LoaderRisorse.getImg("close-yellow.png"));
         }
         
         // crea un nuovo stage

@@ -83,7 +83,7 @@ public class PageView implements IPageView {
     
     @FXML
     private void apriPaginaLogin(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(LoaderRisorse.login);
+        Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Login"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(LoaderRisorse.globalCss);
@@ -93,7 +93,7 @@ public class PageView implements IPageView {
     
     @FXML
     private void apriPaginaRegistrazione(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(LoaderRisorse.registrazione);
+        Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Registrazione"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(LoaderRisorse.globalCss);
@@ -105,7 +105,7 @@ public class PageView implements IPageView {
     	if(app.getAccessoEffettuato()) {
         	// carica la schermata principale
         	FXMLLoader loader = new FXMLLoader();
-        	loader.setLocation(LoaderRisorse.app);
+        	loader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.AM, "App"));
         	Pane root = loader.load();
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);

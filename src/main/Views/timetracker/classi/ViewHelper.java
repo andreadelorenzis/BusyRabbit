@@ -145,7 +145,7 @@ public class ViewHelper {
         	arrow.setRotate(90);
         	arrow.getStyleClass().add("right-arrow");
         }
-        arrow.setImage(LoaderRisorse.arrowIcon);
+        arrow.setImage(LoaderRisorse.getImg("arrow.png"));
         BorderPane.setAlignment(arrow, Pos.CENTER);
         return arrow;
     }

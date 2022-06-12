@@ -366,9 +366,9 @@ public class GoalManagerViewImpl implements GoalManagerView {
     	
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(LoaderRisorse.editorObiettivi);
+    	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.GM, "EditorObiettivi"));
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(LoaderRisorse.goalManagerCss);
+        editor.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.GM, "GoalManager"));
         editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
         
@@ -447,9 +447,9 @@ public class GoalManagerViewImpl implements GoalManagerView {
     	
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(LoaderRisorse.editorAzioni);
+    	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.GM, "EditorAzioni"));
     	AnchorPane editor = fxmlLoader.load();
-        editor.getStylesheets().add(LoaderRisorse.goalManagerCss);
+        editor.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.GM, "GoalManager"));
         editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
         

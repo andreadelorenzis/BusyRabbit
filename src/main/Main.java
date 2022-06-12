@@ -49,7 +49,7 @@ public class Main extends Application {
         try { 
             // Carica la pagina di login.
         	FXMLLoader fxmlLoader = new FXMLLoader();
-        	fxmlLoader.setLocation(LoaderRisorse.cercaFXML("AccountManager", "Login"));
+        	fxmlLoader.setLocation(LoaderRisorse.getFXML("accountmanager", "Login"));
         	Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 650, 600);
             
@@ -57,7 +57,7 @@ public class Main extends Application {
             PageView controller = fxmlLoader.getController();
             
             // Aggiunge l'icona.
-            primaryStage.getIcons().add(LoaderRisorse.logoImg);
+            primaryStage.getIcons().add(LoaderRisorse.getImg("logo.png"));
             scene.getStylesheets().add(LoaderRisorse.globalCss);
             
             primaryStage.setResizable(false);

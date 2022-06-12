@@ -119,7 +119,7 @@ public class Modal {
 		
 		// crea la view del modal
         AnchorPane pane = new AnchorPane();
-        pane.getStylesheets().add(LoaderRisorse.modalCss);
+        pane.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.MODAL, "Modal"));
         pane.getStyleClass().add("modal");
         BorderPane container = new BorderPane();
         container.getStyleClass().add("modal-container");
@@ -175,7 +175,7 @@ public class Modal {
         scroll.setHbarPolicy(ScrollBarPolicy.NEVER);
         scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         scroll.setContent(view);
-        view.getStylesheets().add(LoaderRisorse.modalCss);
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.MODAL, "Modal"));
         container.setCenter(scroll);
         
         // modal footer
