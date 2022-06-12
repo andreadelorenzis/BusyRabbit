@@ -1,6 +1,6 @@
-# # BusyRabbit
+# BusyRabbit
 
-<img src="/src/main/views/risorse/logo.png" width="200" class="center">
+<img src="/src/main/views/risorse/logo.png" width="200" align="middle">
 
 <p align="center"><em>Un'app per la produttività.</em></p>
 
@@ -8,15 +8,15 @@
 
 BusyRabbit è un'app per la produttività personale per studenti e freelancer. E' un progetto creato in gruppo come progetto finale per il corso di Programmazione e Modellazione ad Oggetti dell'Università di Urbino. 
 
-## ## Screenshots
+## Screenshots
 
-### ### Time tracker
+### Time tracker
 
 Monitorare le tue attività tra diversi progetti.
 
 <img src="/src/main/views/risorse/timetracker.PNG" width="700"> 
 
-## ### Goal manager
+### Goal manager
 
 Crea, monitora e gestisci  i tuoi obiettivi personali.
 
