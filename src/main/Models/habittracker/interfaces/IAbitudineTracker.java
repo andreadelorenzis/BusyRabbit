@@ -9,13 +9,13 @@ import java.util.Map;
  * Tool to track habits of the user.
  *
  */
-public interface IHabitTracker {
+public interface IAbitudineTracker {
     
     /**
      * 
      * @param habit
      */
-    public void addHabit(IHabit habit);
+    public void addHabit(IAbitudine habit);
     
     /**
      * Calculate habits to do in the specified date
@@ -23,7 +23,7 @@ public interface IHabitTracker {
      * @param date of today
      * @return list of today's habits
      */
-    public List<IHabit> calculateTodayHabits(LocalDate date);
+    public List<IAbitudine> calculateTodayHabits(LocalDate date);
     
     /**
      * Reset the count of all the habits which were not completed by the user in the days between the two dates.
@@ -37,7 +37,7 @@ public interface IHabitTracker {
      * 
      * @return list of all habits
      */
-    public List<IHabit> getHabits();
+    public List<IAbitudine> getHabits();
     
     /**
      * 
@@ -52,7 +52,7 @@ public interface IHabitTracker {
      * 
      * @return days of monitoring
      */
-    public Map<Integer, List<IHabit>> getYearRecords(int year);
+    public Map<Integer, List<IAbitudine>> getYearRecords(int year);
     
     /**
      * Get the recording of habits in the last week
@@ -61,8 +61,8 @@ public interface IHabitTracker {
      * 
      * @return days of monitoring
      */
-    public Map<Integer, List<IHabit>> getWeekRecords();
+    public Map<Integer, List<IAbitudine>> getWeekRecords();
     
-	public IHabit getHabit(String id);
+	public IAbitudine getHabit(String id);
     
 }

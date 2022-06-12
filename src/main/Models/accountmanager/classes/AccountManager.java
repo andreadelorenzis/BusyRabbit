@@ -10,7 +10,7 @@ import main.Models.accountmanager.interfaces.IAccountManager;
 import main.Models.goalmanager.classes.GoalManager;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.habittracker.classes.AbitudineTracker;
-import main.Models.habittracker.interfaces.IHabitTracker;
+import main.Models.habittracker.interfaces.IAbitudineTracker;
 import main.Models.timetracker.classes.TimeTracker;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
@@ -19,7 +19,7 @@ public class AccountManager implements IAccountManager {
 	
 	private ITimeTracker tt = TimeTracker.getInstance();
 	private IGoalManager gm = GoalManager.getInstance();
-	private IHabitTracker ht = AbitudineTracker.getInstance();
+	private IAbitudineTracker ht = AbitudineTracker.getInstance();
 	private String email = "";
 	private String password = "";
 	private boolean accessoEffettuato = false;
@@ -143,7 +143,7 @@ public class AccountManager implements IAccountManager {
 	}
 	
 	@Override
-	public IHabitTracker getHT() {
+	public IAbitudineTracker getHT() {
 		return ht;
 	}
 	

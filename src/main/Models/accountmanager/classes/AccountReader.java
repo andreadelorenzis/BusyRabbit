@@ -22,10 +22,10 @@ import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.Item;
 import main.Models.habittracker.classes.AbitudineSessione;
 import main.Models.habittracker.classes.AbitudineScomponibile;
-import main.Models.habittracker.interfaces.IHabit;
-import main.Models.habittracker.interfaces.IHabitTracker;
-import main.Models.habittracker.interfaces.ISessionHabit;
-import main.Models.habittracker.interfaces.ISimpleHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
+import main.Models.habittracker.interfaces.IAbitudineTracker;
+import main.Models.habittracker.interfaces.IAbitudineSessione;
+import main.Models.habittracker.interfaces.IAbitudineScomponibile;
 import main.Models.timetracker.classes.Attività;
 import main.Models.timetracker.classes.Progetto;
 import main.Models.timetracker.interfaces.IAttività;
@@ -40,9 +40,9 @@ import main.Views.Colore;
 public class AccountReader {
 	private ITimeTracker tt;
 	private IGoalManager gm;
-	private IHabitTracker ht;
+	private IAbitudineTracker ht;
 	
-	public AccountReader(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
+	public AccountReader(ITimeTracker tt, IGoalManager gm, IAbitudineTracker ht) {
 		this.tt = tt;
 		this.gm = gm;
 		this.ht = ht;
@@ -285,12 +285,12 @@ public class AccountReader {
 				}
 				if(tipo.equals("abitudine-semplice")) {
 					String id = params[7];
-					ISimpleHabit h = new AbitudineScomponibile(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, id);
+					IAbitudineScomponibile h = new AbitudineScomponibile(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, id);
 					ht.addHabit(h);
 				} else if(tipo.equals("abitudine-sessione")) {
 					int durata = Integer.parseInt(params[7]);
 					String id = params[8];
-					ISessionHabit h = new AbitudineSessione(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, durata, id);
+					IAbitudineSessione h = new AbitudineSessione(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, durata, id);
 					ht.addHabit(h);
 				} 
 			}
@@ -301,9 +301,9 @@ public class AccountReader {
 				String id = params[3];
 				Item item = new ItemImpl(nome, id);
 				int i = 0;
-				for(IHabit h : ht.getHabits()) {
+				for(IAbitudine h : ht.getHabits()) {
 					if(h.getId().equals(idPadre)) {
-						ISimpleHabit sh = (ISimpleHabit) ht.getHabits().get(i);
+						IAbitudineScomponibile sh = (IAbitudineScomponibile) ht.getHabits().get(i);
 						sh.addItem(item);
 					}
 					i++;
@@ -318,7 +318,7 @@ public class AccountReader {
 		while(line != null) {
 			String[] params = line.split(",");
 			String idAbitudine = params[0];
-			IHabit abitudine = ht.getHabit(idAbitudine);
+			IAbitudine abitudine = ht.getHabit(idAbitudine);
 			
 			// itero gli anni
 			for(int i = 1; i < params.length; i++) {

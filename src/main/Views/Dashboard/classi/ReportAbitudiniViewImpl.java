@@ -21,7 +21,7 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import main.Controllers.Helpers.Helper;
 import main.Models.habittracker.classes.AbitudineTracker;
-import main.Models.habittracker.interfaces.IHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
 import main.Views.Dashboard.interfacce.ReportAbitudiniView;
 
 public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
@@ -65,7 +65,7 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
     	visualizzaDiagrammaAnnuale(annoSelezionato);
     }
     
-    private AnchorPane creaViewProgressCircle(int totHabits, List<IHabit> completedHabits, LocalDate data) {
+    private AnchorPane creaViewProgressCircle(int totHabits, List<IAbitudine> completedHabits, LocalDate data) {
     	// formatta data
     	String formattedDate = data.format(DateTimeFormatter.ofPattern("dd-MMM-yy"));
     	
@@ -152,7 +152,7 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
         
         // crea la view dei cerchi
         int totHabits = AbitudineTracker.getInstance().getHabits().size();
-        Map<Integer, List<IHabit>> datiSettimana = AbitudineTracker.getInstance().getWeekRecords();
+        Map<Integer, List<IAbitudine>> datiSettimana = AbitudineTracker.getInstance().getWeekRecords();
         List<LocalDate> lastWeek = AbitudineTracker.getLastWeek();
         for(LocalDate data : lastWeek) {
         	AnchorPane circle = creaViewProgressCircle(totHabits, datiSettimana.get(data.getDayOfYear()), data);
@@ -182,13 +182,13 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
         this.tilePane.getChildren().clear();
         int nTotHabits = AbitudineTracker.getInstance().getHabits().size();
         
-        Map<Integer, List<IHabit>> datiAnno = AbitudineTracker.getInstance().getYearRecords(anno);
+        Map<Integer, List<IAbitudine>> datiAnno = AbitudineTracker.getInstance().getYearRecords(anno);
         // itera tutti i giorni dell'anno
         for(int giorno : datiAnno.keySet()) {
         	LocalDate data = LocalDate.ofYearDay(anno, giorno);
         	
         	// calcolo il colore in base al numero di abitudini completate
-        	List<IHabit> abitudiniCompletate = datiAnno.get(giorno);
+        	List<IAbitudine> abitudiniCompletate = datiAnno.get(giorno);
         	double progresso = (double) abitudiniCompletate.size() / nTotHabits;
         	String colore = getColore(progresso);
         	
@@ -215,7 +215,7 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
         }
     }
     
-    public void visualizzaDatiGiorno(LocalDate data, List<IHabit> abitudini) {
+    public void visualizzaDatiGiorno(LocalDate data, List<IAbitudine> abitudini) {
         this.giornoBox.getChildren().clear();
         
         // visualizza label giorno
@@ -233,7 +233,7 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
         this.giornoBox.getChildren().add(label);
         
         // crea l'elenco di abitudini svolte
-        for(IHabit h : abitudini) {
+        for(IAbitudine h : abitudini) {
             HBox hBox = Helper.creaElementoLista(h.getName());
             this.giornoBox.getChildren().add(hBox);
         }

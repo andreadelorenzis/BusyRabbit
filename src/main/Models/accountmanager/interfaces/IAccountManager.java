@@ -3,7 +3,7 @@ package main.Models.accountmanager.interfaces;
 import main.Models.accountmanager.classes.ExistingAccountException;
 import main.Models.accountmanager.classes.WrongCredentialsException;
 import main.Models.goalmanager.interfaces.IGoalManager;
-import main.Models.habittracker.interfaces.IHabitTracker;
+import main.Models.habittracker.interfaces.IAbitudineTracker;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
 /**
@@ -78,7 +78,7 @@ public interface IAccountManager {
      * 
      * @return l'istanza di HabitTracker
      */
-    public IHabitTracker getHT();
+    public IAbitudineTracker getHT();
     
     /**
      * 

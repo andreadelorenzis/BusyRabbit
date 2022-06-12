@@ -4,11 +4,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
-import main.Models.habittracker.interfaces.ISessionHabit;
+import main.Models.habittracker.interfaces.IAbitudineSessione;
 import main.Models.timetracker.classes.TimerSemplice;
 import main.Models.timetracker.interfaces.ITrackable;
 
-public class AbitudineSessione extends Abitudine implements ISessionHabit, ITrackable {
+public class AbitudineSessione extends Abitudine implements IAbitudineSessione, ITrackable {
 	
     //------------------------------- CAMPI ----------------------------------
 	/*

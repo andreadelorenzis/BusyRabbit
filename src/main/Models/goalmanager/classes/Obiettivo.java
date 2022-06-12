@@ -5,7 +5,7 @@ import java.util.UUID;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 import main.Models.habittracker.classes.Abitudine;
-import main.Models.habittracker.interfaces.IHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
 
 public abstract class Obiettivo implements IObiettivo {
     

@@ -41,12 +41,12 @@ public interface Item {
      * 
      * @return habit
      */
-    public ISimpleHabit getHabit();
+    public IAbitudineScomponibile getHabit();
     
     /**
      * 
      * @param habit 
      */
-    public void setHabit(ISimpleHabit habit);
+    public void setHabit(IAbitudineScomponibile habit);
 	
 }

@@ -13,7 +13,7 @@ import main.Models.habittracker.classes.AbitudineTracker;
  * Habit that repeat in time.
  *
  */
-public interface IHabit {
+public interface IAbitudine {
 	
 	/**
 	 * Complete this habit

@@ -19,19 +19,19 @@ import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.Item;
 import main.Models.habittracker.classes.AbitudineSessione;
 import main.Models.habittracker.classes.AbitudineScomponibile;
-import main.Models.habittracker.interfaces.IHabit;
-import main.Models.habittracker.interfaces.IHabitTracker;
-import main.Models.habittracker.interfaces.ISessionHabit;
-import main.Models.habittracker.interfaces.ISimpleHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
+import main.Models.habittracker.interfaces.IAbitudineTracker;
+import main.Models.habittracker.interfaces.IAbitudineSessione;
+import main.Models.habittracker.interfaces.IAbitudineScomponibile;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
 
 public class AccountWriter {
 	private ITimeTracker tt;
-	private IHabitTracker ht;
+	private IAbitudineTracker ht;
 	
-	public AccountWriter(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
+	public AccountWriter(ITimeTracker tt, IGoalManager gm, IAbitudineTracker ht) {
 		this.tt = tt;
 		this.ht = ht;
 	}
@@ -160,7 +160,7 @@ public class AccountWriter {
 	
 	public void scriviAbitudini(BufferedWriter writer) {
 		try {
-			for(IHabit h : ht.getHabits()) {
+			for(IAbitudine h : ht.getHabits()) {
 				String stringaAbitudine = "";
 				String stringaGiorni = "";
 				int i = 0;
@@ -172,20 +172,20 @@ public class AccountWriter {
 					i++;
 				}
 				if(h instanceof AbitudineScomponibile) {
-					ISimpleHabit s = (ISimpleHabit) h;
+					IAbitudineScomponibile s = (IAbitudineScomponibile) h;
 					stringaAbitudine = "abitudine-semplice" + "," + s.getName() + "," + s.getDescription()
 					+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
 					+ "," + s.getStartDate().getYear() + "," + stringaGiorni + "," + s.getId() + "\n"; 
 					
 					// scrive gli item della seguente abitudine semplice
 					for(Item it : s.getItems()) {
-						ISimpleHabit padre = (ISimpleHabit) it.getPadre();
+						IAbitudineScomponibile padre = (IAbitudineScomponibile) it.getPadre();
 						String stringaItem = "item-abitudine" + "," + padre.getId() 
 								+ "," + it.getNome() + "," + it.getId() + "\n";
 						writer.write(stringaItem);
 					}
 				} else if (h instanceof AbitudineSessione) {
-					ISessionHabit s = (ISessionHabit) h;
+					IAbitudineSessione s = (IAbitudineSessione) h;
 					stringaAbitudine = "abitudine-sessione" + "," + s.getName() + "," + s.getDescription()
 					+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
 					+ "," + s.getStartDate().getYear() + "," + stringaGiorni 
@@ -200,7 +200,7 @@ public class AccountWriter {
 	
 	public void scriviStoricoAbitudini(BufferedWriter writer) {
 		try {
-			for(IHabit h : ht.getHabits()) {
+			for(IAbitudine h : ht.getHabits()) {
 				String stringaAbitudine = "";
 				String stringaAnno = "";
 				stringaAbitudine += h.getId() + ",";

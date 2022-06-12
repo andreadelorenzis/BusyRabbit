@@ -5,7 +5,7 @@ import main.Models.timetracker.interfaces.ITrackable;
 /**
  * Habit that has a duration. To complete the habit, a timer with the given duration must pass.
  */
-public interface ISessionHabit extends IHabit {
+public interface IAbitudineSessione extends IAbitudine {
 	
 	/**
 	 * Start the habit session

@@ -3,7 +3,7 @@ package main.Models.habittracker.classes;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import main.Models.habittracker.interfaces.IHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
 
 public class GiornoAbitudine {
 
@@ -15,34 +15,34 @@ public class GiornoAbitudine {
     /*
      * Elenco di tutte le abitudini da completare in questa data.
      */
-    private List<IHabit> allHabits;
+    private List<IAbitudine> allHabits;
     
     /*
      * Elenco di tutte le abitudini completate in questa data.
      */
-    private List<IHabit> completedHabits;
+    private List<IAbitudine> completedHabits;
     
 	public LocalDate getDay() {
 		return date;
 	}
 
-	public List<IHabit> getNumTotalHabits() {
+	public List<IAbitudine> getNumTotalHabits() {
 		return allHabits;
 	}
 
-	public List<IHabit> getCompletedHabits() {
+	public List<IAbitudine> getCompletedHabits() {
 		return completedHabits;
 	}
 
-	public void addTotalHabits(List<IHabit> habits) {
+	public void addTotalHabits(List<IAbitudine> habits) {
 		this.allHabits = habits;
 	}
 
-	public void addCompletedHabit(IHabit h) {
+	public void addCompletedHabit(IAbitudine h) {
 		this.completedHabits.add(h);
 	}
 
-	public void removeCompletedHabit(IHabit habitToRemove) {
+	public void removeCompletedHabit(IAbitudine habitToRemove) {
 		this.completedHabits = this.completedHabits.stream()
 												   .filter(h -> !(h.getId().equals(habitToRemove.getId())))
 												   .collect(Collectors.toList());

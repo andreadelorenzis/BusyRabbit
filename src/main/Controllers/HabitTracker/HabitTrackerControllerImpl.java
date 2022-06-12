@@ -5,25 +5,25 @@ import java.time.LocalDate;
 import java.util.List;
 import main.Views.HabitTracker.interfaces.HabitTrackerView;
 import main.Models.habittracker.classes.AbitudineTracker;
-import main.Models.habittracker.interfaces.IHabit;
-import main.Models.habittracker.interfaces.IHabitTracker;
+import main.Models.habittracker.interfaces.IAbitudine;
+import main.Models.habittracker.interfaces.IAbitudineTracker;
 
 public class HabitTrackerControllerImpl implements HabitTrackerController {
     
 	private HabitTrackerView view;
 	
-	private IHabitTracker ht;
+	private IAbitudineTracker ht;
 	
 	public HabitTrackerControllerImpl(HabitTrackerView view) {
 		this.view = view;
 		ht = AbitudineTracker.getInstance();
 	}
 	
-	public void aggiungiAbitudine(IHabit h) {
+	public void aggiungiAbitudine(IAbitudine h) {
 		ht.addHabit(h);
 	}
 	
-	public void modificaAbitudine(IHabit h1, IHabit h2) {
+	public void modificaAbitudine(IAbitudine h1, IAbitudine h2) {
 		String nome = h2.getName();
 		String descrizione = h2.getDescription();
 		LocalDate data = h2.getStartDate();
@@ -36,11 +36,11 @@ public class HabitTrackerControllerImpl implements HabitTrackerController {
 		h1.setDays(giorni);
 	}
 	
-	public void eliminaAbitudine(IHabit h) {
+	public void eliminaAbitudine(IAbitudine h) {
 		ht.removeHabit(h.getId());
 	}
 	
-	public void completaAbitudine(IHabit h) {
+	public void completaAbitudine(IAbitudine h) {
 		h.complete();
 	}
 	

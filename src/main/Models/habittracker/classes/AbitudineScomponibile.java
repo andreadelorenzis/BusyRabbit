@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import main.Models.habittracker.interfaces.ISimpleHabit;
+import main.Models.habittracker.interfaces.IAbitudineScomponibile;
 import main.Models.goalmanager.interfaces.Item;
 
-public class AbitudineScomponibile extends Abitudine implements ISimpleHabit {
+public class AbitudineScomponibile extends Abitudine implements IAbitudineScomponibile {
 	
     //------------------------------- CAMPI ----------------------------------
 	/*

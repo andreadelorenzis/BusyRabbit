@@ -29,7 +29,7 @@ import main.Controllers.Helpers.Helper;
 import main.Models.habittracker.classes.AbitudineTracker;
 import main.Models.habittracker.classes.AbitudineSessione;
 import main.Models.habittracker.classes.AbitudineScomponibile;
-import main.Models.habittracker.interfaces.IHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
 import main.Views.LoaderRisorse;
 import main.Views.HabitTracker.interfaces.HabitTrackerView;
 import main.Views.Modals.Modal;
@@ -47,7 +47,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     @FXML
     private Label tutteBtn;
     
-    private IHabit abitudineCliccata = null;
+    private IAbitudine abitudineCliccata = null;
     
     private BorderPane paneAbitudineCliccata = null;
     
@@ -63,7 +63,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     
     private void visualizzaAbitudiniGiornaliere() {
         abitudiniBox.getChildren().clear();
-        List<IHabit> habits = AbitudineTracker.getInstance().calculateTodayHabits(LocalDate.now());
+        List<IAbitudine> habits = AbitudineTracker.getInstance().calculateTodayHabits(LocalDate.now());
         if(habits.size() > 0) {
             // crea container abitudini non completate
             Label label1 = new Label("Da fare");
@@ -77,7 +77,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
             VBox vBox2 = new VBox();
             
             // aggiunge le abitudini ai rispettivi container
-            for(IHabit h : habits) {
+            for(IAbitudine h : habits) {
             	BorderPane pane = this.creaViewAbitudine(h, true);
             	if(!h.isCompleted()) {
             		vBox1.getChildren().add(pane);
@@ -100,13 +100,13 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     
     private void visualizzaTotaleAbitudini() {
         abitudiniBox.getChildren().clear();
-        List<IHabit> habits = AbitudineTracker.getInstance().getHabits();
+        List<IAbitudine> habits = AbitudineTracker.getInstance().getHabits();
         
         // crea container abitudini
         VBox vBox1 = new VBox();
         
         // aggiunge le abitudini al container
-        for(IHabit h : habits) {
+        for(IAbitudine h : habits) {
         	BorderPane pane = this.creaViewAbitudine(h, false);
         	vBox1.getChildren().add(pane);
         }
@@ -122,7 +122,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     	}
     }
     
-    private BorderPane creaViewAbitudine(IHabit abitudine, boolean isDaily) {
+    private BorderPane creaViewAbitudine(IAbitudine abitudine, boolean isDaily) {
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(10, 0, 10, 0));
         pane.getStyleClass().add("abitudine");
@@ -223,7 +223,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         return colore;
     }
     
-    private void visualizzaInfoAbitudine(IHabit abitudine) {
+    private void visualizzaInfoAbitudine(IAbitudine abitudine) {
         this.infoBox.getChildren().clear();
         
     	// calcola la percentuale di completamento
@@ -290,7 +290,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         this.infoBox.getChildren().add(hBox2);
     }
     
-    private void apriEditorAbitudine(IHabit abitudine, boolean nuovo) throws IOException {
+    private void apriEditorAbitudine(IAbitudine abitudine, boolean nuovo) throws IOException {
         
         // crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
@@ -333,7 +333,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         	int durata = controller.getDurata();
         	if(nuovo) {
         		// aggiunge abitudine 
-        		IHabit newHabit;
+        		IAbitudine newHabit;
         		if(isSessione) {
         			newHabit = new AbitudineSessione(nome, descrizione, data, giorni, durata);
         		} else {
@@ -344,7 +344,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         		this.visualizzaInfoAbitudine(newHabit);
         	} else {
         		// modifica abitudine
-        		IHabit modificata = null;
+        		IAbitudine modificata = null;
         		if(abitudine instanceof AbitudineScomponibile) {
         			modificata = new AbitudineScomponibile(nome, descrizione, data, giorni);
         		} else if(abitudine instanceof AbitudineSessione) {

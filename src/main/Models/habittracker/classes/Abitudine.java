@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
-import main.Models.habittracker.interfaces.IHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
 
-public class Abitudine implements IHabit {
+public class Abitudine implements IAbitudine {
 	
     //------------------------------- CAMPI ----------------------------------
 	/*
@@ -273,7 +273,7 @@ public class Abitudine implements IHabit {
   	      if (!(obj instanceof Abitudine)) {
   	         return false;
   	      }
-  	      IHabit o = (IHabit) obj;
+  	      IAbitudine o = (IAbitudine) obj;
   	      return this.id.equals(o.getId());
    }
 }

@@ -14,10 +14,10 @@ import main.Models.habittracker.classes.AbitudineTracker;
 import main.Models.goalmanager.classes.ItemImpl;
 import main.Models.habittracker.classes.AbitudineSessione;
 import main.Models.habittracker.classes.AbitudineScomponibile;
-import main.Models.habittracker.interfaces.IHabit;
-import main.Models.habittracker.interfaces.IHabitTracker;
-import main.Models.habittracker.interfaces.ISessionHabit;
-import main.Models.habittracker.interfaces.ISimpleHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
+import main.Models.habittracker.interfaces.IAbitudineTracker;
+import main.Models.habittracker.interfaces.IAbitudineSessione;
+import main.Models.habittracker.interfaces.IAbitudineScomponibile;
 import main.Models.goalmanager.interfaces.Item;
 
 /**
@@ -27,9 +27,9 @@ import main.Models.goalmanager.interfaces.Item;
  */
 public class HabitTrackerTests {
 	
-	private IHabitTracker h = null;
+	private IAbitudineTracker h = null;
 	
-	private void initialize(IHabitTracker h) {
+	private void initialize(IAbitudineTracker h) {
 		// add a SimpleHabit
 		h.addHabit(new AbitudineScomponibile("Morning routine",
 								   "Doing my morning routine",
@@ -59,8 +59,8 @@ public class HabitTrackerTests {
 	public void testHabitsRecording() {
 		h = AbitudineTracker.getInstance();
 		initialize(h);
-		IHabit h1 = h.getHabits().get(0);
-		IHabit h2 = h.getHabits().get(1);
+		IAbitudine h1 = h.getHabits().get(0);
+		IAbitudine h2 = h.getHabits().get(1);
 		int year = LocalDate.now().getYear();
 		int day = LocalDate.now().getDayOfYear();
 		
@@ -68,11 +68,11 @@ public class HabitTrackerTests {
 		h1.complete();
 		
 		// there's one habit completed this year
-		Map<Integer, List<IHabit>> yearRecords = h.getYearRecords(year);
+		Map<Integer, List<IAbitudine>> yearRecords = h.getYearRecords(year);
 		assertEquals("Morning routine", yearRecords.get(day).get(0).getName());
 		
 		// there's one habit completed this week
-		Map<Integer, List<IHabit>> weekRecords = h.getWeekRecords();
+		Map<Integer, List<IAbitudine>> weekRecords = h.getWeekRecords();
 		assertEquals("Morning routine", weekRecords.get(day).get(0).getName());
 		
 		// complete the second habit
@@ -117,7 +117,7 @@ public class HabitTrackerTests {
 	public void testSimpleHabit() {
 		h = AbitudineTracker.getInstance();
 		initialize(h);
-		ISimpleHabit simpleHabit = (ISimpleHabit) h.getHabits().get(0);
+		IAbitudineScomponibile simpleHabit = (IAbitudineScomponibile) h.getHabits().get(0);
 		
 		// add 2 items to first habit
 		simpleHabit.addItem(new ItemImpl("Run for a mile"));
@@ -158,7 +158,7 @@ public class HabitTrackerTests {
 								   new ArrayList<>(List.of(DayOfWeek.SUNDAY))));
 		
 		// get habits for today, Friday 14 January 2022
-		List<IHabit> habits = h.calculateTodayHabits(LocalDate.of(2022, Month.JANUARY, 14));
+		List<IAbitudine> habits = h.calculateTodayHabits(LocalDate.of(2022, Month.JANUARY, 14));
 		
 		// there are 2 habits in the list, "Morning routine" and "Studying"
 		assertEquals(2, habits.size());
@@ -175,7 +175,7 @@ public class HabitTrackerTests {
 		initialize(h);
 		
 		// get habits for today, Friday 14 January 2022
-		List<IHabit> habits = h.calculateTodayHabits(LocalDate.of(2022, Month.JANUARY, 14));
+		List<IAbitudine> habits = h.calculateTodayHabits(LocalDate.of(2022, Month.JANUARY, 14));
 		
 		// complete first habit
 		habits.get(0).complete();
@@ -227,7 +227,7 @@ public class HabitTrackerTests {
 	public void testSessionHabit() {
 		h = AbitudineTracker.getInstance();
 		initialize(h);
-		ISessionHabit habit = (ISessionHabit) h.getHabits().get(1);
+		IAbitudineSessione habit = (IAbitudineSessione) h.getHabits().get(1);
 		
 		// set SessionHabit duration to 2 seconds
 		habit.setDuration(2);

@@ -18,9 +18,9 @@ import main.Models.goalmanager.interfaces.IAzioneScomponibile;
 import main.Models.goalmanager.interfaces.IGoalManager;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
-import main.Models.habittracker.interfaces.IHabit;
-import main.Models.habittracker.interfaces.IHabitTracker;
-import main.Models.habittracker.interfaces.ISimpleHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
+import main.Models.habittracker.interfaces.IAbitudineTracker;
+import main.Models.habittracker.interfaces.IAbitudineScomponibile;
 import main.Models.timetracker.interfaces.IAttività;
 import main.Models.timetracker.interfaces.IProgetto;
 import main.Models.timetracker.interfaces.ITimeTracker;
@@ -198,7 +198,7 @@ class AccountManagerTests {
 	@Test 
 	public void testLetturaAbitudini() {
 		app = AccountManager.getInstance();
-		IHabitTracker ht = app.getHT();
+		IAbitudineTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
 		accedi(app);
@@ -206,7 +206,7 @@ class AccountManagerTests {
 		// ci sono 2 abitudini
 		assertEquals(2, ht.getHabits().size());
 		// controllo la prima abitudine semplice
-		ISimpleHabit h = (ISimpleHabit) ht.getHabits().get(0);
+		IAbitudineScomponibile h = (IAbitudineScomponibile) ht.getHabits().get(0);
 		assertEquals("routine mattutina", h.getName());
 		assertEquals("descrizione", h.getDescription());
 		assertEquals(20, h.getStartDate().getDayOfMonth());
@@ -224,14 +224,14 @@ class AccountManagerTests {
 	@Test
 	public void testLetturaStoricoAbitudini() {
 		app = AccountManager.getInstance();
-		IHabitTracker ht = app.getHT();
+		IAbitudineTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
 		accedi(app);
 		
 		// testo i dati salvati nell'anno 2021
-		Map<Integer, List<IHabit>> anno2021 = ht.getYearRecords(2021);
-		Map<Integer, List<IHabit>> anno2022 = ht.getYearRecords(2022);
+		Map<Integer, List<IAbitudine>> anno2021 = ht.getYearRecords(2021);
+		Map<Integer, List<IAbitudine>> anno2022 = ht.getYearRecords(2022);
 		// il giorno 8 dell'anno 2022 ha 2 abitudini completate
 		assertEquals(2, anno2022.get(8).size());
 		assertEquals("routine mattutina", anno2022.get(8).get(0).getName());

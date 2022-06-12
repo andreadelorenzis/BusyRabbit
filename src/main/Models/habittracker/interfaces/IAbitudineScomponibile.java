@@ -9,7 +9,7 @@ import main.Models.goalmanager.interfaces.Item;
  * Habit that is composable of smaller items.
  *
  */
-public interface ISimpleHabit extends IHabit {
+public interface IAbitudineScomponibile extends IAbitudine {
 	
 	/**
 	 * 

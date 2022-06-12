@@ -1,13 +1,13 @@
 package main.Controllers.HabitTracker;
 
-import main.Models.habittracker.interfaces.IHabit;
+import main.Models.habittracker.interfaces.IAbitudine;
 
 public interface HabitTrackerController {
-	public void aggiungiAbitudine(IHabit h);
+	public void aggiungiAbitudine(IAbitudine h);
 	
-	public void modificaAbitudine(IHabit h1, IHabit h2);
+	public void modificaAbitudine(IAbitudine h1, IAbitudine h2);
 	
-	public void eliminaAbitudine(IHabit h);
+	public void eliminaAbitudine(IAbitudine h);
 	
-	public void completaAbitudine(IHabit h);
+	public void completaAbitudine(IAbitudine h);
 }

@@ -4,23 +4,23 @@ import java.util.UUID;
 
 import main.Models.habittracker.interfaces.*;
 
-public class OggettoImpl implements Item {
+public class ItemImpl implements Item {
 	
 	private String name;
 	private boolean isCompleted = false;
 	private String id;
-	public ISimpleHabit habit;
+	public IAbitudineScomponibile habit;
 	
 	/**
 	 * 
 	 * @param name
 	 */
-	public OggettoImpl(String name) {
+	public ItemImpl(String name) {
 		this.name = name;
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public OggettoImpl(String name, String id) {
+	public ItemImpl(String name, String id) {
 		this(name);
 		this.id = id;
 	}
@@ -51,12 +51,12 @@ public class OggettoImpl implements Item {
 	}
 
 	@Override
-	public ISimpleHabit getHabit() {
+	public IAbitudineScomponibile getHabit() {
 		return habit;
 	}
 
 	@Override
-	public void setHabit(ISimpleHabit habit) {
+	public void setHabit(IAbitudineScomponibile habit) {
 		this.habit = habit;
 	}
 	
