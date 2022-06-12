@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -171,7 +172,8 @@ public class GoalManagerViewImpl implements GoalManagerView {
         });
         
         // aggiunge la data
-        Label label = new Label("Ago, 07 2021");
+        String data = o.getData().format(DateTimeFormatter.ofPattern("MMM, dd yyyy"));
+        Label label = new Label(data);
         label.getStyleClass().add("data");
         vBox.getChildren().add(label);
 
