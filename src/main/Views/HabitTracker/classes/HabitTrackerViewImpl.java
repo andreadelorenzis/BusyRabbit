@@ -339,7 +339,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         		} else {
         			newHabit = new SimpleHabit(nome, descrizione, data, giorni);
         		}
-        		this.controller.aggiungiAbitudine(abitudine);
+        		this.controller.aggiungiAbitudine(newHabit);
         		new Notification("Abitudine aggiunta.", NotificationType.SUCCESS).show();
         		this.visualizzaInfoAbitudine(newHabit);
         	} else {
