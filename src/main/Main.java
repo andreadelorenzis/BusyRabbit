@@ -34,9 +34,9 @@ import javafx.stage.WindowEvent;
 import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.LoaderRisorse;
-import main.views.AccountManager.classi.PageView;
-import main.views.Notifications.Notification;
-import main.views.Notifications.NotificationType;
+import main.views.accountmanager.classi.PageView;
+import main.views.notification.Notification;
+import main.views.notification.NotificationType;
 
 
 public class Main extends Application { 

@@ -1,4 +1,4 @@
-package main.Views.GoalManager.classi;
+package main.views.goalmanager.classi;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

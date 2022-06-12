@@ -1,4 +1,4 @@
-package main.Views.Impostazioni.interfaces;
+package main.views.impostazioni.interfacce;
 
 public interface ImpostazioniView {
 

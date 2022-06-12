@@ -1,4 +1,4 @@
-package main.Views.HabitTracker.classes;
+package main.views.habittracker.classi;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package main.Views.Impostazioni.classes;
+package main.views.impostazioni.classi;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

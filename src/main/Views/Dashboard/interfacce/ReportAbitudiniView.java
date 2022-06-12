@@ -1,4 +1,4 @@
-package main.Views.Dashboard.interfacce;
+package main.views.dashboard.interfacce;
 
 import java.time.LocalDate;
 import java.util.List;

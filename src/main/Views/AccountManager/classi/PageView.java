@@ -1,4 +1,4 @@
-package main.Views.AccountManager.classi;
+package main.views.accountmanager.classi;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;

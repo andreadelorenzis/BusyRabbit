@@ -1,4 +1,4 @@
-package main.Views.GoalManager.classi;
+package main.views.goalmanager.classi;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;

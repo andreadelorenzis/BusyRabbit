@@ -1,4 +1,4 @@
-package main.Views.Dashboard.classi;
+package main.views.dashboard.classi;
 
 import java.net.URL;
 import java.text.DecimalFormat;

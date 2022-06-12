@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" minHeight="345.0" prefHeight="454.0" prefWidth="600.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Views.HabitTracker.classes.EditorAbitudineViewImpl">
+<AnchorPane id="AnchorPane" minHeight="345.0" prefHeight="454.0" prefWidth="600.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.habittracker.classi.EditorAbitudineViewImpl">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="24.0" layoutY="52.0" prefHeight="59.0" prefWidth="562.0">
          <children>

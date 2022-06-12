@@ -1,4 +1,4 @@
-package main.Views.HabitTracker.classes;
+package main.views.habittracker.classi;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

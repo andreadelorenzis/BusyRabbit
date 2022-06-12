@@ -1,4 +1,4 @@
-package main.Views.GoalManager.interfaces;
+package main.views.goalmanager.interfacce;
 
 import java.util.List;
 

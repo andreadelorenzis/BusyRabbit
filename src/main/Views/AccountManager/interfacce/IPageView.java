@@ -1,4 +1,4 @@
-package main.Views.AccountManager.interfacce;
+package main.views.accountmanager.interfacce;
 
 import main.views.View;
 
