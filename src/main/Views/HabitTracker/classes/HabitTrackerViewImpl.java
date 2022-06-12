@@ -26,9 +26,9 @@ import main.Main;
 import main.Controllers.HabitTracker.HabitTrackerController;
 import main.Controllers.HabitTracker.HabitTrackerControllerImpl;
 import main.Controllers.Helpers.Helper;
-import main.Models.habittracker.classes.HabitTracker;
-import main.Models.habittracker.classes.SessionHabit;
-import main.Models.habittracker.classes.SimpleHabit;
+import main.Models.habittracker.classes.AbitudineTracker;
+import main.Models.habittracker.classes.AbitudineSessione;
+import main.Models.habittracker.classes.AbitudineScomponibile;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Views.LoaderRisorse;
 import main.Views.HabitTracker.interfaces.HabitTrackerView;
@@ -63,7 +63,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     
     private void visualizzaAbitudiniGiornaliere() {
         abitudiniBox.getChildren().clear();
-        List<IHabit> habits = HabitTracker.getInstance().calculateTodayHabits(LocalDate.now());
+        List<IHabit> habits = AbitudineTracker.getInstance().calculateTodayHabits(LocalDate.now());
         if(habits.size() > 0) {
             // crea container abitudini non completate
             Label label1 = new Label("Da fare");
@@ -100,7 +100,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     
     private void visualizzaTotaleAbitudini() {
         abitudiniBox.getChildren().clear();
-        List<IHabit> habits = HabitTracker.getInstance().getHabits();
+        List<IHabit> habits = AbitudineTracker.getInstance().getHabits();
         
         // crea container abitudini
         VBox vBox1 = new VBox();
@@ -335,9 +335,9 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         		// aggiunge abitudine 
         		IHabit newHabit;
         		if(isSessione) {
-        			newHabit = new SessionHabit(nome, descrizione, data, giorni, durata);
+        			newHabit = new AbitudineSessione(nome, descrizione, data, giorni, durata);
         		} else {
-        			newHabit = new SimpleHabit(nome, descrizione, data, giorni);
+        			newHabit = new AbitudineScomponibile(nome, descrizione, data, giorni);
         		}
         		this.controller.aggiungiAbitudine(newHabit);
         		new Notification("Abitudine aggiunta.", NotificationType.SUCCESS).show();
@@ -345,10 +345,10 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
         	} else {
         		// modifica abitudine
         		IHabit modificata = null;
-        		if(abitudine instanceof SimpleHabit) {
-        			modificata = new SimpleHabit(nome, descrizione, data, giorni);
-        		} else if(abitudine instanceof SessionHabit) {
-        			modificata = new SessionHabit(nome, descrizione, data, giorni, durata);
+        		if(abitudine instanceof AbitudineScomponibile) {
+        			modificata = new AbitudineScomponibile(nome, descrizione, data, giorni);
+        		} else if(abitudine instanceof AbitudineSessione) {
+        			modificata = new AbitudineSessione(nome, descrizione, data, giorni, durata);
         		}
         		this.controller.modificaAbitudine(abitudine, modificata);
         		new Notification("Abitudine modificata.", NotificationType.SUCCESS).show();

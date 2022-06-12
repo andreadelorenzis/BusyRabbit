@@ -20,8 +20,8 @@ import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.Item;
-import main.Models.habittracker.classes.SessionHabit;
-import main.Models.habittracker.classes.SimpleHabit;
+import main.Models.habittracker.classes.AbitudineSessione;
+import main.Models.habittracker.classes.AbitudineScomponibile;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISessionHabit;
@@ -285,12 +285,12 @@ public class AccountReader {
 				}
 				if(tipo.equals("abitudine-semplice")) {
 					String id = params[7];
-					ISimpleHabit h = new SimpleHabit(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, id);
+					ISimpleHabit h = new AbitudineScomponibile(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, id);
 					ht.addHabit(h);
 				} else if(tipo.equals("abitudine-sessione")) {
 					int durata = Integer.parseInt(params[7]);
 					String id = params[8];
-					ISessionHabit h = new SessionHabit(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, durata, id);
+					ISessionHabit h = new AbitudineSessione(nome, descrizione, LocalDate.of(anno, mese, giorno), giorni, durata, id);
 					ht.addHabit(h);
 				} 
 			}

@@ -17,8 +17,8 @@ import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoAzione;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
 import main.Models.goalmanager.interfaces.Item;
-import main.Models.habittracker.classes.SessionHabit;
-import main.Models.habittracker.classes.SimpleHabit;
+import main.Models.habittracker.classes.AbitudineSessione;
+import main.Models.habittracker.classes.AbitudineScomponibile;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISessionHabit;
@@ -171,7 +171,7 @@ public class AccountWriter {
 					}
 					i++;
 				}
-				if(h instanceof SimpleHabit) {
+				if(h instanceof AbitudineScomponibile) {
 					ISimpleHabit s = (ISimpleHabit) h;
 					stringaAbitudine = "abitudine-semplice" + "," + s.getName() + "," + s.getDescription()
 					+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
@@ -184,7 +184,7 @@ public class AccountWriter {
 								+ "," + it.getNome() + "," + it.getId() + "\n";
 						writer.write(stringaItem);
 					}
-				} else if (h instanceof SessionHabit) {
+				} else if (h instanceof AbitudineSessione) {
 					ISessionHabit s = (ISessionHabit) h;
 					stringaAbitudine = "abitudine-sessione" + "," + s.getName() + "," + s.getDescription()
 					+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()

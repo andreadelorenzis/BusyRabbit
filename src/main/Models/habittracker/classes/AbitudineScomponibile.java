@@ -9,20 +9,20 @@ import java.util.stream.Collectors;
 import main.Models.habittracker.interfaces.ISimpleHabit;
 import main.Models.goalmanager.interfaces.Item;
 
-public class SimpleHabit extends Habit implements ISimpleHabit {
+public class AbitudineScomponibile extends Abitudine implements ISimpleHabit {
 	
     //------------------------------- CAMPI ----------------------------------
 	/*
-	 * Items that compose this habit
+	 * Oggetti che compongono questa abitudine
 	 */
 	private List<Item> items = new ArrayList<>();
 
     //----------------------------- COSTRUTTORI --------------------------------
-	public SimpleHabit(String name, LocalDate startDate, List<DayOfWeek> days) {
+	public AbitudineScomponibile(String name, LocalDate startDate, List<DayOfWeek> days) {
 		super(name, "", startDate, days);
 	}
 
-	public SimpleHabit(String name, LocalDate startDate, List<DayOfWeek> days, String id) {
+	public AbitudineScomponibile(String name, LocalDate startDate, List<DayOfWeek> days, String id) {
 		super(name, "", startDate, days, id);
 	}
 	
@@ -33,7 +33,7 @@ public class SimpleHabit extends Habit implements ISimpleHabit {
 	 * @param startDate
 	 * @param days
 	 */
-	public SimpleHabit(String name, String description, LocalDate startDate, List<DayOfWeek> days) {
+	public AbitudineScomponibile(String name, String description, LocalDate startDate, List<DayOfWeek> days) {
 		super(name, description, startDate, days);
 	}
 	
@@ -45,7 +45,7 @@ public class SimpleHabit extends Habit implements ISimpleHabit {
 	 * @param days
 	 * @param id
 	 */
-	public SimpleHabit(String name, String description, LocalDate startDate, List<DayOfWeek> days, String id) {
+	public AbitudineScomponibile(String name, String description, LocalDate startDate, List<DayOfWeek> days, String id) {
 		super(name, description, startDate, days, id);
 	}
 

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import main.Models.habittracker.interfaces.*;
 
-public class ItemImpl implements Item {
+public class OggettoImpl implements Item {
 	
 	private String name;
 	private boolean isCompleted = false;
@@ -15,12 +15,12 @@ public class ItemImpl implements Item {
 	 * 
 	 * @param name
 	 */
-	public ItemImpl(String name) {
+	public OggettoImpl(String name) {
 		this.name = name;
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public ItemImpl(String name, String id) {
+	public OggettoImpl(String name, String id) {
 		this(name);
 		this.id = id;
 	}

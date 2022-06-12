@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 import main.Models.goalmanager.interfaces.IObiettivo;
 import main.Models.goalmanager.interfaces.IObiettivoScomponibile;
-import main.Models.habittracker.classes.Habit;
+import main.Models.habittracker.classes.Abitudine;
 import main.Models.habittracker.interfaces.IHabit;
 
 public abstract class Obiettivo implements IObiettivo {

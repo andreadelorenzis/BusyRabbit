@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 import main.Models.habittracker.interfaces.IHabit;
 
-public class HabitDay {
+public class GiornoAbitudine {
 
 	/*
-	 * Date of completion.
+	 * Data di completamento.
 	 */
     private LocalDate date;
     
     /*
-     * List of all habits to complete in this date. 
+     * Elenco di tutte le abitudini da completare in questa data.
      */
     private List<IHabit> allHabits;
     
     /*
-     * List of all habits completed in this date.
+     * Elenco di tutte le abitudini completate in questa data.
      */
     private List<IHabit> completedHabits;
     

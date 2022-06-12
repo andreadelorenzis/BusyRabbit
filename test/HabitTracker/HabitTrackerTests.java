@@ -10,10 +10,10 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import main.Models.habittracker.classes.HabitTracker;
+import main.Models.habittracker.classes.AbitudineTracker;
 import main.Models.goalmanager.classes.ItemImpl;
-import main.Models.habittracker.classes.SessionHabit;
-import main.Models.habittracker.classes.SimpleHabit;
+import main.Models.habittracker.classes.AbitudineSessione;
+import main.Models.habittracker.classes.AbitudineScomponibile;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 import main.Models.habittracker.interfaces.ISessionHabit;
@@ -31,12 +31,12 @@ public class HabitTrackerTests {
 	
 	private void initialize(IHabitTracker h) {
 		// add a SimpleHabit
-		h.addHabit(new SimpleHabit("Morning routine",
+		h.addHabit(new AbitudineScomponibile("Morning routine",
 								   "Doing my morning routine",
 								   	LocalDate.now(),
 								   	new ArrayList<>(List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY))));
 		// add a SessionHabit
-		h.addHabit(new SessionHabit("Studying",
+		h.addHabit(new AbitudineSessione("Studying",
 									"Studying for 2 hours",
 									LocalDate.now(),
 									new ArrayList<>(List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
@@ -47,7 +47,7 @@ public class HabitTrackerTests {
 	
     @Before
     public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-    	Field instance = HabitTracker.class.getDeclaredField("habitTracker");
+    	Field instance = AbitudineTracker.class.getDeclaredField("habitTracker");
     	instance.setAccessible(true);
     	instance.set(instance, null);
     }
@@ -57,7 +57,7 @@ public class HabitTrackerTests {
 	 */
 	@Test
 	public void testHabitsRecording() {
-		h = HabitTracker.getInstance();
+		h = AbitudineTracker.getInstance();
 		initialize(h);
 		IHabit h1 = h.getHabits().get(0);
 		IHabit h2 = h.getHabits().get(1);
@@ -95,7 +95,7 @@ public class HabitTrackerTests {
 	 */
 	@Test
 	public void testHabitPresence() {
-		h = HabitTracker.getInstance();
+		h = AbitudineTracker.getInstance();
 		initialize(h);
 		
 		// there are two habits
@@ -103,11 +103,11 @@ public class HabitTrackerTests {
 		
 		// first is "Morning Routine", a SimpleHabit
 		assertEquals("Morning routine", h.getHabits().get(0).getName());
-		assertTrue(h.getHabits().get(0) instanceof SimpleHabit);
+		assertTrue(h.getHabits().get(0) instanceof AbitudineScomponibile);
 		
 		// second is "Studying", a SessionHabit
 		assertEquals("Studying", h.getHabits().get(1).getName());
-		assertTrue(h.getHabits().get(1) instanceof SessionHabit);
+		assertTrue(h.getHabits().get(1) instanceof AbitudineSessione);
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class HabitTrackerTests {
 	 */
 	@Test
 	public void testSimpleHabit() {
-		h = HabitTracker.getInstance();
+		h = AbitudineTracker.getInstance();
 		initialize(h);
 		ISimpleHabit simpleHabit = (ISimpleHabit) h.getHabits().get(0);
 		
@@ -148,11 +148,11 @@ public class HabitTrackerTests {
 	 */
 	@Test
 	public void testTodayHabits() {
-		h = HabitTracker.getInstance();
+		h = AbitudineTracker.getInstance();
 		initialize(h);
 		
 		// add another habit
-		h.addHabit(new SimpleHabit("Another habit",
+		h.addHabit(new AbitudineScomponibile("Another habit",
 								   "",
 								   LocalDate.now(),
 								   new ArrayList<>(List.of(DayOfWeek.SUNDAY))));
@@ -171,7 +171,7 @@ public class HabitTrackerTests {
 	 */
 	@Test
 	public void testCompletion() {
-		h = HabitTracker.getInstance();
+		h = AbitudineTracker.getInstance();
 		initialize(h);
 		
 		// get habits for today, Friday 14 January 2022
@@ -193,7 +193,7 @@ public class HabitTrackerTests {
 	 */
 	@Test
 	public void testReset() {
-		h = HabitTracker.getInstance();
+		h = AbitudineTracker.getInstance();
 		initialize(h);
 		
 		LocalDate date1 = LocalDate.of(2022, Month.JANUARY, 10); // Last access, Monday
@@ -225,7 +225,7 @@ public class HabitTrackerTests {
 	
 	@Test
 	public void testSessionHabit() {
-		h = HabitTracker.getInstance();
+		h = AbitudineTracker.getInstance();
 		initialize(h);
 		ISessionHabit habit = (ISessionHabit) h.getHabits().get(1);
 		

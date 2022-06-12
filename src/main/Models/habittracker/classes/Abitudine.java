@@ -9,63 +9,63 @@ import java.util.TreeMap;
 import java.util.UUID;
 import main.Models.habittracker.interfaces.IHabit;
 
-public class Habit implements IHabit {
+public class Abitudine implements IHabit {
 	
     //------------------------------- CAMPI ----------------------------------
 	/*
-	 * Name of the habit
+	 * Nome Abitudine
 	 */
 	private String name;
 	
 	/*
-	 * Description of the habit
+	 * Descrizione Abitudine
 	 */
 	private String description;
 	
 	/*
-	 * Current count
+	 * Punteggio Attuale
 	 */
 	private int count = 0;
 	
 	/*
-	 * Current record
+	 * Record Corrente
 	 */
 	private int record = 0;
 	
 	/*
-	 * When the habit will start to be active
+	 * Date Inizio Abitudine 
 	 */
 	private LocalDate startDate;
 	
 	/*
-	 * Last date in which the habit was completed
+	 * Ultima data in cui l'abito è stato completato
 	 */
 	private LocalDate dateOfLastCompletion = null;
 	
 	/*
-	 * Contains a backup of dateOfLastCompletion in case the completion of the habit is reverted 
+	 * Contiene un backup della data dell'ultimo completamento nel caso in cui il completamento dell'abitudine venga ripristinato 
 	 */
 	private LocalDate temp;
 	
 	/*
-	 * If the habit is completed or not
+	 * Se l'abitudine è completata o meno
 	 */
 	private boolean isCompleted = false;
 	
 	/*
-	 * The days of repetition
+	 * I giorni della ripetizione
 	 */
 	private List<DayOfWeek> days = new ArrayList<>();
 	
 	/*
-	 * Id of the habit
+	 * Id dell'abitudine
 	 */
 	private String id;
 	
 	/*
-	 * Contains the info about the days when the habit has been completed in the monitored years
-	 * key: year
-	 * value: days where the habit was completed
+	 * Contiene le informazioni sui giorni in cui l'abitudine è stata completata negli anni monitorati
+     * chiave: anno
+     * valore: giorni in cui l'abitudine è stata completata
 	 */
 	private Map<Integer, List<Integer>> yearRecords = new TreeMap<>();
 	
@@ -77,7 +77,7 @@ public class Habit implements IHabit {
 	 * @param startDate
 	 * @param days
 	 */
-	public Habit(String name, String description, LocalDate startDate, List<DayOfWeek> days) {
+	public Abitudine(String name, String description, LocalDate startDate, List<DayOfWeek> days) {
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;
@@ -85,7 +85,7 @@ public class Habit implements IHabit {
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public Habit(String name, String description, LocalDate startDate, List<DayOfWeek> days, String id) {
+	public Abitudine(String name, String description, LocalDate startDate, List<DayOfWeek> days, String id) {
 		this(name, description, startDate, days);
 		this.id = id;
 	}
@@ -96,19 +96,19 @@ public class Habit implements IHabit {
 		int year = date.getYear();
 		int day = date.getDayOfYear();
 		
-		// add day to year records
+		// aggiungere record giorno per anno
 		List<Integer> habitsInYear = new ArrayList<>();
-		// if year does exist
+		// se anno non esiste 
 		if(yearRecords.containsKey(year)) {
-			// get existing year
+			// otiene l'anno esistente 
 			habitsInYear = yearRecords.get(year);
 		}
-		// if day doesn't exist, add the date to the year
+		// se il giorno non esiste, aggiungere la data all'anno
 		if(!habitsInYear.contains(day)) {
 			habitsInYear.add(day);
 		}
 		
-		// add or update the year in the map
+		// aggiungi o aggiorna l'anno nella mappa
 		yearRecords.put(year, habitsInYear);
 	}
 	
@@ -116,7 +116,7 @@ public class Habit implements IHabit {
 		int year = date.getYear();
 		int day = date.getDayOfYear();
 		
-		// remove from year records
+		// rimuovere dai record dell'anno
 		List<Integer> habitsInYear = new ArrayList<>();
 		if(yearRecords.containsKey(year)) {
 			habitsInYear = yearRecords.get(year);
@@ -126,7 +126,7 @@ public class Habit implements IHabit {
 		}
 		yearRecords.put(year, habitsInYear);
 		
-		// if no habits were completed in this year, remove the year from the map
+		// se nessuna abitudine è stata completata in quest'anno, rimuovi l'anno dalla mappa
 		if(habitsInYear.size() == 0) {
 			yearRecords.remove(year);
 		}
@@ -246,7 +246,7 @@ public class Habit implements IHabit {
 	@Override
 	public List<Integer> getWeekRecords() {
 		List<Integer> weekRecords = new ArrayList<>();
-		List<LocalDate> lastWeek = HabitTracker.getLastWeek();
+		List<LocalDate> lastWeek = AbitudineTracker.getLastWeek();
 		int year = lastWeek.get(lastWeek.size() - 1).getYear();
 		for(LocalDate date : lastWeek) {
 			int dayOfYear = date.getDayOfYear();
@@ -270,7 +270,7 @@ public class Habit implements IHabit {
   	      if (obj == this) {
   	         return true;
   	      }
-  	      if (!(obj instanceof Habit)) {
+  	      if (!(obj instanceof Abitudine)) {
   	         return false;
   	      }
   	      IHabit o = (IHabit) obj;

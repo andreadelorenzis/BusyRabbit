@@ -12,22 +12,22 @@ import java.util.stream.Stream;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.IHabitTracker;
 
-public class HabitTracker implements IHabitTracker {
+public class AbitudineTracker implements IHabitTracker {
 
 	/*
-	 * List of all habits
+	 * Elenco di tutte le abitudini
 	 */
 	private List<IHabit> habits = new ArrayList<>();
 	
-	private static HabitTracker habitTracker = null;
+	private static AbitudineTracker habitTracker = null;
 	
-	private HabitTracker() {
+	private AbitudineTracker() {
 		
 	}
 	
-	public static HabitTracker getInstance() {
+	public static AbitudineTracker getInstance() {
 		if(habitTracker == null) {
-			habitTracker = new HabitTracker();
+			habitTracker = new AbitudineTracker();
 		}
 		return habitTracker;
 	}
@@ -52,12 +52,12 @@ public class HabitTracker implements IHabitTracker {
 	public void resetHabits(LocalDate date1, LocalDate date2) {
 		for(int i = 0; i < habits.size(); i++) {
 			IHabit h = habits.get(i);
-			// if the habit was never completed, the count is already set to 0
+			//se l'abitudine non è mai stata completata, il conteggio è già impostato a 0
 			if(h.getDateOfLastCompletion() != null) {
-				// get the dates between the date of last completion of the habit and today
+				// ottenere le date comprese tra la data dell'ultimo completamento dell'abito e oggi
 				Stream<LocalDate> datesBetween = h.getDateOfLastCompletion().datesUntil(date2);
 				
-				// for every day, if the habit showed up (not today o date of last completion), reset it
+				//per ogni giorno, se l'abitudine si è presentata (non oggi o data dell'ultimo completamento), ripristinarla
 				datesBetween.forEach(date -> {
 					if(!date.isEqual(h.getDateOfLastCompletion()) && !date.isEqual(date2)) {
 						if(h.getDays().contains(date.getDayOfWeek())) {

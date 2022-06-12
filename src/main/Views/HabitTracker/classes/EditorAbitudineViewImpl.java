@@ -16,7 +16,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import main.Models.habittracker.classes.SessionHabit;
+import main.Models.habittracker.classes.AbitudineSessione;
 import main.Models.habittracker.interfaces.IHabit;
 import main.Models.habittracker.interfaces.ISessionHabit;
 
@@ -152,7 +152,7 @@ public class EditorAbitudineViewImpl {
                     break;
             }      
         }
-        if(abitudine instanceof SessionHabit) {
+        if(abitudine instanceof AbitudineSessione) {
         	ISessionHabit abitudineSessione = (ISessionHabit) abitudine;
         	tipoRadio2.setSelected(true);
         	tipoRadio1.setDisable(true);

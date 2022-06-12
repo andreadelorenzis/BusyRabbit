@@ -8,11 +8,11 @@ import main.Models.habittracker.interfaces.ISessionHabit;
 import main.Models.timetracker.classes.TimerSemplice;
 import main.Models.timetracker.interfaces.ITrackable;
 
-public class SessionHabit extends Habit implements ISessionHabit, ITrackable {
+public class AbitudineSessione extends Abitudine implements ISessionHabit, ITrackable {
 	
     //------------------------------- CAMPI ----------------------------------
 	/*
-	 * Duration of the session
+	 * Durata della sessione
 	 */
 	private int duration;
 	
@@ -29,7 +29,7 @@ public class SessionHabit extends Habit implements ISessionHabit, ITrackable {
 	 * @param days
 	 * @param duration
 	 */
-	public SessionHabit(String name, LocalDate startDate, List<DayOfWeek> days, int duration) {
+	public AbitudineSessione(String name, LocalDate startDate, List<DayOfWeek> days, int duration) {
 		super(name, "", startDate, days);
 		this.duration = duration;
 		this.timer = new TimerSemplice(duration, this);
@@ -43,7 +43,7 @@ public class SessionHabit extends Habit implements ISessionHabit, ITrackable {
 	 * @param duration
 	 * @param id
 	 */
-	public SessionHabit(String name, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
+	public AbitudineSessione(String name, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
 		super(name, "", startDate, days, id);
 		this.duration = duration;
 		this.timer = new TimerSemplice(duration, this);
@@ -57,7 +57,7 @@ public class SessionHabit extends Habit implements ISessionHabit, ITrackable {
 	 * @param days
 	 * @param duration
 	 */
-	public SessionHabit(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration) {
+	public AbitudineSessione(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration) {
 		super(name, description, startDate, days);
 		this.duration = duration;
 		this.timer = new TimerSemplice(duration, this);
@@ -72,7 +72,7 @@ public class SessionHabit extends Habit implements ISessionHabit, ITrackable {
 	 * @param duration
 	 * @param id
 	 */
-	public SessionHabit(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
+	public AbitudineSessione(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
 		super(name, description, startDate, days, id);
 		this.duration = duration;
 		this.timer = new TimerSemplice(duration, this);
@@ -107,7 +107,7 @@ public class SessionHabit extends Habit implements ISessionHabit, ITrackable {
 
 	@Override
 	public void secondoPassato(int o, int m, int s) {
-		// TODO Auto-generated method stub
+	
 	}
 	
 }
