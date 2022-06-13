@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.interfacce.IItem;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 
 public class AbitudineScomponibile extends Abitudine implements IAbitudineScomponibile {
@@ -15,7 +15,7 @@ public class AbitudineScomponibile extends Abitudine implements IAbitudineScompo
 	/*
 	 * Oggetti che compongono questa abitudine
 	 */
-	private List<Item> items = new ArrayList<>();
+	private List<IItem> items = new ArrayList<>();
 
     //----------------------------- COSTRUTTORI --------------------------------
 	public AbitudineScomponibile(String name, LocalDate startDate, List<DayOfWeek> days) {
@@ -51,7 +51,7 @@ public class AbitudineScomponibile extends Abitudine implements IAbitudineScompo
 
     //---------------------------- METODI PUBBLICI -----------------------------
 	@Override
-	public void addItem(Item item) {
+	public void addItem(IItem item) {
 		items.add(item);
 		item.setPadre(this);
 	}
@@ -64,7 +64,7 @@ public class AbitudineScomponibile extends Abitudine implements IAbitudineScompo
 	}
 
 	@Override
-	public List<Item> getItems() {
+	public List<IItem> getItems() {
 		return items;
 	}
 	

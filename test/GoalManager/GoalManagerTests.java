@@ -13,7 +13,7 @@ import java.util.List;
 import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.AzioneSessione;
 import main.model.goalmanager.classi.GoalManager;
-import main.model.goalmanager.classi.ItemImpl;
+import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.classi.ObiettivoAzione;
 import main.model.goalmanager.classi.ObiettivoScomponibile;
 import main.model.goalmanager.interfacce.IAzione;
@@ -219,8 +219,8 @@ public class GoalManagerTests {
         IAzioneScomponibile azione = (IAzioneScomponibile) obiettivo.getAzioni().get(0);
         
         // aggiungo 2 item all'AzioneScomponibile
-        azione.aggiungiItem(new ItemImpl("Leggere 5 pagine"));
-        azione.aggiungiItem(new ItemImpl("Leggere altre 5 pagine"));
+        azione.aggiungiItem(new Item("Leggere 5 pagine"));
+        azione.aggiungiItem(new Item("Leggere altre 5 pagine"));
         
         // ci sono 2 item
         assertEquals(2, azione.getItems().size());

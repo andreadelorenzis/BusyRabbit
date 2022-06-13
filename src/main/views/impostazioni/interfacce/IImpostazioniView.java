@@ -1,13 +1,15 @@
 package main.views.impostazioni.interfacce;
 
-public interface ImpostazioniView {
+import main.views.IView;
 
-	public void errore(String s);
+public interface IImpostazioniView extends IView {
 	
 	public void emailCambiata();
 	
 	public void passwordCambiata();
 	
 	public void accountEliminato();
+	
+	public void errore(String s);
 	
 }

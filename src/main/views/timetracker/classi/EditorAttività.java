@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import main.model.timetracker.interfacce.IAttivit‡;
 import main.model.timetracker.interfacce.IProgetto;
 
-public class EditorAttivit‡ViewImpl {
+public class EditorAttivit‡ {
     
     @FXML
     private TextField nameField;

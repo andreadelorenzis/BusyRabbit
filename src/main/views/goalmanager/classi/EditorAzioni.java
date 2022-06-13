@@ -1,41 +1,34 @@
-package main.views.habittracker.classi;
+package main.views.goalmanager.classi;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import main.model.habittracker.classi.AbitudineSessione;
-import main.model.habittracker.interfacce.IAbitudine;
-import main.model.habittracker.interfacce.IAbitudineSessione;
+import main.model.goalmanager.classi.AzioneSessione;
+import main.model.goalmanager.interfacce.IAzione;
+import main.model.goalmanager.interfacce.IAzioneSessione;
 
-public class EditorAbitudineViewImpl {
-    
+public class EditorAzioni {
     @FXML
-    private TextField abitudineField;
+    private TextField azioneField;
     @FXML
-    private TextArea descrizioneArea;
+    private DatePicker datePicker;
     @FXML
-    private DatePicker dataPicker; 
-    @FXML
-    private RadioButton tipoRadio1;
-    @FXML
-    private RadioButton tipoRadio2;
-    @FXML
-    private HBox formSessione;
+    private Spinner<Integer> valoreSpinner;
     @FXML
     private Spinner<Integer> durataSpinner;
+    @FXML
+    private HBox formSessione;
     @FXML
     private Label lunBtn;
     @FXML
@@ -50,6 +43,10 @@ public class EditorAbitudineViewImpl {
     private Label sabBtn;
     @FXML
     private Label domBtn;
+    @FXML
+    private RadioButton tipoRadio1;
+    @FXML
+    private RadioButton tipoRadio2;
     
     // giorni della settimana selezionati
     private boolean lun, mar, mer, gio, ven, sab, dom = false;
@@ -57,20 +54,22 @@ public class EditorAbitudineViewImpl {
     
     @FXML
     private void initialize() {
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
-        valueFactory.setValue(1);
-        durataSpinner.setValueFactory(valueFactory);
-        dataPicker.setValue(LocalDate.now());
+        SpinnerValueFactory<Integer> valueFactory1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        valueFactory1.setValue(1);
+        valueFactory2.setValue(1);
+        valoreSpinner.setValueFactory(valueFactory1);
+        durataSpinner.setValueFactory(valueFactory2);
+        datePicker.setValue(LocalDate.now());
     }
     
     private void toggleBtn(Label label, boolean giorno) {
-    	System.out.println(giorno);
-        if(giorno) {
-        	// deselezionare
-            label.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE; -fx-border-color: #4361EE;");
-        } else {
-        	// selezionare
+        if(!giorno) {
+            giorno = true;
             label.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
+        } else {
+            giorno = false;
+            label.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE; -fx-border-color: #4361EE;");
         }
     }
     
@@ -80,37 +79,30 @@ public class EditorAbitudineViewImpl {
         switch(btnGiornoCliccato) {
             case "lunBtn": 
                 toggleBtn(lunBtn, lun);
-                lun = !lun;
                 giorni.add(DayOfWeek.MONDAY);
                 break;
             case "marBtn": 
             	toggleBtn(marBtn, mar);
-            	mar = !mar;
             	giorni.add(DayOfWeek.TUESDAY);
             	break;
             case "merBtn": 
             	toggleBtn(merBtn, mer);
-            	mer = !mer;
             	giorni.add(DayOfWeek.WEDNESDAY);
             	break;
             case "gioBtn": 
             	toggleBtn(gioBtn, gio);
-            	gio = !gio;
             	giorni.add(DayOfWeek.THURSDAY);
             	break;
             case "venBtn": 
             	toggleBtn(venBtn, ven);
-            	ven = !ven;
             	giorni.add(DayOfWeek.FRIDAY);
             	break;
             case "sabBtn": 
             	toggleBtn(sabBtn, sab);
-            	sab = !sab;
             	giorni.add(DayOfWeek.SATURDAY);
             	break;
             case "domBtn": 
             	toggleBtn(domBtn, dom);
-            	dom = !dom;
             	giorni.add(DayOfWeek.SUNDAY);
             	break;
         }
@@ -124,9 +116,11 @@ public class EditorAbitudineViewImpl {
             formSessione.setVisible(true);
         }
     }
-    public void setAbitudine(IAbitudine abitudine) {
-        abitudineField.setText(abitudine.getName());
-        List<DayOfWeek> giorni = abitudine.getDays();
+    
+    public void setAzione(IAzione azione) {
+        this.azioneField.setText(azione.getNome());
+        this.valoreSpinner.getValueFactory().setValue(azione.getIncremento());
+        List<DayOfWeek> giorni = azione.getGiorniRipetizione();
         for(int i = 0; i < giorni.size(); i++) {
             switch(giorni.get(i)) {
                 case MONDAY: 
@@ -150,41 +144,40 @@ public class EditorAbitudineViewImpl {
                 case SUNDAY:
                     toggleBtn(domBtn, dom);
                     break;
-            }      
+            }
         }
-        if(abitudine instanceof AbitudineSessione) {
-        	IAbitudineSessione abitudineSessione = (IAbitudineSessione) abitudine;
+        if(azione instanceof AzioneSessione) {
+        	IAzioneSessione azioneSessione = (IAzioneSessione) azione;
         	tipoRadio2.setSelected(true);
         	tipoRadio1.setDisable(true);
-        	durataSpinner.getValueFactory().setValue(abitudineSessione.getDuration());
-        	formSessione.setVisible(true);
+        	durataSpinner.getValueFactory().setValue(azioneSessione.getDurata());
         } else {
         	tipoRadio2.setDisable(true);
         }
     }
     
     public String getNome() {
-    	return abitudineField.getText();
+    	return azioneField.getText();
     }
     
-    public String getDescrizione() {
-    	return descrizioneArea.getText();
-    }
-    
-    public LocalDate getData() {
-    	return dataPicker.getValue();
-    }
-    
-    public boolean isSessione() {
-    	return tipoRadio2.isSelected();
+    public int getValore() {
+    	return valoreSpinner.getValue();
     }
     
     public List<DayOfWeek> getGiorni() {
     	return giorni;
     }
     
+    public boolean isTipoSessione() {
+    	return tipoRadio2.isSelected();
+    }
+    
     public int getDurata() {
     	return durataSpinner.getValue();
+    }
+    
+    public LocalDate getData() {
+    	return datePicker.getValue();
     }
     
 }

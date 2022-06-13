@@ -10,7 +10,7 @@ import java.util.List;
 
 import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.AzioneSessione;
-import main.model.goalmanager.classi.ItemImpl;
+import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.classi.ObiettivoAzione;
 import main.model.goalmanager.classi.ObiettivoScomponibile;
 import main.model.goalmanager.interfacce.IAzione;
@@ -20,7 +20,7 @@ import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.interfacce.IItem;
 import main.model.habittracker.classi.AbitudineScomponibile;
 import main.model.habittracker.classi.AbitudineSessione;
 import main.model.habittracker.interfacce.IAbitudine;
@@ -251,7 +251,7 @@ public class AccountReader {
 				String idPadre = params[1];
 				String nome = params[2];
 				String id = params[3];
-				Item nuovo = new ItemImpl(nome, id);
+				IItem nuovo = new Item(nome, id);
 				// cerco l'azione scomponibile a cui appartiene questo item
 				int i = 0;
 				for(IAzione a : azioni) {
@@ -300,7 +300,7 @@ public class AccountReader {
 				String idPadre = params[1];
 				nome = params[2];
 				String id = params[3];
-				Item item = new ItemImpl(nome, id);
+				IItem item = new Item(nome, id);
 				int i = 0;
 				for(IAbitudine h : ht.getHabits()) {
 					if(h.getId().equals(idPadre)) {

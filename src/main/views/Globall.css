@@ -1,7 +1,11 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
+
+/* background color */ 
+ 
+.root {
+    -fx-background-color: #060818     
+}
+
+/* Stile ChoiceBox */
 
 .choice-box {
 	-fx-background-color: #122C49;
@@ -26,6 +30,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .choice-box .context-menu {
     -fx-background-color: #122C49;
 }
+
+/* Stile Spinner */
 
 .spinner {
 	-fx-background-color: #122C49;
@@ -53,6 +59,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-height: 18;
 }
 
+/* Stile ScrollPane */
+
 .scroll-pane .scroll-bar:vertical .track-background {
     -fx-background-color: #1B2E4B;
 }
@@ -66,6 +74,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #2B305B;
 }
 
+/* Stile DialogPane */
 
 .dialog-pane .button-bar .button:default {
     -fx-background-color: #4361EE;
@@ -78,10 +87,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 }
 
-  /* change root scene background color */ 
-.root {
-    -fx-background-color: #060818     
-}
+/* Stile ScrollBar */
 
  .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{
@@ -107,35 +113,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-padding :0.0 10.0 2.0 0.0;
 
 }
-      .scroll-bar .increment-arrow,
-      .scroll-bar .decrement-arrow{
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
     -fx-shape : " ";    
     -fx-padding :0.10em 0.0;
 }
 
-   /* change dimension of scroll bar ( 0.10em) */
  .scroll-bar:vertical .increment-arrow,
  .scroll-bar:vertical .decrement-arrow{
     -fx-shape : " ";    
     -fx-padding :0.0 0.10em;
 }
-  /* change color of scroll button and button dimension befor selected ( -0.5)*/
+
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color :derive(#2B305B,35.0%); 
     -fx-background-insets : -0.5, 0.0, 0.0;
     -fx-background-radius : 2.0em;
 }
-   /* change color of scroll button when selected */
+
 .scroll-bar:horizontal .thumb:hover,
 .scroll-bar:vertical .thumb:hover {
     -fx-background-color :derive(#4D4C4F,30.0%); 
     -fx-background-insets : 2.0, 0.0, 0.0;
     -fx-background-radius : 2.0em;
 }
-/*.scroll-pane > .corner {
-      -fx-background-color: transparent;
-}*/
 
 .check-box .box {
     -fx-background-color: #515365;
@@ -152,6 +155,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .check-box:selected .text {
 	-fx-strikethrough: true;
 }
+
+/* Stile ProgressBar */
 
 /*
 .progress-bar:determinate .track {
@@ -230,7 +235,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 
-/*  DatePicker  */
+/* Stile DatePicker */
 * {
 	-fx-primary-color: #1B2E4B;
 	-fx-secondary-color: #007acc;
@@ -287,7 +292,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 	-fx-background-color: white;
 }
 
-/* TextArea */
+/* Stile TextArea */
+
 .text-area {
 	-fx-background-color:  #1B2E4B;
 	-fx-text-fill: #ffffff;

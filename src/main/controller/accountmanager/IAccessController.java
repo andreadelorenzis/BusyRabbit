@@ -1,8 +1,8 @@
 package main.controller.accountmanager;
 
-import main.controller.Controller;
+import main.controller.IController;
 
-public interface IAccessController extends Controller {
+public interface IAccessController extends IController {
 	
 	public boolean accedi(String email, String password);
 	

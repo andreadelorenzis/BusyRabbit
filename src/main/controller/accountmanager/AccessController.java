@@ -7,27 +7,28 @@ import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.accountmanager.interfacce.IAccountManager;
-import main.views.View;
+import main.views.IView;
 import main.views.accountmanager.interfacce.IPageView;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
 
 public class AccessController implements IAccessController {
 	
-	private View view; 
+	private IView view; 
 	
 	private AccountManager app = AccountManager.getInstance();
 
 	@Override
-	public void setView(View v) {
+	public void setView(IView v) {
 		this.view = v;
 	}
 
 	@Override
-	public View getView() {
+	public IView getView() {
 		return view;
 	}
 	
+	@Override
     public boolean accedi(String email, String password) {
 		IPageView pageView = (IPageView) view;
 		try {

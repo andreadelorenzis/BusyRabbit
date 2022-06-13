@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.Colore;
 
-public class EditorProgettoViewImpl {
+public class EditorProgetto {
     
     @FXML
     private ChoiceBox<String> colorChoice;

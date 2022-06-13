@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import main.model.goalmanager.interfacce.IAzioneScomponibile;
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.interfacce.IItem;
 
 public class AzioneScomponibile extends Azione implements IAzioneScomponibile {
     
@@ -15,7 +15,7 @@ public class AzioneScomponibile extends Azione implements IAzioneScomponibile {
     /**
      * La lista di item di cui si compone l'azione
      */
-    private List<Item> items = new ArrayList<>();
+    private List<IItem> items = new ArrayList<>();
 
     //----------------------------- COSTRUTTORI --------------------------------
     /**
@@ -36,7 +36,7 @@ public class AzioneScomponibile extends Azione implements IAzioneScomponibile {
 
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
-    public void aggiungiItem(Item item) {
+    public void aggiungiItem(IItem item) {
     	item.setPadre(this);
         items.add(item);
     }
@@ -49,7 +49,7 @@ public class AzioneScomponibile extends Azione implements IAzioneScomponibile {
     }
 
     @Override
-    public List<Item> getItems() {
+    public List<IItem> getItems() {
         return items;
     }
     

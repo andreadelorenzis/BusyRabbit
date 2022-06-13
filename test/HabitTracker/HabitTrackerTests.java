@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import main.model.goalmanager.classi.ItemImpl;
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.classi.Item;
+import main.model.goalmanager.interfacce.IItem;
 import main.model.habittracker.classi.AbitudineScomponibile;
 import main.model.habittracker.classi.AbitudineSessione;
 import main.model.habittracker.classi.HabitTracker;
@@ -121,8 +121,8 @@ public class HabitTrackerTests {
 		IAbitudineScomponibile simpleHabit = (IAbitudineScomponibile) h.getHabits().get(0);
 		
 		// add 2 items to first habit
-		simpleHabit.addItem(new ItemImpl("Run for a mile"));
-		Item item2 = new ItemImpl("Make a cold shower");
+		simpleHabit.addItem(new Item("Run for a mile"));
+		IItem item2 = new Item("Make a cold shower");
 		simpleHabit.addItem(item2);
 		
 		// there are 2 items 

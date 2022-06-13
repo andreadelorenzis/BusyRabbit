@@ -31,8 +31,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import main.Main;
+import main.controller.goalmanager.IGoalManagerController;
+import main.controller.IController;
 import main.controller.goalmanager.GoalManagerController;
-import main.controller.goalmanager.GoalManagerControllerImpl;
 import main.controller.helpers.Helper;
 import main.model.goalmanager.classi.Azione;
 import main.model.goalmanager.classi.AzioneScomponibile;
@@ -46,14 +47,14 @@ import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.interfacce.IItem;
 import main.views.LoaderRisorse;
-import main.views.goalmanager.interfacce.GoalManagerView;
+import main.views.goalmanager.interfacce.IGoalManagerView;
 import main.views.modal.Modal;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
 
-public class GoalManagerViewImpl implements GoalManagerView {
+public class GoalManagerView implements IGoalManagerView {
 
 	//--------------------------------- CAMPI ------------------------------------
 	
@@ -67,7 +68,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
     /*
      * Observer della view
      */
-    private GoalManagerController gmc;
+    private IGoalManagerController controller;
     
     /*
      * L'ultimo obiettivo cliccato.
@@ -95,15 +96,53 @@ public class GoalManagerViewImpl implements GoalManagerView {
     
     @FXML
     private void initialize() {
-    	this.aggiornaView(GoalManager.getInstance().getObiettivi());
-    	GoalManagerController gmc = new GoalManagerControllerImpl(this);
-    	this.gmc = gmc;
+    	this.aggiornaObiettivi(GoalManager.getInstance().getObiettivi());
+    	IGoalManagerController controller = new GoalManagerController();
+    	setController(controller);
+    }
+    
+	@Override
+	public void setController(IController c) {
+		IGoalManagerController controller = new GoalManagerController();
+		controller.setView(this);
+		this.controller = (IGoalManagerController) c;
+	}
+
+	@Override
+	public IController getController() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void errore(String message) {
+		new Notification(message, NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void successo(String message) {
+		new Notification(message, NotificationType.SUCCESS).show();
+	}
+
+	@Override
+	public void info(String message) {
+		new Notification(message, NotificationType.INFO).show();
+	}
+	
+	@Override
+    public void aggiornaObiettivi(List<IObiettivo> obiettivi) {
+    	visualizzaObiettivi(obiettivi);
+    	visualizzaAzioniGiornaliere();
+    	if(obiettivoCliccato != null) {
+    		this.resettaPaginaInfo();
+    		apriPaginaInfo(obiettivoCliccato);
+    	}
     }
     
     /**
-     * Aggiorna la view degli obiettivi.
+     * Visualizza la view degli obiettivi.
      */
-    private void aggiornaObiettivi(List<IObiettivo> obiettivi) {
+    private void visualizzaObiettivi(List<IObiettivo> obiettivi) {
         boxObiettivi.getChildren().clear();
         for(int i = 0; i < obiettivi.size(); i++) {
         	BorderPane pane = creaViewObiettivo((Obiettivo) obiettivi.get(i));
@@ -112,15 +151,6 @@ public class GoalManagerViewImpl implements GoalManagerView {
         		pane.setStyle("-fx-border-width: 0 0 0 0;");
         	}
         }            
-    }
-    
-    public void aggiornaView(List<IObiettivo> obiettivi) {
-    	aggiornaObiettivi(obiettivi);
-    	visualizzaAzioniGiornaliere();
-    	if(obiettivoCliccato != null) {
-    		this.resettaPaginaInfo();
-    		apriPaginaInfo(obiettivoCliccato);
-    	}
     }
     
     /**
@@ -167,7 +197,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
                 if(o.getCompletato()) {
                 	new Notification("Obiettivo completato.", NotificationType.SUCCESS).show();
                 }
-                aggiornaView(GoalManager.getInstance().getObiettivi());
+                aggiornaObiettivi(GoalManager.getInstance().getObiettivi());
             }
         });
         
@@ -199,7 +229,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
                     	t.consume();
                         aggiungiSottoObiettivo(o);
                     } catch (IOException ex) {
-                        Logger.getLogger(GoalManagerControllerImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
@@ -246,7 +276,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
                     	t.consume();
                     	apriEditorAzione(null, o, true);
                     } catch (IOException ex) {
-                        Logger.getLogger(GoalManagerControllerImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
@@ -380,7 +410,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
         }
         
         // ottiene il controller del dialog e imposta l'obiettivo se in modifica
-        EditorObiettiviViewImpl controller = fxmlLoader.getController();
+        EditorObiettivi controller = fxmlLoader.getController();
         if(!nuovo && !isSottoObiettivo) {
         	controller.setObiettivo(o);
         }
@@ -422,9 +452,9 @@ public class GoalManagerViewImpl implements GoalManagerView {
         			nuovoObiettivo = new ObiettivoScomponibile(nome, descrizione, data);
         		}
         		if(isSottoObiettivo) {
-        			gmc.aggiungiSottoObiettivo(o, nuovoObiettivo);
+        			this.controller.aggiungiSottoObiettivo(o, nuovoObiettivo);
         		} else {
-        			gmc.aggiungiObiettivo(nuovoObiettivo);
+        			this.controller.aggiungiObiettivo(nuovoObiettivo);
         		}
         	} else {
         		
@@ -435,7 +465,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
         		} else if(o instanceof ObiettivoAzione) {
         			modificato = new ObiettivoAzione(nome, descrizione, data, valore, unità);
         		}
-        		gmc.modificaObiettivo(o, modificato);
+        		this.controller.modificaObiettivo(o, modificato);
         	}
         }
     }
@@ -461,7 +491,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
         }
         
         // Ottiene il controller e imposta l'azione se in modifica
-        EditorAzioniViewImpl controller = fxmlLoader.getController();
+        EditorAzioni controller = fxmlLoader.getController();
         if(!nuovo) {
         	controller.setAzione(azione);
         }
@@ -498,7 +528,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
         		} else {
         			nuovaAzione = new AzioneScomponibile(nome, valore, data, giorni);
         		}
-        		gmc.collegaAzione(o, nuovaAzione);
+        		this.controller.collegaAzione(o, nuovaAzione);
         		
         		// aggiorno la view
         		apriPaginaInfo(o);
@@ -511,7 +541,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
         		} else if(azione instanceof AzioneSessione) {
         			modificata = new AzioneSessione(nome, valore, data, giorni, durata);
         		}
-        		gmc.modificaAzione(azione, modificata);
+        		this.controller.modificaAzione(azione, modificata);
         		
         		// aggiorno la view
         		apriPaginaInfo(azione.getObiettivo());
@@ -532,7 +562,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
     		obPadre.eliminaSottoObiettivo(obiettivo.getId());
     		new Notification("Sotto-obiettivo eliminato.", NotificationType.INFO).show();
     	} else {
-        	gmc.eliminaObiettivo(obiettivo);
+        	this.controller.eliminaObiettivo(obiettivo);
         	new Notification("Obiettivo eliminato.", NotificationType.INFO).show();
     	}
     	
@@ -859,7 +889,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
                 	container.getChildren().add(itemContainer);
                 	HBox hBox = Helper.creaBtnAggiunta("Item");
                 	itemContainer.getChildren().add(hBox); 
-                	for(Item item : as.getItems()) {
+                	for(IItem item : as.getItems()) {
                 		CheckBox itemCheck = creaCheckbox(item.getNome(), item.getCompletato());
                 		itemContainer.getChildren().add(itemCheck);
                 		
@@ -897,7 +927,7 @@ public class GoalManagerViewImpl implements GoalManagerView {
     private void completaAzione(IAzione a) {
     	
     	// comunica con il modello
-    	gmc.completaAzione(a);
+    	this.controller.completaAzione(a);
     	
     	// aggiorna view
     	obiettivoCliccato = null;
@@ -926,25 +956,5 @@ public class GoalManagerViewImpl implements GoalManagerView {
     private void aggiungiSottoObiettivo(IObiettivo obiettivo) throws IOException {
     	apriEditorObiettivo(obiettivo, true, true);
     }
-
-	@Override
-	public void aggiorna(List<IObiettivo> obiettivi) {
-		this.aggiornaView(obiettivi);
-	}
-
-	@Override
-	public void errore(String message) {
-		new Notification(message, NotificationType.ERROR).show();
-	}
-
-	@Override
-	public void successo(String message) {
-		new Notification(message, NotificationType.SUCCESS).show();
-	}
-
-	@Override
-	public void info(String message) {
-		new Notification(message, NotificationType.INFO).show();
-	}
     
 }

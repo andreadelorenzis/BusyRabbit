@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="panePrincipale" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.timetracker.classi.TimeTrackerViewImpl">
+<AnchorPane id="AnchorPane" fx:id="panePrincipale" prefHeight="722.0" prefWidth="858.0" style="-fx-background-color: #060818;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.timetracker.classi.TimeTrackerView">
    <children>
       <BorderPane layoutX="66.0" layoutY="63.0" prefHeight="132.0" prefWidth="846.0" style="-fx-background-color: #0E1726;" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="63.0">
          <top>

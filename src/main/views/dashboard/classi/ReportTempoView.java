@@ -37,10 +37,9 @@ import javafx.scene.layout.VBox;
 import main.model.timetracker.classi.Progetto;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.IProgetto;
-import main.views.dashboard.interfacce.ReportTempoView;
 import main.views.timetracker.classi.ViewHelper;
 
-public class ReportTempoViewImpl implements Initializable, ReportTempoView {
+public class ReportTempoView implements Initializable {
     
 	//-------------------------------- CAMPI FXML -----------------------------------
     @FXML

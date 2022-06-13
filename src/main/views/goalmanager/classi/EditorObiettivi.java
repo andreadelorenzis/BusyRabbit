@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import main.model.goalmanager.classi.ObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivo;
 
-public class EditorObiettiviViewImpl {
+public class EditorObiettivi {
     
     @FXML
     private TextField nomeField, unit‡Field;

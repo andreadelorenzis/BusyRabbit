@@ -3,17 +3,18 @@ package main.views.impostazioni.classi;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import main.controller.IController;
+import main.controller.impostazioni.IImpostazioniController;
 import main.controller.impostazioni.ImpostazioniController;
-import main.controller.impostazioni.ImpostazioniControllerImpl;
+import main.controller.timetracker.ITimeTrackerController;
 import main.controller.timetracker.TimeTrackerController;
-import main.controller.timetracker.TimeTrackerControllerImpl;
 import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.WrongCredentialsException;
-import main.views.impostazioni.interfacce.ImpostazioniView;
+import main.views.impostazioni.interfacce.IImpostazioniView;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
 
-public class ImpostazioniViewImpl implements ImpostazioniView {
+public class ImpostazioniView implements IImpostazioniView {
 	
 	@FXML
 	private TextField oldPassField;
@@ -32,14 +33,24 @@ public class ImpostazioniViewImpl implements ImpostazioniView {
 	@FXML
 	private Button deleteBtn;
 	
-	private ImpostazioniController controller;
+	private IImpostazioniController controller;
 	
 	@FXML
 	private void initialize() {
-        ImpostazioniController controller = new ImpostazioniControllerImpl(this);
-        this.controller = controller;
+        IImpostazioniController controller = new ImpostazioniController();
+        setController(controller);
 	}
 
+	@Override
+	public void setController(IController c) {
+		this.controller = (IImpostazioniController) c;
+	}
+
+	@Override
+	public IController getController() {
+		return this.controller;
+	}
+	
 	@Override
 	public void emailCambiata() {
 		new Notification("Email cambiata con successo", NotificationType.SUCCESS).show();
@@ -101,4 +112,5 @@ public class ImpostazioniViewImpl implements ImpostazioniView {
 		}
 		controller.eliminaAccount(password);
 	}
+	
 }

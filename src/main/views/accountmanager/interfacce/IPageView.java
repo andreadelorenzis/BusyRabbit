@@ -1,9 +1,12 @@
 package main.views.accountmanager.interfacce;
 
-import main.views.View;
+import main.views.IView;
 
-public interface IPageView extends View {
+public interface IPageView extends IView {
+	
 	public void erroreConfermaPassword();
+	
 	public void erroreEmailEsistente();
+	
 	public void erroreCredenzialiSbagliate();
 }

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.impostazioni.classi.ImpostazioniViewImpl">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.impostazioni.classi.ImpostazioniView">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="663.0" prefWidth="617.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>

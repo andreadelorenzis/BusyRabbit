@@ -13,11 +13,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import main.controller.Controller;
+import main.controller.IController;
 import main.controller.accountmanager.AccessController;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.LoaderRisorse;
-import main.views.View;
+import main.views.IView;
 
 public class AppView {
     @FXML
@@ -65,7 +65,7 @@ public class AppView {
     private Label abitudiniReportLabel = new Label("Report Abitudini");
     private boolean dashboardMenuAperto = false;
     private boolean sidebarAperta = true;
-    private Controller controller;
+    private IController controller;
     private IAccountManager app;
     
     @FXML 

@@ -37,9 +37,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Main;
+import main.controller.IController;
 import main.controller.helpers.Helper;
+import main.controller.timetracker.ITimeTrackerController;
 import main.controller.timetracker.TimeTrackerController;
-import main.controller.timetracker.TimeTrackerControllerImpl;
 import main.model.timetracker.classi.Attivit‡;
 import main.model.timetracker.classi.PomodoroTimer;
 import main.model.timetracker.classi.Progetto;
@@ -52,9 +53,9 @@ import main.views.LoaderRisorse;
 import main.views.modal.Modal;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
-import main.views.timetracker.interfacce.TimeTrackerView;
+import main.views.timetracker.interfacce.ITimeTrackerView;
 
-public class TimeTrackerViewImpl implements TimeTrackerView {
+public class TimeTrackerView implements ITimeTrackerView {
 	
     @FXML
     private AnchorPane panePrincipale;
@@ -114,7 +115,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     /*
      * Observer di questa view
      */
-	private TimeTrackerController ttc;
+	private ITimeTrackerController controller;
 	
 	/*
 	 * Se un qualunque men˘ progetto Ë aperto
@@ -143,9 +144,35 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         this.aggiornaView(TimeTracker.getInstance().getGiorniAttivit‡(1), 1);
         
         // imposta il controller
-        TimeTrackerController ttc = new TimeTrackerControllerImpl(this);
-        this.ttc = ttc;
+        ITimeTrackerController controller = new TimeTrackerController();
+        setController(controller);
     }
+    
+	@Override
+	public void setController(IController c) {
+		this.controller = (ITimeTrackerController) c;
+	}
+
+	@Override
+	public IController getController() {
+		return this.controller;
+	}
+	
+	@Override
+	public void aggiornaView(List<List<IAttivit‡>> giorni, int pagina) {
+		listaGiorniAttivit‡.getChildren().clear();
+        creaCronologiaAttivit‡(giorni, pagina);
+	}
+
+	@Override
+	public void progettoAggiunto() {
+		new Notification("Progetto aggiunto", NotificationType.SUCCESS).show();
+	}
+
+	@Override
+	public void attivit‡Aggiunta() {
+		new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
+	}
     
     private BorderPane creaViewProgetto(IProgetto progetto, VBox container) {     
     	
@@ -186,9 +213,9 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         });
         menuItem2.setOnAction((ActionEvent e) -> {
         	if(obj instanceof Attivit‡) {
-    			ttc.eliminaAttivit‡((IAttivit‡) obj);
+    			this.controller.eliminaAttivit‡((IAttivit‡) obj);
     		} else if(obj instanceof Progetto) {
-    			ttc.eliminaProgetto((IProgetto) obj);
+    			this.controller.eliminaProgetto((IProgetto) obj);
     		}
         });
         menu.getItems().addAll(menuItem1, menuItem2);
@@ -216,7 +243,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     	Modal modal = new Modal(editor, "");
         
         // ottiene il controller e imposta l'attivit‡ da modificare
-        EditorAttivit‡ViewImpl controller = fxmlLoader.getController();
+        EditorAttivit‡ controller = fxmlLoader.getController();
         controller.setListaProgetti(progetti);
         controller.setAttivit‡(attivit‡);
          
@@ -252,7 +279,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
             
         	// modifica l'attivit‡
         	IAttivit‡ attivit‡Modificata = new Attivit‡(nome, data, ora, durata, progetto);
-        	ttc.modificaAttivit‡(attivit‡, attivit‡Modificata);
+        	this.controller.modificaAttivit‡(attivit‡, attivit‡Modificata);
         	
         	new Notification("Attivit‡ modificata con successo", NotificationType.SUCCESS).show();
         }
@@ -275,7 +302,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     	}
     	
         // ottiene il controller e imposta il progetto
-        EditorProgettoViewImpl controller = fxmlLoader.getController();
+        EditorProgetto controller = fxmlLoader.getController();
         controller.setProgetto(progetto);
         
         // valida gli input
@@ -296,11 +323,11 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         	
         	// aggiunge o modifica il colore
         	if(aggiunta) {
-        		ttc.aggiungiProgetto(new Progetto(nome, colore));
+        		this.controller.aggiungiProgetto(new Progetto(nome, colore));
             	new Notification("Nuovo progetto aggiunto", NotificationType.SUCCESS).show();
         	} else {
         		IProgetto progettoModificato = new Progetto(nome, colore);
-        		ttc.modificaProgetto(progetto, progettoModificato);
+        		this.controller.modificaProgetto(progetto, progettoModificato);
         		cambiaProgettoCorrente(progettoModificato);
         		new Notification("Progetto modificato", NotificationType.SUCCESS).show();
         	}
@@ -365,7 +392,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         leftArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
-                ttc.decrementaPagina();
+                controller.decrementaPagina();
             }
         });
         
@@ -373,7 +400,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         rightArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
-                ttc.incrementaPagina();
+                controller.incrementaPagina();
             }
         });
         
@@ -419,7 +446,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         if(!field.getText().isBlank() && !(field.getText().equals(a.getNome()))) {
         	IAttivit‡ copia = this.getCopiaAttivit‡(a);
         	copia.setNome(field.getText());
-        	ttc.modificaAttivit‡(a, copia);
+        	this.controller.modificaAttivit‡(a, copia);
         	new Notification("Attivit‡ modificata", NotificationType.SUCCESS).show();
         }
     }
@@ -631,7 +658,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
                 	IAttivit‡ copia = getCopiaAttivit‡(a);
                 	IProgetto vecchioProgetto = a.getProgetto();
                 	copia.setProgettoPadre(TimeTracker.progettoDefault);
-                	ttc.modificaAttivit‡(a, copia);
+                	controller.modificaAttivit‡(a, copia);
                 	if(!(vecchioProgetto.getId().equals(TimeTracker.progettoDefault.getId()))) {
                 		new Notification("Attivit‡ modificata", NotificationType.SUCCESS).show();
                 	}
@@ -639,7 +666,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
                 }
                 chiudiMenuProgetti();
                 stage.close();
-                aggiornaView(TimeTracker.getInstance().getGiorniAttivit‡(ttc.getPagina()), ttc.getPagina());
+                aggiornaView(TimeTracker.getInstance().getGiorniAttivit‡(controller.getPagina()), controller.getPagina());
             }
         });
         
@@ -666,7 +693,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
                         }
                         chiudiMenuProgetti();
                         stage.close();
-                        aggiornaView(TimeTracker.getInstance().getGiorniAttivit‡(ttc.getPagina()), ttc.getPagina());
+                        aggiornaView(TimeTracker.getInstance().getGiorniAttivit‡(controller.getPagina()), controller.getPagina());
                     }
                 });
                 
@@ -696,27 +723,11 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
 
     }
 
-	@Override
-	public void aggiornaView(List<List<IAttivit‡>> giorni, int pagina) {
-		listaGiorniAttivit‡.getChildren().clear();
-        creaCronologiaAttivit‡(giorni, pagina);
-	}
-
-	@Override
-	public void progettoAggiunto() {
-		new Notification("Progetto aggiunto", NotificationType.SUCCESS).show();
-	}
-
-	@Override
-	public void attivit‡Aggiunta() {
-		new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
-	}
-
 	@FXML
 	private void cronometroScelto() {
     	rimuoviEvidenziazionePulsanti();
     	cronoBtn.setStyle("-fx-background-color: #3C4B63");
-    	ttc.scegliCronometro();
+    	this.controller.scegliCronometro();
         nascondiTrackers();
         formTimeTracker.setVisible(true);
         visualizzaOrologio(0, 0, 0);
@@ -726,7 +737,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
 	private void pomodoroScelto() {
     	rimuoviEvidenziazionePulsanti();
     	pomoBtn.setStyle("-fx-background-color: #3C4B63");
-    	ttc.scegliPomodoro();
+    	this.controller.scegliPomodoro();
     	nascondiTrackers();
     	formTimeTracker.setVisible(true);
     	settingsBtn.setVisible(true);
@@ -799,7 +810,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     		
     		// avvia il tracker
     		String nome = attivit‡Text.getText();
-    		ttc.avviaTracker(nome, progetto);
+    		this.controller.avviaTracker(nome, progetto);
     		
     	} else {
     		new Notification("Perfavore inserisci il nome di un'attivit‡.", NotificationType.ERROR).show();
@@ -813,7 +824,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     public void trackerTerminato() {
     	
     	// termina il tracker
-    	ttc.terminaTracker();
+    	this.controller.terminaTracker();
  
     	// cambia i pulsanti
     	togglePulsantiTracker();
@@ -839,7 +850,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
     	modal.setTitolo("Imposta pomodoro timer");
         
         // ottiene il controller e setta le impostazioni di del pomodoro timer attuali
-        EditorTimerViewImpl controller = fxmlLoader.getController();
+        EditorTimer controller = fxmlLoader.getController();
         IPomodoroTimer pt = (IPomodoroTimer) TimeTracker.getInstance().getTracker();
         controller.setPomodoro(pt);
         
@@ -849,7 +860,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         	int sessione = controller.getSessione();
         	int pausaBreve = controller.getPausaBreve();
         	int pausaLunga = controller.getPausaLunga();
-        	ttc.impostaPomodoroTimer(sessione, pausaBreve, pausaLunga);
+        	this.controller.impostaPomodoroTimer(sessione, pausaBreve, pausaLunga);
         	int[] params = ViewHelper.scomponiDurata(controller.getSessione());
         	this.visualizzaOrologio(params[0], params[1], params[2]);
         	new Notification("Pomodoro timer modificato", NotificationType.SUCCESS).show();
@@ -907,7 +918,7 @@ public class TimeTrackerViewImpl implements TimeTrackerView {
         if(this.progetto != null) {
         	a.setProgettoPadre(this.progetto);
         }
-    	ttc.aggiungiAttivit‡(a);
+    	this.controller.aggiungiAttivit‡(a);
     	new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
     }
 

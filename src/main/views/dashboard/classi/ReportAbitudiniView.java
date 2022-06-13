@@ -22,9 +22,8 @@ import javafx.scene.shape.Circle;
 import main.controller.helpers.Helper;
 import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
-import main.views.dashboard.interfacce.ReportAbitudiniView;
 
-public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
+public class ReportAbitudiniView {
 
     @FXML
     private TilePane tilePane;

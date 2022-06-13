@@ -3,9 +3,9 @@ package main.model.goalmanager.classi;
 import java.util.UUID;
 
 import main.model.goalmanager.interfacce.IObiettivo;
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.interfacce.IItem;
 
-public class ItemImpl implements Item {
+public class Item implements IItem {
     
     //-------------------------------- CAMPI -----------------------------------
     /***
@@ -33,12 +33,12 @@ public class ItemImpl implements Item {
      * 
      * @param nome 
      */
-    public ItemImpl(String nome) {
+    public Item(String nome) {
         this.nome = nome;
         this.id = UUID.randomUUID().toString();
     }
 
-    public ItemImpl(String nome, String id) {
+    public Item(String nome, String id) {
         this(nome);
         this.id = id;
     }
@@ -84,10 +84,10 @@ public class ItemImpl implements Item {
   	      if (obj == this) {
   	         return true;
   	      }
-  	      if (!(obj instanceof Item)) {
+  	      if (!(obj instanceof IItem)) {
   	         return false;
   	      }
-  	      Item o = (Item) obj;
+  	      IItem o = (IItem) obj;
   	      return this.id.equals(o.getId());
    }
 }

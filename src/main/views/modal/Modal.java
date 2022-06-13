@@ -32,14 +32,14 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Main;
-import main.controller.goalmanager.GoalManagerControllerImpl;
+import main.controller.goalmanager.GoalManagerController;
 import main.controller.helpers.Helper;
 import main.views.LoaderRisorse;
 import main.views.accountmanager.classi.PageView;
 import main.views.notification.NotificationType;
 import main.views.notification.NotificationsManager;
 
-public class Modal {
+public class Modal implements IModal {
 	
 	@FXML
 	private BorderPane modal;

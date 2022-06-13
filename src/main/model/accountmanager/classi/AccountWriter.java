@@ -17,7 +17,7 @@ import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.interfacce.IItem;
 import main.model.habittracker.classi.AbitudineScomponibile;
 import main.model.habittracker.classi.AbitudineSessione;
 import main.model.habittracker.interfacce.IAbitudine;
@@ -136,7 +136,7 @@ public class AccountWriter {
 								writer.write(stringaAzione);
 								
 								// scrivi gli item della seguente AzioneScomponibile
-								for(Item it : as.getItems()) {
+								for(IItem it : as.getItems()) {
 									IAzioneScomponibile padre = (IAzioneScomponibile) it.getPadre();
 									String stringaItem = "item-azione" + "," + padre.getId() 
 									+ "," + it.getNome() + "," + it.getId() + "\n";
@@ -179,7 +179,7 @@ public class AccountWriter {
 					+ "," + s.getStartDate().getYear() + "," + stringaGiorni + "," + s.getId() + "\n"; 
 					
 					// scrive gli item della seguente abitudine semplice
-					for(Item it : s.getItems()) {
+					for(IItem it : s.getItems()) {
 						IAbitudineScomponibile padre = (IAbitudineScomponibile) it.getPadre();
 						String stringaItem = "item-abitudine" + "," + padre.getId() 
 								+ "," + it.getNome() + "," + it.getId() + "\n";

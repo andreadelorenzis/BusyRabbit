@@ -1,47 +1,31 @@
 package main;
 
-import java.awt.event.ActionListener;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
- */
-
-// Demo
-
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.Timer;
-
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.LoaderRisorse;
 import main.views.accountmanager.classi.PageView;
-import main.views.notification.Notification;
-import main.views.notification.NotificationType;
-
 
 public class Main extends Application { 
     
+	/*
+	 * Data di ultimo accesso all'applicazione
+	 */
     public static LocalDate dataUltimoAccesso;
+    
+    /*
+     * Istanza dell'AccountManager
+     */
     public IAccountManager app;
     
     @Override

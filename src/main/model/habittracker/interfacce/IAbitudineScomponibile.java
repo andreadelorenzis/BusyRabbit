@@ -2,7 +2,7 @@ package main.model.habittracker.interfacce;
 
 import java.util.List;
 
-import main.model.goalmanager.interfacce.Item;
+import main.model.goalmanager.interfacce.IItem;
 
 /**
  * 
@@ -15,7 +15,7 @@ public interface IAbitudineScomponibile extends IAbitudine {
 	 * 
 	 * @param item to add
 	 */
-	public void addItem(Item item);
+	public void addItem(IItem item);
 	
 	/**
 	 * 
@@ -27,6 +27,6 @@ public interface IAbitudineScomponibile extends IAbitudine {
 	 * 
 	 * @return list of items
 	 */
-	public List<Item> getItems();
+	public List<IItem> getItems();
 	
 }

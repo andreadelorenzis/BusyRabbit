@@ -12,7 +12,7 @@ public interface IAzioneScomponibile extends IAzione {
      * 
      * @param item l'item da aggiungere
      */
-    public void aggiungiItem(Item item);
+    public void aggiungiItem(IItem item);
     
     /**
      * 
@@ -24,6 +24,6 @@ public interface IAzioneScomponibile extends IAzione {
      * 
      * @return la lista degli item di questa AzioneScomponibile
      */
-    public List<Item> getItems();
+    public List<IItem> getItems();
     
 }

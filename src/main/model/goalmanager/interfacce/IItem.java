@@ -3,7 +3,7 @@ package main.model.goalmanager.interfacce;
 /**
  * Item da completare che può essere assegnato ad un'AzioneScomponibile. 
  */
-public interface Item {
+public interface IItem {
     
     /**
      * Completa l'item

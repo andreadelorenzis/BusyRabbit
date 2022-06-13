@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import main.controller.Controller;
+import main.controller.IController;
 import main.controller.accountmanager.AccessController;
 import main.model.accountmanager.classi.AccountManager;
 import main.views.LoaderRisorse;
@@ -42,7 +42,7 @@ public class PageView implements IPageView {
     @FXML
     private TextField confPassRegField;
     
-    private Controller controller;
+    private IController controller;
     
     private AccountManager app = AccountManager.getInstance();
     
@@ -133,13 +133,13 @@ public class PageView implements IPageView {
     }
     
 	@Override
-	public void setController(Controller c) {
+	public void setController(IController c) {
 		this.controller = c;
 		controller.setView(this);
 	}
 
 	@Override
-	public Controller getController() {
+	public IController getController() {
 		return this.controller;
 	}
 
