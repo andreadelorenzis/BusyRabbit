@@ -12,22 +12,22 @@ import java.util.stream.Stream;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineTracker;
 
-public class AbitudineTracker implements IAbitudineTracker {
+public class HabitTracker implements IAbitudineTracker {
 
 	/*
 	 * Elenco di tutte le abitudini
 	 */
 	private List<IAbitudine> habits = new ArrayList<>();
 	
-	private static AbitudineTracker habitTracker = null;
+	private static HabitTracker habitTracker = null;
 	
-	private AbitudineTracker() {
+	private HabitTracker() {
 		
 	}
 	
-	public static AbitudineTracker getInstance() {
+	public static HabitTracker getInstance() {
 		if(habitTracker == null) {
-			habitTracker = new AbitudineTracker();
+			habitTracker = new HabitTracker();
 		}
 		return habitTracker;
 	}

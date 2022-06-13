@@ -79,7 +79,7 @@ public class AccountWriter {
 					if(o instanceof ObiettivoScomponibile) {
 						IObiettivoScomponibile os = (IObiettivoScomponibile) o;
 						
-						// se il seguente obiettivo ï¿½ un sotto-obiettivo
+						// se il seguente obiettivo è un sotto-obiettivo
 						if(o.getObiettivoPadre() != null) {
 							String idPadre = o.getObiettivoPadre().getId();
 							stringaObiettivo = "obiettivo-scomponibile" + "," + true + "," + idPadre
@@ -99,7 +99,7 @@ public class AccountWriter {
 					} else if (o instanceof ObiettivoAzione) {
 						IObiettivoAzione oa = (IObiettivoAzione) o;
 						
-						// se il seguente obiettivo ï¿½ un sotto-obiettivo
+						// se il seguente obiettivo è un sotto-obiettivo
 						if(o.getObiettivoPadre() != null) {
 							String idPadre =  o.getObiettivoPadre().getId();
 							stringaObiettivo = "obiettivo-azione" + "," + true + "," + idPadre

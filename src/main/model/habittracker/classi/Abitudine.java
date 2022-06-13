@@ -247,7 +247,7 @@ public class Abitudine implements IAbitudine {
 	@Override
 	public List<Integer> getWeekRecords() {
 		List<Integer> weekRecords = new ArrayList<>();
-		List<LocalDate> lastWeek = AbitudineTracker.getLastWeek();
+		List<LocalDate> lastWeek = HabitTracker.getLastWeek();
 		int year = lastWeek.get(lastWeek.size() - 1).getYear();
 		for(LocalDate date : lastWeek) {
 			int dayOfYear = date.getDayOfYear();

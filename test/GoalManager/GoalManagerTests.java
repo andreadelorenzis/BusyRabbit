@@ -22,12 +22,6 @@ import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 
-/**
- * TODO:
- * - testare obiettivo padre []
- * - testare azioni giornaliere per singolo obiettivo []
- *
- */
 public class GoalManagerTests {
     GoalManager g = null; 
     

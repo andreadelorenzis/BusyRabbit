@@ -4,7 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
-import main.model.habittracker.classi.AbitudineTracker;
+import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineTracker;
 import main.views.habittracker.interfacce.HabitTrackerView;
@@ -17,7 +17,7 @@ public class HabitTrackerControllerImpl implements HabitTrackerController {
 	
 	public HabitTrackerControllerImpl(HabitTrackerView view) {
 		this.view = view;
-		ht = AbitudineTracker.getInstance();
+		ht = HabitTracker.getInstance();
 	}
 	
 	public void aggiungiAbitudine(IAbitudine h) {

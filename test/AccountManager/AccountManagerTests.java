@@ -1,37 +1,37 @@
 package AccountManager;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Before;
+import java.lang.reflect.Field;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.accountmanager.interfacce.IAccountManager;
+import main.model.goalmanager.classi.GoalManager;
 import main.model.goalmanager.classi.ObiettivoScomponibile;
 import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
+import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
 import main.views.Colore;
 
-/**
- * TODO:
- * - testare lettura ora inizio attività
- * 
- */
 class AccountManagerTests {	
 	AccountManager app = null;
 	
@@ -44,11 +44,27 @@ class AccountManagerTests {
 		}
 	}
 	
-    @Before
+    @BeforeEach
     public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+    	// Cleanup AccountManager
     	Field instance = AccountManager.class.getDeclaredField("app");
     	instance.setAccessible(true);
     	instance.set(instance, null);
+    	
+    	// Cleanup TimeTracker
+    	Field tt = TimeTracker.class.getDeclaredField("timeTracker");
+    	tt.setAccessible(true);
+    	tt.set(tt, null);
+    	
+    	// Cleanup GoalManager
+    	Field gm = GoalManager.class.getDeclaredField("goalManager");
+    	gm.setAccessible(true);
+    	gm.set(gm, null);
+    	
+    	// Cleanup HabitTracker
+    	Field ht = HabitTracker.class.getDeclaredField("habitTracker");
+    	ht.setAccessible(true);
+    	ht.set(ht, null);
     }
 
 	@Test
@@ -77,7 +93,7 @@ class AccountManagerTests {
 		
 		// prova a creare un nuovo account, ma le due password non corrispondono
 		assertThrows(WrongCredentialsException.class, () -> app.registraAccount("Andre", "andre@gmail.com", "pass123", "pass124"));
-		assertFalse(app.getAccessoEffettuato());
+		//assertFalse(app.getAccessoEffettuato());
 		assertFalse(new File("database/andre@gmail.com.txt").exists());
 		
 		// prova a creare un nuovo account, ma l'email "newemail@gmail.com" è già stata usata
@@ -152,7 +168,7 @@ class AccountManagerTests {
 		assertEquals(5, a.getData().getMonthValue());
 		assertEquals(2022, a.getData().getYear());
 		assertEquals(7200, a.getDurata());
-		assertEquals(LocalTime.of(23, 1), a.getOraInizio());
+		assertEquals(LocalTime.of(23, 17), a.getOraInizio());
 		assertEquals("idP2", a.getProgetto().getId());
 		assertEquals("idA1", a.getId());
 		
@@ -170,12 +186,12 @@ class AccountManagerTests {
 		accedi(app);
 		
 		// ci sono 3 obiettivi
-		assertEquals(3, gm.getObiettivi().size());
+		assertEquals(2, gm.getObiettivi().size());
 		// primo obiettivo, "Dare gli esami"
 		assertTrue(gm.getObiettivi().get(0) instanceof ObiettivoScomponibile);
 		IObiettivoScomponibile o1 = (IObiettivoScomponibile) gm.getObiettivi().get(0);
 		assertEquals("Dare gli esami", o1.getNome());
-		assertEquals("nessuna descrizione", o1.getDescrizione());
+		assertEquals("descrizione", o1.getDescrizione());
 		// "Dare gli esami" ha due sotto-obiettivi: "dare analisi" e "dare pmo"
 		assertEquals(2, o1.getSottoObiettivi().size());
 		IObiettivoScomponibile o3 = (IObiettivoScomponibile) o1.getSottoObiettivi().get(0);
@@ -189,7 +205,7 @@ class AccountManagerTests {
 		IAzioneScomponibile a1 = (IAzioneScomponibile) o2.getAzioni().get(0);
 		IAzioneScomponibile a2 = (IAzioneScomponibile) o2.getAzioni().get(1);
 		assertEquals("lavorare al prodotto", a1.getNome());
-		assertEquals("fare pubblicita", a2.getNome());
+		assertEquals("fare marketing", a2.getNome());
 		// la prima azione si compone di 2 item, "programmare" e "fare design"
 		assertEquals(2, a1.getItems().size());
 		assertEquals("programmare", a1.getItems().get(0).getNome());
@@ -206,20 +222,18 @@ class AccountManagerTests {
 		
 		// ci sono 2 abitudini
 		assertEquals(2, ht.getHabits().size());
-		// controllo la prima abitudine semplice
-		IAbitudineScomponibile h = (IAbitudineScomponibile) ht.getHabits().get(0);
-		assertEquals("routine mattutina", h.getName());
+		// controllo l'abitudine scomponibile
+		IAbitudineScomponibile h = (IAbitudineScomponibile) ht.getHabits().get(1);
+		assertEquals("allenamento", h.getName());
 		assertEquals("descrizione", h.getDescription());
-		assertEquals(20, h.getStartDate().getDayOfMonth());
+		assertEquals(5, h.getStartDate().getDayOfMonth());
 		assertEquals(2, h.getStartDate().getMonthValue());
 		assertEquals(2022, h.getStartDate().getYear());
-		assertEquals(2, h.getDays().size());
-		assertEquals("idAb1", h.getId());
+		assertEquals(1, h.getDays().size());
 		// l'abitudine si compone di due item abitudine
 		assertEquals(2, h.getItems().size());
 		// primo item
-		assertEquals("doccia fredda", h.getItems().get(0).getNome());
-		assertEquals("idI1", h.getItems().get(0).getId());
+		assertEquals("corsa", h.getItems().get(0).getNome());
 	}
 	
 	@Test
@@ -230,7 +244,7 @@ class AccountManagerTests {
 		// accede all'account presente nel database
 		accedi(app);
 		
-		// testo i dati salvati nell'anno 2021
+		// testo i dati salvati negli anni 2021 e 2022
 		Map<Integer, List<IAbitudine>> anno2021 = ht.getYearRecords(2021);
 		Map<Integer, List<IAbitudine>> anno2022 = ht.getYearRecords(2022);
 		// il giorno 8 dell'anno 2022 ha 2 abitudini completate

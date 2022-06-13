@@ -20,7 +20,7 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import main.controller.helpers.Helper;
-import main.model.habittracker.classi.AbitudineTracker;
+import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.views.dashboard.interfacce.ReportAbitudiniView;
 
@@ -151,9 +151,9 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
         this.settimanaBox.getChildren().clear();
         
         // crea la view dei cerchi
-        int totHabits = AbitudineTracker.getInstance().getHabits().size();
-        Map<Integer, List<IAbitudine>> datiSettimana = AbitudineTracker.getInstance().getWeekRecords();
-        List<LocalDate> lastWeek = AbitudineTracker.getLastWeek();
+        int totHabits = HabitTracker.getInstance().getHabits().size();
+        Map<Integer, List<IAbitudine>> datiSettimana = HabitTracker.getInstance().getWeekRecords();
+        List<LocalDate> lastWeek = HabitTracker.getLastWeek();
         for(LocalDate data : lastWeek) {
         	AnchorPane circle = creaViewProgressCircle(totHabits, datiSettimana.get(data.getDayOfYear()), data);
         	this.settimanaBox.getChildren().add(circle);
@@ -180,9 +180,9 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
     public void visualizzaDiagrammaAnnuale(int anno) {
         double dimCaselle = 13;
         this.tilePane.getChildren().clear();
-        int nTotHabits = AbitudineTracker.getInstance().getHabits().size();
+        int nTotHabits = HabitTracker.getInstance().getHabits().size();
         
-        Map<Integer, List<IAbitudine>> datiAnno = AbitudineTracker.getInstance().getYearRecords(anno);
+        Map<Integer, List<IAbitudine>> datiAnno = HabitTracker.getInstance().getYearRecords(anno);
         // itera tutti i giorni dell'anno
         for(int giorno : datiAnno.keySet()) {
         	LocalDate data = LocalDate.ofYearDay(anno, giorno);
@@ -227,7 +227,7 @@ public class ReportAbitudiniViewImpl implements ReportAbitudiniView {
         
         // visualizza label numero abitudini svolte
         String s = abitudini.size() == 1 ? "e " : "i ";
-        Label label = new Label("Svolto " + abitudini.size() + " abitudin" + s +  " su " + AbitudineTracker.getInstance().getHabits().size());
+        Label label = new Label("Svolto " + abitudini.size() + " abitudin" + s +  " su " + HabitTracker.getInstance().getHabits().size());
         label.setStyle("-fx-text-fill: #888EA8; -fx-font-size: 16;");
         label.setPadding(new Insets(0, 0, 15, 0));
         this.giornoBox.getChildren().add(label);

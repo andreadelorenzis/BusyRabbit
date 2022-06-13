@@ -10,7 +10,7 @@ import java.io.IOException;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.model.goalmanager.classi.GoalManager;
 import main.model.goalmanager.interfacce.IGoalManager;
-import main.model.habittracker.classi.AbitudineTracker;
+import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudineTracker;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.ITimeTracker;
@@ -20,7 +20,7 @@ public class AccountManager implements IAccountManager {
 	
 	private ITimeTracker tt = TimeTracker.getInstance();
 	private IGoalManager gm = GoalManager.getInstance();
-	private IAbitudineTracker ht = AbitudineTracker.getInstance();
+	private IAbitudineTracker ht = HabitTracker.getInstance();
 	private String email = "";
 	private String password = "";
 	private boolean accessoEffettuato = false;
@@ -61,7 +61,7 @@ public class AccountManager implements IAccountManager {
 				throw new WrongCredentialsException("Le due password non combaciano.");
 			}
 		} else {
-			throw new ExistingAccountException("L'email ï¿½ giï¿½ in uso da un altro account.");
+			throw new ExistingAccountException("L'email è già in uso da un altro account.");
 		}
 	}
 	

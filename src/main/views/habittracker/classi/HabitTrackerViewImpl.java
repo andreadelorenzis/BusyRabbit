@@ -28,7 +28,7 @@ import main.controller.habittracker.HabitTrackerControllerImpl;
 import main.controller.helpers.Helper;
 import main.model.habittracker.classi.AbitudineScomponibile;
 import main.model.habittracker.classi.AbitudineSessione;
-import main.model.habittracker.classi.AbitudineTracker;
+import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.views.LoaderRisorse;
 import main.views.habittracker.interfacce.HabitTrackerView;
@@ -63,7 +63,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     
     private void visualizzaAbitudiniGiornaliere() {
         abitudiniBox.getChildren().clear();
-        List<IAbitudine> habits = AbitudineTracker.getInstance().calculateTodayHabits(LocalDate.now());
+        List<IAbitudine> habits = HabitTracker.getInstance().calculateTodayHabits(LocalDate.now());
         if(habits.size() > 0) {
             // crea container abitudini non completate
             Label label1 = new Label("Da fare");
@@ -100,7 +100,7 @@ public class HabitTrackerViewImpl implements HabitTrackerView {
     
     private void visualizzaTotaleAbitudini() {
         abitudiniBox.getChildren().clear();
-        List<IAbitudine> habits = AbitudineTracker.getInstance().getHabits();
+        List<IAbitudine> habits = HabitTracker.getInstance().getHabits();
         
         // crea container abitudini
         VBox vBox1 = new VBox();
