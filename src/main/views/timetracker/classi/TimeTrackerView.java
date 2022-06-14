@@ -287,7 +287,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     
     private void apriEditorProgetto(IProgetto progetto, boolean aggiunta) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader();
-    	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.TT, "EditorProgetti"));
+    	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.TT, "EditorProgetto"));
     	AnchorPane editor = fxmlLoader.load();
         editor.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.TT, "TimeTracker"));
         editor.getStylesheets().add(LoaderRisorse.globalCss);  

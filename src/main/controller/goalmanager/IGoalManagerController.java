@@ -1,7 +1,9 @@
 package main.controller.goalmanager;
 
 import main.controller.IController;
+import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.interfacce.IAzione;
+import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IObiettivo;
 
 public interface IGoalManagerController extends IController {
@@ -23,4 +25,8 @@ public interface IGoalManagerController extends IController {
 	public void completaObiettivo(IObiettivo o);
 	
 	public void completaAzione(IAzione a);
+	
+	public void creaItem(IAzioneScomponibile a, Item item);
+	
+	public void completaItem(Item item);
 }

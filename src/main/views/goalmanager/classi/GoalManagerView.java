@@ -39,6 +39,7 @@ import main.model.goalmanager.classi.Azione;
 import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.AzioneSessione;
 import main.model.goalmanager.classi.GoalManager;
+import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.classi.Obiettivo;
 import main.model.goalmanager.classi.ObiettivoAzione;
 import main.model.goalmanager.classi.ObiettivoScomponibile;
@@ -96,22 +97,21 @@ public class GoalManagerView implements IGoalManagerView {
     
     @FXML
     private void initialize() {
-    	this.aggiornaObiettivi(GoalManager.getInstance().getObiettivi());
     	IGoalManagerController controller = new GoalManagerController();
+    	this.controller = controller;
     	setController(controller);
+    	this.aggiornaObiettivi(GoalManager.getInstance().getObiettivi());
     }
     
 	@Override
 	public void setController(IController c) {
-		IGoalManagerController controller = new GoalManagerController();
 		controller.setView(this);
 		this.controller = (IGoalManagerController) c;
 	}
 
 	@Override
 	public IController getController() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.controller;
 	}
 
 	@Override
@@ -499,7 +499,7 @@ public class GoalManagerView implements IGoalManagerView {
         // valida gli input
         final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
         btnOk.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-    		if(controller.getNome().isBlank() && controller.getData() == null){
+    		if(controller.getNome().isBlank() || controller.getData() == null){
     			event.consume();
     			if(controller.getNome().isBlank()) {
     				new Notification("Inserisci un nome per l'azione", NotificationType.ERROR).show();
@@ -531,6 +531,7 @@ public class GoalManagerView implements IGoalManagerView {
         		this.controller.collegaAzione(o, nuovaAzione);
         		
         		// aggiorno la view
+        		this.obiettivoCliccato = o;
         		apriPaginaInfo(o);
         	} else {
         		
@@ -547,6 +548,42 @@ public class GoalManagerView implements IGoalManagerView {
         		apriPaginaInfo(azione.getObiettivo());
         	}
             
+        }
+    }
+
+    /**
+     * Apre l'editor delle azioni in aggiunta/modifica.
+     */
+    private void apriEditorItem(IAzioneScomponibile azione) throws IOException {
+    	
+        // crea il modal
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.GM, "EditorItem"));
+    	AnchorPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.GM, "GoalManager"));
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
+    	Modal modal = new Modal(editor, "");
+    	modal.setTitolo("Nuovo item");
+        
+        // Ottiene il controller e imposta l'azione se in modifica
+        EditorItem controller = fxmlLoader.getController();
+        
+        // valida gli input
+        final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
+        btnOk.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+    		if(controller.getNome().isBlank()){
+    			event.consume();
+    			new Notification("Inserisci un nome per l'item", NotificationType.ERROR).show();
+        	}
+    	});
+        
+    	// apre il dialog e attende
+        ButtonType btnCliccato = modal.show();
+        if(btnCliccato == ButtonType.OK) {
+        	String nome = controller.getNome();
+        	Item nuovoItem = new Item(nome);
+        	this.controller.creaItem(azione, nuovoItem);
+        	this.apriPaginaInfo(obiettivoCliccato);
         }
     }
     
@@ -667,7 +704,8 @@ public class GoalManagerView implements IGoalManagerView {
             public void handle(MouseEvent t) {
             	
             	// rimuovo evidenziazione obiettivo cliccato
-            	paneObiettivoCliccato.setStyle("-fx-background-color: #0E1726;");
+            	if(paneObiettivoCliccato != null)
+            		paneObiettivoCliccato.setStyle("-fx-background-color: #0E1726;");
             	
             	// visualizza il totale azioni giornaliere per tutti gli obiettivi
             	visualizzaAzioniGiornaliere();
@@ -864,51 +902,59 @@ public class GoalManagerView implements IGoalManagerView {
         	VBox container = new VBox();
         	pane.setLeft(container);
         	
+    		// crea checkbox
+            CheckBox azioneCheck = creaCheckbox(azione.getNome(), azione.getCompletata());
+            azioneCheck.getStyleClass().add("nome");
+            container.getChildren().add(azioneCheck);
+            
+            // collega evento click checkbox azione
+            azioneCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent t) {
+                	t.consume();
+                    completaAzione(azione);
+                }
+            });
+        	
         	if(azione instanceof AzioneScomponibile) {
         		IAzioneScomponibile as = (IAzioneScomponibile) azione;
-        		
-        		// crea checkbox
-                CheckBox azioneCheck = creaCheckbox(azione.getNome(), azione.getCompletata());
-                azioneCheck.getStyleClass().add("nome");
-                container.getChildren().add(azioneCheck);
                 
-                // collega evento click checkbox azione
-                azioneCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent t) {
-                    	t.consume();
-                        completaAzione(azione);
-                        if(azione.getCompletata()) {
-                        	new Notification("Azione completata.", NotificationType.SUCCESS).show();
-                        }
+                // crea container per gli item
+                VBox itemContainer = new VBox();
+                itemContainer.getStyleClass().add("item-container");
+            	container.getChildren().add(itemContainer);
+            	
+            	// crea pulsante aggiunta item
+            	HBox hBox = Helper.creaBtnAggiunta("Item");
+            	hBox.getStyleClass().add("aggiunta-item");
+            	itemContainer.getChildren().add(hBox);
+            	
+            	// collega evento aggiunta item
+                hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent t) {
+                    	try {
+							apriEditorItem((AzioneScomponibile) azione);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
                     }
                 });
-                
+            	
                 // aggiunge gli item dell'azione scomponibile
-                if(as.getItems().size() > 0) {
-                	VBox itemContainer = new VBox();
-                	container.getChildren().add(itemContainer);
-                	HBox hBox = Helper.creaBtnAggiunta("Item");
-                	itemContainer.getChildren().add(hBox); 
+                if(as.getItems().size() > 0) { 
                 	for(IItem item : as.getItems()) {
                 		CheckBox itemCheck = creaCheckbox(item.getNome(), item.getCompletato());
+                		itemCheck.getStyleClass().add("item-checkbox");
                 		itemContainer.getChildren().add(itemCheck);
                 		
                         // collega evento click checkbox azione
-                        azioneCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                        itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                             public void handle(ActionEvent t) {
                             	t.consume();
-                                item.completa();
-                                itemCheck.setSelected(true);
-                            }
-                        });
-                        
-                        // collega evento aggiunta item
-                        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                            public void handle(MouseEvent t) {
-                            	System.out.println("Aggiunta item");
+                                controller.completaItem((Item) item);
                             }
                         });
                 	}
+                	pane.setBottom(itemContainer);
                 }
         	} else if(azione instanceof AzioneSessione) {
         		

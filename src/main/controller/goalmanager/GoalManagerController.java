@@ -1,7 +1,10 @@
 package main.controller.goalmanager;
 
+import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.GoalManager;
+import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.interfacce.IAzione;
+import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
@@ -34,7 +37,7 @@ public class GoalManagerController implements IGoalManagerController {
 	public void aggiungiObiettivo(IObiettivo o) {
 		gm.aggiungiObiettivo(o);
 		view.successo("Obiettivo creato");
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 	
 	@Override
@@ -42,7 +45,7 @@ public class GoalManagerController implements IGoalManagerController {
 		IObiettivoScomponibile os = (IObiettivoScomponibile) padre;
 		os.aggiungiSottoObiettivo(figlio);
 		view.successo("Sotto-obiettivo creato");
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override
@@ -52,14 +55,14 @@ public class GoalManagerController implements IGoalManagerController {
 		o1.setData(o2.getData());
 		o1.setObiettivoPadre(o2.getObiettivoPadre());
 		view.successo("Obiettivo modificato");
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override
 	public void eliminaObiettivo(IObiettivo o) {
 		gm.eliminaObiettivo(o.getId());
 		view.info("Obiettivo eliminato");
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override
@@ -68,7 +71,7 @@ public class GoalManagerController implements IGoalManagerController {
 		oa.collegaAzione(a);
 		a.setObiettivo(oa);
 		view.successo("Azione collegata");
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override
@@ -79,14 +82,14 @@ public class GoalManagerController implements IGoalManagerController {
 		a1.setIncremento(a2.getIncremento());
 		a1.setObiettivo(a2.getObiettivo());
 		view.successo("Azione modificata");
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override
 	public void eliminaAzione(IAzione a) {
 		a.getObiettivo().eliminaAzione(a.getId());
 		view.info("Azione eliminata");
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override
@@ -96,7 +99,7 @@ public class GoalManagerController implements IGoalManagerController {
 		if(o.getCompletato()) {
 			view.successo("Obiettivo completato");
 		}
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override
@@ -106,7 +109,19 @@ public class GoalManagerController implements IGoalManagerController {
 		if(a.getCompletata()) {
 			view.successo("Azione completata");
 		}
-		view.aggiorna(gm.getObiettivi());
+		view.aggiornaObiettivi(gm.getObiettivi());
+	}
+	
+	@Override 
+	public void creaItem(IAzioneScomponibile azione, Item item) {
+		azione.aggiungiItem(item);
+		view.successo("Item creato");
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
     
+	@Override
+	public void completaItem(Item item) {
+		item.completa();
+	}
+	
 }
