@@ -64,7 +64,6 @@ public class EditorAbitudine {
     }
     
     private void toggleBtn(Label label, boolean giorno) {
-    	System.out.println(giorno);
         if(giorno) {
         	// deselezionare
             label.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE; -fx-border-color: #4361EE;");

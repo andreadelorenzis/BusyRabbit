@@ -48,11 +48,9 @@ public class Modal implements IModal {
 	public static final int ALTEZZA = 600;
 	
 	private Pane content;
-	private String okBtnText = "Salva";
-	private String cancelBtnText = "Annulla";
 	private int larghezza = LARGHEZZA;
 	private int altezza = ALTEZZA;
-	private Button okBtn = new Button(), cancelBtn = new Button();
+	private Button okBtn, cancelBtn;
 	private HBox okBtnContainer = new HBox(), cancelBtnContainer = new HBox();
 	private ButtonType btnCliccato = ButtonType.CANCEL;
 	private String titolo;
@@ -60,6 +58,8 @@ public class Modal implements IModal {
 	public Modal(Pane content, String titolo) {
 		this.content = content;
 		this.titolo = titolo;
+		okBtn = new Button("Salva");
+		cancelBtn = new Button("Annulla");
 	}
 	
 	private void toggleOverlay() {
@@ -182,12 +182,10 @@ public class Modal implements IModal {
         HBox footer = new HBox();
         footer.getStyleClass().add("modal-footer");
         footer.setAlignment(Pos.CENTER_RIGHT);
-        okBtn.setText(okBtnText);
         okBtnContainer.getChildren().add(okBtn);
         okBtnContainer.setPadding(new Insets(0, 0, 0, 15));
         okBtn.setMinWidth(100.0);
         okBtn.getStyleClass().addAll("modal-btn", "ok-btn");
-        cancelBtn.setText(cancelBtnText);
         cancelBtnContainer.getChildren().add(cancelBtn);
         cancelBtn.setMinWidth(100.0);
         cancelBtn.getStyleClass().addAll("modal-btn", "cancel-btn");

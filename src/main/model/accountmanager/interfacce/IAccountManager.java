@@ -18,7 +18,6 @@ public interface IAccountManager {
      * @param email
      * @param password
      * @param ripetiPass 
-     * @return Account
      */
     public void registraAccount(String nome, String email, String password, String ripetiPass) throws WrongCredentialsException, 
 	   																								  ExistingAccountException ;
@@ -29,7 +28,6 @@ public interface IAccountManager {
      * 
      * @param email 
      * @param password
-     * @return Account
      */
     public void accedi(String email, String password) throws WrongCredentialsException;
     
@@ -41,7 +39,7 @@ public interface IAccountManager {
      * @param password Password dell'utente.
      * @return Valore che rappresenta l'avvenuta eliminazione dell'account o meno.
      */
-    public void eliminaAccount(String email, String password) throws WrongCredentialsException;
+    public boolean eliminaAccount(String email, String password) throws WrongCredentialsException;
     
     /**
      * 

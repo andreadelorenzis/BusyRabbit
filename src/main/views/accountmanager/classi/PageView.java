@@ -25,9 +25,9 @@ import main.views.notification.NotificationType;
 public class PageView implements IPageView {
 	public static AnchorPane appContainer = null;
     
-    private Stage stage;
+    public static Stage stage;
     
-    private Scene scene;
+    public static Scene scene;
     
     @FXML
     private TextField emailLogField;
@@ -56,11 +56,13 @@ public class PageView implements IPageView {
     	AccessController accessController = (AccessController) controller;
     	String email = emailLogField.getText();
     	String password = passLogField.getText();
-    	if(/*!email.isBlank() && !password.isBlank()*/true) {
-	    	boolean result = accessController.accedi("newemail@gmail.com", "pass123");
+    	if(/*!email.isBlank() && !password.isBlank()*/ true) {
+	    	boolean result = accessController.accedi(email, password);
 	    	if(result) {
 	    		apriSchermataPrincipale(event);	
 	    	}
+    	} else {
+    		new Notification("Perfavore, compila tutti i campi.", NotificationType.ERROR).show();
     	}
     }
     
@@ -82,7 +84,7 @@ public class PageView implements IPageView {
     }
     
     @FXML
-    private void apriPaginaLogin(MouseEvent event) throws IOException {
+    public void apriPaginaLogin(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Login"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

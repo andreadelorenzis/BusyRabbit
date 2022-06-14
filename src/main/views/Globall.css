@@ -74,19 +74,6 @@
     -fx-background-color: #2B305B;
 }
 
-/* Stile DialogPane */
-
-.dialog-pane .button-bar .button:default {
-    -fx-background-color: #4361EE;
-    -fx-text-fill: #ffffff;
-}
-
-.dialog-pane .button-bar .button:cancel {
-    -fx-background-color: gray;
-    -fx-text-fill: #ffffff;
-
-}
-
 /* Stile ScrollBar */
 
  .scroll-bar:horizontal .track,

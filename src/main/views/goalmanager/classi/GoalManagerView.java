@@ -655,7 +655,7 @@ public class GoalManagerView implements IGoalManagerView {
         
         // visualizza il progresso dell'obiettivo
         double progress = o.calcolaProgresso();
-        VBox bar = creaProgressBar(progress);
+        VBox bar = creaProgressBar(progress, true);
         paginaAzioni.setBottom(bar);
 
     }
@@ -841,7 +841,7 @@ public class GoalManagerView implements IGoalManagerView {
             
             // visualizza la barra di progresso
             double progress = completate / azioni.size();
-            VBox bar = creaProgressBar(progress);
+            VBox bar = creaProgressBar(progress, false);
             paginaAzioni.setBottom(bar);
             
         } else {
@@ -856,9 +856,14 @@ public class GoalManagerView implements IGoalManagerView {
         }
     }
     
-    private VBox creaProgressBar(double progress) {
+    private VBox creaProgressBar(double progress, boolean obiettivo) {
+    	String nomeProgressBar = "";
+    	if(obiettivo) 
+    		nomeProgressBar = "Progresso obiettivo:";
+    	else 
+    		nomeProgressBar = "Progresso giornaliero:";
     	VBox vBox = new VBox();
-    	Label label = new Label("Progresso giornaliero:");
+    	Label label = new Label(nomeProgressBar);
     	label.getStyleClass().add("progress-title");
     	HBox box = new HBox();
     	box.setAlignment(Pos.CENTER_LEFT);

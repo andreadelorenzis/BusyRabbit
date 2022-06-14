@@ -52,6 +52,7 @@ public class AccountManager implements IAccountManager {
 					writer.write("---attivita---\n");
 					writer.write("---obiettivi---\n");
 					writer.write("---abitudini---\n");
+					writer.write("---storico-abitudini---\n");
 					writer.close();
 					System.out.println("Registrazione effettuata.");
 				} catch (IOException e) {
@@ -109,28 +110,18 @@ public class AccountManager implements IAccountManager {
 	}
 
 	@Override
-	public void eliminaAccount(String email, String password) throws WrongCredentialsException {
+	public boolean eliminaAccount(String email, String password) throws WrongCredentialsException {
 		if(accessoEffettuato) {
-			BufferedReader reader;
-			try {
-				reader = new BufferedReader(new FileReader("database/" + email + ".txt"));
+			if(this.password.equals(password)) {
 				File f = new File("database/" + email + ".txt");
-				String primaLinea = reader.readLine();
-				String passwordAccount = primaLinea.split(",")[1];
-				reader.close();
-				if(passwordAccount.equals(password)) {
-					if(f.delete()) {
-						System.out.println("Account eliminato: " + email);
-					}
-		
-				} else {
-					throw new WrongCredentialsException("Password non corretta");
+				if(f.delete()) {
+					return true;
 				}
-				reader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} else {
+				throw new WrongCredentialsException("Password non corretta");
 			}
 		}
+		return false;
 	}
 	
 	@Override
