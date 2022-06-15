@@ -16,6 +16,13 @@ public interface IGoalManager {
     public void aggiungiObiettivo(IObiettivo obiettivo);
     
     /**
+     * Aggiunge un nuovo sotto-obiettivo
+     * 
+     * @param obiettivo
+     */
+    public void aggiungiSottoObiettivo(IObiettivoScomponibile padre, IObiettivo figlio);
+    
+    /**
      * Verifica alla data passata se qualche obiettivo è scaduto e, in caso affermativo, fa fallire tali obiettivi
      * 
      * @param data la data di oggi

@@ -1,0 +1,65 @@
+password,password123
+---progetti---
+Analisi matematica,Blu,idP1
+Programmazione ad oggetti,Giallo,idP2
+Algoritmi e strutture dati,Rosso,idP3
+Fisica generale,Verde,idP4
+Sistemi operativi,Viola,idP5
+---attivita---
+Fare esercizi analisi,1,1,2022,12,00,3800,idP1,idA1
+Studiare teoria,3,1,2022,14,00,7200,idP1,idA2
+Fare esercizi analisi,6,1,2022,12,00,2600,idP1,idA3
+Studiare teoria,8,1,2022,14,00,7200,idP1,idA4
+Fare esercizi analisi,13,1,2022,16,00,4300,idP1,idA5
+Studiare teoria,17,1,2022,14,00,7200,idP1,idA6
+Lavorare al progetto di PMO,18,1,2022,18,00,8000,idP2,idA7
+Esercitazione PMO,25,1,2022,21,00,3600,idP2,idA8
+Esercitazione PMO,02,2,2022,11,00,6600,idP2,idA9
+Esercitazione PMO,05,2,2022,11,00,6600,idP2,idA10
+Esercitazione PMO,07,2,2022,11,00,6600,idP2,idA11
+Lavorare al progetto di PMO,18,2,2022,18,00,2000,idP2,idA12
+Lavorare al progetto di PMO,23,2,2022,18,00,1200,idP2,idA13
+Lavorare al progetto di PMO,26,2,2022,18,00,3600,idP2,idA14
+Fare esercizi di fisica,1,3,2022,12,00,4000,idP4,idA15
+Fare esercizi di fisica,5,3,2022,12,00,2300,idP4,idA16
+Fare esercizi di fisica,10,3,2022,12,00,7200,idP4,idA17
+Studiare algoritmi,4,4,2022,18,00,3800,idP3,idA18
+Progetto algoritmi,6,4,2022,18,00,1000,idP3,idA19
+Studiare algoritmi,7,4,2022,18,00,2000,idP3,idA20
+Progetto algoritmi,8,4,2022,18,00,3800,idP3,idA21
+Studiare algoritmi,8,4,2022,21,00,3600,idP3,idA22
+Studiare algoritmi,10,4,2022,18,00,3800,idP3,idA23
+Progetto algoritmi,11,4,2022,18,00,3800,idP3,idA24
+Studiare teoria di fisica,17,4,2022,12,00,4000,idP4,idA25
+Fare esercizi di fisica,18,4,2022,12,00,2300,idP4,idA26
+Fare esercizi di fisica,19,4,2022,12,00,3600,idP4,idA27
+Fare esercizi di fisica,19,4,2022,17,00,1000,idP4,idA28
+Lavorare al progetto di PMO,2,5,2022,18,00,3600,idP2,idA29
+Lavorare al progetto di PMO,2,5,2022,21,00,3600,idP2,idA30
+Lavorare al progetto di PMO,10,5,2022,9,00,3600,idP2,idA31
+Studiare teoria di sistemi operativi,12,5,2022,21,00,4000,idP5,idA32
+Studiare teoria di sistemi operativi,13,5,2022,21,00,3600,idP5,idA33
+Studiare teoria di sistemi operativi,15,5,2022,21,00,7000,idP5,idA34
+Studiare teoria di sistemi operativi,15,6,2022,21,00,7000,idP5,idA35
+Studiare teoria di sistemi operativi,18,6,2022,21,00,5000,idP5,idA36
+Studiare teoria di fisica,19,6,2022,12,00,4000,idP4,idA37
+Fare esercizi di fisica,20,6,2022,12,00,2300,idP4,idA38
+---obiettivi---
+obiettivo-scomponibile,false,Dare tutti gli esami,Dare tutti gli esami del secondo anno entro Luglio,11,7,2022,idOb1
+obiettivo-scomponibile,true,idOb1,Dare analisi matematica,Dare l'esame di analisi matematica,5,6,2022,idOb2
+obiettivo-azione,true,idOb2,Studiare tutta la teoria (100 pag),Passare l'orale di analisi,5,6,2022,100,pag,idOb3
+azione-sessione,idOb3,Studiare 1 ora la teoria di analisi,5,1,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,3600,idAz1
+obiettivo-azione,true,idOb2,Fare tutti gli esercizi,Passare lo scritto di analisi,5,6,2022,50,esercizi,idOb4
+azione-scomponibile,idOb4,Fare 3 esercizi di ogni tipo,9,1,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,idAz2
+item-azione,idAz2,3 esercizi su integrali,idItem1
+item-azione,idAz2,3 esercizi su derivate,idItem2
+item-azione,idAz2,3 esercizi su serie numeriche,idItem3
+obiettivo-scomponibile,true,idOb1,Dare programmazione,Dare l'esame di programmazione ad oggetti,11,7,2022,idOb5
+---abitudini---
+abitudine-sessione,routine mattutina,descrizione,20,2,2022,MONDAY-FRIDAY,1,1f10e856-83a1-4732-b1e9-16831d78ca97
+abitudine-semplice,allenamento,descrizione,5,2,2022,SATURDAY,dae6b451-4780-4831-9cb5-ab687ed42d72
+item-abitudine,dae6b451-4780-4831-9cb5-ab687ed42d72,corsa,iditem1
+item-abitudine,dae6b451-4780-4831-9cb5-ab687ed42d72,addominali,iditem2
+---storico-abitudini---
+1f10e856-83a1-4732-b1e9-16831d78ca97,2021-2-3-6-9-10-15-17-80,2022-3-4-5-8-10-45-90-300
+dae6b451-4780-4831-9cb5-ab687ed42d72,2021-2-5,2022-8

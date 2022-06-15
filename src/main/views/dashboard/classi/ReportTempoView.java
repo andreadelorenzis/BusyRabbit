@@ -8,9 +8,11 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -67,6 +70,8 @@ public class ReportTempoView implements Initializable {
      * Il mese per cui visualizzare le statistiche sul tempo.
      */
     private String meseSelezionato = LocalDate.now().getMonth().toString();
+    
+    private Map<String, List<Node>> datiColoreStackedBarChart;
     
     //--------------------------- METODI PUBBLICI --------------------------------
     @Override
@@ -134,6 +139,7 @@ public class ReportTempoView implements Initializable {
      			   if(progetto.getAnnoProgetto(annoSelezionato) != null && progetto.getAnnoProgetto(annoSelezionato).containsKey(i)) {
      		    		   tempo = progetto.getAnnoProgetto(annoSelezionato).get(i);
      		       }
+	     	       XYChart.Data<String, Double> data = new XYChart.Data<>(mese, tempo);
              	   tempiProgetto.getData().add(new XYChart.Data<>(mese, tempo));
                 }
                 datiAnno.add(tempiProgetto);
@@ -338,7 +344,7 @@ public class ReportTempoView implements Initializable {
                 percentuale.setPadding(new Insets(0, 0, 0, 20));
                 
                 // aggiunge gli elementi alla view
-                AnchorPane.setLeftAnchor(progress, 200.0);
+                AnchorPane.setLeftAnchor(progress, 270.0);
                 AnchorPane.setRightAnchor(progress, 70.0);
                 AnchorPane.setLeftAnchor(container, 0.0);
                 AnchorPane.setRightAnchor(percentuale, 0.0);

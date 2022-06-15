@@ -128,12 +128,12 @@ public class AccountReader {
 					// creo il sotto-obiettivo scomponibile e lo aggiungo alla lista
 					nuovo = new ObiettivoScomponibile(nome, descrizione, LocalDate.of(anno, mese, giorno), id);
 					obiettivi.add(nuovo);
-					// lo aggiungo anche al obiettivo padre, gi� aggiunto nella lista
+					// lo aggiungo anche al obiettivo padre
 					int i = 0;
 					for(IObiettivo o : obiettivi) {
 						if(o.getId().equals(idPadre)) {
 							IObiettivoScomponibile os = (IObiettivoScomponibile) obiettivi.get(i);
-							os.aggiungiSottoObiettivo(nuovo);
+							this.gm.aggiungiSottoObiettivo(os, nuovo);
 						}
 						i++;
 					}
@@ -178,7 +178,7 @@ public class AccountReader {
 					for(IObiettivo o : obiettivi) {
 						if(o.getId().equals(idPadre)) {
 							IObiettivoScomponibile os = (IObiettivoScomponibile) obiettivi.get(i);
-							os.aggiungiSottoObiettivo(nuovo);
+							this.gm.aggiungiSottoObiettivo(os, nuovo);
 						}
 						i++;
 					}
@@ -244,6 +244,8 @@ public class AccountReader {
 					if(o.getId().equals(idPadre)) {
 						IObiettivoAzione oa = (IObiettivoAzione) obiettivi.get(i);
 						oa.collegaAzione(nuova);
+						System.out.println(oa.getAzioni().get(0).getGiorniRipetizione());
+						System.out.println(oa.getAzioni().get(0).getDataInizio());
 					}
 					i++;
 				}

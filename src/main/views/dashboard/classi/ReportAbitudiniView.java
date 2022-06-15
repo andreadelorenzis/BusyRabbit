@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -40,17 +41,22 @@ public class ReportAbitudiniView {
     
     @FXML
     private void initialize() {
-    	
     	// aggiunge pulsanti selezione anno
     	for(int i = 0; i < 3; i++) {
     		int anno = annoSelezionato - i;
     		Label labelAnno = new Label("" + anno);
     		labelAnno.getStyleClass().add("label-anno");
     		
+    		if(i == 0) {
+    			labelAnno.setStyle("-fx-background-color: #374856");
+    		}
+    		
     		// collega evento selezione anno
     		labelAnno.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent t) {
+                	deselezionaAnni();
                 	visualizzaDiagrammaAnnuale(anno);
+                	labelAnno.setStyle("-fx-background-color: #374856");
                 }
             });
     		
@@ -64,9 +70,16 @@ public class ReportAbitudiniView {
     	visualizzaDiagrammaAnnuale(annoSelezionato);
     }
     
+    private void deselezionaAnni() {
+    	for(Node anno : this.selezioneAnniBox.getChildren()) {
+    		Label annoLabel = (Label) anno;
+    		annoLabel.setStyle("-fx-background-color: transparent");
+    	}
+    }
+    
     private AnchorPane creaViewProgressCircle(int totHabits, List<IAbitudine> completedHabits, LocalDate data) {
     	// formatta data
-    	String formattedDate = data.format(DateTimeFormatter.ofPattern("dd-MMM-yy"));
+    	String formattedDate = data.format(DateTimeFormatter.ofPattern("dd MMM"));
     	
     	// calcola la percentuale di completamento
         double progress = (double) completedHabits.size() / totHabits;
@@ -189,7 +202,9 @@ public class ReportAbitudiniView {
         	// calcolo il colore in base al numero di abitudini completate
         	List<IAbitudine> abitudiniCompletate = datiAnno.get(giorno);
         	double progresso = (double) abitudiniCompletate.size() / nTotHabits;
-        	String colore = getColore(progresso);
+        	String colore = "#272E52"; 
+        	if(nTotHabits != 0)
+        		colore = getColore(progresso);
         	
         	// creo la casella
             HBox container = new HBox();
@@ -218,7 +233,7 @@ public class ReportAbitudiniView {
         this.giornoBox.getChildren().clear();
         
         // visualizza label giorno
-        String formattedDate = data.format(DateTimeFormatter.ofPattern("dd-MMM-yy"));
+        String formattedDate = data.format(DateTimeFormatter.ofPattern("dd MMM, yyyy"));
         giornoLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: 800;");
         this.giornoLabel.setText(formattedDate);
         this.giornoLabel.setVisible(true);

@@ -142,7 +142,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	public void avviaTracker(String nome, IProgetto p) {
 		IAttività a = new Attività(nome, LocalDate.now(), LocalTime.now(), 0L, p);
 		tt.avviaTracker(a);
-		tt.getTracker().setAscoltatore(this);
+		tt.getTracker().registraAscoltatore(this);
 	}
 
 	@Override

@@ -151,6 +151,7 @@ public class TimeTrackerView implements ITimeTrackerView {
 	@Override
 	public void setController(IController c) {
 		this.controller = (ITimeTrackerController) c;
+		this.controller.setView(this);
 	}
 
 	@Override
@@ -351,7 +352,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         }
         
         // aggiungo il pulsante di paginazione alla fine
-        if(giorni.size() == 10) {
+        if(giorni.size() == 10 || pagina != 1) {
         	listaGiorniAttività.getChildren().add(creaPageBtn(pagina));
         }
     }
@@ -654,9 +655,9 @@ public class TimeTrackerView implements ITimeTrackerView {
                 	IProgetto vecchioProgetto = a.getProgetto();
                 	copia.setProgettoPadre(TimeTracker.progettoDefault);
                 	controller.modificaAttività(a, copia);
-                	if(!(vecchioProgetto.getId().equals(TimeTracker.progettoDefault.getId()))) {
-                		new Notification("Attività modificata", NotificationType.SUCCESS).show();
-                	}
+//                	if(!(vecchioProgetto.getId().equals(TimeTracker.progettoDefault.getId()))) {
+//                		new Notification("Attività modificata", NotificationType.SUCCESS).show();
+//                	}
                 	
                 }
                 chiudiMenuProgetti();
@@ -681,8 +682,10 @@ public class TimeTrackerView implements ITimeTrackerView {
                         	IProgetto vecchioProgetto = a.getProgetto();
                         	vecchioProgetto.eliminaAttività(a);
                         	
-                        	// modifica il progetto
+                        	// aggiunge durata dell'attività al nuovo progetto
+                        	p.aggiungiAttività(a);
                         	a.setProgettoPadre(p);
+                        	new Notification("Attività modificata", NotificationType.SUCCESS).show();
                         	
                         }
                         chiudiMenuProgetti();

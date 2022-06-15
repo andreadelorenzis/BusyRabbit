@@ -32,7 +32,8 @@ public class AccessController implements IAccessController {
     public boolean accedi(String email, String password) {
 		IView pageView = view;
 		try {
-			app.accedi("andreadelorenzis99@gmail.com", "pass");
+			//app.accedi("andreadelorenzis99@gmail.com", "pass");
+			app.accedi("mariorossi@gmail.com", "password123");
 			//app.accedi(email, password);
 			return true;
 		} catch (WrongCredentialsException e) {

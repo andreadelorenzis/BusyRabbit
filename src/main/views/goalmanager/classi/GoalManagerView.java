@@ -825,6 +825,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         
         // creo la lista azioni giornaliere
         List<IAzione> azioni = GoalManager.getInstance().calcolaAzioniGiornaliere(LocalDate.now());
+        System.out.println(azioni.size());
         if(azioni.size() > 0) {
         	VBox containerAzioni = new VBox();
         	

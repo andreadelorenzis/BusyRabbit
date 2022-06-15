@@ -27,7 +27,7 @@
                      <children>
                         <VBox alignment="CENTER" layoutX="38.0" layoutY="26.0" maxWidth="1100.0" prefHeight="562.0" prefWidth="929.0" AnchorPane.leftAnchor="10.400000000000091" AnchorPane.rightAnchor="20.399999999999864">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="849.0" style="-fx-font-weight: 800; -fx-font-size: 16;" text="Ultimi 7 giorni" textFill="WHITE">
+                              <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="26.0" prefWidth="849.0" style="-fx-font-weight: 800; -fx-font-size: 16;" text="Ultimi 7 giorni" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

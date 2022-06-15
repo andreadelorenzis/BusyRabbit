@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import main.model.timetracker.interfacce.ITimer;
+import main.model.timetracker.interfacce.ITimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
 
-public class TimerSemplice extends Tracker implements ITimer {
+public class TimerSemplice extends Tracker implements ITimerSemplice {
 	
 	private int durataTimer;
 	

@@ -10,24 +10,38 @@ import main.model.goalmanager.interfacce.IAzione;
 import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
+import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 
 public class GoalManager implements IGoalManager {
-    // CAMPI
+	//-------------------------------- CAMPI -----------------------------------
+	/*
+	 * istanza SINGLETONE
+	 */
     private static GoalManager goalManager = null;
     
-    private List<IObiettivo> obiettivi = new ArrayList<>();
+    /*
+     * Struttura che contiene la gerarchia degli obiettivi
+     */
+    private List<IObiettivo> alberoObiettivi = new ArrayList<>();
     
-    // COSTRUTTORI
+    /*
+     * Struttura che contiene tutti gli obiettivi
+     */
+    private List<IObiettivo> listaObiettivi = new ArrayList<>();
+    
+    //----------------------------- COSTRUTTORI --------------------------------
     private GoalManager() {
         
     };
     
-    /**
-     * 
-     * @param data la data da comparare
-     * @param giorni la lista di giorni
-     * @return se il giorno della data è presente nella lista di giorni
-     */
+    //--------------------------- METODI PUBBLICI ------------------------------
+    public static GoalManager getInstance() {
+    	if(goalManager == null) {
+    		goalManager = new GoalManager();
+    	}
+    	return goalManager;
+    }
+    
     public static boolean giornoPresente(LocalDate data, List<DayOfWeek> giorni) {
         boolean presente = false;
         for(DayOfWeek giorno : giorni) {
@@ -38,29 +52,28 @@ public class GoalManager implements IGoalManager {
         return presente;
     }
     
-    public static GoalManager getInstance() {
-    	if(goalManager == null) {
-    		goalManager = new GoalManager();
-    	}
-    	return goalManager;
+    @Override
+    public void aggiungiObiettivo(IObiettivo obiettivo) {
+        alberoObiettivi.add(obiettivo);
     }
     
     @Override
-    public void aggiungiObiettivo(IObiettivo obiettivo) {
-        obiettivi.add(obiettivo);
+    public void aggiungiSottoObiettivo(IObiettivoScomponibile padre, IObiettivo figlio) {
+    	listaObiettivi.add(figlio);
+    	padre.aggiungiSottoObiettivo(figlio);
     }
 
     @Override
     public List<IObiettivo> getObiettivi() {
-        return obiettivi;
+        return alberoObiettivi;
     }
 
     @Override
     public void verificaScadenzeObiettivi(LocalDate data) {
     	int i = 0;
-        for(IObiettivo ob : obiettivi) {
+        for(IObiettivo ob : listaObiettivi) {
         	if(ob.getData().isBefore(data) || ob.getData().isEqual(data)) {
-                obiettivi.get(i).faiFallire();
+                listaObiettivi.get(i).faiFallire();
             }
         	i++;
         }
@@ -69,7 +82,7 @@ public class GoalManager implements IGoalManager {
     @Override
     public List<IAzione> calcolaAzioniGiornaliere(LocalDate data) {
         List<IAzione> azioni = new ArrayList<>();
-        obiettivi.stream()
+        listaObiettivi.stream()
                  .forEach(ob -> {
                     if(ob instanceof ObiettivoAzione) {
                         IObiettivoAzione obAzione = (IObiettivoAzione) ob;
@@ -89,7 +102,7 @@ public class GoalManager implements IGoalManager {
 
     @Override
     public void eliminaObiettivo(String idObiettivo) {
-        obiettivi = obiettivi.stream()
+        alberoObiettivi = alberoObiettivi.stream()
                              .filter(ob -> !(ob.getId().equals(idObiettivo)))
                              .collect(Collectors.toList());
     }

@@ -1,5 +1,7 @@
-password,
+password,<password>
 ---progetti---
+<nome progetto>, <colore>, <ID>
 ---attivita---
+<nome attività>, <giorno>, <mese>, <anno>, <ore>, <minuti>, <durata>, <ID progetto>, <ID>
 ---obiettivi---
 ---abitudini---

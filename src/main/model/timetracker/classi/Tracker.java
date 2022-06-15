@@ -78,7 +78,7 @@ public abstract class Tracker implements ITracker {
 	}
 	
 	@Override
-	public void setAscoltatore(ITrackable ascoltatore) {
+	public void registraAscoltatore(ITrackable ascoltatore) {
 		this.ascoltatore = ascoltatore;
 	}
 

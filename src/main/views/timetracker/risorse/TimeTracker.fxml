@@ -116,7 +116,7 @@
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0">
                                              <image>
-                                                <Image url="@/main/views/risorse/play.png" />
+                                                <Image url="@/main/views/risorse/reset.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
