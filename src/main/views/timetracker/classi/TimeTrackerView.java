@@ -280,8 +280,6 @@ public class TimeTrackerView implements ITimeTrackerView {
         	// modifica l'attivit‡
         	IAttivit‡ attivit‡Modificata = new Attivit‡(nome, data, ora, durata, progetto);
         	this.controller.modificaAttivit‡(attivit‡, attivit‡Modificata);
-        	
-        	new Notification("Attivit‡ modificata con successo", NotificationType.SUCCESS).show();
         }
     }
     
@@ -324,12 +322,10 @@ public class TimeTrackerView implements ITimeTrackerView {
         	// aggiunge o modifica il colore
         	if(aggiunta) {
         		this.controller.aggiungiProgetto(new Progetto(nome, colore));
-            	new Notification("Nuovo progetto aggiunto", NotificationType.SUCCESS).show();
         	} else {
         		IProgetto progettoModificato = new Progetto(nome, colore);
         		this.controller.modificaProgetto(progetto, progettoModificato);
         		cambiaProgettoCorrente(progettoModificato);
-        		new Notification("Progetto modificato", NotificationType.SUCCESS).show();
         	}
         	
         	chiudiMenuProgetti();
@@ -447,7 +443,6 @@ public class TimeTrackerView implements ITimeTrackerView {
         	IAttivit‡ copia = this.getCopiaAttivit‡(a);
         	copia.setNome(field.getText());
         	this.controller.modificaAttivit‡(a, copia);
-        	new Notification("Attivit‡ modificata", NotificationType.SUCCESS).show();
         }
     }
 
@@ -689,7 +684,6 @@ public class TimeTrackerView implements ITimeTrackerView {
                         	// modifica il progetto
                         	a.setProgettoPadre(p);
                         	
-                        	new Notification("Attivit‡ modificata", NotificationType.SUCCESS).show();
                         }
                         chiudiMenuProgetti();
                         stage.close();
@@ -834,7 +828,6 @@ public class TimeTrackerView implements ITimeTrackerView {
     	minutiLabel.setText("00"); 
     	secondiLabel.setText("00");
     	
-    	new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
     }
     
     @FXML 
@@ -919,7 +912,21 @@ public class TimeTrackerView implements ITimeTrackerView {
         	a.setProgettoPadre(this.progetto);
         }
     	this.controller.aggiungiAttivit‡(a);
-    	new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
     }
+
+	@Override
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+
+	@Override
+	public void errore(String m) {
+		new Notification(m, NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
+	}
 
 }

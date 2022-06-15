@@ -8,5 +8,11 @@ public interface IView {
 	
 	public IController getController();
 	
+	public void successo(String m);
+	
+	public void errore(String m);
+	
+	public void info(String m);
+	
 }
 

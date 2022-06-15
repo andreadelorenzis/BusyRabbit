@@ -14,12 +14,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import main.controller.IController;
-import main.controller.accountmanager.AccessController;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.LoaderRisorse;
+import main.views.notification.Notification;
+import main.views.notification.NotificationType;
 import main.views.IView;
 
-public class AppView {
+public class AppView implements IView {
     @FXML
     private HBox timeHBox;
     @FXML
@@ -70,6 +71,7 @@ public class AppView {
     
     @FXML 
     private void initialize() throws IOException {
+    	// Inizializza stili
         String stile = "-fx-text-fill: #58698D; -fx-font-weight: 800; -fx-font-size: 16;";
         this.timeReportLabel.setStyle(stile);
         this.abitudiniReportLabel.setStyle(stile);
@@ -81,7 +83,6 @@ public class AppView {
         this.abitudiniReportBox.setMinHeight(40);
         this.abitudiniReportBox.setAlignment(Pos.CENTER_LEFT);
         this.abitudiniReportBox.setPadding(new Insets(0, 0, 0, 10));
-        
         this.timeHBox.getStyleClass().add("sidebar-btn");
         this.habitHBox.getStyleClass().add("sidebar-btn");
         this.goalHBox.getStyleClass().add("sidebar-btn");
@@ -90,7 +91,7 @@ public class AppView {
         this.abitudiniReportBox.getStyleClass().add("sidebar-btn");
         this.timeReportBox.getStyleClass().add("sidebar-btn");
         
-        // Aggiunge gli event handler dei click dei bottoni.
+        // Evento click pulsanti report
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
                 try {
@@ -100,8 +101,6 @@ public class AppView {
 				}
             }
         };
-        this.timeReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-        
         EventHandler<MouseEvent> eventHandler3 = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent t) {
                 try {
@@ -111,51 +110,38 @@ public class AppView {
 				}
             }
         };
+        this.timeReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
         this.abitudiniReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
     }
+    
+	@Override
+	public void setController(IController c) {
+		this.controller = c;
+	}
+
+	@Override
+	public IController getController() {
+		return this.controller;
+	}
+
+	@Override
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void errore(String s) {
+		new Notification(s, NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
+	}
     
     public void setAppData(IAccountManager app) throws IOException {
     	this.app = app;
     	apriPaginaTimeTracker();
-    }
-    
-    private void rimuoviEvidenziazionePulsanti() {
-        timeHBox.setStyle("-fx-background-color: #060818;");
-        timeLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        timeImg.setImage(LoaderRisorse.getImg("clock.png"));
-        
-        goalHBox.setStyle("-fx-background-color: #060818;");
-        goalLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        goalImg.setImage(LoaderRisorse.getImg("darts.png"));
-        
-        habitHBox.setStyle("-fx-background-color: #060818;");
-        habitLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        habitImg.setImage(LoaderRisorse.getImg("refresh.png"));
-        
-        dashboardHBox.setStyle("-fx-background-color: #060818;");
-        dashboardLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        dashboardImg.setImage(LoaderRisorse.getImg("dashboard.png"));
-        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down.png"));
-        this.dashboardArrow.setRotate(0);
-        
-        impostazioniHBox.setStyle("-fx-background-color: #060818;");
-        impostazioniLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        impostazioniImg.setImage(LoaderRisorse.getImg("settings.png"));
-        
-        this.timeReportBox.setStyle("-fx-background-color: #060818;");
-        this.timeReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-        
-        this.abitudiniReportBox.setStyle("-fx-background-color: #060818;");
-        this.abitudiniReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
-    }
-    
-    private void evidenziaPulsante(HBox hBox, Label label, ImageView imageView, String imgFile) {
-        hBox.setStyle("-fx-background-color: #374856;"
-                + "-fx-border-radius:12;"
-                + "-fx-border-style:solid;"
-                + "-fx-background-radius:12;");
-        label.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
-        imageView.setImage(LoaderRisorse.getImg(imgFile));
     }
     
     @FXML
@@ -307,6 +293,48 @@ public class AppView {
         this.dashboardBtns.getChildren().clear();
         this.dashboardMenuAperto = false;
         this.dashboardImg.setImage(LoaderRisorse.getImg("dashboard.png"));
+    }
+    
+    private void rimuoviEvidenziazionePulsanti() {
+    	// rimuove evidenziazione pulsante timetracker
+        this.rimuoviEvidenziazione(timeHBox, timeLabel, timeImg, "clock.png");
+        
+        // rimuove evidenziazione pulsante goalmanager
+        this.rimuoviEvidenziazione(goalHBox, goalLabel, goalImg, "darts.png");
+        
+        // rimuove evidenziazione pulsante habittracker
+        this.rimuoviEvidenziazione(habitHBox, habitLabel, habitImg, "refresh.png");
+        
+        // rimuove evidenziazione pulsante dashboard
+        this.rimuoviEvidenziazione(dashboardHBox, dashboardLabel, dashboardImg, "arrow-down.png");
+        this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down.png"));
+        this.dashboardArrow.setRotate(0);
+        
+        // rimuove evidenziazione pulsante impostazioni
+        this.rimuoviEvidenziazione(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings.png");
+        
+        // rimuove evidenziazione pulsante timereport
+        this.timeReportBox.setStyle("-fx-background-color: #060818;");
+        this.timeReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
+        
+        // rimuove evidenziazione pulsante abitudinireport
+        this.abitudiniReportBox.setStyle("-fx-background-color: #060818;");
+        this.abitudiniReportLabel.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
+    }
+    
+    private void rimuoviEvidenziazione(HBox hbox, Label label, ImageView imageView, String imgFile) {
+    	hbox.setStyle("-fx-background-color: #060818;");
+        label.setStyle("-fx-text-fill: #58698D; -fx-font-weight: 800;");
+        imageView.setImage(LoaderRisorse.getImg(imgFile));
+    }
+    
+    private void evidenziaPulsante(HBox hBox, Label label, ImageView imageView, String imgFile) {
+        hBox.setStyle("-fx-background-color: #374856;"
+                + "-fx-border-radius:12;"
+                + "-fx-border-style:solid;"
+                + "-fx-background-radius:12;");
+        label.setStyle("-fx-text-fill: #ffffff; -fx-font-weight: 800;");
+        imageView.setImage(LoaderRisorse.getImg(imgFile));
     }
 
 }

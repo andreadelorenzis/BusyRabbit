@@ -228,6 +228,37 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
         this.infoBox.getChildren().add(hBox2);
     }
 	
+	@Override
+	public void timerTerminato(long tempo) {
+		Platform.runLater(() -> {
+			this.labelSessioneCorrente.setText("00:00:00");
+	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
+	    	this.aggiornaAbitudini();
+		});
+	}
+
+	@Override
+	public void secondoPassato(int o, int m, int s) {
+		Platform.runLater(() -> {
+			this.visualizzaOrologio(o, m, s);
+		});
+	}
+
+	@Override
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void errore(String s) {
+		new Notification(s, NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
+	}
+	
     @FXML
     public void aggiungiAbitudine() throws IOException {
     	this.apriEditorAbitudine(null, true);
@@ -552,27 +583,6 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
             aggiornaAbitudini();
     	}
     }
-
-	@Override
-	public void successo(String messaggio) {
-		new Notification(messaggio, NotificationType.SUCCESS).show();
-	}
-	
-	@Override
-	public void timerTerminato(long tempo) {
-		Platform.runLater(() -> {
-			this.labelSessioneCorrente.setText("00:00:00");
-	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
-	    	this.aggiornaAbitudini();
-		});
-	}
-
-	@Override
-	public void secondoPassato(int o, int m, int s) {
-		Platform.runLater(() -> {
-			this.visualizzaOrologio(o, m, s);
-		});
-	}
 	
 	private void visualizzaOrologio(int o, int m, int s) {
 		String ore = ViewHelperTT.formattaDurata(o);

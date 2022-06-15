@@ -5,10 +5,10 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
+import main.model.accountmanager.classi.InvalidEmailException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.IView;
-import main.views.accountmanager.interfacce.IPageView;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
 
@@ -30,28 +30,30 @@ public class AccessController implements IAccessController {
 	
 	@Override
     public boolean accedi(String email, String password) {
-		IPageView pageView = (IPageView) view;
+		IView pageView = view;
 		try {
 			app.accedi("andreadelorenzis99@gmail.com", "pass");
 			//app.accedi(email, password);
 			return true;
 		} catch (WrongCredentialsException e) {
-			pageView.erroreCredenzialiSbagliate();
+			pageView.errore("Email o password non sono corrette");
 			return false;
 		}
     }
 
 	@Override
 	public boolean registraAccount(String nome, String email, String password, String confirmation) {
-		IPageView pageView = (IPageView) view;
+		IView pageView = view;
 		try {
 			app.registraAccount(nome, email, password, confirmation);
 			return true;
-		} catch (WrongCredentialsException | ExistingAccountException e) {
+		} catch (WrongCredentialsException | ExistingAccountException | InvalidEmailException e) {
 			if(e instanceof WrongCredentialsException) {
-				pageView.erroreConfermaPassword();
+				pageView.errore("Le due password non coincidono");
 			} else if(e instanceof ExistingAccountException) {
-				pageView.erroreEmailEsistente();
+				pageView.errore("L'email è già utilizzata da un altro account");
+			} else if(e instanceof InvalidEmailException) {
+				pageView.errore("Email non valida");
 			}
 			return false;
 		}

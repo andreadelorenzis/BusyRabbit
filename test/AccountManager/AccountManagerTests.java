@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
+import main.model.accountmanager.classi.InvalidEmailException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.model.goalmanager.classi.GoalManager;
@@ -102,7 +103,7 @@ class AccountManagerTests {
 		// registra un nuovo account con successo
 		try {
 			app.registraAccount("Andre", "andre@gmail.com", "pass123", "pass123");
-		} catch (WrongCredentialsException | ExistingAccountException e) {
+		} catch (WrongCredentialsException | ExistingAccountException | InvalidEmailException e) {
 			e.printStackTrace();
 		}
 		assertTrue(app.getAccessoEffettuato());
@@ -119,11 +120,10 @@ class AccountManagerTests {
 	@Test 
 	public void testEliminazione() {
 		app = AccountManager.getInstance();
-		
 		// crea un nuovo account
 		try {
 			app.registraAccount("Andre", "andre@gmail.com", "pass123", "pass123");
-		} catch (WrongCredentialsException | ExistingAccountException e) {
+		} catch (WrongCredentialsException | ExistingAccountException | InvalidEmailException e) {
 			e.printStackTrace();
 		}
 		

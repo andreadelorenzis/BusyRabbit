@@ -59,7 +59,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" maxWidth="700.0" prefHeight="0.0">
                                  <children>
-                                    <Button fx:id="changeBtn1" mnemonicParsing="false" onAction="#cambiaPassword" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #4361EE; -fx-font-weight: 800; -fx-cursor: hand;" text="Cambia" textFill="WHITE">
+                                    <Button fx:id="changeBtn1" mnemonicParsing="false" onAction="#cambiaPassword" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #4361EE; -fx-font-weight: 800;" text="Cambia" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -109,7 +109,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" maxWidth="700.0">
                                  <children>
-                                    <Button fx:id="changeBtn2" mnemonicParsing="false" onAction="#cambiaEmail" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #4361EE; -fx-font-weight: 800; -fx-cursor: hand;" text="Cambia" textFill="WHITE">
+                                    <Button fx:id="changeBtn2" mnemonicParsing="false" onAction="#cambiaEmail" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #4361EE; -fx-font-weight: 800;" text="Cambia" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -146,7 +146,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" maxWidth="700.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#eliminaAccount" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: #E7515A; -fx-font-weight: 800; -fx-cursor: hand;" text="Elimina" textFill="WHITE">
+                                    <Button mnemonicParsing="false" onAction="#eliminaAccount" prefHeight="26.0" prefWidth="80.0" scaleShape="false" style="-fx-background-color: #E7515A; -fx-font-weight: 800;" text="Elimina" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

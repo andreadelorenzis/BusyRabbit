@@ -40,7 +40,7 @@ public class ImpostazioniController implements IImpostazioniController {
 	public void cambiaEmail(String email, String pass) {
 		try {
 			app.cambiaEmail(email, pass);
-			view.emailCambiata();
+			view.successo("Email cambiata con successo");
 		} catch (ExistingAccountException | WrongCredentialsException e) {
 			if(e instanceof ExistingAccountException) {
 				view.errore("E' già presente un'altro account con questa email.");
@@ -54,7 +54,7 @@ public class ImpostazioniController implements IImpostazioniController {
 	public void cambiaPassword(String vecchia, String nuova) {
 		try {
 			app.cambiaPassword(vecchia, nuova);
-			view.passwordCambiata();
+			view.successo("Password cambiata con successo");
 		} catch (WrongCredentialsException e) {
 			view.errore("La password non è corretta.");
 		}

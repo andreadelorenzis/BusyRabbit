@@ -1,6 +1,7 @@
 package main.model.accountmanager.interfacce;
 
 import main.model.accountmanager.classi.ExistingAccountException;
+import main.model.accountmanager.classi.InvalidEmailException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.habittracker.interfacce.IAbitudineTracker;
@@ -20,7 +21,8 @@ public interface IAccountManager {
      * @param ripetiPass 
      */
     public void registraAccount(String nome, String email, String password, String ripetiPass) throws WrongCredentialsException, 
-	   																								  ExistingAccountException ;
+	   																								  ExistingAccountException,
+	   																								  InvalidEmailException;
     
     /**
      * Prende l'account del database, la cui email combacia con quella passata, se la

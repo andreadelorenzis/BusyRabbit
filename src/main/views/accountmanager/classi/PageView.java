@@ -8,6 +8,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -17,12 +18,12 @@ import javafx.stage.Stage;
 import main.controller.IController;
 import main.controller.accountmanager.AccessController;
 import main.model.accountmanager.classi.AccountManager;
+import main.views.IView;
 import main.views.LoaderRisorse;
-import main.views.accountmanager.interfacce.IPageView;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
 
-public class PageView implements IPageView {
+public class PageView implements IView {
 	public static AnchorPane appContainer = null;
     
     public static Stage stage;
@@ -32,15 +33,15 @@ public class PageView implements IPageView {
     @FXML
     private TextField emailLogField;
     @FXML 
-    private TextField passLogField;
+    private PasswordField passLogField;
     @FXML
     private TextField emailRegField;
     @FXML
     private TextField nameRegField;
     @FXML
-    private TextField passRegField;
+    private PasswordField passRegField;
     @FXML
-    private TextField confPassRegField;
+    private PasswordField confPassRegField;
     
     private IController controller;
     
@@ -145,20 +146,20 @@ public class PageView implements IPageView {
 	public IController getController() {
 		return this.controller;
 	}
-
+	
 	@Override
-	public void erroreConfermaPassword() {
-		new Notification("Le due password non coincidono.", NotificationType.ERROR).show();
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void errore(String s) {
+		new Notification(s, NotificationType.ERROR).show();
 	}
 
 	@Override
-	public void erroreEmailEsistente() {
-		new Notification("L'email è già utilizzata da un altro account.", NotificationType.ERROR).show();
-	}
-
-	@Override
-	public void erroreCredenzialiSbagliate() {
-		new Notification("Email o password incorrette.", NotificationType.ERROR).show();
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
 	}
     
 }

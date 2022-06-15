@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.model.goalmanager.classi.GoalManager;
@@ -40,9 +42,20 @@ public class AccountManager implements IAccountManager {
     
 	@Override
 	public void registraAccount(String nome, String email, String password, String ripetiPass) throws WrongCredentialsException, 
-																									   ExistingAccountException {
+		  																							   ExistingAccountException, 
+		  																							   InvalidEmailException {
+		// valida email
+		String regex = "^(.+)@(.+)$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(email); 
+		if(!matcher.matches()) {
+			throw new InvalidEmailException("Email non valida");
+		}
+	
+		// fai ricerca in database
 		File f = new File("database/" + email + ".txt");
 		if(!f.exists()) {
+			// leggi dati
 			if(password.equals(ripetiPass)) {
 				inizializza(email, password);
 				try {

@@ -48,6 +48,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	@Override
 	public void timerTerminato(long tempo) {
 		view.trackerTerminato();
+		view.successo("Attività aggiunta");
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	@Override
 	public void aggiungiProgetto(IProgetto p) {
 		tt.aggiungiProgetto(p);
+		view.successo("Progetto aggiunto");
 		aggiornaView();
 	}
 
@@ -67,18 +69,21 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	public void modificaProgetto(IProgetto p1, IProgetto p2) {
 		p1.setNome(p2.getNome());
 		p1.setColore(p2.getColore());
+		view.successo("Progetto modificato");
 		aggiornaView();
 	}
 
 	@Override
 	public void eliminaProgetto(IProgetto p) {
 		tt.eliminaProgetto(p.getId());
+		view.info("Progetto eliminato");
 		aggiornaView();
 	}
 
 	@Override
 	public void aggiungiAttività(IAttività a) {
 		tt.aggiungiAttività(a);
+		view.successo("Attività aggiunta");
 		aggiornaView();
 	}
 
@@ -100,17 +105,15 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 			// cambio il progetto nell'attività
 			a1.setProgettoPadre(nuovoProgetto);
 		}
+		view.successo("Attività modificata");
 		aggiornaView();
 	}
 
 	@Override
 	public void eliminaAttività(IAttività a) {
-		// elimina durata dal progetto
 		a.getProgetto().eliminaAttività(a);
-		
-		// elimina attività dal modello
 		tt.eliminaAttività(a);
-		
+		view.info("Attività eliminata");
 		aggiornaView();
 	}
 
@@ -146,6 +149,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	public void terminaTracker() {
 		tt.terminaTracker();
 		view.aggiornaView(tt.getGiorniAttività(pagina), pagina);
+		view.successo("Attività aggiunta");
 	}
 
 	@Override
@@ -164,6 +168,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 		pt.setSessione(sessione);
 		pt.setPausaBreve(pausaBreve);
 		pt.setPausaLunga(pausaLunga);
+		view.successo("Timer modificato");
 		aggiornaView();
 	}
     

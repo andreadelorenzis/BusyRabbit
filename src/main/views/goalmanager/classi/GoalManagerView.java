@@ -129,18 +129,18 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
 	}
 
 	@Override
-	public void errore(String message) {
-		new Notification(message, NotificationType.ERROR).show();
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void errore(String s) {
+		new Notification(s, NotificationType.ERROR).show();
 	}
 
 	@Override
-	public void successo(String message) {
-		new Notification(message, NotificationType.SUCCESS).show();
-	}
-
-	@Override
-	public void info(String message) {
-		new Notification(message, NotificationType.INFO).show();
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
 	}
 	
 	@Override

@@ -80,16 +80,6 @@ public class ImpostazioniView implements IImpostazioniView {
 	public IController getController() {
 		return this.controller;
 	}
-	
-	@Override
-	public void emailCambiata() {
-		new Notification("Email cambiata con successo", NotificationType.SUCCESS).show();
-	}
-
-	@Override
-	public void passwordCambiata() {
-		new Notification("Password cambiata con successo", NotificationType.SUCCESS).show();
-	}
 
 	@Override
 	public void accountEliminato() {
@@ -111,11 +101,6 @@ public class ImpostazioniView implements IImpostazioniView {
         PageView.stage.setX(dimSchermo.getMaxX()/2 - 325);
         PageView.stage.setY(dimSchermo.getMaxY()/2 - 300);
         PageView.stage.show();
-	}
-
-	@Override
-	public void errore(String s) {
-		new Notification(s, NotificationType.ERROR).show();
 	}
 
 	@FXML
@@ -174,6 +159,21 @@ public class ImpostazioniView implements IImpostazioniView {
 				this.controller.eliminaAccount(password);
 			}
 		}
+	}
+
+	@Override
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void errore(String s) {
+		new Notification(s, NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
 	}
 	
 }
