@@ -74,7 +74,7 @@ public class EditorAttività {
         // crea nome e pallino progetto nella parte sinistra
         HBox nome = new HBox();
         nome.setAlignment(Pos.CENTER);
-        Label label1 = ViewHelper.creaLabelProgetto(progetto);
+        Label label1 = ViewHelperTT.creaLabelProgetto(progetto);
         nome.getChildren().add(label1);
         pane.setLeft(nome);
 
@@ -97,7 +97,7 @@ public class EditorAttività {
     private void cambiaProgetto(IProgetto progetto) {
 
     	// modifica progetto
-        Label label = ViewHelper.creaLabelProgetto(progetto);
+        Label label = ViewHelperTT.creaLabelProgetto(progetto);
         this.progetto = progetto;
         
         // aggiorna il pulsante nella view.

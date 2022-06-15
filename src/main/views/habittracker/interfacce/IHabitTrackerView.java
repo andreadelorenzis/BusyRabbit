@@ -13,4 +13,5 @@ public interface IHabitTrackerView extends IView {
 	
 	public void visualizzaInfoAbitudine(IAbitudine abitudine);
 	
+	public void successo(String messaggio);
 }

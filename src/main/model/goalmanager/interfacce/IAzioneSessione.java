@@ -36,4 +36,6 @@ public interface IAzioneSessione extends IAzione {
      */
     public void setDurata(int durata);
     
+    public boolean getAvviato();
+    
 }

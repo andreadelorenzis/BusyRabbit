@@ -4,8 +4,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+import main.model.goalmanager.classi.Item;
 import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudineScomponibile;
+import main.model.habittracker.interfacce.IAbitudineSessione;
 import main.model.habittracker.interfacce.IAbitudineTracker;
 import main.views.IView;
 import main.views.habittracker.interfacce.IHabitTrackerView;
@@ -52,6 +55,30 @@ public class HabitTrackerController implements IHabitTrackerController {
 	@Override
 	public void completaAbitudine(IAbitudine h) {
 		h.complete();
+	}
+
+	@Override
+	public void creaItem(IAbitudineScomponibile a, Item item) {
+		a.addItem(item);
+		view.successo("Item creato");
+		view.aggiornaAbitudini();
+	}
+
+	@Override
+	public void completaItem(Item item) {
+		item.completa();
+	}
+
+	@Override
+	public void avviaAzioneSessione(IAbitudineSessione a) {
+		if(!a.isStarted())
+			a.startSession();
+	}
+
+	@Override
+	public void terminaAzioneSessione(IAbitudineSessione a) {
+		if(a.isStarted())
+			a.stopSession();
 	}
 	
 }

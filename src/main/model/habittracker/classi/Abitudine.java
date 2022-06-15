@@ -277,4 +277,5 @@ public class Abitudine implements IAbitudine {
   	      IAbitudine o = (IAbitudine) obj;
   	      return this.id.equals(o.getId());
    }
+
 }

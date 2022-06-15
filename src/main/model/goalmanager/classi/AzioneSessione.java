@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+import main.controller.goalmanager.GoalManagerController;
 import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.timetracker.classi.TimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
@@ -20,6 +21,13 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
      * Il timer per misurare il tempo
      */
     private TimerSemplice timer;
+    
+    /**
+     * Se il timer è avviato o no
+     */
+    private boolean avviato = false;
+    
+    
     
     //----------------------------- COSTRUTTORI --------------------------------
     /**
@@ -47,17 +55,14 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
     public void avviaSessione() {
     	timer.setDurata(durata);
     	timer.avvia();
+    	this.avviato = true;
     }
     
     @Override
     public void terminaSessione() {
     	timer.termina();
+    	this.avviato = false;
     }
-    
-	@Override
-	public void timerTerminato(long tempo) {
-    	completa();
-	}
 
     @Override
     public int getDurata() {
@@ -76,8 +81,17 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
 
 	@Override
 	public void secondoPassato(int o, int m, int s) {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void timerTerminato(long tempo) {
+    	completa();
+    	this.avviato = false;
+	}
+	
+	public boolean getAvviato() {
+		return this.avviato;
 	}
     
 }

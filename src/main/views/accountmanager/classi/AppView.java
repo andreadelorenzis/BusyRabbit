@@ -71,10 +71,8 @@ public class AppView {
     @FXML 
     private void initialize() throws IOException {
         String stile = "-fx-text-fill: #58698D; -fx-font-weight: 800; -fx-font-size: 16;";
-        
         this.timeReportLabel.setStyle(stile);
         this.abitudiniReportLabel.setStyle(stile);
-        
         this.timeReportBox.getChildren().add(this.timeReportLabel);
         this.timeReportBox.setMinHeight(40);
         this.timeReportBox.setAlignment(Pos.CENTER_LEFT); 
@@ -83,6 +81,14 @@ public class AppView {
         this.abitudiniReportBox.setMinHeight(40);
         this.abitudiniReportBox.setAlignment(Pos.CENTER_LEFT);
         this.abitudiniReportBox.setPadding(new Insets(0, 0, 0, 10));
+        
+        this.timeHBox.getStyleClass().add("sidebar-btn");
+        this.habitHBox.getStyleClass().add("sidebar-btn");
+        this.goalHBox.getStyleClass().add("sidebar-btn");
+        this.dashboardHBox.getStyleClass().add("sidebar-btn");
+        this.impostazioniHBox.getStyleClass().add("sidebar-btn");
+        this.abitudiniReportBox.getStyleClass().add("sidebar-btn");
+        this.timeReportBox.getStyleClass().add("sidebar-btn");
         
         // Aggiunge gli event handler dei click dei bottoni.
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {

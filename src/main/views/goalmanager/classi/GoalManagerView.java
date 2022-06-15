@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
@@ -45,17 +48,21 @@ import main.model.goalmanager.classi.ObiettivoAzione;
 import main.model.goalmanager.classi.ObiettivoScomponibile;
 import main.model.goalmanager.interfacce.IAzione;
 import main.model.goalmanager.interfacce.IAzioneScomponibile;
+import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
+import main.model.timetracker.classi.TimerSemplice;
+import main.model.timetracker.interfacce.ITrackable;
 import main.model.goalmanager.interfacce.IItem;
 import main.views.LoaderRisorse;
 import main.views.goalmanager.interfacce.IGoalManagerView;
 import main.views.modal.Modal;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
+import main.views.timetracker.classi.ViewHelperTT;
 
-public class GoalManagerView implements IGoalManagerView {
+public class GoalManagerView implements IGoalManagerView, ITrackable {
 
 	//--------------------------------- CAMPI ------------------------------------
 	
@@ -92,6 +99,13 @@ public class GoalManagerView implements IGoalManagerView {
      * valore: se la lista sotto-obiettivi è aperta o meno
      */
     private Map<String, Boolean> obiettiviAperti = new HashMap<>();
+    
+    /*
+     * Usate per il funzionamento delle azioni sessione
+     */
+    private IAzioneSessione sessioneCorrente; 
+    private Label labelSessioneCorrente;
+    private Button btnSessioneCorrente;
     
     //--------------------------- METODI PRIVATI --------------------------------
     
@@ -133,10 +147,10 @@ public class GoalManagerView implements IGoalManagerView {
     public void aggiornaObiettivi(List<IObiettivo> obiettivi) {
     	visualizzaObiettivi(obiettivi);
     	visualizzaAzioniGiornaliere();
-    	if(obiettivoCliccato != null) {
-    		this.resettaPaginaInfo();
-    		apriPaginaInfo(obiettivoCliccato);
-    	}
+//    	if(obiettivoCliccato != null) {
+//    		this.resettaPaginaInfo();
+//    		apriPaginaInfo(obiettivoCliccato);
+//    	}
     }
     
     /**
@@ -240,7 +254,7 @@ public class GoalManagerView implements IGoalManagerView {
             	center.setCursor(Cursor.HAND);
             	
             	// crea label numero sotto-obiettivi
-            	HBox btnSottoObiettivi = ViewHelper.creaSottoObiettiviBtn(os.getSottoObiettivi().size(), center);
+            	HBox btnSottoObiettivi = ViewHelperGM.creaSottoObiettiviBtn(os.getSottoObiettivi().size(), center);
             	boxBtns.getChildren().add(btnSottoObiettivi);
                 
                 // aggiungo container per sotto-obiettivi
@@ -669,7 +683,8 @@ public class GoalManagerView implements IGoalManagerView {
         hBox2.setAlignment(Pos.CENTER);
         Label label = new Label("Tutte le azioni di oggi");
         label.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 18;");
-        Label label2 = new Label("18/09/2021");
+        String dataDiOggi = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        Label label2 = new Label(dataDiOggi);
         label2.setStyle("-fx-text-fill: #888EA8; -fx-font-size: 20; -fx-font-weight: 800;");
         hBox.getChildren().add(label);
         hBox2.getChildren().add(label2);
@@ -887,13 +902,6 @@ public class GoalManagerView implements IGoalManagerView {
     	new Notification("Azione eliminata.", NotificationType.INFO).show();  	
     }
     
-    private CheckBox creaCheckbox(String s, boolean completata) {
-        CheckBox check = new CheckBox();
-        check.setText(s);
-        check.setSelected(completata);
-        return check;
-    }
-    
     /**
      * Crea la view di una singola azione.
      */
@@ -908,7 +916,7 @@ public class GoalManagerView implements IGoalManagerView {
         	pane.setLeft(container);
         	
     		// crea checkbox
-            CheckBox azioneCheck = creaCheckbox(azione.getNome(), azione.getCompletata());
+            CheckBox azioneCheck = ViewHelperGM.creaCheckbox(azione.getNome(), azione.getCompletata());
             azioneCheck.getStyleClass().add("nome");
             container.getChildren().add(azioneCheck);
             
@@ -921,7 +929,7 @@ public class GoalManagerView implements IGoalManagerView {
             });
         	
         	if(azione instanceof AzioneScomponibile) {
-        		IAzioneScomponibile as = (IAzioneScomponibile) azione;
+        		IAzioneScomponibile azioneScomponibile = (IAzioneScomponibile) azione;
                 
                 // crea container per gli item
                 VBox itemContainer = new VBox();
@@ -932,6 +940,7 @@ public class GoalManagerView implements IGoalManagerView {
             	HBox hBox = Helper.creaBtnAggiunta("Item");
             	hBox.getStyleClass().add("aggiunta-item");
             	itemContainer.getChildren().add(hBox);
+            	pane.setBottom(itemContainer);
             	
             	// collega evento aggiunta item
                 hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -945,11 +954,15 @@ public class GoalManagerView implements IGoalManagerView {
                 });
             	
                 // aggiunge gli item dell'azione scomponibile
-                if(as.getItems().size() > 0) { 
-                	for(IItem item : as.getItems()) {
-                		CheckBox itemCheck = creaCheckbox(item.getNome(), item.getCompletato());
+                if(azioneScomponibile.getItems().size() > 0) { 
+                	for(IItem item : azioneScomponibile.getItems()) {
+                		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
                 		itemCheck.getStyleClass().add("item-checkbox");
                 		itemContainer.getChildren().add(itemCheck);
+                		
+                		// se l'azione è completata, completa anche l'item
+                		if(azioneScomponibile.getCompletata())
+                			itemCheck.setSelected(true);
                 		
                         // collega evento click checkbox azione
                         itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -959,10 +972,47 @@ public class GoalManagerView implements IGoalManagerView {
                             }
                         });
                 	}
-                	pane.setBottom(itemContainer);
                 }
+                
         	} else if(azione instanceof AzioneSessione) {
+        		IAzioneSessione azioneSessione = (IAzioneSessione) azione;
         		
+        		// aggiunge i controlli del timer all'azione sessione
+        		TimerSemplice timer = new TimerSemplice(azioneSessione.getDurata(), this);
+        		HBox timerContainer = new HBox();
+        		timerContainer.getStyleClass().add("session-container");
+        		timerContainer.setAlignment(Pos.CENTER_LEFT);
+        		String durata = ViewHelperTT.formattaOrologio(azioneSessione.getDurata()*60);
+        		Label tempo = new Label(durata);
+        		tempo.getStyleClass().add("session-tempo");
+        		Button timerBtn = new Button("AVVIA");
+        		timerBtn.getStyleClass().add("session-btn");
+        		timerContainer.getChildren().addAll(timerBtn, tempo);
+        		pane.setBottom(timerContainer);
+        		
+        		// se l'azione è completate, disabilita il timer
+        		if(azioneSessione.getCompletata()) 
+        			timerBtn.setDisable(true);
+        		
+        		// evento timer
+        		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent t) {
+                    	t.consume();
+                    	labelSessioneCorrente = tempo;
+                    	btnSessioneCorrente = timerBtn;
+                        if(azioneSessione.getAvviato()) {
+                        	controller.terminaAzioneSessione(azioneSessione);
+                        	timer.termina();
+                        	timerBtn.setText("AVVIA");
+                        	timerBtn.setStyle("-fx-background-color: #1ABC9C");
+                        } else {
+                        	azioneSessione.avviaSessione();
+                        	timer.avvia();
+                        	timerBtn.setText("STOP");
+                        	timerBtn.setStyle("-fx-background-color: #E7515A");
+                        }
+                    }
+                });
         	}
         } else {
         	pane.setLeft(Helper.creaElementoLista(azione.getNome()));
@@ -1007,5 +1057,28 @@ public class GoalManagerView implements IGoalManagerView {
     private void aggiungiSottoObiettivo(IObiettivo obiettivo) throws IOException {
     	apriEditorObiettivo(obiettivo, true, true);
     }
+
+	@Override
+	public void timerTerminato(long tempo) {
+		Platform.runLater(() -> {
+			this.labelSessioneCorrente.setText("00:00:00");
+	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
+	    	this.visualizzaAzioniGiornaliere();
+		});
+	}
+
+	@Override
+	public void secondoPassato(int o, int m, int s) {
+		Platform.runLater(() -> {
+			this.visualizzaOrologio(o, m, s);
+		});
+	}
+	
+	private void visualizzaOrologio(int o, int m, int s) {
+		String ore = ViewHelperTT.formattaDurata(o);
+		String minuti = ViewHelperTT.formattaDurata(m);
+		String secondi = ViewHelperTT.formattaDurata(s);
+		this.labelSessioneCorrente.setText(ore + ":" + minuti + ":" + secondi);
+	}
     
 }

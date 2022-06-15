@@ -5,6 +5,7 @@ import main.model.goalmanager.classi.GoalManager;
 import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.interfacce.IAzione;
 import main.model.goalmanager.interfacce.IAzioneScomponibile;
+import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
@@ -124,4 +125,16 @@ public class GoalManagerController implements IGoalManagerController {
 		item.completa();
 	}
 	
+	@Override
+	public void avviaAzioneSessione(IAzioneSessione a) {
+		if(!a.getAvviato())
+			a.avviaSessione();
+	}
+	
+	@Override
+	public void terminaAzioneSessione(IAzioneSessione a) {
+		if(a.getAvviato()) 
+			a.terminaSessione();
+	}
+
 }

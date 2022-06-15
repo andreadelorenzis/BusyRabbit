@@ -21,6 +21,12 @@
 	-fx-padding: 15 10 15 10;
 }
 
+.check-abitudine {
+    -fx-text-fill: #BAC4CA;
+    -fx-font-size: 16;
+    -fx-font-weight: 800;
+}
+
 .abitudine:hover {
 	-fx-background-color: #374856; 
 	-fx-background-radius: 10; 
@@ -32,4 +38,38 @@
 	-fx-font-size: 18;
 	-fx-font-weight: 800;
 	-fx-padding: 0 0 10 0;
+}
+
+.aggiunta-item {
+	-fx-padding: 5 0 5 0;
+}
+
+.item-container {
+	-fx-padding: 0 0 0 35;
+}
+
+.item-checkbox {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 14;
+	-fx-font-weight: 600;
+	-fx-padding: 5 0 5 0;
+}
+
+.session-container {
+	-fx-padding: 5 0 0 35;
+}
+
+.session-btn {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 12px;
+	-fx-cursor: hand;
+	-fx-background-color: #1ABC9C;
+	-fx-font-weight: 800;
+}
+
+.session-tempo {
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: 800;
+	-fx-font-size: 22px;
+	-fx-padding: 0 0 0 10;
 }

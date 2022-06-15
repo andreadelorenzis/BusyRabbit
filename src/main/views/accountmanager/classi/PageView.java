@@ -112,6 +112,7 @@ public class PageView implements IPageView {
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             root.getStylesheets().add(LoaderRisorse.globalCss);
+            root.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.AM, "App"));
             
             AnchorPane pane = (AnchorPane) root;
             appContainer = pane;

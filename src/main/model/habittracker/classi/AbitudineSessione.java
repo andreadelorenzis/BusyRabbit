@@ -20,6 +20,8 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	 * Timer of the session
 	 */
 	private TimerSemplice timer;
+	
+	private boolean isStarted = false;
 
     //----------------------------- COSTRUTTORI --------------------------------
 	/**
@@ -82,17 +84,20 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	@Override
 	public void timerTerminato(long tempo) {
 		complete();
+		isStarted = false;
 	}
 
 	@Override
 	public void startSession() {
 		timer.setDurata(duration);
 		timer.avvia();
+		isStarted = true;
 	}
 
 	@Override
 	public void stopSession() {
 		timer.termina();
+		isStarted = false;
 	}
 
 	@Override
@@ -108,6 +113,11 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	@Override
 	public void secondoPassato(int o, int m, int s) {
 	
+	}
+	
+	@Override
+	public boolean isStarted() {
+		return this.isStarted;
 	}
 	
 }

@@ -37,7 +37,7 @@ import javafx.scene.layout.VBox;
 import main.model.timetracker.classi.Progetto;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.IProgetto;
-import main.views.timetracker.classi.ViewHelper;
+import main.views.timetracker.classi.ViewHelperTT;
 
 public class ReportTempoView implements Initializable {
     
@@ -325,7 +325,7 @@ public class ReportTempoView implements Initializable {
                 // crea il label durata
                 Label nome = new Label(progetto.getNome());
                 nome.setStyle("-fx-text-fill: #BAC4CA; -fx-font-size: 14; -fx-font-weight: 800;");
-                Label ore = new Label("" + ViewHelper.formattaOrologio((int)durata));
+                Label ore = new Label("" + ViewHelperTT.formattaOrologio((int)durata));
                 ore.setStyle(stile);
                 ore.setPadding(new Insets(0, 10, 0, 10));
                 HBox container = new HBox();

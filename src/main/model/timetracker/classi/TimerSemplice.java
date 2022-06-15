@@ -15,7 +15,7 @@ public class TimerSemplice extends Tracker implements ITimer {
 	private ITrackable ascoltatore = null;
 	
 	public TimerSemplice(int durata, ITrackable ascoltatore) {
-		this.durataTimer = durata * 1000;
+		this.durataTimer = durata * 60 * 1000;
 		this.ascoltatore = ascoltatore;
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -25,7 +25,10 @@ public class TimerSemplice extends Tracker implements ITimer {
 					ore = (durataTimer / 3600000);
 					minuti = (durataTimer / 60000) % 60;
 					secondi = (durataTimer / 1000) % 60;
+					ascoltatore.secondoPassato(ore, minuti, secondi);
 				} else {
+					long durata = tempoPassato / 1000;
+					ascoltatore.timerTerminato(durata);
 					termina();
 				}
 			};
@@ -43,14 +46,13 @@ public class TimerSemplice extends Tracker implements ITimer {
 			secondi = 0;
 			minuti = 0;
 			ore = 0;
-			ascoltatore.timerTerminato(durata);
 		}
 		return durata;
 	}
 	
 	@Override
 	public void setDurata(int durata) {
-		this.durataTimer = durata * 1000;
+		this.durataTimer = durata * 60 * 1000;
 	}
 
 }

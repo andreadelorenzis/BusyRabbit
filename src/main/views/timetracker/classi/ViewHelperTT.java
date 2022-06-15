@@ -16,7 +16,7 @@ import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.LoaderRisorse;
 
-public class ViewHelper {
+public class ViewHelperTT {
 	
 	public static BorderPane creaPaneProgetto(IProgetto progetto) {
 		

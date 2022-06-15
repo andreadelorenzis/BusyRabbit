@@ -3,6 +3,7 @@ package main.views.goalmanager.classi;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.views.LoaderRisorse;
 
-public class ViewHelper {
+public class ViewHelperGM {
 	public static Image arrowIcon = LoaderRisorse.getImg("arrow-down-white.png");
 	
 	public static HBox creaSottoObiettiviBtn(int size, HBox box) {
@@ -53,5 +54,12 @@ public class ViewHelper {
         
         return hBox;
 	}
+	
+    public static CheckBox creaCheckbox(String s, boolean completata) {
+        CheckBox check = new CheckBox();
+        check.setText(s);
+        check.setSelected(completata);
+        return check;
+    }
 	
 }

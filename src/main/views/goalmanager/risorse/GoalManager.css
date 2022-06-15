@@ -1,11 +1,4 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 31 dic 2021, 13:32:40
-    Author     : andre
-*/
+
 
 .obiettivo {
     -fx-padding: 10 10 10 10;
@@ -152,8 +145,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 	-fx-font-weight: 600;
 	-fx-padding: 5 0 5 0;
 }
-/*
-.item-checkbox .box {
-	-fx-background-radius: 100; 
-} */
+
+.session-container {
+	-fx-padding: 5 0 0 35;
+}
+
+.session-btn {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 12px;
+	-fx-cursor: hand;
+	-fx-background-color: #1ABC9C;
+	-fx-font-weight: 800;
+}
+
+.session-tempo {
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: 800;
+	-fx-font-size: 22px;
+	-fx-padding: 0 0 0 10;
+}
+
 

@@ -177,7 +177,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     private BorderPane creaViewProgetto(IProgetto progetto, VBox container) {     
     	
         // crea contenitore progetto
-        BorderPane pane = ViewHelper.creaPaneProgetto(progetto);
+        BorderPane pane = ViewHelperTT.creaPaneProgetto(progetto);
         
         // aggiunge pulsante di edit nella parte destra
         HBox editBtn = creaViewEditBtn(progetto);
@@ -372,11 +372,11 @@ public class TimeTrackerView implements ITimeTrackerView {
         form.getChildren().add(pane);
         
         // crea freccia sinistra
-        ImageView leftArrow = ViewHelper.creaArrow(true);
+        ImageView leftArrow = ViewHelperTT.creaArrow(true);
         pane.setLeft(leftArrow);
         
         // crea freccia destra
-        ImageView rightArrow = ViewHelper.creaArrow(false);
+        ImageView rightArrow = ViewHelperTT.creaArrow(false);
         pane.setRight(rightArrow);
         
         // disabilito le freccie se sono agli estremi
@@ -405,7 +405,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         });
         
         // crea label
-        Label label = ViewHelper.creaLabelPageBtn(pagina, numGiorni);
+        Label label = ViewHelperTT.creaLabelPageBtn(pagina, numGiorni);
         pane.setCenter(label);
 
         return form;
@@ -424,7 +424,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         pane.setCenter(box);
         
         // crea l'header con le info relative al giorno
-        BorderPane header = ViewHelper.creaHeaderGiorno(giorno);
+        BorderPane header = ViewHelperTT.creaHeaderGiorno(giorno);
         header.setMinHeight(50);
         box.getChildren().add(header);
         
@@ -477,7 +477,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         HBox btnProgetto = new HBox();
         btnProgetto.setAlignment(Pos.CENTER);
         if(!attivit‡.getProgetto().getId().equals(TimeTracker.progettoDefault.getId())) {
-        	Label label5 = ViewHelper.creaLabelProgetto(attivit‡.getProgetto());
+        	Label label5 = ViewHelperTT.creaLabelProgetto(attivit‡.getProgetto());
         	btnProgetto.getChildren().add(label5);
         } else {
         	btnProgetto = Helper.creaBtnAggiunta("Progetto");	
@@ -533,7 +533,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         box1.getChildren().addAll(label3, label7, label6);
         box1.getStyleClass().add("attivita-destra");
         box1.setPadding(new Insets(20, 25, 20, 25));
-        Label label4 = new Label(ViewHelper.formattaOrologio((int) attivit‡.getDurata()));
+        Label label4 = new Label(ViewHelperTT.formattaOrologio((int) attivit‡.getDurata()));
         label4.getStyleClass().add("durata-attivita");
         label4.setPadding(new Insets(20, 25, 20, 25));
         pane.setRight(attivit‡Destra);
@@ -710,7 +710,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     		this.progetto = progetto;
     		
         	// crea il label progetto
-        	Label label = ViewHelper.creaLabelProgetto(progetto);
+        	Label label = ViewHelperTT.creaLabelProgetto(progetto);
         	
             // aggiunge il label alla view
             this.boxProgetto.getChildren().add(label);
@@ -742,7 +742,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     	formTimeTracker.setVisible(true);
     	settingsBtn.setVisible(true);
     	PomodoroTimer p = (PomodoroTimer) TimeTracker.getInstance().getTracker();
-    	int[] params = ViewHelper.scomponiDurata(p.getSessione());
+    	int[] params = ViewHelperTT.scomponiDurata(p.getSessione());
     	visualizzaOrologio(params[0], params[1], params[2]);
 	}
 
@@ -759,9 +759,9 @@ public class TimeTrackerView implements ITimeTrackerView {
 
 	@Override
 	public void visualizzaOrologio(int ore, int min, int sec) {
-		oreLabel.setText(ViewHelper.formattaDurata(ore));
-    	minutiLabel.setText(ViewHelper.formattaDurata(min));
-    	secondiLabel.setText(ViewHelper.formattaDurata(sec));
+		oreLabel.setText(ViewHelperTT.formattaDurata(ore));
+    	minutiLabel.setText(ViewHelperTT.formattaDurata(min));
+    	secondiLabel.setText(ViewHelperTT.formattaDurata(sec));
 	}
 	
     private void togglePulsantiTracker() {
@@ -861,7 +861,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         	int pausaBreve = controller.getPausaBreve();
         	int pausaLunga = controller.getPausaLunga();
         	this.controller.impostaPomodoroTimer(sessione, pausaBreve, pausaLunga);
-        	int[] params = ViewHelper.scomponiDurata(controller.getSessione());
+        	int[] params = ViewHelperTT.scomponiDurata(controller.getSessione());
         	this.visualizzaOrologio(params[0], params[1], params[2]);
         	new Notification("Pomodoro timer modificato", NotificationType.SUCCESS).show();
         }

@@ -28,4 +28,6 @@ public interface IAbitudineSessione extends IAbitudine {
      * @return duration of the habit
      */
     public int getDuration();
+    
+    public boolean isStarted();
 }

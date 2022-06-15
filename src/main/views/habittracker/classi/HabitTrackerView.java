@@ -6,12 +6,14 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
@@ -27,17 +29,30 @@ import main.controller.habittracker.IHabitTrackerController;
 import main.controller.IController;
 import main.controller.habittracker.HabitTrackerController;
 import main.controller.helpers.Helper;
+import main.model.goalmanager.classi.AzioneScomponibile;
+import main.model.goalmanager.classi.AzioneSessione;
+import main.model.goalmanager.classi.Item;
+import main.model.goalmanager.interfacce.IAzioneScomponibile;
+import main.model.goalmanager.interfacce.IAzioneSessione;
+import main.model.goalmanager.interfacce.IItem;
 import main.model.habittracker.classi.AbitudineScomponibile;
 import main.model.habittracker.classi.AbitudineSessione;
 import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudineScomponibile;
+import main.model.habittracker.interfacce.IAbitudineSessione;
+import main.model.timetracker.classi.TimerSemplice;
+import main.model.timetracker.interfacce.ITrackable;
 import main.views.LoaderRisorse;
+import main.views.goalmanager.classi.EditorItem;
+import main.views.goalmanager.classi.ViewHelperGM;
 import main.views.habittracker.interfacce.IHabitTrackerView;
 import main.views.modal.Modal;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
+import main.views.timetracker.classi.ViewHelperTT;
 
-public class HabitTrackerView implements IHabitTrackerView {
+public class HabitTrackerView implements IHabitTrackerView, ITrackable {
 
     @FXML
     private VBox abitudiniBox;
@@ -55,6 +70,13 @@ public class HabitTrackerView implements IHabitTrackerView {
     private boolean giornaliereSelected = true;
     
     private IHabitTrackerController controller;
+    
+    /*
+     * Usate per il funzionamento delle abitudini sessione
+     */
+    private IAzioneSessione sessioneCorrente; 
+    private Label labelSessioneCorrente;
+    private Button btnSessioneCorrente;
   
     @FXML
     private void initialize() {
@@ -66,6 +88,7 @@ public class HabitTrackerView implements IHabitTrackerView {
 	@Override
 	public void setController(IController c) {
 		this.controller = (IHabitTrackerController) c;
+		this.controller.setView(this);
 	}
 
 	@Override
@@ -210,6 +233,42 @@ public class HabitTrackerView implements IHabitTrackerView {
     	this.apriEditorAbitudine(null, true);
     }
     
+    /**
+     * Apre l'editor delle azioni in aggiunta/modifica.
+     */
+    private void apriEditorItem(IAbitudineScomponibile abitudine) throws IOException {
+    	
+        // crea il modal
+    	FXMLLoader fxmlLoader = new FXMLLoader();
+    	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.GM, "EditorItem"));
+    	AnchorPane editor = fxmlLoader.load();
+        editor.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.GM, "GoalManager"));
+        editor.getStylesheets().add(LoaderRisorse.globalCss);  
+    	Modal modal = new Modal(editor, "");
+    	modal.setTitolo("Nuovo item");
+        
+        // Ottiene il controller e imposta l'azione se in modifica
+        EditorItem controller = fxmlLoader.getController();
+        
+        // valida gli input
+        final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
+        btnOk.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+    		if(controller.getNome().isBlank()){
+    			event.consume();
+    			new Notification("Inserisci un nome per l'item", NotificationType.ERROR).show();
+        	}
+    	});
+        
+    	// apre il dialog e attende
+        ButtonType btnCliccato = modal.show();
+        if(btnCliccato == ButtonType.OK) {
+        	String nome = controller.getNome();
+        	Item nuovoItem = new Item(nome);
+        	this.controller.creaItem(abitudine, nuovoItem);
+        	this.aggiornaAbitudini();
+        }
+    }
+    
     private BorderPane creaViewAbitudine(IAbitudine abitudine, boolean isDaily) {
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(10, 0, 10, 0));
@@ -229,15 +288,14 @@ public class HabitTrackerView implements IHabitTrackerView {
             }
         }); 
         
-        if(!isDaily) {
-        	// crea l'elemento della lista
-            pane.setLeft(Helper.creaElementoLista(abitudine.getName()));
-        } else {
+        if(isDaily) {
+        	VBox container = new VBox();
+        	pane.setLeft(container);
         	
         	// crea la checkbox
             CheckBox check = new CheckBox();
             check.setText(abitudine.getName());
-            check.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14;");
+            check.getStyleClass().add("check-abitudine");
             check.setSelected(false);
             if(abitudine.isCompleted()) {
                 check.setSelected(true);
@@ -255,7 +313,97 @@ public class HabitTrackerView implements IHabitTrackerView {
                     aggiornaAbitudini();
                 }
             }); 
+            
+            if(abitudine instanceof AbitudineScomponibile) {
+            	IAbitudineScomponibile abitudineScomponibile = (IAbitudineScomponibile) abitudine;
+                
+                // crea container per gli item
+                VBox itemContainer = new VBox();
+                itemContainer.getStyleClass().add("item-container");
+            	container.getChildren().add(itemContainer);
+            	
+            	// crea pulsante aggiunta item
+            	HBox hBox = Helper.creaBtnAggiunta("Item");
+            	hBox.getStyleClass().add("aggiunta-item");
+            	itemContainer.getChildren().add(hBox);
+            	pane.setBottom(itemContainer);
+            	
+            	// collega evento aggiunta item
+                hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent t) {
+                    	try {
+							apriEditorItem(abitudineScomponibile);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+                    }
+                });
+            	
+                // aggiunge gli item dell'abitudine scomponibile
+                if(abitudineScomponibile.getItems().size() > 0) { 
+                	for(IItem item : abitudineScomponibile.getItems()) {
+                		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
+                		itemCheck.getStyleClass().add("item-checkbox");
+                		itemContainer.getChildren().add(itemCheck);
+                		
+                		// se l'abitudine è completata, completa anche l'item
+                		if(abitudineScomponibile.isCompleted())
+                			itemCheck.setSelected(true);
+                		
+                        // collega evento click checkbox abitudine
+                        itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                            public void handle(ActionEvent t) {
+                            	t.consume();
+                                controller.completaItem((Item) item);
+                            }
+                        });
+                	}
+                }
+            } else if(abitudine instanceof AbitudineSessione) {
+        		IAbitudineSessione abitudineSessione = (IAbitudineSessione) abitudine;
+        		
+        		// aggiunge i controlli del timer all'azione sessione
+        		TimerSemplice timer = new TimerSemplice(abitudineSessione.getDuration(), this);
+        		HBox timerContainer = new HBox();
+        		timerContainer.getStyleClass().add("session-container");
+        		timerContainer.setAlignment(Pos.CENTER_LEFT);
+        		String durata = ViewHelperTT.formattaOrologio(abitudineSessione.getDuration()*60);
+        		Label tempo = new Label(durata);
+        		tempo.getStyleClass().add("session-tempo");
+        		Button timerBtn = new Button("AVVIA");
+        		timerBtn.getStyleClass().add("session-btn");
+        		timerContainer.getChildren().addAll(timerBtn, tempo);
+        		pane.setBottom(timerContainer);
+        		
+        		// se l'azione è completate, disabilita il timer
+        		if(abitudineSessione.isCompleted()) 
+        			timerBtn.setDisable(true);
+        		
+        		// evento timer
+        		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent t) {
+                    	t.consume();
+                    	labelSessioneCorrente = tempo;
+                    	btnSessioneCorrente = timerBtn;
+                        if(abitudineSessione.isStarted()) {
+                        	controller.terminaAzioneSessione(abitudineSessione);
+                        	timer.termina();
+                        	timerBtn.setText("AVVIA");
+                        	timerBtn.setStyle("-fx-background-color: #1ABC9C");
+                        } else {
+                        	abitudineSessione.startSession();;
+                        	timer.avvia();
+                        	timerBtn.setText("STOP");
+                        	timerBtn.setStyle("-fx-background-color: #E7515A");
+                        }
+                    }
+                });
+            }
+            
             pane.setLeft(check);
+        } else {
+         // crea l'elemento della lista
+            pane.setLeft(Helper.creaElementoLista(abitudine.getName()));
         }
         
         // crea pulsante apertura menù abitudine
@@ -268,6 +416,7 @@ public class HabitTrackerView implements IHabitTrackerView {
         ContextMenu menu = new ContextMenu();
         MenuItem menuItem1 = new MenuItem("Modifica");
         MenuItem menuItem2 = new MenuItem("Elimina");
+        menu.getStyleClass().add("edit-menu");
         menuItem1.setOnAction((ActionEvent e) -> {
         	e.consume();
         	try {
@@ -278,6 +427,7 @@ public class HabitTrackerView implements IHabitTrackerView {
         });
         menuItem2.setOnAction((ActionEvent e) -> {
         	controller.eliminaAbitudine(abitudine);
+        	this.aggiornaAbitudini();
         	new Notification("Abitudine eliminata.", NotificationType.INFO).show();
         });
         menu.getItems().addAll(menuItem1, menuItem2);
@@ -402,5 +552,33 @@ public class HabitTrackerView implements IHabitTrackerView {
             aggiornaAbitudini();
     	}
     }
+
+	@Override
+	public void successo(String messaggio) {
+		new Notification(messaggio, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void timerTerminato(long tempo) {
+		Platform.runLater(() -> {
+			this.labelSessioneCorrente.setText("00:00:00");
+	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
+	    	this.aggiornaAbitudini();
+		});
+	}
+
+	@Override
+	public void secondoPassato(int o, int m, int s) {
+		Platform.runLater(() -> {
+			this.visualizzaOrologio(o, m, s);
+		});
+	}
+	
+	private void visualizzaOrologio(int o, int m, int s) {
+		String ore = ViewHelperTT.formattaDurata(o);
+		String minuti = ViewHelperTT.formattaDurata(m);
+		String secondi = ViewHelperTT.formattaDurata(s);
+		this.labelSessioneCorrente.setText(ore + ":" + minuti + ":" + secondi);
+	}
     
 }

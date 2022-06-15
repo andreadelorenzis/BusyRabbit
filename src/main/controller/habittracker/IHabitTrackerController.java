@@ -1,7 +1,10 @@
 package main.controller.habittracker;
 
 import main.controller.IController;
+import main.model.goalmanager.classi.Item;
 import main.model.habittracker.interfacce.IAbitudine;
+import main.model.habittracker.interfacce.IAbitudineScomponibile;
+import main.model.habittracker.interfacce.IAbitudineSessione;
 
 public interface IHabitTrackerController extends IController {
 	public void aggiungiAbitudine(IAbitudine h);
@@ -11,4 +14,12 @@ public interface IHabitTrackerController extends IController {
 	public void eliminaAbitudine(IAbitudine h);
 	
 	public void completaAbitudine(IAbitudine h);
+	
+	public void creaItem(IAbitudineScomponibile a, Item item);
+	
+	public void completaItem(Item item);
+	
+	public void avviaAzioneSessione(IAbitudineSessione a);
+	
+	public void terminaAzioneSessione(IAbitudineSessione a);
 }
