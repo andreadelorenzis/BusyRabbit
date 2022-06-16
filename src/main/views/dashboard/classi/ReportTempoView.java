@@ -85,19 +85,17 @@ public class ReportTempoView implements Initializable {
         // aggiunge listener per cambiamento mese
         meseChoice.getSelectionModel().selectedIndexProperty().addListener(
                  (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-                	 
-                	// visualizza dati mensili
-                    meseSelezionato = (String) meseChoice.getItems().get((Integer) new_val);
-                    visualizzaStackedBarChart(false);
-                    visualizzaPieChart(false);
-                    visualizzaProgressBars(false);
-                    
                     if((String) meseChoice.getItems().get((Integer) new_val) == "ALL") {
-                    	
                     	// visualizza dati annuali
                     	visualizzaStackedBarChart(true);
                         visualizzaPieChart(true);
                         visualizzaProgressBars(true);
+                    } else {
+                    	// visualizza dati mensili
+                        meseSelezionato = (String) meseChoice.getItems().get((Integer) new_val);
+                        visualizzaStackedBarChart(false);
+                        visualizzaPieChart(false);
+                        visualizzaProgressBars(false);
                     }
         });
         
@@ -139,7 +137,6 @@ public class ReportTempoView implements Initializable {
      			   if(progetto.getAnnoProgetto(annoSelezionato) != null && progetto.getAnnoProgetto(annoSelezionato).containsKey(i)) {
      		    		   tempo = progetto.getAnnoProgetto(annoSelezionato).get(i);
      		       }
-	     	       XYChart.Data<String, Double> data = new XYChart.Data<>(mese, tempo);
              	   tempiProgetto.getData().add(new XYChart.Data<>(mese, tempo));
                 }
                 datiAnno.add(tempiProgetto);
@@ -200,11 +197,6 @@ public class ReportTempoView implements Initializable {
         List<IProgetto> progettiMisurati = TimeTracker.getInstance().getProgetti().stream()
         												   .filter(p -> !(isProgettoVuoto(p, isAnno)))
         												   .collect(Collectors.toList());
-        
-        for(int i = 0; i < dati.size(); i++) {
-	    	stackedChart.getStyleClass().add(progettiMisurati.get(i).getColore().toString() + i);
-        }
-        
     }
     
     /**

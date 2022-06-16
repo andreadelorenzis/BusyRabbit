@@ -27,12 +27,6 @@
     -fx-font-weight: 800;
 }
 
-.abitudine:hover {
-	-fx-background-color: #374856; 
-	-fx-background-radius: 10; 
-	-fx-border-radius: 10;
-}
-
 .daily-label {
 	-fx-text-fill: #ffffff;
 	-fx-font-size: 18;

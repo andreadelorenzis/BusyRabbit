@@ -173,7 +173,7 @@ public class AccountReader {
 					// creo il sotto-obiettivo azione e lo aggiungo alla lista
 					nuovo = new ObiettivoAzione(nome, descrizione, LocalDate.of(anno, mese, giorno), valore, unità, id);
 					obiettivi.add(nuovo);
-					// lo aggiungo anche al obiettivo padre, giï¿½ aggiunto nella lista
+					// lo aggiungo anche al obiettivo padre
 					int i = 0;
 					for(IObiettivo o : obiettivi) {
 						if(o.getId().equals(idPadre)) {
@@ -244,8 +244,6 @@ public class AccountReader {
 					if(o.getId().equals(idPadre)) {
 						IObiettivoAzione oa = (IObiettivoAzione) obiettivi.get(i);
 						oa.collegaAzione(nuova);
-						System.out.println(oa.getAzioni().get(0).getGiorniRipetizione());
-						System.out.println(oa.getAzioni().get(0).getDataInizio());
 					}
 					i++;
 				}

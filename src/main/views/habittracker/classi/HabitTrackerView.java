@@ -342,6 +342,8 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
                 		new Notification("Abitudine completata.", NotificationType.SUCCESS).show();
                 	}
                     aggiornaAbitudini();
+                    if(abitudineCliccata != null) 
+                    	visualizzaInfoAbitudine(abitudine);
                 }
             }); 
             

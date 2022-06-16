@@ -198,7 +198,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         check.setText(o.getNome());
         check.setSelected(o.getCompletato());
         check.getStyleClass().add("nome");
-        check.setMaxWidth(300);
+        check.setMaxWidth(500);
         check.setWrapText(true);
         vBox.getChildren().add(check);
         vBox.getStyleClass().add("obiettivo-content");
@@ -825,7 +825,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         
         // creo la lista azioni giornaliere
         List<IAzione> azioni = GoalManager.getInstance().calcolaAzioniGiornaliere(LocalDate.now());
-        System.out.println(azioni.size());
         if(azioni.size() > 0) {
         	VBox containerAzioni = new VBox();
         	
@@ -855,10 +854,8 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
             containerAzioni.getChildren().addAll(box1, box2);
             paginaAzioni.setCenter(containerAzioni);
             
-            // visualizza la barra di progresso
-            double progress = completate / azioni.size();
-            VBox bar = creaProgressBar(progress, false);
-            paginaAzioni.setBottom(bar);
+            // elimina la barra di progresso
+            paginaAzioni.setBottom(null);
             
         } else {
         	

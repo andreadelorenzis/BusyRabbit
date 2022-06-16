@@ -2,7 +2,6 @@ password,password123
 ---progetti---
 Analisi matematica,Blu,idP1
 Programmazione ad oggetti,Giallo,idP2
-Algoritmi e strutture dati,Rosso,idP3
 Fisica generale,Verde,idP4
 Sistemi operativi,Viola,idP5
 ---attivita---
@@ -17,19 +16,14 @@ Esercitazione PMO,25,1,2022,21,00,3600,idP2,idA8
 Esercitazione PMO,02,2,2022,11,00,6600,idP2,idA9
 Esercitazione PMO,05,2,2022,11,00,6600,idP2,idA10
 Esercitazione PMO,07,2,2022,11,00,6600,idP2,idA11
+Fare allenamento,07,2,2022,17,00,6600,null,idA11
 Lavorare al progetto di PMO,18,2,2022,18,00,2000,idP2,idA12
 Lavorare al progetto di PMO,23,2,2022,18,00,1200,idP2,idA13
 Lavorare al progetto di PMO,26,2,2022,18,00,3600,idP2,idA14
 Fare esercizi di fisica,1,3,2022,12,00,4000,idP4,idA15
 Fare esercizi di fisica,5,3,2022,12,00,2300,idP4,idA16
 Fare esercizi di fisica,10,3,2022,12,00,7200,idP4,idA17
-Studiare algoritmi,4,4,2022,18,00,3800,idP3,idA18
-Progetto algoritmi,6,4,2022,18,00,1000,idP3,idA19
-Studiare algoritmi,7,4,2022,18,00,2000,idP3,idA20
-Progetto algoritmi,8,4,2022,18,00,3800,idP3,idA21
-Studiare algoritmi,8,4,2022,21,00,3600,idP3,idA22
-Studiare algoritmi,10,4,2022,18,00,3800,idP3,idA23
-Progetto algoritmi,11,4,2022,18,00,3800,idP3,idA24
+Leggere un libro,8,4,2022,18,00,5000,null,idA36
 Studiare teoria di fisica,17,4,2022,12,00,4000,idP4,idA25
 Fare esercizi di fisica,18,4,2022,12,00,2300,idP4,idA26
 Fare esercizi di fisica,19,4,2022,12,00,3600,idP4,idA27
@@ -41,25 +35,44 @@ Studiare teoria di sistemi operativi,12,5,2022,21,00,4000,idP5,idA32
 Studiare teoria di sistemi operativi,13,5,2022,21,00,3600,idP5,idA33
 Studiare teoria di sistemi operativi,15,5,2022,21,00,7000,idP5,idA34
 Studiare teoria di sistemi operativi,15,6,2022,21,00,7000,idP5,idA35
-Studiare teoria di sistemi operativi,18,6,2022,21,00,5000,idP5,idA36
+Studiare teoria di sistemi operativi,18,6,2022,13,00,5000,idP5,idA36
+Programmare un videogioco,18,6,2022,18,00,5000,null,idA36
 Studiare teoria di fisica,19,6,2022,12,00,4000,idP4,idA37
+Lavorare al progetto di PMO,19,6,2022,17,00,3600,idP4,idA37
+Leggere un libro,19,6,2022,19,00,3600,null,idA37
 Fare esercizi di fisica,20,6,2022,12,00,2300,idP4,idA38
+Studiare teoria di fisica,20,6,2022,14,00,3600,idP4,idA39
+Studiare teoria di sistemi operativi,20,6,2022,17,00,5000,idP5,idA40
 ---obiettivi---
 obiettivo-scomponibile,false,Dare tutti gli esami,Dare tutti gli esami del secondo anno entro Luglio,11,7,2022,idOb1
 obiettivo-scomponibile,true,idOb1,Dare analisi matematica,Dare l'esame di analisi matematica,5,6,2022,idOb2
 obiettivo-azione,true,idOb2,Studiare tutta la teoria (100 pag),Passare l'orale di analisi,5,6,2022,100,pag,idOb3
-azione-sessione,idOb3,Studiare 1 ora la teoria di analisi,5,1,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,3600,idAz1
+azione-sessione,idOb3,Studiare 1 ora la teoria di analisi,5,1,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,60,idAz1
 obiettivo-azione,true,idOb2,Fare tutti gli esercizi,Passare lo scritto di analisi,5,6,2022,50,esercizi,idOb4
 azione-scomponibile,idOb4,Fare 3 esercizi di ogni tipo,9,1,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,idAz2
 item-azione,idAz2,3 esercizi su integrali,idItem1
 item-azione,idAz2,3 esercizi su derivate,idItem2
 item-azione,idAz2,3 esercizi su serie numeriche,idItem3
-obiettivo-scomponibile,true,idOb1,Dare programmazione,Dare l'esame di programmazione ad oggetti,11,7,2022,idOb5
+obiettivo-azione,true,idOb1,Dare programmazione,Dare l'esame di programmazione ad oggetti,11,7,2022,50,ore,idOb5
+obiettivo-scomponibile,false,Raggiungere una buona forma fisica,Mettermi in forma,5,12,2022,idOb6
+obiettivo-azione,true,idOb6,Allenarmi ogni giorno per un mese,,5,6,2022,30,giorni,idOb7
+azione-scomponibile,idOb7,Allenamento,1,1,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,idAz4
+item-azione,idAz4,Correre 10km,idItem3
+item-azione,idAz4,Streching,idItem4
+obiettivo-azione,true,idOb6,Mangiare solo cibi salutari per un mese,,5,6,2022,30,giorni,idOb8
+azione-scomponibile,idOb8,Dieta,1,1,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,idAz4
 ---abitudini---
-abitudine-sessione,routine mattutina,descrizione,20,2,2022,MONDAY-FRIDAY,1,1f10e856-83a1-4732-b1e9-16831d78ca97
-abitudine-semplice,allenamento,descrizione,5,2,2022,SATURDAY,dae6b451-4780-4831-9cb5-ab687ed42d72
-item-abitudine,dae6b451-4780-4831-9cb5-ab687ed42d72,corsa,iditem1
-item-abitudine,dae6b451-4780-4831-9cb5-ab687ed42d72,addominali,iditem2
+abitudine-sessione,Correre ogni giorno per 30 minuti,,20,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,30,idAb1
+abitudine-semplice,Svolgere una routine mattutina,,5,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,idAb2
+item-abitudine,idAb2,Sveglia alle 6:00,iditem1
+item-abitudine,idAb2,Fare un'abbondante colazione,iditem2
+item-abitudine,idAb2,Meditare per 10 minuti,iditem3
+abitudine-sessione,Studiare 1 ora al giorno,Studiare un qualunque materia un'ora al giorno,20,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,60,idAb3
+abitudine-semplice,Leggere 20 pagine di un libro al giorno,,5,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,idAb4
+abitudine-semplice,Conoscere una persona nuova al giorno,,5,2,2022,MONDAY-TUESDAY-WEDNESDAY-THURSDAY-FRIDAY-SATURDAY-SUNDAY,idAb5
 ---storico-abitudini---
-1f10e856-83a1-4732-b1e9-16831d78ca97,2021-2-3-6-9-10-15-17-80,2022-3-4-5-8-10-45-90-300
-dae6b451-4780-4831-9cb5-ab687ed42d72,2021-2-5,2022-8
+idAb1,2021-1-3-4-7-8-11-12-16-19-20-21-24-25-27-28-29-32-34-35-38-39-40-43-44-47-50-51-54-59-62-64-65-66-68-69-73-75-76-78-82-83-84-86-87-88-89-92-93-96-97-99-100-102-103-106-107-108-110-112-113-116-117-118-119-124-131-132-133-140-142-144-150-155-157-165-167-169-173-175-176-177-180-184-185-186-188-189-190-192-193-194-195-198-200-201-202-205-207-208-211-212-214-215-219-222-224-225-226-228-230-231-233-237-242-243-245-246-248-249-252-256-258-260-262-263-264-265-268-269-270-271-272-273-274-279-281-282-284-285-289-291-292-293-295-298-300-301-305-306-307-308-309-313-314-315-320-321-322-324-325-327-329-330-331-332-333-335-339-344-345-346-347-349-350-351-352-353-354-359-360-363-364,2022-1-2-3-4-5-7-8-9-11-12-15-16-17-18-19-21-24-25-26-27-28-29-30-31-32-36-37-39-40-41-42-43-45-46-47-48-51-55-58-59-61-62-64-65-66-67-69-70-71-73-75-77-78-82-84-85-88-89-90-91-93-94-95-96-98-100-103-107-108-109-110-113-115-116-117-119-120-159-160-161-162-164-167
+idAb2,2021-1-4-5-9-10-11-13-16-19-21-24-34-37-41-44-45-46-47-50-51-52-54-55-58-61-62-66-67-68-69-70-72-73-74-75-76-78-79-82-83-84-85-87-89-92-94-95-96-97-98-99-102-104-106-107-111-112-115-116-118-119-122-124-127-129-132-133-137-138-139-140-141-143-144-145-146-151-152-153-156-159-162-163-164-167-170-171-172-174-176-177-178-180-181-182-183-185-186-188-190-194-198-199-201-203-205-207-211-214-215-216-217-218-222-225-230-234-236-237-239-240-241-243-244-246-249-253-256-259-261-269-270-274-275-276-278-280-285-286-287-289-290-291-295-297-298-300-302-304-305-306-309-311-312-313-314-315-316-317-318-322-323-324-328-330-332-334-340-343-345-348-349-350-351-352-354-357-361-363,2022-2-6-7-8-9-10-14-15-18-19-20-22-23-24-27-28-29-30-31-36-38-39-40-42-44-46-47-48-49-51-54-58-59-61-63-64-66-68-69-71-72-73-74-75-78-81-87-88-95-96-97-99-101-102-108-110-112-113-115-116-117-118-120-159-161-163-165-166-167
+idAb3,2021-1-5-6-7-8-10-11-13-17-18-19-20-23-24-27-28-35-37-39-41-42-44-46-48-49-50-51-52-53-55-56-59-60-61-62-64-66-69-70-71-73-74-77-78-82-83-86-90-91-95-96-98-100-101-102-104-106-108-113-114-115-117-118-120-121-122-126-127-128-129-130-131-132-138-140-142-143-147-150-151-153-154-156-157-159-162-163-164-165-168-170-173-174-176-182-183-186-189-190-191-192-193-194-195-199-200-204-205-206-207-209-211-213-214-222-223-224-226-233-239-240-242-243-244-246-247-249-252-254-256-259-261-264-265-266-267-270-273-274-276-279-280-282-290-292-294-295-297-298-299,2022-1-3-7-11-14-16-24-25-26-27-32-34-37-43-45-50-57-59-66-67-68-70-74-81-85-92-94-98-99-100-102-108-109-113-114-115-117-118-119-120-159-160-161-162-164-165-166
+idAb4,2021-1-3-5-7-8-9-10-11-12-13-15-16-17-20-21-24-25-26-27-28-30-31-32-34-36-37-38-39-41-44-46-48-49-53-55-56-59-61-65-66-67-70-79-82-83-84-89-90-93-97-98-99-100-102-104-106-108-110-111-112-113-114-115-116-119-121-128-134-138-139-143-146-147-150-151-152-153-154-155-157-158-160-161-171-172-173-174-175-177-178-180-181-182-183-184-188-190-193-197-198-200-201-206-207-208-209-213-214-216-217-218-219-220-224-225-227-234-236-237-239-242-243-249-251-255-256-257-258-260-263-264-266-267-270-273-275-276-278-279-280-281-283-285-286-290-291-296,2022-1-2-3-4-5-8-9-10-12-14-15-16-17-18-20-21-22-24-26-29-32-38-39-41-42-45-46-48-49-50-58-62-66-67-70-71-72-73-74-76-77-78-79-80-81-82-84-87-88-89-91-92-93-94-96-98-101-102-103-104-106-107-108-109-110-113-115-117-120-159-160-161-162-163-164-165-166
+idAb5,2021-2-11-13-15-21-26-31-32-35-38-40-46-49-57-65-70-72-73-77-78-85-92-96-105-111-117-118-120-130-131-132-135-138-148-151-153-154-160-161-162-163-164-175-178-179-181-183-185-188-193-199-200-201-208-220-222-224-227-228-229-234-236-238-239-243-248-250-252-256-260-261-262-264-272-273-279-284-289-290-291-293-296,2022-1-4-5-7-9-10-11-13-14-15-16-20-22-26-27-29-32-33-35-36-37-38-40-41-42-43-45-47-48-51-54-57-64-68-70-71-77-83-84-86-88-89-92-93-94-97-98-102-104-105-107-110-113-114-115-161-162-163-164-165-166-167
