@@ -4,3 +4,4 @@ github-key.pub
 /dist/
 /build
 .classpath
+.project
