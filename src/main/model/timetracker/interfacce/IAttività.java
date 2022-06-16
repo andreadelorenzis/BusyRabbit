@@ -30,6 +30,18 @@ public interface IAttività {
     
     /**
      * 
+     * @param data dell'attività
+     */
+    public void setData(LocalDate data);
+    
+    /**
+     * 
+     * @param ora orario dell'attività
+     */
+    public void setOra(LocalTime ora);
+    
+    /**
+     * 
      * @return nome dell'attività
      */
     public String getNome();

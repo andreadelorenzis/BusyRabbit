@@ -61,13 +61,5 @@ public class Main extends Application {
             Logger.getLogger(FXML.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    /**
-     * Metodo main
-     */
-    public static void main(String[] args) {
-        Main.dataUltimoAccesso = LocalDate.now();
-        launch(args);
-    }
     
 }

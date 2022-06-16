@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +17,7 @@
          <children>
             <BorderPane layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="521.0">
                <top>
-                  <VBox alignment="CENTER_LEFT" prefHeight="354.0" prefWidth="676.0" BorderPane.alignment="CENTER">
+                  <VBox alignment="CENTER_LEFT" prefHeight="259.0" prefWidth="521.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label text="Informazioni attività" textFill="#bac4ca">
                            <font>
@@ -47,34 +45,6 @@
                            </children>
                            <VBox.margin>
                               <Insets top="20.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">
-                           <children>
-                              <Label text="Progetto:" textFill="#bac4ca">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <HBox fx:id="btnProgetto" alignment="CENTER_LEFT" onMouseClicked="#toggleMenuProgetti" prefHeight="36.0" prefWidth="86.0">
-                                 <children>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0">
-                                       <image>
-                                          <Image url="@/main/views/risorse/plus.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <Label text="Progetto" textFill="#2196f3" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </HBox>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="20.0" />
                            </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="374.0">

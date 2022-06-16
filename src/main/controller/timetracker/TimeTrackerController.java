@@ -89,12 +89,9 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 
 	@Override
 	public void modificaAttività(IAttività a1, IAttività a2) {
-		String nome = a2.getNome();
 		IProgetto nuovoProgetto = a2.getProgetto();
-		long durata = a2.getDurata();
 		IProgetto vecchioProgetto = a1.getProgetto();
-		a1.setNome(nome);
-		a1.setDurata(durata);
+
 		if(!(vecchioProgetto.getId().equals(nuovoProgetto.getId()))) {
 			// elimino durata dal vecchio progetto
 			vecchioProgetto.eliminaAttività(a1);
@@ -105,6 +102,10 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 			// cambio il progetto nell'attività
 			a1.setProgettoPadre(nuovoProgetto);
 		}
+		
+		this.tt.eliminaAttività(a1);
+		this.tt.aggiungiAttività(a2);
+		
 		view.successo("Attività modificata");
 		aggiornaView();
 	}

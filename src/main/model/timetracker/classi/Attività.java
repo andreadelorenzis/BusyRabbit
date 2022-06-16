@@ -126,6 +126,16 @@ public class Attività implements IAttività {
 	public void setProgettoPadre(IProgetto progetto) {
 		this.progetto = progetto;
 	}
+	
+	@Override
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+	
+	@Override 
+	public void setOra(LocalTime ora) {
+		this.ora = ora;
+	}
 
 	@Override
 	public String getId() {

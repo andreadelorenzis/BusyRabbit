@@ -160,7 +160,6 @@ public class TimeTrackerView implements ITimeTrackerView {
 	
 	@Override
 	public void aggiornaView(List<List<IAttività>> giorni, int pagina) {
-		listaGiorniAttività.getChildren().clear();
         creaCronologiaAttività(giorni, pagina);
 	}
 
@@ -295,7 +294,6 @@ public class TimeTrackerView implements ITimeTrackerView {
         
         // ottiene il controller e imposta l'attività da modificare
         EditorAttività controller = fxmlLoader.getController();
-        controller.setListaProgetti(progetti);
         controller.setAttività(attività);
          
         // imposta il titolo del modal
@@ -323,13 +321,12 @@ public class TimeTrackerView implements ITimeTrackerView {
         // quando l'utente clicca OK.
         if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
-        	IProgetto progetto = controller.getProgetto();
         	LocalDate data = controller.getData();
         	LocalTime ora = controller.getOra();
         	long durata = controller.getDurata();
             
         	// modifica l'attività
-        	IAttività attivitàModificata = new Attività(nome, data, ora, durata, progetto);
+        	IAttività attivitàModificata = new Attività(nome, data, ora, durata);
         	this.controller.modificaAttività(attività, attivitàModificata);
         }
     }
@@ -366,8 +363,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     	btnLookup.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
     		if(controller.getNome().isBlank()) {
     			event.consume();
-    			Notification n = new Notification("Perfavore, inserisci un nome per il progetto", NotificationType.ERROR);
-    			n.show();
+    			new Notification("Perfavore, inserisci un nome per il progetto", NotificationType.ERROR).show();
         	}
     	});
         
