@@ -61,7 +61,7 @@ Modifica le opzioni dell'account.
     <img src="/readme_imgs/impostazioni.PNG" width="700">
 </p> 
 
-### Funzionalità
+## Funzionalità
 
 + Strumenti per il monitoraggio del tempo.
 + Creazione e gestione degli obiettivi.
@@ -71,7 +71,7 @@ Modifica le opzioni dell'account.
 + Impostazioni per modifica account.
 + E altro ancora in arrivo :P
 
-### Design pattern
+## Design patterns
 
 + **MVC (Model-View-Controller)**
 + **Singletone**
@@ -79,5 +79,6 @@ Modifica le opzioni dell'account.
 + **Template method**
 
 ## Licenza
+
 ### Licenza MIT
 Con la presente viene concesso il permesso, gratuitamente, a chiunque ottenga una copia di questo software e dei file di documentazione associati (il "Software"), di trattare il Software senza restrizioni, inclusi senza limitazione i diritti di utilizzare, copiare, modificare, unire , pubblicare, distribuire, concedere in sublicenza e/o vendere copie del Software e consentire alle persone a cui viene fornito il Software di farlo
