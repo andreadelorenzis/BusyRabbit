@@ -14,7 +14,7 @@ BusyRabbit è un'app per la produttività personale per studenti e freelancer. E
 Crea un account e salva tutti i tuoi dati.
 
 <p align="center">
-    <img src="/readme_imgs/login.png" width="700">
+    <img src="/readme_imgs/login.png" width="400">
 </p> 
 
 ### Time tracker
@@ -51,6 +51,14 @@ Visualizza le statistiche per i tempi e le abitudini.
 
 <p align="center">
     <img src="/readme_imgs/dashboard2.PNG" width="700">
+</p> 
+
+### Impostazioni
+
+Modifica le opzioni dell'account.
+
+<p align="center">
+    <img src="/readme_imgs/impostazioni.PNG" width="700">
 </p> 
 
 ### Funzionalità
