@@ -55,6 +55,7 @@ public class GoalManager implements IGoalManager {
     @Override
     public void aggiungiObiettivo(IObiettivo obiettivo) {
         alberoObiettivi.add(obiettivo);
+        listaObiettivi.add(obiettivo);
     }
     
     @Override

@@ -22,10 +22,8 @@ public class TimerSemplice extends Tracker implements ITimerSemplice {
 	 * @param durata
 	 * @param ascoltatore
 	 */
-	public TimerSemplice(int durata, ITrackable ascoltatore) {
-		registraAscoltatore(ascoltatore);
-		this.durataTimer = durata * 60 * 1000;
-		this.ascoltatore = ascoltatore;
+	public TimerSemplice(int durata) {
+		this.durataTimer = durata * 1000;
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(durataTimer > 0) {
@@ -45,24 +43,10 @@ public class TimerSemplice extends Tracker implements ITimerSemplice {
 	}
 	
 	//--------------------------- METODI PUBBLICI ------------------------------
-	@Override
-	public long termina() {
-		long durata = tempoPassato / 1000;
-		if(avviato) {
-			avviato = false;
-			sospeso = false;
-			timer.stop();
-			tempoPassato = 0;
-			secondi = 0;
-			minuti = 0;
-			ore = 0;
-		}
-		return durata;
-	}
 	
 	@Override
 	public void setDurata(int durata) {
-		this.durataTimer = durata * 60 * 1000;
+		this.durataTimer = durata * 1000;
 	}
 
 }

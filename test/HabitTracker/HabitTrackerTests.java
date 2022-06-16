@@ -231,14 +231,14 @@ public class HabitTrackerTests {
 		IAbitudineSessione habit = (IAbitudineSessione) h.getHabits().get(1);
 		
 		// set SessionHabit duration to 2 seconds
-		habit.setDuration(2);
+		habit.setDuration(1);
 		
 		// start the session
 		habit.startSession();
 		
 		// wait for 3 seconds
 		try {
-			Thread.sleep(3100);
+			Thread.sleep(2100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 

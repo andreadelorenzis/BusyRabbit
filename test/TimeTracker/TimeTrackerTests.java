@@ -330,9 +330,9 @@ public class TimeTrackerTests {
 									7200L,
 									t.getProgetti().get(0)));
 		
-		// Prima sessione, attendo 2 secondi e qualcosa in modo che termini
+		// Prima sessione, attendo 3 secondi e qualcosa in modo che termini
 		try {
-			Thread.sleep(2100);
+			Thread.sleep(3100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -346,7 +346,7 @@ public class TimeTrackerTests {
 		assertEquals(5, giorni.get(0).get(0).getData().getDayOfMonth());
 		assertEquals(1, giorni.get(0).get(0).getDurata());
 		
-		// timer in pausa breve (1s) e lunga (1s), attendo 2 secondi e qualcosa
+		// timer in pausa breve (1s) e lunga (1s), attendo 3 secondi e qualcosa
 		try {
 			Thread.sleep(3100);
 		} catch (InterruptedException e) {
@@ -359,7 +359,7 @@ public class TimeTrackerTests {
 		
 		// timer in sessione, attendo 2 secondi e qualcosa
 		try {
-			Thread.sleep(3100);
+			Thread.sleep(2100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

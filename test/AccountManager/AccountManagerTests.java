@@ -1,17 +1,13 @@
 package AccountManager;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.Before;
 import java.lang.reflect.Field;
-
 import java.io.File;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.InvalidEmailException;
@@ -48,7 +44,7 @@ class AccountManagerTests {
     @BeforeEach
     public void setup() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
     	// Cleanup AccountManager
-    	Field instance = AccountManager.class.getDeclaredField("app");
+    	Field instance = AccountManager.class.getDeclaredField("accountManager");
     	instance.setAccessible(true);
     	instance.set(instance, null);
     	

@@ -43,6 +43,7 @@ Leggere un libro,19,6,2022,19,0,3600,null,idA37
 Fare esercizi di fisica,20,6,2022,12,0,2300,idP4,idA38
 Studiare teoria di fisica,20,6,2022,14,0,3600,idP4,idA39
 Studiare teoria di sistemi operativi,20,6,2022,17,0,5000,idP5,idA40
+asds,16,6,2022,22,35,2,null,e2a4bd21-2bde-4835-8ca8-ddb8de218aa5
 ---obiettivi---
 obiettivo-scomponibile,false,Dare tutti gli esami,Dare tutti gli esami del secondo anno entro Luglio,11,7,2022,idOb1
 obiettivo-scomponibile,true,idOb1,Dare analisi matematica,Dare l'esame di analisi matematica,5,6,2022,idOb2

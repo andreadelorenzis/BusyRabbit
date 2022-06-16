@@ -25,8 +25,6 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
      */
     private boolean avviato = false;
     
-    
-    
     //----------------------------- COSTRUTTORI --------------------------------
     /**
      * 
@@ -39,7 +37,8 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
     public AzioneSessione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, int durata) {
         super(nome, incremento, dataInizio, giorni);
         this.durata = durata;
-        timer = new TimerSemplice(durata, this);
+        this.timer = new TimerSemplice(durata);
+		this.timer.registraAscoltatore(this);
     }
     
     /**
@@ -54,7 +53,8 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
     public AzioneSessione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, int durata, String id) {
         super(nome, incremento, dataInizio, giorni, id);
         this.durata = durata;
-        timer = new TimerSemplice(durata, this);
+        this.timer = new TimerSemplice(durata);
+		this.timer.registraAscoltatore(this);
     }
 
     //--------------------------- METODI PUBBLICI ------------------------------

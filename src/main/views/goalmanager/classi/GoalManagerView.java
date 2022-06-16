@@ -989,7 +989,8 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
      */
     private void creaViewAzioneSessione(BorderPane pane, IAzioneSessione azioneSessione) {
 		// aggiunge i controlli del timer all'azione sessione
-		TimerSemplice timer = new TimerSemplice(azioneSessione.getDurata(), this);
+		TimerSemplice timer = new TimerSemplice(azioneSessione.getDurata());
+		timer.registraAscoltatore(this);
 		HBox timerContainer = new HBox();
 		timerContainer.getStyleClass().add("session-container");
 		timerContainer.setAlignment(Pos.CENTER_LEFT);

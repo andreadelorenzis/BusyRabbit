@@ -437,7 +437,8 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
      */
     private void creaViewAbitudineSessione(BorderPane pane, IAbitudineSessione abitudineSessione) {
 		// aggiunge i controlli del timer all'azione sessione
-		TimerSemplice timer = new TimerSemplice(abitudineSessione.getDuration(), this);
+		TimerSemplice timer = new TimerSemplice(abitudineSessione.getDuration());
+		timer.registraAscoltatore(this);
 		HBox timerContainer = new HBox();
 		timerContainer.getStyleClass().add("session-container");
 		timerContainer.setAlignment(Pos.CENTER_LEFT);

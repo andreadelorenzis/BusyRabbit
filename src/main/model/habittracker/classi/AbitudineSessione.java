@@ -12,7 +12,7 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	
     //------------------------------- CAMPI ----------------------------------
 	/*
-	 * Durata della sessione
+	 * Duration of timer
 	 */
 	private int duration;
 	
@@ -34,7 +34,8 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, LocalDate startDate, List<DayOfWeek> days, int duration) {
 		super(name, "", startDate, days);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration, this);
+		this.timer = new TimerSemplice(duration);
+		this.timer.registraAscoltatore(this);
 	}
 	
 	/**
@@ -48,7 +49,8 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
 		super(name, "", startDate, days, id);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration, this);
+		this.timer = new TimerSemplice(duration);
+		this.timer.registraAscoltatore(this);
 	}
 	
 	/**
@@ -62,7 +64,8 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration) {
 		super(name, description, startDate, days);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration, this);
+		this.timer = new TimerSemplice(duration);
+		this.timer.registraAscoltatore(this);
 	}
 	
 	/**
@@ -77,7 +80,8 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
 		super(name, description, startDate, days, id);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration, this);
+		this.timer = new TimerSemplice(duration);
+		this.timer.registraAscoltatore(this);
 	}
 
 	//---------------------------- METODI PUBBLICI -----------------------------
