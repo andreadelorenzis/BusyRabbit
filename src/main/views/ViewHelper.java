@@ -1,4 +1,4 @@
-package main.controller.helpers;
+package main.views;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,9 +8,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import main.views.LoaderRisorse;
 
-public class Helper {
+/**
+ * Classe modulo che contiene servizi utilizzabili da tutte le classi di tipo View
+ */
+public class ViewHelper {
 	public static Image dotsIcon = LoaderRisorse.getImg("dots.png");
 	public static Image plusIcon = LoaderRisorse.getImg("plus.png");
 	public static Image closeIcon = LoaderRisorse.getImg("close.png");
@@ -73,6 +75,23 @@ public class Helper {
         circle.setRadius(4);
         circle.setFill(Color.web("#BAC4CA"));
         box.getChildren().addAll(circle, label);
+        return box;
+    }
+    
+    /**
+     * Usato per rendere un'immagine un pulsante cliccabile
+     */
+    public static HBox creaBtn(Image img, int dim) {
+    	HBox box = new HBox();
+        ImageView imgView = new ImageView();
+        imgView.setFitHeight(dim);
+        imgView.setFitWidth(dim);
+        imgView.setImage(img);
+        box.getChildren().add(imgView);
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(5, 5, 5, 5));
+        HBox.setMargin(box, new Insets(0, 5, 0, 0));
+        box.setStyle("-fx-cursor: hand;");
         return box;
     }
 }

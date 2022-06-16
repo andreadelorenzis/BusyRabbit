@@ -9,20 +9,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Le azioni collegabili agli ObiettiviAzione. Queste azioni si attivano nei giorni scelti e 
+ * Le azioni collegabili agli ObiettivoAzione. Queste azioni si attivano nei giorni scelti e 
  * completandole si incrementa l'obiettivo a cui sono collegate del valore specificato. Se 
- * l'azione non Ã¨ attiva, non puÃ² essere completata.
+ * l'azione non è attiva, non può essere completata.
  */
 public interface IAzione {
     
     /**
-     * Completa l'azione. Solo se l'azione Ã¨ attiva.
+     * Completa l'azione. Solo se l'azione è attiva.
      */
     public void completa();
     
     /**
      * 
-     * @return se l'azione Ã¨ stata completata o meno
+     * @return se l'azione è stata completata o meno
      */
     public boolean getCompletata();
     
@@ -82,13 +82,13 @@ public interface IAzione {
     
     /**
      * 
-     * @param obiettivo l'obiettivo a cui questa azione Ã¨ collegata
+     * @param obiettivo l'obiettivo a cui questa azione è collegata
      */
     public void setObiettivo(IObiettivoAzione obiettivo);
     
     /**
      * 
-     * @return l'obiettivo a cui questa azione Ã¨ collegata
+     * @return l'obiettivo a cui questa azione è collegata
      */
     public IObiettivoAzione getObiettivo();
     

@@ -1,17 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package main.model.goalmanager.interfacce;
 
 import java.util.List;
 
 /**
- * Obiettivo a cui Ã¨ possibile assegnare dei sotto-obiettivi. Questi sotto-obiettivi possono essere sia altri 
+ * Obiettivo a cui è possibile assegnare dei sotto-obiettivi. Questi sotto-obiettivi possono essere sia altri 
  * obiettivi "scomponibili" e sia obiettivi "azione".
  */
 public interface IObiettivoScomponibile extends IObiettivo {
 	
+    /**
+     * Verifica che tutti i sotto-obiettivi siano stati completati
+     */
+    public void verificaCompletamento();
+	
+	/**
+	 * Completa tutti i sotto-obiettivi
+	 */
 	public void completaSottoObiettivi();
     
     /**
@@ -22,7 +27,7 @@ public interface IObiettivoScomponibile extends IObiettivo {
     public void aggiungiSottoObiettivo(IObiettivo obiettivo);
     
     /**
-     * @return i sotto-obiettivi.
+     * @return sotto-obiettivi.
      */
     public List<IObiettivo> getSottoObiettivi();
     
@@ -31,7 +36,5 @@ public interface IObiettivoScomponibile extends IObiettivo {
      * @param idObiettivo identificativo del sotto-obiettivo da eliminare
      */
     public void eliminaSottoObiettivo(String idObiettivo);
-    
-    public void verificaCompletamento();
     
 }

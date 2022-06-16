@@ -1,9 +1,11 @@
 package main.views.notification;
 
+/**
+ * Gestisce il numero di Notification aperte simultaneamente
+ */
 public class NotificationsManager {
 	
 	private static NotificationsManager istanza = null;
-	
 	private int num;
 	
 	private NotificationsManager() {

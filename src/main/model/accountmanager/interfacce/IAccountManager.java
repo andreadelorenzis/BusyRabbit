@@ -4,7 +4,7 @@ import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.InvalidEmailException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.goalmanager.interfacce.IGoalManager;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 import main.model.timetracker.interfacce.ITimeTracker;
 
 /**
@@ -15,10 +15,6 @@ public interface IAccountManager {
     /**
      * Aggiunge un nuovo account al database, identificato dall'email, se l'email
      * non è già stata usata e le due password combaciano. 
-     * 
-     * @param email
-     * @param password
-     * @param ripetiPass 
      */
     public void registraAccount(String nome, String email, String password, String ripetiPass) throws WrongCredentialsException, 
 	   																								  ExistingAccountException,
@@ -27,33 +23,22 @@ public interface IAccountManager {
     /**
      * Prende l'account del database, la cui email combacia con quella passata, se la
      * password è corretta, null altrimenti
-     * 
-     * @param email 
-     * @param password
      */
     public void accedi(String email, String password) throws WrongCredentialsException;
     
     /**
      * Elimina l'account del database, la cui email combacia con quella passata, se
      * la password è corretta
-     * 
-     * @param email Email dell'utente.
-     * @param password Password dell'utente.
-     * @return Valore che rappresenta l'avvenuta eliminazione dell'account o meno.
      */
     public boolean eliminaAccount(String email, String password) throws WrongCredentialsException;
     
     /**
-     * 
-     * @param nuovaEmail
-     * @param password
+     * Cambia l'email associata all'account
      */
     public void cambiaEmail(String nuovaEmail, String password) throws ExistingAccountException, WrongCredentialsException;
     
     /**
-     * 
-     * @param vecchia
-     * @param nuova
+     * Cambia la password dell'account
      */
     public void cambiaPassword(String vecchia, String nuova) throws WrongCredentialsException;
     
@@ -78,7 +63,7 @@ public interface IAccountManager {
      * 
      * @return l'istanza di HabitTracker
      */
-    public IAbitudineTracker getHT();
+    public IHabitTracker getHT();
     
     /**
      * 

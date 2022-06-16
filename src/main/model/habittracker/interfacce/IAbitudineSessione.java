@@ -29,5 +29,9 @@ public interface IAbitudineSessione extends IAbitudine {
      */
     public int getDuration();
     
+    /**
+     * 
+     * @return se la sessione è iniziata
+     */
     public boolean isStarted();
 }

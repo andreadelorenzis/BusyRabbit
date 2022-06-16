@@ -20,12 +20,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
-import main.controller.helpers.Helper;
 import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
+import main.views.ViewHelper;
 
 public class ReportAbitudiniView {
 
+	//-------------------------------- CAMPI -----------------------------------
     @FXML
     private TilePane tilePane;
     @FXML
@@ -70,6 +71,7 @@ public class ReportAbitudiniView {
     	visualizzaDiagrammaAnnuale(annoSelezionato);
     }
     
+    //---------------------------- METODI PRIVATI ------------------------------
     private void deselezionaAnni() {
     	for(Node anno : this.selezioneAnniBox.getChildren()) {
     		Label annoLabel = (Label) anno;
@@ -159,19 +161,6 @@ public class ReportAbitudiniView {
         return container;
     }
     
-    public void visualizzaDatiUltimaSettimana() {
-        this.settimanaBox.getChildren().clear();
-        
-        // crea la view dei cerchi
-        int totHabits = HabitTracker.getInstance().getHabits().size();
-        Map<Integer, List<IAbitudine>> datiSettimana = HabitTracker.getInstance().getWeekRecords();
-        List<LocalDate> lastWeek = HabitTracker.getLastWeek();
-        for(LocalDate data : lastWeek) {
-        	AnchorPane circle = creaViewProgressCircle(totHabits, datiSettimana.get(data.getDayOfYear()), data);
-        	this.settimanaBox.getChildren().add(circle);
-        }
-    }
-    
     private String getColore(double progress) {
         String colore = "#00E396";
         if(progress == 0.0) {
@@ -187,6 +176,20 @@ public class ReportAbitudiniView {
         }
         
         return colore;
+    }
+    
+    //--------------------------- METODI PUBBLICI ------------------------------
+    public void visualizzaDatiUltimaSettimana() {
+        this.settimanaBox.getChildren().clear();
+        
+        // crea la view dei cerchi
+        int totHabits = HabitTracker.getInstance().getHabits().size();
+        Map<Integer, List<IAbitudine>> datiSettimana = HabitTracker.getInstance().getWeekRecords();
+        List<LocalDate> lastWeek = HabitTracker.getLastWeek();
+        for(LocalDate data : lastWeek) {
+        	AnchorPane circle = creaViewProgressCircle(totHabits, datiSettimana.get(data.getDayOfYear()), data);
+        	this.settimanaBox.getChildren().add(circle);
+        }
     }
     
     public void visualizzaDiagrammaAnnuale(int anno) {
@@ -248,7 +251,7 @@ public class ReportAbitudiniView {
         
         // crea l'elenco di abitudini svolte
         for(IAbitudine h : abitudini) {
-            HBox hBox = Helper.creaElementoLista(h.getName());
+            HBox hBox = ViewHelper.creaElementoLista(h.getName());
             this.giornoBox.getChildren().add(hBox);
         }
     }

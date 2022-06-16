@@ -1,14 +1,11 @@
 package main.views.timetracker.classi;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
 import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,9 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.Main;
 import main.controller.IController;
-import main.controller.helpers.Helper;
 import main.controller.timetracker.ITimeTrackerController;
 import main.controller.timetracker.TimeTrackerController;
 import main.model.timetracker.classi.Attivit‡;
@@ -49,6 +44,7 @@ import main.model.timetracker.interfacce.IAttivit‡;
 import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.Colore;
+import main.views.ViewHelper;
 import main.views.LoaderRisorse;
 import main.views.modal.Modal;
 import main.views.notification.Notification;
@@ -57,6 +53,7 @@ import main.views.timetracker.interfacce.ITimeTrackerView;
 
 public class TimeTrackerView implements ITimeTrackerView {
 	
+	//------------------------------ CAMPI FXML ---------------------------------
     @FXML
     private AnchorPane panePrincipale;
     @FXML
@@ -112,6 +109,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     @FXML
     private Button cronoBtn;
     
+    //-------------------------------- CAMPI -----------------------------------
     /*
      * Observer di questa view
      */
@@ -148,6 +146,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         setController(controller);
     }
     
+    //--------------------------- METODI PUBBLICI ------------------------------
 	@Override
 	public void setController(IController c) {
 		this.controller = (ITimeTrackerController) c;
@@ -174,7 +173,45 @@ public class TimeTrackerView implements ITimeTrackerView {
 	public void attivit‡Aggiunta() {
 		new Notification("Attivit‡ aggiunta", NotificationType.SUCCESS).show();
 	}
+	
+	@Override
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+
+	@Override
+	public void errore(String m) {
+		new Notification(m, NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
+	}
+	
+	@FXML
+	public void trackerTerminato() {
+		
+		// termina il tracker
+		this.controller.terminaTracker();
+		
+		// cambia i pulsanti
+		togglePulsantiTracker();
+		
+		// resetta view durata
+		oreLabel.setText("00");
+		minutiLabel.setText("00"); 
+		secondiLabel.setText("00");
+	}
+	
+	@Override
+	public void visualizzaOrologio(int ore, int min, int sec) {
+		oreLabel.setText(ViewHelperTT.formattaDurata(ore));
+    	minutiLabel.setText(ViewHelperTT.formattaDurata(min));
+    	secondiLabel.setText(ViewHelperTT.formattaDurata(sec));
+	}
     
+	//---------------------------- METODI PRIVATI ------------------------------
     private BorderPane creaViewProgetto(IProgetto progetto, VBox container) {     
     	
         // crea contenitore progetto
@@ -193,7 +230,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     private HBox creaViewEditBtn(Object obj) {
     	
     	// creo il pulsante
-        HBox editBtn = Helper.creaBtnEdit();
+        HBox editBtn = ViewHelper.creaBtnEdit();
         
         // creo il menu dropdown
         ContextMenu menu = new ContextMenu();
@@ -268,7 +305,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     	});
         
         // apre il dialog e attende
-        ButtonType btnCliccato = modal.show();
+        ButtonType btnCliccato = modal.showAndWait();
         
         // quando l'utente clicca OK.
         if(btnCliccato == ButtonType.OK) {
@@ -315,7 +352,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     	});
         
     	// apre il modal e attende l'input dell'utente
-    	ButtonType btnCliccato = modal.show();
+    	ButtonType btnCliccato = modal.showAndWait();
         if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	Colore colore = controller.getColore();
@@ -476,7 +513,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         	Label label5 = ViewHelperTT.creaLabelProgetto(attivit‡.getProgetto());
         	btnProgetto.getChildren().add(label5);
         } else {
-        	btnProgetto = Helper.creaBtnAggiunta("Progetto");	
+        	btnProgetto = ViewHelper.creaBtnAggiunta("Progetto");	
         }
         attivit‡Sinistra.setRight(btnProgetto);
         
@@ -585,7 +622,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         containerProgetti.setStyle("-fx-background-color: #1B2E4B; -fx-padding: 10 0 0 0;");
         scrollPane.setContent(containerProgetti);
         scrollPane.setStyle("-fx-background-color: #1B2E4B;");
-        HBox box2 = Helper.creaBtnAggiunta("Crea nuovo progetto");
+        HBox box2 = ViewHelper.creaBtnAggiunta("Crea nuovo progetto");
         box2.setAlignment(Pos.CENTER);
         box2.setStyle("-fx-background-color: #1B2E4B; -fx-padding: 0 0 10 0;");
         menuProgetti.setBottom(box2);
@@ -714,7 +751,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     	} else {
     		this.progetto = progettoDefault;
     		
-    		HBox box = Helper.creaBtnAggiunta("Progetto");
+    		HBox box = ViewHelper.creaBtnAggiunta("Progetto");
     		this.boxProgetto.getChildren().add(box);
     	}
 
@@ -752,13 +789,6 @@ public class TimeTrackerView implements ITimeTrackerView {
         orarioText2.setText("" + LocalTime.now().getMinute());
         dataManuale.setValue(LocalDate.now());
         formManuale.setVisible(true);
-	}
-
-	@Override
-	public void visualizzaOrologio(int ore, int min, int sec) {
-		oreLabel.setText(ViewHelperTT.formattaDurata(ore));
-    	minutiLabel.setText(ViewHelperTT.formattaDurata(min));
-    	secondiLabel.setText(ViewHelperTT.formattaDurata(sec));
 	}
 	
     private void togglePulsantiTracker() {
@@ -813,25 +843,6 @@ public class TimeTrackerView implements ITimeTrackerView {
     		new Notification("Perfavore inserisci il nome di un'attivit‡.", NotificationType.ERROR).show();
     	}
     }
-	
-    /**
-     * Termina il tracker.
-     */
-    @FXML
-    public void trackerTerminato() {
-    	
-    	// termina il tracker
-    	this.controller.terminaTracker();
- 
-    	// cambia i pulsanti
-    	togglePulsantiTracker();
-    	
-    	// resetta view durata
-    	oreLabel.setText("00");
-    	minutiLabel.setText("00"); 
-    	secondiLabel.setText("00");
-    	
-    }
     
     @FXML 
     private void impostaTimer() throws IOException {
@@ -851,7 +862,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         controller.setPomodoro(pt);
         
         // apre il modal
-        ButtonType btnCliccato = modal.show();
+        ButtonType btnCliccato = modal.showAndWait();
         if(btnCliccato == ButtonType.OK) {
         	int sessione = controller.getSessione();
         	int pausaBreve = controller.getPausaBreve();
@@ -916,20 +927,5 @@ public class TimeTrackerView implements ITimeTrackerView {
         }
     	this.controller.aggiungiAttivit‡(a);
     }
-
-	@Override
-	public void successo(String m) {
-		new Notification(m, NotificationType.SUCCESS).show();
-	}
-
-	@Override
-	public void errore(String m) {
-		new Notification(m, NotificationType.ERROR).show();
-	}
-
-	@Override
-	public void info(String m) {
-		new Notification(m, NotificationType.INFO).show();
-	}
 
 }

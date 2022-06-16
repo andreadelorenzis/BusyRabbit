@@ -1,7 +1,6 @@
 package main.views.goalmanager.classi;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,11 +31,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import main.Main;
 import main.controller.goalmanager.IGoalManagerController;
 import main.controller.IController;
 import main.controller.goalmanager.GoalManagerController;
-import main.controller.helpers.Helper;
 import main.model.goalmanager.classi.Azione;
 import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.AzioneSessione;
@@ -55,6 +51,7 @@ import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 import main.model.timetracker.classi.TimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
 import main.model.goalmanager.interfacce.IItem;
+import main.views.ViewHelper;
 import main.views.LoaderRisorse;
 import main.views.goalmanager.interfacce.IGoalManagerView;
 import main.views.modal.Modal;
@@ -65,7 +62,6 @@ import main.views.timetracker.classi.ViewHelperTT;
 public class GoalManagerView implements IGoalManagerView, ITrackable {
 
 	//--------------------------------- CAMPI ------------------------------------
-	
     @FXML 
     private BorderPane obiettivo0;
     @FXML
@@ -107,8 +103,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     private Label labelSessioneCorrente;
     private Button btnSessioneCorrente;
     
-    //--------------------------- METODI PRIVATI --------------------------------
-    
     @FXML
     private void initialize() {
     	IGoalManagerController controller = new GoalManagerController();
@@ -117,6 +111,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	this.aggiornaObiettivi(GoalManager.getInstance().getObiettivi());
     }
     
+    //--------------------------- METODI PUBBLICI ------------------------------
 	@Override
 	public void setController(IController c) {
 		controller.setView(this);
@@ -147,12 +142,25 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     public void aggiornaObiettivi(List<IObiettivo> obiettivi) {
     	visualizzaObiettivi(obiettivi);
     	visualizzaAzioniGiornaliere();
-//    	if(obiettivoCliccato != null) {
-//    		this.resettaPaginaInfo();
-//    		apriPaginaInfo(obiettivoCliccato);
-//    	}
     }
+	
+	@Override
+	public void timerTerminato(long tempo) {
+		Platform.runLater(() -> {
+			this.labelSessioneCorrente.setText("00:00:00");
+	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
+	    	this.visualizzaAzioniGiornaliere();
+		});
+	}
+
+	@Override
+	public void secondoPassato(int o, int m, int s) {
+		Platform.runLater(() -> {
+			this.visualizzaOrologio(o, m, s);
+		});
+	}
     
+	//--------------------------- METODI PRIVATI --------------------------------
     /**
      * Visualizza la view degli obiettivi.
      */
@@ -234,7 +242,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	if(o instanceof ObiettivoScomponibile) {
     		
     		// crea pulsante di aggiunta sotto-obiettivi
-    		btnAggiunta = Helper.creaBtnAggiunta("Sotto-obiettivo");
+    		btnAggiunta = ViewHelper.creaBtnAggiunta("Sotto-obiettivo");
             
             // collega evento per aggiunta di un sotto-obiettivo.
     		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -281,7 +289,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	} else {
 
     		// crea pulsante di aggiunta azioni
-    		btnAggiunta = Helper.creaBtnAggiunta("Azione");
+    		btnAggiunta = ViewHelper.creaBtnAggiunta("Azione");
     		
             // collega evento per aggiunta di un'azione.
     		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -364,7 +372,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     private HBox creaBtnMenu(Object obj) {
     	
         // crea view pulsante
-        HBox editBtn = Helper.creaBtnEdit();
+        HBox editBtn = ViewHelper.creaBtnEdit();
         
         // crea il menu dropdown
         ContextMenu menu = new ContextMenu();
@@ -449,7 +457,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	});
         
         // apre il dialog e attende
-        ButtonType btnCliccato = modal.show();
+        ButtonType btnCliccato = modal.showAndWait();
         if(btnCliccato == ButtonType.OK) {  
         	String nome = controller.getNome();
         	String descrizione = controller.getDescrizione();
@@ -524,7 +532,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	});
         
     	// apre il dialog e attende
-        ButtonType btnCliccato = modal.show();
+        ButtonType btnCliccato = modal.showAndWait();
         if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	int valore = controller.getValore();
@@ -592,7 +600,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	});
         
     	// apre il dialog e attende
-        ButtonType btnCliccato = modal.show();
+        ButtonType btnCliccato = modal.showAndWait();
         if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	Item nuovoItem = new Item(nome);
@@ -601,9 +609,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         }
     }
     
-    /**
-     * Elimina un obiettivo dal modello.
-     */
     private void eliminaObiettivo(IObiettivo obiettivo) {
         boolean sottoObiettivo = obiettivo.getObiettivoPadre() != null;
     	
@@ -617,6 +622,10 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         	new Notification("Obiettivo eliminato.", NotificationType.INFO).show();
     	}
     	
+    }
+    
+    private void eliminaItem(IAzioneScomponibile a, Item i) {
+    	this.controller.eliminaItem(a, i);
     }
     
     private void resettaPaginaInfo() {
@@ -935,7 +944,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
             	container.getChildren().add(itemContainer);
             	
             	// crea pulsante aggiunta item
-            	HBox hBox = Helper.creaBtnAggiunta("Item");
+            	HBox hBox = ViewHelper.creaBtnAggiunta("Item");
             	hBox.getStyleClass().add("aggiunta-item");
             	itemContainer.getChildren().add(hBox);
             	pane.setBottom(itemContainer);
@@ -954,19 +963,37 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
                 // aggiunge gli item dell'azione scomponibile
                 if(azioneScomponibile.getItems().size() > 0) { 
                 	for(IItem item : azioneScomponibile.getItems()) {
+                		
+                		// crea pane item
+                		BorderPane itemPane = new BorderPane();
+                		itemPane.setPadding(new Insets(0, 10, 0, 0));
+                		itemContainer.getChildren().add(itemPane);
+                		
+                		// crea checkbox item
                 		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
                 		itemCheck.getStyleClass().add("item-checkbox");
-                		itemContainer.getChildren().add(itemCheck);
+                		itemPane.setLeft(itemCheck);
+                		
+                		// collega evento click checkbox azione
+                		itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                			public void handle(ActionEvent t) {
+                				t.consume();
+                				controller.completaItem((Item) item);
+                			}
+                		});
                 		
                 		// se l'azione è completata, completa anche l'item
                 		if(azioneScomponibile.getCompletata())
                 			itemCheck.setSelected(true);
                 		
-                        // collega evento click checkbox azione
-                        itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                            public void handle(ActionEvent t) {
-                            	t.consume();
-                                controller.completaItem((Item) item);
+                		// aggiunge immagine eliminazione
+                		HBox trashImg = ViewHelper.creaBtn(LoaderRisorse.getImg("trash.png"), 16);
+                		itemPane.setRight(trashImg);
+                		
+                		// collega evento eliminazione
+                		trashImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                            public void handle(MouseEvent t) {
+                                eliminaItem(azioneScomponibile, (Item) item);
                             }
                         });
                 	}
@@ -1013,7 +1040,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
                 });
         	}
         } else {
-        	pane.setLeft(Helper.creaElementoLista(azione.getNome()));
+        	pane.setLeft(ViewHelper.creaElementoLista(azione.getNome()));
         }
         
         // crea pulsante menu azione
@@ -1032,7 +1059,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	obiettivoCliccato = null;
     }
     
-    //------------------------------ METODI FXML ----------------------------------
     /**
      * Collega un'azione all'obiettivo cliccato.
      */
@@ -1055,22 +1081,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     private void aggiungiSottoObiettivo(IObiettivo obiettivo) throws IOException {
     	apriEditorObiettivo(obiettivo, true, true);
     }
-
-	@Override
-	public void timerTerminato(long tempo) {
-		Platform.runLater(() -> {
-			this.labelSessioneCorrente.setText("00:00:00");
-	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
-	    	this.visualizzaAzioniGiornaliere();
-		});
-	}
-
-	@Override
-	public void secondoPassato(int o, int m, int s) {
-		Platform.runLater(() -> {
-			this.visualizzaOrologio(o, m, s);
-		});
-	}
 	
 	private void visualizzaOrologio(int o, int m, int s) {
 		String ore = ViewHelperTT.formattaDurata(o);

@@ -2,6 +2,9 @@ package main.views;
 
 import main.controller.IController;
 
+/**
+ * View base
+ */
 public interface IView {
 
 	public void setController(IController c);

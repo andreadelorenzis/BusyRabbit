@@ -1,12 +1,16 @@
 package main.controller.goalmanager;
 
 import main.controller.IController;
+import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.interfacce.IAzione;
 import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.goalmanager.interfacce.IObiettivo;
 
+/**
+ * Controller collegato a GoalManagerView
+ */
 public interface IGoalManagerController extends IController {
 	
 	public void aggiungiObiettivo(IObiettivo o);
@@ -31,7 +35,10 @@ public interface IGoalManagerController extends IController {
 	
 	public void completaItem(Item item);
 	
+	public void eliminaItem(IAzioneScomponibile a, Item i);
+	
 	public void avviaAzioneSessione(IAzioneSessione a);
 	
 	public void terminaAzioneSessione(IAzioneSessione a);
+	
 }

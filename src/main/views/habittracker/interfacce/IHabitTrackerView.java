@@ -3,6 +3,9 @@ package main.views.habittracker.interfacce;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.views.IView;
 
+/**
+ * View a cui è collegato l'HabitTrackerView
+ */
 public interface IHabitTrackerView extends IView {
 	
 	public void visualizzaAbitudiniGiornaliere();

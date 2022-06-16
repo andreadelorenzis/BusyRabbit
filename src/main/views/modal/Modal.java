@@ -1,16 +1,8 @@
 package main.views.modal;
 
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URL;
-
-import javax.swing.Timer;
-
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -20,7 +12,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -31,22 +22,17 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.Main;
-import main.controller.goalmanager.GoalManagerController;
-import main.controller.helpers.Helper;
+import main.views.ViewHelper;
 import main.views.LoaderRisorse;
 import main.views.accountmanager.classi.PageView;
-import main.views.notification.NotificationType;
-import main.views.notification.NotificationsManager;
 
 public class Modal implements IModal {
 	
+	//-------------------------------- CAMPI -----------------------------------
 	@FXML
 	private BorderPane modal;
-	
 	public static final int LARGHEZZA = 800;
 	public static final int ALTEZZA = 600;
-	
 	private Pane content;
 	private int larghezza = LARGHEZZA;
 	private int altezza = ALTEZZA;
@@ -55,6 +41,12 @@ public class Modal implements IModal {
 	private ButtonType btnCliccato = ButtonType.CANCEL;
 	private String titolo;
 	
+	//----------------------------- COSTRUTTORI --------------------------------
+	/**
+	 * 
+	 * @param content
+	 * @param titolo
+	 */
 	public Modal(Pane content, String titolo) {
 		this.content = content;
 		this.titolo = titolo;
@@ -62,6 +54,7 @@ public class Modal implements IModal {
 		cancelBtn = new Button("Annulla");
 	}
 	
+	//---------------------------- METODI PRIVATI ------------------------------
 	private void toggleOverlay() {
 		BorderPane overlay = new BorderPane();
 		if(ModalsManager.getInstance().isModalOpen()) {
@@ -78,11 +71,14 @@ public class Modal implements IModal {
 		}
 	}
 	
+	//--------------------------- METODI PUBBLICI ------------------------------
+	@Override
 	public void setDimensioni(int larghezza, int altezza) {
 		this.larghezza = larghezza;
 		this.altezza = altezza;
 	}
 	
+	@Override
 	public Button getButton(ButtonType tipo) {
 		if(tipo.equals(ButtonType.OK)) {
 			return this.okBtn;
@@ -93,6 +89,7 @@ public class Modal implements IModal {
 		}
 	}
 	
+	@Override
 	public HBox getBtnLookup(ButtonType tipo) {
 		if(tipo.equals(ButtonType.OK)) {
 			return this.okBtnContainer;
@@ -103,17 +100,20 @@ public class Modal implements IModal {
 		}
 	}
 	
+	@Override
 	public void close(Stage stage) {
 		stage.close();
         ModalsManager.getInstance().chiudiModal();
         toggleOverlay();
 	}
 	
+	@Override
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
 	
-	public ButtonType show() throws IOException {
+	@Override
+	public ButtonType showAndWait() throws IOException {
 		ModalsManager.getInstance().apriModal();
 		toggleOverlay();
 		
@@ -149,7 +149,7 @@ public class Modal implements IModal {
         header.getStyleClass().add("modal-header");
         Label titleLabel = new Label(titolo);
         titleLabel.getStyleClass().add("modal-title");
-        HBox closeImg = Helper.creaIconaChiusura();
+        HBox closeImg = ViewHelper.creaIconaChiusura();
         header.setLeft(titleLabel);
         header.setRight(closeImg);
         BorderPane.setAlignment(titleLabel, Pos.CENTER);

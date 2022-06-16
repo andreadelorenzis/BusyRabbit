@@ -3,13 +3,12 @@ package main.controller.habittracker;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-
 import main.model.goalmanager.classi.Item;
 import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineSessione;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 import main.views.IView;
 import main.views.habittracker.interfacce.IHabitTrackerView;
 
@@ -17,7 +16,7 @@ public class HabitTrackerController implements IHabitTrackerController {
     
 	private IHabitTrackerView view;
 	
-	private IAbitudineTracker ht = HabitTracker.getInstance();;
+	private IHabitTracker ht = HabitTracker.getInstance();;
 	
 	@Override
 	public void setView(IView v) {
@@ -67,6 +66,13 @@ public class HabitTrackerController implements IHabitTrackerController {
 	@Override
 	public void completaItem(Item item) {
 		item.completa();
+	}
+	
+	@Override
+	public void eliminaItem(IAbitudineScomponibile a, Item item) {
+		a.removeItem(item.getId());
+		view.info("Item eliminato");
+		view.aggiornaAbitudini();
 	}
 
 	@Override

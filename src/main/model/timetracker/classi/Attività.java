@@ -3,14 +3,9 @@ package main.model.timetracker.classi;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.TemporalAmount;
 import java.util.UUID;
-
-import main.model.goalmanager.classi.Obiettivo;
-import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
-import main.views.Colore;
 
 public class Attività implements IAttività {
 	

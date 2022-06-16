@@ -92,7 +92,7 @@ public class Abitudine implements IAbitudine {
 	}
 
     //---------------------------- METODI PUBBLICI -----------------------------
-	
+	@Override
 	public void addHabitRecord(LocalDate date) {
 		int year = date.getYear();
 		int day = date.getDayOfYear();
@@ -113,6 +113,7 @@ public class Abitudine implements IAbitudine {
 		yearRecords.put(year, habitsInYear);
 	}
 	
+	@Override
 	public void removeHabitRecord(LocalDate date) {
 		int year = date.getYear();
 		int day = date.getDayOfYear();

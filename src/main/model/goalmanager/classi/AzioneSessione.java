@@ -3,8 +3,6 @@ package main.model.goalmanager.classi;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-
-import main.controller.goalmanager.GoalManagerController;
 import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.timetracker.classi.TimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
@@ -44,6 +42,15 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
         timer = new TimerSemplice(durata, this);
     }
     
+    /**
+     * 
+     * @param nome
+     * @param incremento
+     * @param dataInizio
+     * @param giorni
+     * @param durata
+     * @param id
+     */
     public AzioneSessione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, int durata, String id) {
         super(nome, incremento, dataInizio, giorni, id);
         this.durata = durata;

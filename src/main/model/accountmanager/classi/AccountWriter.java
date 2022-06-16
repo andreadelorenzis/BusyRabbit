@@ -23,20 +23,41 @@ import main.model.habittracker.classi.AbitudineSessione;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineSessione;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
 
+/**
+ * Classe per scrivere i dati sul database
+ */
 public class AccountWriter {
-	private ITimeTracker tt;
-	private IAbitudineTracker ht;
 	
-	public AccountWriter(ITimeTracker tt, IGoalManager gm, IAbitudineTracker ht) {
+	/*
+	 * Istanza di TimeTracker
+	 */
+	private ITimeTracker tt;
+	
+	/*
+	 * Istanza di HabitTracker
+	 */
+	private IHabitTracker ht;
+	
+	//----------------------------- COSTRUTTORI --------------------------------
+	/**
+	 * @param tt istanza di TimeTracker
+	 * @param gm istanza di GoalManager
+	 * @param ht istanza di HabitTracker
+	 */
+	public AccountWriter(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
 		this.tt = tt;
 		this.ht = ht;
 	}
     
+	//--------------------------- METODI PUBBLICI ------------------------------
+	/**
+	 * Scrive tutti i progetti sul file di testo
+	 */
     public void scriviProgetti(BufferedWriter writer) {
 		try {
 			int i = 0;
@@ -53,6 +74,9 @@ public class AccountWriter {
 		}
 	}
     
+    /**
+	 * Scrive tutte le attività sul file di testo
+	 */
     public void scriviAttività(BufferedWriter writer) {
 		try {
 			for(IAttività a : tt.getAttività()) {
@@ -71,6 +95,9 @@ public class AccountWriter {
 		}
 	}
 	
+    /**
+	 * Scrive tutti gli obiettivi sul file di testo
+	 */
 	public void scriviObiettivi(BufferedWriter writer, List<IObiettivo> obiettivi) {
 		try {
 			if(!obiettivi.isEmpty()) {
@@ -121,9 +148,10 @@ public class AccountWriter {
 							String stringaGiorni = "";
 							int i = 0;
 							for(DayOfWeek g : a.getGiorniRipetizione()) {
-								stringaGiorni += g + "-";
 								if(i == a.getGiorniRipetizione().size() - 1) {
 									stringaGiorni += g;
+								} else {
+									stringaGiorni += g + "-";
 								}
 								i++;
 							}
@@ -159,16 +187,21 @@ public class AccountWriter {
 		}
 	}
 	
+	/**
+	 * Scrive tutte le abitudini sul file di testo
+	 */
 	public void scriviAbitudini(BufferedWriter writer) {
 		try {
 			for(IAbitudine h : ht.getHabits()) {
 				String stringaAbitudine = "";
+				String stringaItem = "";
 				String stringaGiorni = "";
 				int i = 0;
 				for(DayOfWeek g : h.getDays()) {
-					stringaGiorni += g + "-";
 					if(i == h.getDays().size() - 1) {
 						stringaGiorni += g;
+					} else {
+						stringaGiorni += g + "-";
 					}
 					i++;
 				}
@@ -176,12 +209,12 @@ public class AccountWriter {
 					IAbitudineScomponibile s = (IAbitudineScomponibile) h;
 					stringaAbitudine = "abitudine-semplice" + "," + s.getName() + "," + s.getDescription()
 					+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
-					+ "," + s.getStartDate().getYear() + "," + stringaGiorni + "," + s.getId() + "\n"; 
+					+ "," + s.getStartDate().getYear() + "," + stringaGiorni + "," + s.getId() + "\n";
 					
 					// scrive gli item della seguente abitudine semplice
 					for(IItem it : s.getItems()) {
 						IAbitudineScomponibile padre = (IAbitudineScomponibile) it.getPadre();
-						String stringaItem = "item-abitudine" + "," + padre.getId() 
+						stringaItem = "item-abitudine" + "," + padre.getId() 
 								+ "," + it.getNome() + "," + it.getId() + "\n";
 						writer.write(stringaItem);
 					}
@@ -193,12 +226,17 @@ public class AccountWriter {
 					+ "," + s.getDuration() + "," + s.getId() + "\n"; 
 				}
 				writer.write(stringaAbitudine);
+				if(h instanceof AbitudineScomponibile)
+					writer.write(stringaItem);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Scrive tutte le informazioni di completamento storiche delle abitudini sul file di testo
+	 */
 	public void scriviStoricoAbitudini(BufferedWriter writer) {
 		try {
 			for(IAbitudine h : ht.getHabits()) {

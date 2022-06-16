@@ -1,7 +1,5 @@
 package main.model.timetracker.classi;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -75,13 +73,6 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 		pomodoroTimer = new PomodoroTimer();
 		tracker = cronometro;
 	}
-	
-	public static TimeTracker getInstance() {
-		if(timeTracker == null) {
-			timeTracker = new TimeTracker();
-		}
-		return timeTracker;
-	}
 
     //--------------------------- METODI PRIVATI -----------------------------
 	/*
@@ -124,6 +115,13 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 	
     //-------------------------- METODI PUBBLICI ----------------------------
+	public static TimeTracker getInstance() {
+		if(timeTracker == null) {
+			timeTracker = new TimeTracker();
+		}
+		return timeTracker;
+	}
+	
 	@Override
 	public void avviaTracker(IAttivit‡ a) {
 		attivit‡Corrente = a;

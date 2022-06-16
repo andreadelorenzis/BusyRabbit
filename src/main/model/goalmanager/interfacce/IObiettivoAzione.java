@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Obiettivo a cui √® possibile collegare azioni periodiche che, se completate, fanno incrementare il progresso 
+ * Obiettivo a cui Ë possibile collegare azioni periodiche che, se completate, fanno incrementare il progresso 
  * dell'obiettivo. Le azioni si ripetono nei giorni della settimana scelti. Il totale delle azioni non per forza deve
  * portare al completamento dell'obiettivo.
  */
@@ -53,13 +53,13 @@ public interface IObiettivoAzione extends IObiettivo {
     
     /**
      * 
-     * @return l'unit√† di misura dell'obiettivo
+     * @return l'unit‡† di misura dell'obiettivo
      */
     public String getUnit‡();
 
     /**
      * 
-     * @param unit√† l'unit√† di misura dell'obiettivo
+     * @param unit‡† l'unit‡† di misura dell'obiettivo
      */
     public void setUnita(String unit‡);
     

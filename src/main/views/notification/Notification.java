@@ -31,29 +31,37 @@ import javafx.util.Duration;
 import main.Main;
 import main.views.LoaderRisorse;
 
-public class Notification {
+public class Notification implements INotification {
 	
+	//-------------------------------- CAMPI -----------------------------------
 	public static final int LARGHEZZA = 800;
 	public static final int ALTEZZA = 60;
-	
 	private String messaggio;
 	private NotificationType tipo;
 	
+	//----------------------------- COSTRUTTORI --------------------------------
+	/**
+	 * 
+	 * @param tipo
+	 */
 	public Notification(NotificationType tipo) {
 		this.messaggio = "";
 		this.tipo = tipo;
 	}
 	
+	/**
+	 * 
+	 * @param messaggio
+	 * @param tipo
+	 */
 	public Notification(String messaggio, NotificationType tipo) {
 		this(tipo);
 		this.messaggio = messaggio;
 	}
 	
-	public void setMessaggio(String s) {
-		this.messaggio = s;
-	}
-	
-	private void close(Stage stage) {
+	//--------------------------- METODI PUBBLICI ------------------------------
+	@Override
+	public void close(Stage stage) {
         Animation transition = new Transition() {
             {
                 setCycleDuration(Duration.millis(1000));
@@ -72,6 +80,7 @@ public class Notification {
         transition.play();
 	}
 	
+	@Override
 	public void show() {
 		NotificationsManager manager = NotificationsManager.getInstance();
 		manager.incrementaNumNotifiche();
@@ -165,8 +174,10 @@ public class Notification {
             }
         };
         transition.play();
-        
-        
+	}
+	
+	public void setMessaggio(String s) {
+		this.messaggio = s;
 	}
 	
 }

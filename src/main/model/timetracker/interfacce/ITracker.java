@@ -27,7 +27,7 @@ public interface ITracker {
 	
     /**
      * 
-     * @param ascoltatore che verrà informato quando il tracker termina
+     * @param ascoltatore che verrà informato degli eventi del Tracker
      */
     public void registraAscoltatore(ITrackable ascoltatore);
 	

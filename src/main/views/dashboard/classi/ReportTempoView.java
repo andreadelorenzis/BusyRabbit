@@ -8,11 +8,8 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -70,8 +66,6 @@ public class ReportTempoView implements Initializable {
      * Il mese per cui visualizzare le statistiche sul tempo.
      */
     private String meseSelezionato = LocalDate.now().getMonth().toString();
-    
-    private Map<String, List<Node>> datiColoreStackedBarChart;
     
     //--------------------------- METODI PUBBLICI --------------------------------
     @Override

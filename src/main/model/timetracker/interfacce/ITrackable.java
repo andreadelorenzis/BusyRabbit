@@ -1,7 +1,7 @@
 package main.model.timetracker.interfacce;
 
 /**
- * Interfaccia che permette ad un oggetto di essere notificato alla fine di un timer
+ * Interfaccia che permette ad un oggetto di essere notificato degli eventi del Timer 
  */
 public interface ITrackable {
 

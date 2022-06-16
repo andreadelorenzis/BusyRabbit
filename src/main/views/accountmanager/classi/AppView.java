@@ -21,6 +21,8 @@ import main.views.notification.NotificationType;
 import main.views.IView;
 
 public class AppView implements IView {
+	
+	//------------------------------ CAMPI FXML ---------------------------------
     @FXML
     private HBox timeHBox;
     @FXML
@@ -64,6 +66,8 @@ public class AppView implements IView {
     private Label timeReportLabel = new Label("Report Tempo");
     private HBox abitudiniReportBox = new HBox();
     private Label abitudiniReportLabel = new Label("Report Abitudini");
+    
+    //-------------------------------- CAMPI -----------------------------------
     private boolean dashboardMenuAperto = false;
     private boolean sidebarAperta = true;
     private IController controller;
@@ -114,6 +118,7 @@ public class AppView implements IView {
         this.abitudiniReportBox.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler3);
     }
     
+    //--------------------------- METODI PUBBLICI ------------------------------
 	@Override
 	public void setController(IController c) {
 		this.controller = c;
@@ -144,6 +149,7 @@ public class AppView implements IView {
     	apriPaginaTimeTracker();
     }
     
+    //---------------------------- METODI PRIVATI ------------------------------
     @FXML
     private void toggleSidebar() {
     	if(sidebarAperta) {
@@ -206,6 +212,44 @@ public class AppView implements IView {
         panePrincipale.setCenter(view);
     } 
     
+    @FXML
+    private void toggleMenuDashboard() {
+        if(!this.dashboardMenuAperto) {
+            // Evidenza il pulsante della Dashboard
+            this.rimuoviEvidenziazionePulsanti();
+            this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white.png");
+            this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white.png"));
+            this.dashboardArrow.setRotate(180);
+            
+            // Fa comparire i pulsanti nel sotto-menu del pulsante dashboard.
+            this.dashboardBtns.getChildren().add(this.timeReportBox);
+            this.dashboardBtns.getChildren().add(this.abitudiniReportBox);
+            
+            this.dashboardMenuAperto = true;
+        } else {
+            this.dashboardBtns.getChildren().clear();
+            this.dashboardMenuAperto = false;
+            this.dashboardArrow.setRotate(0);
+        }
+    }
+    
+    @FXML
+    private void apriPaginaImpostazioni() throws IOException {
+        
+        // Cambia stile pulsanti navigazione
+        this.rimuoviEvidenziazionePulsanti();
+        this.evidenziaPulsante(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings-white.png");
+        this.chiudiMenuDashboard();
+        
+        // Cambia la pagina all'interno del BorderPane
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.IMPOSTAZIONI, "Impostazioni"));
+        Pane view = fxmlLoader.load();
+        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.IMPOSTAZIONI, "Impostazioni"));
+        view.getStylesheets().add(LoaderRisorse.globalCss);
+        panePrincipale.setCenter(view);
+    } 
+    
     private void apriPaginaReportTempo() throws IOException {
         
         // Cambia stile pulsanti navigazione
@@ -229,23 +273,6 @@ public class AppView implements IView {
         
     }
     
-    @FXML
-    private void apriPaginaImpostazioni() throws IOException {
-        
-        // Cambia stile pulsanti navigazione
-        this.rimuoviEvidenziazionePulsanti();
-        this.evidenziaPulsante(impostazioniHBox, impostazioniLabel, impostazioniImg, "settings-white.png");
-        this.chiudiMenuDashboard();
-        
-        // Cambia la pagina all'interno del BorderPane
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.IMPOSTAZIONI, "Impostazioni"));
-        Pane view = fxmlLoader.load();
-        view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.IMPOSTAZIONI, "Impostazioni"));
-        view.getStylesheets().add(LoaderRisorse.globalCss);
-        panePrincipale.setCenter(view);
-    } 
-    
     private void apriPaginaReportAbitudini() throws IOException {
     
         // Cambia stile pulsanti navigazione
@@ -266,27 +293,6 @@ public class AppView implements IView {
         view.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.DASHBOARD, "ReportAbitudini"));
         view.getStylesheets().add(LoaderRisorse.globalCss);
         panePrincipale.setCenter(view);
-    }
-    
-    @FXML
-    private void toggleMenuDashboard() {
-        if(!this.dashboardMenuAperto) {
-            // Evidenza il pulsante della Dashboard
-            this.rimuoviEvidenziazionePulsanti();
-            this.evidenziaPulsante(this.dashboardHBox, this.dashboardLabel, this.dashboardImg, "dashboard-white.png");
-            this.dashboardArrow.setImage(LoaderRisorse.getImg("arrow-down-white.png"));
-            this.dashboardArrow.setRotate(180);
-            
-            // Fa comparire i pulsanti nel sotto-menu del pulsante dashboard.
-            this.dashboardBtns.getChildren().add(this.timeReportBox);
-            this.dashboardBtns.getChildren().add(this.abitudiniReportBox);
-            
-            this.dashboardMenuAperto = true;
-        } else {
-            this.dashboardBtns.getChildren().clear();
-            this.dashboardMenuAperto = false;
-            this.dashboardArrow.setRotate(0);
-        }
     }
     
     private void chiudiMenuDashboard() {

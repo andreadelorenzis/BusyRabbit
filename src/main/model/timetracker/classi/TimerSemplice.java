@@ -10,11 +10,20 @@ import main.model.timetracker.interfacce.ITrackable;
 
 public class TimerSemplice extends Tracker implements ITimerSemplice {
 	
+	//-------------------------------- CAMPI -----------------------------------
+	/*
+	 * Durata del timer
+	 */
 	private int durataTimer;
 	
-	private ITrackable ascoltatore = null;
-	
+	//----------------------------- COSTRUTTORI --------------------------------
+	/**
+	 * 
+	 * @param durata
+	 * @param ascoltatore
+	 */
 	public TimerSemplice(int durata, ITrackable ascoltatore) {
+		registraAscoltatore(ascoltatore);
 		this.durataTimer = durata * 60 * 1000;
 		this.ascoltatore = ascoltatore;
 		timer = new Timer(1000, new ActionListener() {
@@ -35,6 +44,7 @@ public class TimerSemplice extends Tracker implements ITimerSemplice {
 		});
 	}
 	
+	//--------------------------- METODI PUBBLICI ------------------------------
 	@Override
 	public long termina() {
 		long durata = tempoPassato / 1000;

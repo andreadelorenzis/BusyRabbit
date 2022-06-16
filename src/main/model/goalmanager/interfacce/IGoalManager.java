@@ -23,7 +23,7 @@ public interface IGoalManager {
     public void aggiungiSottoObiettivo(IObiettivoScomponibile padre, IObiettivo figlio);
     
     /**
-     * Verifica alla data passata se qualche obiettivo Ã¨ scaduto e, in caso affermativo, fa fallire tali obiettivi
+     * Verifica alla data passata se qualche obiettivo è scaduto e, in caso affermativo, fa fallire tali obiettivi
      * 
      * @param data la data di oggi
      * @return la lista degli obiettivi da completare oggi

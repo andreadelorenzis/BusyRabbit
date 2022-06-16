@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import main.model.habittracker.interfacce.IAbitudine;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 
-public class HabitTracker implements IAbitudineTracker {
+public class HabitTracker implements IHabitTracker {
 
 	/*
 	 * Elenco di tutte le abitudini
@@ -115,12 +115,7 @@ public class HabitTracker implements IAbitudineTracker {
 		return weekMap;
 	}
 	
-	public static List<LocalDate> getLastWeek() {
-		LocalDate weekBeforeToday = LocalDate.now().minusDays(7);
-		return weekBeforeToday.datesUntil(LocalDate.now().plusDays(1))
-			   .collect(Collectors.toList());
-	}
-	
+	@Override
 	public IAbitudine getHabit(String id) {
 		IAbitudine habit = null;
 		for(IAbitudine h : habits) {
@@ -129,6 +124,12 @@ public class HabitTracker implements IAbitudineTracker {
 			}
 		}
 		return habit;
+	}
+	
+	public static List<LocalDate> getLastWeek() {
+		LocalDate weekBeforeToday = LocalDate.now().minusDays(7);
+		return weekBeforeToday.datesUntil(LocalDate.now().plusDays(1))
+				.collect(Collectors.toList());
 	}
     
 }

@@ -154,7 +154,7 @@ public class ImpostazioniView implements IImpostazioniView {
 			modal.getButton(ButtonType.CANCEL).setText("NO");
 			
 			// apre il dialog e attende
-			ButtonType btnCliccato = modal.show();
+			ButtonType btnCliccato = modal.showAndWait();
 			if(btnCliccato == ButtonType.OK) {
 				this.controller.eliminaAccount(password);
 			}

@@ -5,17 +5,18 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import main.Main;
 import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.LoaderRisorse;
 
+/**
+ * Classe modulo che contiene servizi per la classe TimeTrackerView
+ */
 public class ViewHelperTT {
 	
 	public static BorderPane creaPaneProgetto(IProgetto progetto) {
@@ -151,7 +152,6 @@ public class ViewHelperTT {
     }
     
     public static Label creaLabelPageBtn(int pagina, int numGiorni) {
-    	
     	// crea stringa testo
     	String testo = "";
     	if(pagina == 1) {

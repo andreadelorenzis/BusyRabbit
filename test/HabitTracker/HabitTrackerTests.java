@@ -19,7 +19,7 @@ import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineSessione;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 
 /**
  * TODO:
@@ -28,9 +28,9 @@ import main.model.habittracker.interfacce.IAbitudineTracker;
  */
 public class HabitTrackerTests {
 	
-	private IAbitudineTracker h = null;
+	private IHabitTracker h = null;
 	
-	private void initialize(IAbitudineTracker h) {
+	private void initialize(IHabitTracker h) {
 		// add a SimpleHabit
 		h.addHabit(new AbitudineScomponibile("Morning routine",
 								   "Doing my morning routine",

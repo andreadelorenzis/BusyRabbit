@@ -2,10 +2,8 @@ package main.model.timetracker.classi;
 
 import java.time.Month;
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
-
 import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.Colore;
@@ -34,23 +32,27 @@ public class Progetto implements IProgetto {
 	private String id;
 	
     //----------------------------- COSTRUTTORI --------------------------------
+	/**
+	 * 
+	 * @param nome
+	 * @param colore
+	 */
 	public Progetto(String nome, Colore colore) {
 		this.nome = nome;
 		this.colore = colore;
 		this.id = UUID.randomUUID().toString();
 	}
 	
+	/**
+	 * 
+	 * @param nome
+	 * @param colore
+	 * @param id
+	 */
 	public Progetto(String nome, Colore colore, String id) {
 		this(nome, colore);
 		this.id = id;
 	}
-	
-    //---------------------------- METODI PRIVATI ------------------------------
-//	private MeseProgetto creaMese(IAttività a){
-//		MeseProgetto m = new MeseProgetto(a.getData().getMonth());
-//		m.aggiungiDurata(a);
-//		return m;
-//	}
 
     //---------------------------- METODI PUBBLICI -----------------------------
 	@Override

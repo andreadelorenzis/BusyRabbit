@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IItem;
 
@@ -29,6 +28,14 @@ public class AzioneScomponibile extends Azione implements IAzioneScomponibile {
         super(nome, incremento, dataInizio, giorni);
     }
     
+    /**
+     * 
+     * @param nome
+     * @param incremento
+     * @param dataInizio
+     * @param giorni
+     * @param id
+     */
     public AzioneScomponibile(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, String id) {
         super(nome, incremento, dataInizio, giorni, id);
     }

@@ -1,5 +1,8 @@
 package main.views.modal;
 
+/**
+ * Gestisce il numero di Modal aperti simultaneamente
+ */
 public class ModalsManager {
 	private static ModalsManager instance = null;
 	

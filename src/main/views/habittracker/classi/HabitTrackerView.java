@@ -28,7 +28,6 @@ import main.Main;
 import main.controller.habittracker.IHabitTrackerController;
 import main.controller.IController;
 import main.controller.habittracker.HabitTrackerController;
-import main.controller.helpers.Helper;
 import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.AzioneSessione;
 import main.model.goalmanager.classi.Item;
@@ -43,6 +42,7 @@ import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineSessione;
 import main.model.timetracker.classi.TimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
+import main.views.ViewHelper;
 import main.views.LoaderRisorse;
 import main.views.goalmanager.classi.EditorItem;
 import main.views.goalmanager.classi.ViewHelperGM;
@@ -291,13 +291,17 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
     	});
         
     	// apre il dialog e attende
-        ButtonType btnCliccato = modal.show();
+        ButtonType btnCliccato = modal.showAndWait();
         if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	Item nuovoItem = new Item(nome);
         	this.controller.creaItem(abitudine, nuovoItem);
         	this.aggiornaAbitudini();
         }
+    }
+    
+    private void eliminaItem(IAbitudineScomponibile a, Item i) {
+    	this.controller.eliminaItem(a, i);
     }
     
     private BorderPane creaViewAbitudine(IAbitudine abitudine, boolean isDaily) {
@@ -356,7 +360,7 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
             	container.getChildren().add(itemContainer);
             	
             	// crea pulsante aggiunta item
-            	HBox hBox = Helper.creaBtnAggiunta("Item");
+            	HBox hBox = ViewHelper.creaBtnAggiunta("Item");
             	hBox.getStyleClass().add("aggiunta-item");
             	itemContainer.getChildren().add(hBox);
             	pane.setBottom(itemContainer);
@@ -375,9 +379,16 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
                 // aggiunge gli item dell'abitudine scomponibile
                 if(abitudineScomponibile.getItems().size() > 0) { 
                 	for(IItem item : abitudineScomponibile.getItems()) {
+                		
+                		// crea pane item
+                		BorderPane itemPane = new BorderPane();
+                		itemPane.setPadding(new Insets(0, 10, 0, 0));
+                		itemContainer.getChildren().add(itemPane);
+                		
+                		// crea checkbox item
                 		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
                 		itemCheck.getStyleClass().add("item-checkbox");
-                		itemContainer.getChildren().add(itemCheck);
+                		itemPane.setLeft(itemCheck);
                 		
                 		// se l'abitudine è completata, completa anche l'item
                 		if(abitudineScomponibile.isCompleted())
@@ -388,6 +399,17 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
                             public void handle(ActionEvent t) {
                             	t.consume();
                                 controller.completaItem((Item) item);
+                            }
+                        });
+                        
+                		// aggiunge immagine eliminazione
+                		HBox trashImg = ViewHelper.creaBtn(LoaderRisorse.getImg("trash.png"), 16);
+                		itemPane.setRight(trashImg);
+                		
+                		// collega evento eliminazione
+                		trashImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                            public void handle(MouseEvent t) {
+                                eliminaItem(abitudineScomponibile, (Item) item);
                             }
                         });
                 	}
@@ -436,13 +458,13 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
             pane.setLeft(check);
         } else {
          // crea l'elemento della lista
-            pane.setLeft(Helper.creaElementoLista(abitudine.getName()));
+            pane.setLeft(ViewHelper.creaElementoLista(abitudine.getName()));
         }
         
         // crea pulsante apertura menù abitudine
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
-        HBox editBtn = Helper.creaBtnEdit(); 
+        HBox editBtn = ViewHelper.creaBtnEdit(); 
         hBox.getChildren().addAll(editBtn);
      
         // crea il menu dropdown
@@ -527,7 +549,7 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
     	});
         
     	// apre il dialog e attende
-        ButtonType btnCliccato = modal.show();
+        ButtonType btnCliccato = modal.showAndWait();
         if(btnCliccato == ButtonType.OK) {
         	String nome = controller.getNome();
         	String descrizione = controller.getDescrizione();

@@ -2,11 +2,8 @@ package main.model.goalmanager.classi;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
 import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
-import main.model.habittracker.classi.Abitudine;
-import main.model.habittracker.interfacce.IAbitudine;
 
 public abstract class Obiettivo implements IObiettivo {
     
@@ -27,12 +24,12 @@ public abstract class Obiettivo implements IObiettivo {
     private LocalDate data;
     
     /**
-     * Se l'obiettivo Ã¨ completato o no
+     * Se l'obiettivo è completato o no
      */
     private boolean completato = false;
     
     /**
-     * Se l'obiettivo Ã¨ arrivato alla data di scadenza o no
+     * Se l'obiettivo è arrivato alla data di scadenza o no
      */
     private boolean fallito = false;
     

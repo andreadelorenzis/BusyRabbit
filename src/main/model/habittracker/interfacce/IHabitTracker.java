@@ -9,7 +9,7 @@ import java.util.Map;
  * Tool to track habits of the user.
  *
  */
-public interface IAbitudineTracker {
+public interface IHabitTracker {
     
     /**
      * 
@@ -63,6 +63,11 @@ public interface IAbitudineTracker {
      */
     public Map<Integer, List<IAbitudine>> getWeekRecords();
     
+    /**
+     * 
+     * @param id
+     * @return l'abitudine
+     */
 	public IAbitudine getHabit(String id);
     
 }

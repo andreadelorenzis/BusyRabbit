@@ -1,5 +1,8 @@
 package main.views;
 
+/**
+ * Colori usati per la classe Progetto
+ */
 public enum Colore {
     Rosso("#FF4560"),
     Verde("#00E396"),

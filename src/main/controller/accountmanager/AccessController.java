@@ -1,16 +1,10 @@
 package main.controller.accountmanager;
 
-import java.io.IOException;
-
-import javafx.event.ActionEvent;
 import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
 import main.model.accountmanager.classi.InvalidEmailException;
 import main.model.accountmanager.classi.WrongCredentialsException;
-import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.IView;
-import main.views.notification.Notification;
-import main.views.notification.NotificationType;
 
 public class AccessController implements IAccessController {
 	
@@ -32,9 +26,7 @@ public class AccessController implements IAccessController {
     public boolean accedi(String email, String password) {
 		IView pageView = view;
 		try {
-			//app.accedi("andreadelorenzis99@gmail.com", "pass");
-			app.accedi("mariorossi@gmail.com", "password123");
-			//app.accedi(email, password);
+			app.accedi(email, password);
 			return true;
 		} catch (WrongCredentialsException e) {
 			pageView.errore("Email o password non sono corrette");

@@ -12,10 +12,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.LoaderRisorse;
-import main.views.accountmanager.classi.PageView;
 
+/**
+ * Classe principale da cui parte l'esecuzione dell'applicazione
+ */
 public class Main extends Application { 
     
 	/*
@@ -26,34 +29,32 @@ public class Main extends Application {
     /*
      * Istanza dell'AccountManager
      */
-    public IAccountManager app;
+    public IAccountManager app = AccountManager.getInstance();
     
     @Override
     public void start(Stage primaryStage) {
         try { 
-            // Carica la pagina di login.
+            // carica la pagina di login.
         	FXMLLoader fxmlLoader = new FXMLLoader();
         	fxmlLoader.setLocation(LoaderRisorse.getFXML("accountmanager", "Login"));
         	Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 650, 600);
             
-            // passa l'istanza di app al controller delle pagine di accesso
-            PageView controller = fxmlLoader.getController();
-            
-            // Aggiunge l'icona.
+            // aggiunge l'icona della finestra
             primaryStage.getIcons().add(LoaderRisorse.getImg("logo.png"));
             scene.getStylesheets().add(LoaderRisorse.globalCss);
             
+            // dimensiona la finestra e imposa il titolo
             primaryStage.setResizable(false);
             primaryStage.setTitle("BusyRabbit");
             primaryStage.setScene(scene);
             primaryStage.show();
             
-            // alla chiusura dell'app, salvare i dati nel database
+            // salva i dati nel database all'atto della chiusura
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent arg0) {
-					//app.salvaDati();
+					app.salvaDati();
 				}
             });
         } catch (IOException ex) {
@@ -62,7 +63,7 @@ public class Main extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     * Metodo main
      */
     public static void main(String[] args) {
         Main.dataUltimoAccesso = LocalDate.now();

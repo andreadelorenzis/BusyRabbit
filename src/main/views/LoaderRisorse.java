@@ -5,6 +5,9 @@ import java.net.URL;
 import javafx.scene.image.Image;
 import main.Main;
 
+/**
+ * Classe modulo che contiene servizi per accedere a tutte le risorse nell'applicazione
+ */
 public class LoaderRisorse {
 	
 	/* PATH immagini */

@@ -9,9 +9,6 @@ import java.time.LocalDate;
 /**
  * Rappresenta un qualsiasi obiettivo, avente un nome, una descrizione, una data di completamento ed un valore che rappresenta 
  * il progresso dell'obiettivo. 
- * Le sue implementazioni sono ObiettivoScomponibile, un obiettivo scomponibile
- * in più sotto-obiettivi, e ObiettivoAzione, il quale ha un valore e a cui possono essere collegate delle azioni 
- * ricorrenti.
  */
 public interface IObiettivo {
     
@@ -79,6 +76,10 @@ public interface IObiettivo {
      */
     public IObiettivoScomponibile getObiettivoPadre();
     
+    /**
+     * 
+     * @param completato
+     */
     public void setCompletato(boolean completato);
     
     /**

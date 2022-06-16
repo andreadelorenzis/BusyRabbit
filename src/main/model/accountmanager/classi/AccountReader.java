@@ -26,7 +26,7 @@ import main.model.habittracker.classi.AbitudineSessione;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineSessione;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 import main.model.timetracker.classi.Attività;
 import main.model.timetracker.classi.Progetto;
 import main.model.timetracker.interfacce.IAttività;
@@ -35,20 +35,36 @@ import main.model.timetracker.interfacce.ITimeTracker;
 import main.views.Colore;
 
 /**
- *
- * @author Mars_DB
+ * Classe per leggere i dati dal database
  */
 public class AccountReader {
+	//--------------------------- CAMPI ------------------------------
+	/*
+	 * Istanza di TimeTracker
+	 */
 	private ITimeTracker tt;
-	private IGoalManager gm;
-	private IAbitudineTracker ht;
 	
-	public AccountReader(ITimeTracker tt, IGoalManager gm, IAbitudineTracker ht) {
+	/*
+	 * Istanza di GoalManager
+	 */
+	private IGoalManager gm;
+	
+	/*
+	 * Istanza di HabitTracker
+	 */
+	private IHabitTracker ht;
+	
+    //----------------------------- COSTRUTTORI --------------------------------
+	public AccountReader(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
 		this.tt = tt;
 		this.gm = gm;
 		this.ht = ht;
 	}
     
+	//---------------------------- METODI PRIVATI ------------------------------
+	/**
+	 * Trova un certo progetto all'interno di TimeTracker
+	 */
 	private IProgetto trovaProgetto(String idProgetto) {
 		int i = 0;
 		for(IProgetto p : tt.getProgetti()) {
@@ -60,6 +76,10 @@ public class AccountReader {
 		return null;
 	}
 	
+	//--------------------------- METODI PUBBLICI ------------------------------
+	/**
+	 * Legge tutti i progetti dal file di testo
+	 */
     public void leggiProgetti(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
 		while(!line.equals("---attivita---")) {
@@ -73,6 +93,9 @@ public class AccountReader {
 		}
 	}
 	
+    /**
+	 * Legge tutti le attività dal file di testo
+	 */
 	public void leggiAttività(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
 		while(!(line.equals("---obiettivi---"))) {	
@@ -99,6 +122,9 @@ public class AccountReader {
 		}
 	}
 	
+	/**
+	 * Legge tutti gli obiettivi dal file di testo
+	 */
 	public void leggiObiettivi(BufferedReader reader) throws IOException {
 		List<IObiettivo> obiettivi = new ArrayList<>();
 		List<IAzione> azioni = new ArrayList<>();
@@ -266,6 +292,9 @@ public class AccountReader {
 		}
 	}
 	
+	/**
+	 * Legge tutte le abitudini dal file di testo
+	 */
 	public void leggiAbitudini(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
 		while(!(line.equals("---storico-abitudini---"))) {
@@ -297,6 +326,7 @@ public class AccountReader {
 			}
 			
 			if(tipo.equals("item-abitudine")) {
+				System.out.println("dentro");
 				String idPadre = params[1];
 				nome = params[2];
 				String id = params[3];
@@ -314,6 +344,9 @@ public class AccountReader {
 		}
 	}
 	
+	/**
+	 * Legge le informazioni di completamento storiche delle abitudini dal file di testo
+	 */
 	public void leggiStoricoAbitudini(BufferedReader reader) throws IOException {
 		String line = reader.readLine();
 		while(line != null) {

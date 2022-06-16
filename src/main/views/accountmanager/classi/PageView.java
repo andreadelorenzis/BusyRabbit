@@ -25,9 +25,7 @@ import main.views.notification.NotificationType;
 
 public class PageView implements IView {
 	public static AnchorPane appContainer = null;
-    
     public static Stage stage;
-    
     public static Scene scene;
     
     @FXML
@@ -44,7 +42,6 @@ public class PageView implements IView {
     private PasswordField confPassRegField;
     
     private IController controller;
-    
     private AccountManager app = AccountManager.getInstance();
     
     @FXML
@@ -52,12 +49,50 @@ public class PageView implements IView {
         setController(new AccessController());
     }
     
+    //--------------------------- METODI PUBBLICI ------------------------------
+	@Override
+	public void setController(IController c) {
+		this.controller = c;
+		controller.setView(this);
+	}
+
+	@Override
+	public IController getController() {
+		return this.controller;
+	}
+	
+	@Override
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void errore(String s) {
+		new Notification(s, NotificationType.ERROR).show();
+	}
+
+	@Override
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
+	}
+	
+    @FXML
+    public void apriPaginaLogin(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Login"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(LoaderRisorse.globalCss);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+	//---------------------------- METODI PRIVATI ------------------------------
     @FXML
     private void accedi(ActionEvent event) throws IOException {
     	AccessController accessController = (AccessController) controller;
     	String email = emailLogField.getText();
     	String password = passLogField.getText();
-    	if(/*!email.isBlank() && !password.isBlank()*/ true) {
+    	if(!email.isBlank() && !password.isBlank()) {
 	    	boolean result = accessController.accedi(email, password);
 	    	if(result) {
 	    		apriSchermataPrincipale(event);	
@@ -85,16 +120,6 @@ public class PageView implements IView {
     }
     
     @FXML
-    public void apriPaginaLogin(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Login"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add(LoaderRisorse.globalCss);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
-    @FXML
     private void apriPaginaRegistrazione(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Registrazione"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -114,7 +139,6 @@ public class PageView implements IView {
             scene = new Scene(root);
             root.getStylesheets().add(LoaderRisorse.globalCss);
             root.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.AM, "App"));
-            
             AnchorPane pane = (AnchorPane) root;
             appContainer = pane;
             
@@ -123,9 +147,7 @@ public class PageView implements IView {
             controller.setAppData(app);
 
             scene.getStylesheets().add(LoaderRisorse.globalCss);
-            
             Rectangle2D dimSchermo = Screen.getPrimary().getVisualBounds();
-            
             stage.setScene(scene);
             stage.setWidth(dimSchermo.getWidth());
             stage.setHeight(dimSchermo.getHeight());
@@ -135,31 +157,5 @@ public class PageView implements IView {
             stage.show();
     	}
     }
-    
-	@Override
-	public void setController(IController c) {
-		this.controller = c;
-		controller.setView(this);
-	}
-
-	@Override
-	public IController getController() {
-		return this.controller;
-	}
-	
-	@Override
-	public void successo(String m) {
-		new Notification(m, NotificationType.SUCCESS).show();
-	}
-	
-	@Override
-	public void errore(String s) {
-		new Notification(s, NotificationType.ERROR).show();
-	}
-
-	@Override
-	public void info(String m) {
-		new Notification(m, NotificationType.INFO).show();
-	}
     
 }

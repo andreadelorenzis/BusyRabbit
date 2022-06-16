@@ -1,8 +1,6 @@
 package main.model.goalmanager.classi;
 
 import java.util.UUID;
-
-import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IItem;
 
 public class Item implements IItem {
@@ -14,7 +12,7 @@ public class Item implements IItem {
     private String nome;
     
     /**
-     * Se l'item Ã¨ completato
+     * Se l'item è completato
      */
     private boolean completato = false;
     
@@ -38,6 +36,11 @@ public class Item implements IItem {
         this.id = UUID.randomUUID().toString();
     }
 
+    /**
+     * 
+     * @param nome
+     * @param id
+     */
     public Item(String nome, String id) {
         this(nome);
         this.id = id;

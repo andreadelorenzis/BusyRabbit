@@ -116,11 +116,31 @@ public interface IAbitudine {
 	 */
 	public String getId();
 	
+	/**
+	 * Ottiene le informazioni di completamente delle abitudini in un dato anno
+	 * 
+	 * @param year
+	 */
 	public List<Integer> getYearRecords(int year);
 	
+	/**
+	 * Ottiene le informazioni di completamente delle abitudini in nell'ultima settimana
+	 */
 	public List<Integer> getWeekRecords();
 	
-	public Map<Integer, List<Integer>> getYearData();
-	
+	/**
+	 * Aggiunge completamento abitudine allo storico
+	 * 
+	 * @param date
+	 */
 	public void addHabitRecord(LocalDate date);
+	
+	/**
+	 * Rimuove completamento abitudine allo storico
+	 * 
+	 * @param date
+	 */
+	public void removeHabitRecord(LocalDate date);
+	
+	public Map<Integer, List<Integer>> getYearData();
 }

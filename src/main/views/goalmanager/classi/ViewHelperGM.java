@@ -12,6 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.views.LoaderRisorse;
 
+/**
+ * Classe modulo che contiene servizi per la classe GoalManagerView
+ */
 public class ViewHelperGM {
 	public static Image arrowIcon = LoaderRisorse.getImg("arrow-down-white.png");
 	

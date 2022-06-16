@@ -5,9 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import main.model.goalmanager.interfacce.IAzione;
-import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 
 public abstract class Azione implements IAzione {
@@ -19,12 +17,12 @@ public abstract class Azione implements IAzione {
     private String nome;
 
     /**
-     * Se l'azione Ã¨ completata o meno
+     * Se l'azione è completata o meno
      */
     private boolean completata = false;
     
     /**
-     * Il valore di cui viene incrementato l'obiettivo a cui Ã¨ collegata l'azione
+     * Il valore di cui viene incrementato l'obiettivo a cui è collegata l'azione
      */
     private int incremento;
     
@@ -39,7 +37,7 @@ public abstract class Azione implements IAzione {
     private LocalDate dataInizio;
     
     /**
-     * L'obiettivo a cui l'azione Ã¨ collegata
+     * L'obiettivo a cui l'azione è collegata
      */
     private IObiettivoAzione obiettivo;
     

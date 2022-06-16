@@ -1,12 +1,12 @@
 package main.views.timetracker.interfacce;
 
 import java.util.List;
-
-import main.controller.timetracker.ITimeTrackerController;
 import main.model.timetracker.interfacce.IAttività;
-import main.model.timetracker.interfacce.IProgetto;
 import main.views.IView;
 
+/**
+ * View a cui è collegato il GoalManagerController
+ */
 public interface ITimeTrackerView extends IView {
 	
 	public void aggiornaView(List<List<IAttività>> giorni, int pagina);

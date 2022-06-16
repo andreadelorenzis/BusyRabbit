@@ -26,7 +26,7 @@ import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
@@ -215,7 +215,7 @@ class AccountManagerTests {
 	@Test 
 	public void testLetturaAbitudini() {
 		app = AccountManager.getInstance();
-		IAbitudineTracker ht = app.getHT();
+		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
 		accedi(app);
@@ -239,7 +239,7 @@ class AccountManagerTests {
 	@Test
 	public void testLetturaStoricoAbitudini() {
 		app = AccountManager.getInstance();
-		IAbitudineTracker ht = app.getHT();
+		IHabitTracker ht = app.getHT();
 		
 		// accede all'account presente nel database
 		accedi(app);

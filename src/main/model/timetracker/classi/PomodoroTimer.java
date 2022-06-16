@@ -66,7 +66,7 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 		});
 	}
 	
-    //---------------------------- METODI PUBBLICI -----------------------------
+	//---------------------------- METODI PRIVATI ------------------------------
 	/**
 	 * Permette di andare alla fase successiva programmata per il pomodoro timer
 	 */
@@ -96,6 +96,7 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 		}
 	}
 	
+	//---------------------------- METODI PUBBLICI -----------------------------
 	@Override 
 	public void avvia() {
 		if(!avviato) {

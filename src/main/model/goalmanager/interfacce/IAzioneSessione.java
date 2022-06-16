@@ -3,8 +3,8 @@ package main.model.goalmanager.interfacce;
 import main.model.timetracker.classi.TimerSemplice;
 
 /**
- * Azione associata ad una durata di tempo. L'azione puÃ² essere completata al termine di un timer
- * settato con la durata dell'azione (Es: studiare 2 ore)
+ * Azione associata ad una durata di tempo. L'azione può essere completata al termine di un timer
+ * impostato con la durata dell'azione (Es: studiare 2 ore)
  */
 public interface IAzioneSessione extends IAzione {
     
@@ -32,10 +32,14 @@ public interface IAzioneSessione extends IAzione {
     
     /**
      * 
-     * @param durata
+     * @param durata durata del timer
      */
     public void setDurata(int durata);
     
+    /**
+     * 
+     * @return se il timer è avviato o meno
+     */
     public boolean getAvviato();
     
 }

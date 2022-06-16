@@ -25,6 +25,10 @@ public class MeseAttività {
 	private Map<Integer, GiornoAttività> giorni = new TreeMap<>(Collections.reverseOrder());
 	
     //----------------------------- COSTRUTTORI --------------------------------
+	/**
+	 * 
+	 * @param mese
+	 */
 	public MeseAttività(Month mese) {
 		this.mese = mese;
 	}

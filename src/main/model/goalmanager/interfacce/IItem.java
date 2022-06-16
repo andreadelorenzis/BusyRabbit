@@ -1,7 +1,7 @@
 package main.model.goalmanager.interfacce;
 
 /**
- * Item da completare che puÃ² essere assegnato ad un'AzioneScomponibile. 
+ * Item da completare che può essere assegnato ad un'AzioneScomponibile. 
  */
 public interface IItem {
     
@@ -12,7 +12,7 @@ public interface IItem {
     
     /**
      * 
-     * @return se l'item Ã¨ completato
+     * @return se l'item è completato
      */
     public boolean getCompletato();
     

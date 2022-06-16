@@ -27,7 +27,7 @@ public class ObiettivoAzione extends Obiettivo implements IObiettivoAzione {
     private int valoreAttuale = 0;
     
     /**
-     * L'unit√† di misura del valore di questo obiettivo
+     * L'unit‡† di misura del valore di questo obiettivo
      */
     private String unit‡;
 

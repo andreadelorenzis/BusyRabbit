@@ -8,36 +8,72 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.model.goalmanager.classi.GoalManager;
 import main.model.goalmanager.interfacce.IGoalManager;
 import main.model.habittracker.classi.HabitTracker;
-import main.model.habittracker.interfacce.IAbitudineTracker;
+import main.model.habittracker.interfacce.IHabitTracker;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.ITimeTracker;
 
 public class AccountManager implements IAccountManager {
-	private static AccountManager app = null;
+	//-------------------------------- CAMPI -----------------------------------
+	/*
+	 * SINGLETONE
+	 */
+	private static AccountManager accountManager = null;
 	
+	/*
+	 * Istanza di TimeTacker
+	 */
 	private ITimeTracker tt = TimeTracker.getInstance();
+	
+    /*
+     * Istanza di GoalManager
+     */
 	private IGoalManager gm = GoalManager.getInstance();
-	private IAbitudineTracker ht = HabitTracker.getInstance();
+	
+	/*
+	 * Istanza di HabitTracker
+	 */
+	private IHabitTracker ht = HabitTracker.getInstance();
+	
+	/*
+	 * Email dell'account
+	 */
 	private String email = "";
+	
+	/*
+	 * Password dell'account
+	 */
 	private String password = "";
+	
+	/*
+	 * Utente loggato o meno
+	 */
 	private boolean accessoEffettuato = false;
+	
+	/*
+	 * Oggetto per scrivere i dati
+	 */
     private AccountWriter writerApp = new AccountWriter(tt, gm, ht);
+    
+    /*
+     * Oggeto per leggere i dati 
+     */
     private AccountReader readerApp = new AccountReader(tt, gm, ht);
 
+    //----------------------------- COSTRUTTORI --------------------------------
     private AccountManager() {
 
     }
     
+    //--------------------------- METODI PUBBLICI ------------------------------
     public static AccountManager getInstance() {
-    	if(app == null) {
-    		app = new AccountManager();
+    	if(accountManager == null) {
+    		accountManager = new AccountManager();
     	}
-    	return app;
+    	return accountManager;
     }
     
 	@Override
@@ -148,7 +184,7 @@ public class AccountManager implements IAccountManager {
 	}
 	
 	@Override
-	public IAbitudineTracker getHT() {
+	public IHabitTracker getHT() {
 		return ht;
 	}
 	

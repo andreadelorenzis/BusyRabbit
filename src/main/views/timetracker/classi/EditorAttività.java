@@ -21,19 +21,14 @@ public class EditorAttività {
     
     @FXML
     private TextField nameField;
-    
     @FXML 
     private HBox btnProgetto;
-    
     @FXML
     private VBox listaProgetti;
-    
     @FXML
     private BorderPane menuProgetti;
-    
     @FXML
     private DatePicker datePicker;
-    
     @FXML
     private TextField oraField1;
     @FXML

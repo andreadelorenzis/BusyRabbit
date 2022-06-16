@@ -3,7 +3,7 @@ package main.model.goalmanager.interfacce;
 import java.util.List;
 
 /**
- * Azione suddivisibile ulteriormente in degli item. Il completamento degli item NON vieta all'utente
+ * Azione suddivisibile ulteriormente in degli item. Il completamento degli item non vieta all'utente
  * di completare l'azione direttamente.
  */
 public interface IAzioneScomponibile extends IAzione {

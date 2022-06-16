@@ -1,6 +1,5 @@
 package main.controller.goalmanager;
 
-import main.model.goalmanager.classi.AzioneScomponibile;
 import main.model.goalmanager.classi.GoalManager;
 import main.model.goalmanager.classi.Item;
 import main.model.goalmanager.interfacce.IAzione;
@@ -123,6 +122,13 @@ public class GoalManagerController implements IGoalManagerController {
 	@Override
 	public void completaItem(Item item) {
 		item.completa();
+	}
+	
+	@Override
+	public void eliminaItem(IAzioneScomponibile a, Item item) {
+		a.eliminaItem(item.getId());
+		view.info("Item eliminato");
+		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 	
 	@Override

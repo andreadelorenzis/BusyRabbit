@@ -5,6 +5,9 @@ import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITrackable;
 
+/**
+ * Controller collegato a TimeTrackerView
+ */
 public interface ITimeTrackerController extends ITrackable, IController {
 	
 	public void aggiungiProgetto(IProgetto p);
