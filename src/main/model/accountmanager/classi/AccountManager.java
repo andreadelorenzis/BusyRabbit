@@ -56,16 +56,23 @@ public class AccountManager implements IAccountManager {
 	/*
 	 * Oggetto per scrivere i dati
 	 */
-    private AccountWriter writerApp = new AccountWriter(tt, gm, ht);
+    private AccountWriter accountWriter = new AccountWriter();
     
     /*
      * Oggeto per leggere i dati 
      */
-    private AccountReader readerApp = new AccountReader(tt, gm, ht);
+    private AccountReader accountReader = new AccountReader();
 
     //----------------------------- COSTRUTTORI --------------------------------
     private AccountManager() {
 
+    }
+    
+    //---------------------------- METODI PRIVATI ------------------------------
+    private void inizializza(String email, String password) {
+    	this.accessoEffettuato = true;
+    	this.email = email;
+    	this.password = password;
     }
     
     //--------------------------- METODI PUBBLICI ------------------------------
@@ -115,17 +122,13 @@ public class AccountManager implements IAccountManager {
 		}
 	}
 	
-	private void inizializza(String email, String password) {
-		this.accessoEffettuato = true;
-		this.email = email;
-		this.password = password;
-	}
-	
 	@Override
 	public void accedi(String email, String password) throws WrongCredentialsException {
 		try {	
-			// trovo il file e lo apro in lettura
+			// trova il file e lo apro in lettura
 			BufferedReader reader = new BufferedReader(new FileReader("database/" + email + ".txt"));
+			
+			// lettura password
 			String primaLinea = reader.readLine();
 			this.password = primaLinea.split(",")[1];
 			if(this.password.equals(password)) {
@@ -134,19 +137,19 @@ public class AccountManager implements IAccountManager {
 				reader.readLine();
 
 				// lettura progetti
-				readerApp.leggiProgetti(reader);
+				accountReader.leggiProgetti(reader, tt);
 				
 				// lettura Attività
-				readerApp.leggiAttività(reader);
+				accountReader.leggiAttività(reader, tt);
 				
 				// lettura obiettivi
-				readerApp.leggiObiettivi(reader);
+				accountReader.leggiObiettivi(reader, gm);
 				
 				// lettura abitudini
-				readerApp.leggiAbitudini(reader);
+				accountReader.leggiAbitudini(reader, ht);
 				
 				// lettura storico abitudini
-				readerApp.leggiStoricoAbitudini(reader);
+				accountReader.leggiStoricoAbitudini(reader, ht);
 				
 				reader.close();
 			} else {
@@ -205,17 +208,30 @@ public class AccountManager implements IAccountManager {
 			BufferedWriter writer;
 			try {
 				writer = new BufferedWriter(new FileWriter("database/" + email + ".txt", false));
+				
+				// scrittura password
 				writer.write("password," + password + "\n");
+				
+				// scrittura progetti
 				writer.write("---progetti---\n");
-				writerApp.scriviProgetti(writer);
+				accountWriter.scriviProgetti(writer, tt);
+				
+				// scrittura attività
 				writer.write("---attivita---\n");
-				writerApp.scriviAttività(writer);
+				accountWriter.scriviAttività(writer, tt);
+				
+				// scrittura obiettivi
 				writer.write("---obiettivi---\n");
-				writerApp.scriviObiettivi(writer, gm.getObiettivi());
+				accountWriter.scriviObiettivi(writer, gm.getObiettivi());
+				
+				// scrittura abitudini
 				writer.write("---abitudini---\n");
-				writerApp.scriviAbitudini(writer);
+				accountWriter.scriviAbitudini(writer, ht);
+				
+				// scrittura storico abitudini
 				writer.write("---storico-abitudini---\n");
-				writerApp.scriviStoricoAbitudini(writer);
+				accountWriter.scriviStoricoAbitudini(writer, ht);
+				
 				writer.close();
 			} catch (IOException e) {
 				e.printStackTrace();

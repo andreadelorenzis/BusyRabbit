@@ -75,16 +75,6 @@ public class PageView implements IView {
 	public void info(String m) {
 		new Notification(m, NotificationType.INFO).show();
 	}
-	
-    @FXML
-    public void apriPaginaLogin(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Login"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add(LoaderRisorse.globalCss);
-        stage.setScene(scene);
-        stage.show();
-    }
     
 	//---------------------------- METODI PRIVATI ------------------------------
     @FXML
@@ -92,7 +82,7 @@ public class PageView implements IView {
     	AccessController accessController = (AccessController) controller;
     	String email = emailLogField.getText();
     	String password = passLogField.getText();
-    	if(!email.isBlank() && !password.isBlank()) {
+    	if(/*!email.isBlank() && !password.isBlank()*/true) {
 	    	boolean result = accessController.accedi(email, password);
 	    	if(result) {
 	    		apriSchermataPrincipale(event);	

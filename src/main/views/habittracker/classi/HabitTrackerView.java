@@ -54,6 +54,7 @@ import main.views.timetracker.classi.ViewHelperTT;
 
 public class HabitTrackerView implements IHabitTrackerView, ITrackable {
 
+	//-------------------------------- CAMPI ----------------------------------- 
     @FXML
     private VBox abitudiniBox;
     @FXML
@@ -85,6 +86,7 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
     	visualizzaAbitudiniGiornaliere();
     }
     
+    //--------------------------- METODI PUBBLICI ------------------------------
 	@Override
 	public void setController(IController c) {
 		this.controller = (IHabitTrackerController) c;
@@ -264,6 +266,7 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
     	this.apriEditorAbitudine(null, true);
     }
     
+    //---------------------------- METODI PRIVATI ------------------------------
     /**
      * Apre l'editor delle azioni in aggiunta/modifica.
      */
@@ -300,10 +303,65 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
         }
     }
     
+    /**
+     * Elimina un item da un'AbitudineScomponibile
+     */
     private void eliminaItem(IAbitudineScomponibile a, Item i) {
     	this.controller.eliminaItem(a, i);
     }
     
+    /**
+     * Crea il pulsante di opzioni di un'abitudine
+     * 
+     * @param pane
+     * @param abitudine
+     */
+    private void creaPulsanteMenuAbitudine(BorderPane pane, IAbitudine abitudine) {
+        // crea pulsante apertura menù abitudine
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        HBox editBtn = ViewHelper.creaBtnEdit(); 
+        hBox.getChildren().addAll(editBtn);
+     
+        // crea il menu dropdown
+        ContextMenu menu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Modifica");
+        MenuItem menuItem2 = new MenuItem("Elimina");
+        menu.getStyleClass().add("edit-menu");
+        menuItem1.setOnAction((ActionEvent e) -> {
+        	e.consume();
+        	try {
+        		apriEditorAbitudine(abitudine, false);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+        });
+        menuItem2.setOnAction((ActionEvent e) -> {
+        	controller.eliminaAbitudine(abitudine);
+        	this.aggiornaAbitudini();
+        	new Notification("Abitudine eliminata.", NotificationType.INFO).show();
+        });
+        menu.getItems().addAll(menuItem1, menuItem2);
+        
+        // Evento per il click del menù attività
+        editBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+            	t.consume();
+            	menu.show(editBtn, t.getScreenX(), t.getScreenY());
+            }
+        }); 
+    
+        pane.setRight(hBox);
+    }
+    
+    /**
+     * Crea la view di una singola abitudine
+     * 
+     * @param abitudine
+     * @param isDaily
+     * @return
+     */
     private BorderPane creaViewAbitudine(IAbitudine abitudine, boolean isDaily) {
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(10, 0, 10, 0));
@@ -353,106 +411,10 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
             
             if(abitudine instanceof AbitudineScomponibile) {
             	IAbitudineScomponibile abitudineScomponibile = (IAbitudineScomponibile) abitudine;
-                
-                // crea container per gli item
-                VBox itemContainer = new VBox();
-                itemContainer.getStyleClass().add("item-container");
-            	container.getChildren().add(itemContainer);
-            	
-            	// crea pulsante aggiunta item
-            	HBox hBox = ViewHelper.creaBtnAggiunta("Item");
-            	hBox.getStyleClass().add("aggiunta-item");
-            	itemContainer.getChildren().add(hBox);
-            	pane.setBottom(itemContainer);
-            	
-            	// collega evento aggiunta item
-                hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent t) {
-                    	try {
-							apriEditorItem(abitudineScomponibile);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-                    }
-                });
-            	
-                // aggiunge gli item dell'abitudine scomponibile
-                if(abitudineScomponibile.getItems().size() > 0) { 
-                	for(IItem item : abitudineScomponibile.getItems()) {
-                		
-                		// crea pane item
-                		BorderPane itemPane = new BorderPane();
-                		itemPane.setPadding(new Insets(0, 10, 0, 0));
-                		itemContainer.getChildren().add(itemPane);
-                		
-                		// crea checkbox item
-                		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
-                		itemCheck.getStyleClass().add("item-checkbox");
-                		itemPane.setLeft(itemCheck);
-                		
-                		// se l'abitudine è completata, completa anche l'item
-                		if(abitudineScomponibile.isCompleted())
-                			itemCheck.setSelected(true);
-                		
-                        // collega evento click checkbox abitudine
-                        itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                            public void handle(ActionEvent t) {
-                            	t.consume();
-                                controller.completaItem((Item) item);
-                            }
-                        });
-                        
-                		// aggiunge immagine eliminazione
-                		HBox trashImg = ViewHelper.creaBtn(LoaderRisorse.getImg("trash.png"), 16);
-                		itemPane.setRight(trashImg);
-                		
-                		// collega evento eliminazione
-                		trashImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                            public void handle(MouseEvent t) {
-                                eliminaItem(abitudineScomponibile, (Item) item);
-                            }
-                        });
-                	}
-                }
+                this.creaViewAbitudineScomponibile(container, pane, abitudineScomponibile);
             } else if(abitudine instanceof AbitudineSessione) {
         		IAbitudineSessione abitudineSessione = (IAbitudineSessione) abitudine;
-        		
-        		// aggiunge i controlli del timer all'azione sessione
-        		TimerSemplice timer = new TimerSemplice(abitudineSessione.getDuration(), this);
-        		HBox timerContainer = new HBox();
-        		timerContainer.getStyleClass().add("session-container");
-        		timerContainer.setAlignment(Pos.CENTER_LEFT);
-        		String durata = ViewHelperTT.formattaOrologio(abitudineSessione.getDuration()*60);
-        		Label tempo = new Label(durata);
-        		tempo.getStyleClass().add("session-tempo");
-        		Button timerBtn = new Button("AVVIA");
-        		timerBtn.getStyleClass().add("session-btn");
-        		timerContainer.getChildren().addAll(timerBtn, tempo);
-        		pane.setBottom(timerContainer);
-        		
-        		// se l'azione è completate, disabilita il timer
-        		if(abitudineSessione.isCompleted()) 
-        			timerBtn.setDisable(true);
-        		
-        		// evento timer
-        		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent t) {
-                    	t.consume();
-                    	labelSessioneCorrente = tempo;
-                    	btnSessioneCorrente = timerBtn;
-                        if(abitudineSessione.isStarted()) {
-                        	controller.terminaAzioneSessione(abitudineSessione);
-                        	timer.termina();
-                        	timerBtn.setText("AVVIA");
-                        	timerBtn.setStyle("-fx-background-color: #1ABC9C");
-                        } else {
-                        	abitudineSessione.startSession();;
-                        	timer.avvia();
-                        	timerBtn.setText("STOP");
-                        	timerBtn.setStyle("-fx-background-color: #E7515A");
-                        }
-                    }
-                });
+        		this.creaViewAbitudineSessione(pane, abitudineSessione);
             }
             
             pane.setLeft(check);
@@ -461,43 +423,135 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
             pane.setLeft(ViewHelper.creaElementoLista(abitudine.getName()));
         }
         
-        // crea pulsante apertura menù abitudine
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER);
-        HBox editBtn = ViewHelper.creaBtnEdit(); 
-        hBox.getChildren().addAll(editBtn);
-     
-        // crea il menu dropdown
-        ContextMenu menu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Modifica");
-        MenuItem menuItem2 = new MenuItem("Elimina");
-        menu.getStyleClass().add("edit-menu");
-        menuItem1.setOnAction((ActionEvent e) -> {
-        	e.consume();
-        	try {
-        		apriEditorAbitudine(abitudine, false);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-        });
-        menuItem2.setOnAction((ActionEvent e) -> {
-        	controller.eliminaAbitudine(abitudine);
-        	this.aggiornaAbitudini();
-        	new Notification("Abitudine eliminata.", NotificationType.INFO).show();
-        });
-        menu.getItems().addAll(menuItem1, menuItem2);
-        
-        // Evento per il click del menù attività
-        editBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-            	t.consume();
-            	menu.show(editBtn, t.getScreenX(), t.getScreenY());
-            }
-        }); 
-    
-        pane.setRight(hBox);
+        // aggiunge pulsante di edit
+        this.creaPulsanteMenuAbitudine(pane, abitudine);
+ 
         return pane;
+    }
+    
+    /**
+     * Crea la view di un AbitudineSessione
+     * 
+     * @param pane
+     * @param abitudineSessione
+     */
+    private void creaViewAbitudineSessione(BorderPane pane, IAbitudineSessione abitudineSessione) {
+		// aggiunge i controlli del timer all'azione sessione
+		TimerSemplice timer = new TimerSemplice(abitudineSessione.getDuration(), this);
+		HBox timerContainer = new HBox();
+		timerContainer.getStyleClass().add("session-container");
+		timerContainer.setAlignment(Pos.CENTER_LEFT);
+		String durata = ViewHelperTT.formattaOrologio(abitudineSessione.getDuration()*60);
+		Label tempo = new Label(durata);
+		tempo.getStyleClass().add("session-tempo");
+		Button timerBtn = new Button("AVVIA");
+		timerBtn.getStyleClass().add("session-btn");
+		timerContainer.getChildren().addAll(timerBtn, tempo);
+		pane.setBottom(timerContainer);
+		
+		// se l'azione è completate, disabilita il timer
+		if(abitudineSessione.isCompleted()) 
+			timerBtn.setDisable(true);
+		
+		// evento timer
+		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+            	t.consume();
+            	labelSessioneCorrente = tempo;
+            	btnSessioneCorrente = timerBtn;
+                if(abitudineSessione.isStarted()) {
+                	controller.terminaAzioneSessione(abitudineSessione);
+                	timer.termina();
+                	timerBtn.setText("AVVIA");
+                	timerBtn.setStyle("-fx-background-color: #1ABC9C");
+                } else {
+                	abitudineSessione.startSession();;
+                	timer.avvia();
+                	timerBtn.setText("STOP");
+                	timerBtn.setStyle("-fx-background-color: #E7515A");
+                }
+            }
+        });
+    }
+    
+    /**
+     * Crea la view di un AbitudineScomponibile
+     * 
+     * @param container
+     * @param pane
+     * @param abitudineScomponibile
+     */
+    private void creaViewAbitudineScomponibile(VBox container, BorderPane pane, IAbitudineScomponibile abitudineScomponibile) {
+        // crea container per gli item
+        VBox itemContainer = new VBox();
+        itemContainer.getStyleClass().add("item-container");
+    	container.getChildren().add(itemContainer);
+    	
+    	// crea pulsante aggiunta item
+    	HBox hBox = ViewHelper.creaBtnAggiunta("Item");
+    	hBox.getStyleClass().add("aggiunta-item");
+    	itemContainer.getChildren().add(hBox);
+    	pane.setBottom(itemContainer);
+    	
+    	// collega evento aggiunta item
+        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	try {
+					apriEditorItem(abitudineScomponibile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+            }
+        });
+    	
+        // aggiunge gli item dell'abitudine scomponibile
+        if(abitudineScomponibile.getItems().size() > 0) { 
+        	for(IItem item : abitudineScomponibile.getItems()) {
+        		this.creaViewItem(itemContainer, abitudineScomponibile, item);
+        	}
+        }
+    }
+    
+    /**
+     * Crea la view di un item
+     * 
+     * @param itemContainer
+     * @param abitudineScomponibile
+     * @param item
+     */
+    private void creaViewItem(VBox itemContainer, IAbitudineScomponibile abitudineScomponibile, IItem item) {
+    	// crea pane item
+		BorderPane itemPane = new BorderPane();
+		itemPane.setPadding(new Insets(0, 10, 0, 0));
+		itemContainer.getChildren().add(itemPane);
+		
+		// crea checkbox item
+		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
+		itemCheck.getStyleClass().add("item-checkbox");
+		itemPane.setLeft(itemCheck);
+		
+		// se l'abitudine è completata, completa anche l'item
+		if(abitudineScomponibile.isCompleted())
+			itemCheck.setSelected(true);
+		
+        // collega evento click checkbox abitudine
+        itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+            	t.consume();
+                controller.completaItem((Item) item);
+            }
+        });
+        
+		// aggiunge immagine eliminazione
+		HBox trashImg = ViewHelper.creaBtn(LoaderRisorse.getImg("trash.png"), 16);
+		itemPane.setRight(trashImg);
+		
+		// collega evento eliminazione
+		trashImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                eliminaItem(abitudineScomponibile, (Item) item);
+            }
+        });
     }
     
     private String getColore(int conteggio, int record) {
@@ -516,6 +570,13 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
         return colore;
     }
     
+    /**
+     * Apre l'editor per l'aggiunta/modifica di un'abitudine
+     * 
+     * @param abitudine
+     * @param nuovo
+     * @throws IOException
+     */
     private void apriEditorAbitudine(IAbitudine abitudine, boolean nuovo) throws IOException {
         
         // crea il modal
@@ -608,6 +669,9 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
     	}
     }
 	
+    /**
+     * Modifica l'orologio dell'AbitudineSessione in corso
+     */
 	private void visualizzaOrologio(int o, int m, int s) {
 		String ore = ViewHelperTT.formattaDurata(o);
 		String minuti = ViewHelperTT.formattaDurata(m);

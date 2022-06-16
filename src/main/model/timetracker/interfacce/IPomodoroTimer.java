@@ -2,7 +2,7 @@ package main.model.timetracker.interfacce;
 
 /**
  * 
- * Un timer ad intervalli che funziona secondo la tecnica del pomodoro: si alternano sessioni di lavori e periodi di pausa. 
+ * Un timer ad intervalli che funziona secondo la tecnica del pomodoro: si alternano sessioni di lavoro a periodi di pausa. 
  * Dopo ogni sessione di lavoro c'è una pausa breve. Dopo N ripetizioni, c'è una pausa lunga. 
  * Di default il timer ha sessione 30M, pausa breve 5M, pausa lunga 10M, 3 cicli (sessione - pausa breve) dopo il quale inizia
  * una pausa lunga.

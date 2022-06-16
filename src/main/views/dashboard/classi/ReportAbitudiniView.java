@@ -72,6 +72,9 @@ public class ReportAbitudiniView {
     }
     
     //---------------------------- METODI PRIVATI ------------------------------
+    /**
+     * Rimuove evidenziazione dagli anni
+     */
     private void deselezionaAnni() {
     	for(Node anno : this.selezioneAnniBox.getChildren()) {
     		Label annoLabel = (Label) anno;
@@ -79,6 +82,9 @@ public class ReportAbitudiniView {
     	}
     }
     
+    /**
+     * Crea i cerchi di progresso per statistiche ultima settimana
+     */
     private AnchorPane creaViewProgressCircle(int totHabits, List<IAbitudine> completedHabits, LocalDate data) {
     	// formatta data
     	String formattedDate = data.format(DateTimeFormatter.ofPattern("dd MMM"));
@@ -160,7 +166,7 @@ public class ReportAbitudiniView {
         
         return container;
     }
-    
+
     private String getColore(double progress) {
         String colore = "#00E396";
         if(progress == 0.0) {

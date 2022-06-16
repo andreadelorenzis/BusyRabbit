@@ -218,7 +218,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         BorderPane pane = ViewHelperTT.creaPaneProgetto(progetto);
         
         // aggiunge pulsante di edit nella parte destra
-        HBox editBtn = creaViewEditBtn(progetto);
+        HBox editBtn = creaEditBtn(progetto);
         pane.setRight(editBtn);
         
         // aggiunge il progetto alla view
@@ -227,7 +227,13 @@ public class TimeTrackerView implements ITimeTrackerView {
         return pane;
     }
     
-    private HBox creaViewEditBtn(Object obj) {
+    /**
+     * Crea il pulsante di opzioni di attività e progetti
+     * 
+     * @param obj
+     * @return
+     */
+    private HBox creaEditBtn(Object obj) {
     	
     	// creo il pulsante
         HBox editBtn = ViewHelper.creaBtnEdit();
@@ -270,6 +276,13 @@ public class TimeTrackerView implements ITimeTrackerView {
         return editBtn;
     }   
     
+    /**
+     * Apre l'editor delle attività per modifica/aggiunta
+     * 
+     * @param attività
+     * @param progetti
+     * @throws IOException
+     */
     private void apriEditorAttività(IAttività attività, List<IProgetto> progetti) throws IOException {
     	
     	// crea il modal
@@ -321,6 +334,13 @@ public class TimeTrackerView implements ITimeTrackerView {
         }
     }
     
+    /**
+     * Apre l'editor dei progetti per modifica/aggiunta
+     * 
+     * @param progetto
+     * @param aggiunta
+     * @throws IOException
+     */
     private void apriEditorProgetto(IProgetto progetto, boolean aggiunta) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader();
     	fxmlLoader.setLocation(LoaderRisorse.getFXML(LoaderRisorse.TT, "EditorProgetto"));
@@ -370,6 +390,9 @@ public class TimeTrackerView implements ITimeTrackerView {
         }
     }
     
+    /**
+     * Chiude il menu dei progetti attualmente aperto
+     */
     private void chiudiMenuProgetti() {
     	if(menuProgettiAperto) {
     		menuProgettiAperto = false;
@@ -378,6 +401,12 @@ public class TimeTrackerView implements ITimeTrackerView {
     	}
     }
     
+    /**
+     * Visualizza la cronologia dei giorni con tutte le attività
+     * 
+     * @param giorni
+     * @param pagina
+     */
     private void creaCronologiaAttività(List<List<IAttività>> giorni, int pagina) {
     	
     	// resetto la view 
@@ -394,6 +423,12 @@ public class TimeTrackerView implements ITimeTrackerView {
         }
     }
     
+    /**
+     * Crea il pulsante di paginazione delle attività
+     * 
+     * @param pagina
+     * @return
+     */
     private HBox creaPageBtn(int pagina) {
     	int numGiorni = TimeTracker.getInstance().getNumGiorni();
     	
@@ -445,6 +480,11 @@ public class TimeTrackerView implements ITimeTrackerView {
         return form;
     }
     
+    /**
+     * Crea la view di un singolo giorno, contenente delle attività
+     * 
+     * @param giorno
+     */
     private void creaViewGiorno(List<IAttività> giorno) {
         
         // crea un border pane
@@ -484,6 +524,12 @@ public class TimeTrackerView implements ITimeTrackerView {
         }
     }
 
+    /**
+     * Crea la view di una singola attività
+     * 
+     * @param attività
+     * @return
+     */
     private BorderPane creaViewAttività(IAttività attività) {
         // crea un BorderPane.
         BorderPane pane = new BorderPane();
@@ -570,7 +616,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         label4.getStyleClass().add("durata-attivita");
         label4.setPadding(new Insets(20, 25, 20, 25));
         pane.setRight(attivitàDestra);
-        HBox btn = creaViewEditBtn(attività);
+        HBox btn = creaEditBtn(attività);
         HBox container = new HBox();
         container.setAlignment(Pos.CENTER);
         container.setPadding(new Insets(0, 25, 0, 0));
@@ -596,6 +642,9 @@ public class TimeTrackerView implements ITimeTrackerView {
     	return new Attività(a.getNome(), a.getData(), a.getOraInizio(), a.getDurata(), a.getProgetto(), a.getId());
     }
     
+    /**
+     * Crea il menù contenente la lista di tutti i progetti
+     */
     private BorderPane creaMenuProgetti(MouseEvent t, IAttività a, boolean menuForm) {
     	List<IProgetto> progetti = TimeTracker.getInstance().getProgetti();
     	
@@ -637,7 +686,6 @@ public class TimeTrackerView implements ITimeTrackerView {
 			AnchorPane.setTopAnchor(menuProgetti, 0.0);
 			container.getChildren().add(menuProgetti);
 		} else {
-			
 			// posiziona il menù in corrispondenza della rispettiva attività
 	    	stage.initStyle(StageStyle.TRANSPARENT);
 	    	stage.initModality(Modality.WINDOW_MODAL);
@@ -689,13 +737,8 @@ public class TimeTrackerView implements ITimeTrackerView {
                 	cambiaProgettoCorrente(TimeTracker.progettoDefault);
                 } else {
                 	IAttività copia = getCopiaAttività(a);
-                	IProgetto vecchioProgetto = a.getProgetto();
                 	copia.setProgettoPadre(TimeTracker.progettoDefault);
                 	controller.modificaAttività(a, copia);
-//                	if(!(vecchioProgetto.getId().equals(TimeTracker.progettoDefault.getId()))) {
-//                		new Notification("Attività modificata", NotificationType.SUCCESS).show();
-//                	}
-                	
                 }
                 chiudiMenuProgetti();
                 stage.close();
@@ -737,6 +780,9 @@ public class TimeTrackerView implements ITimeTrackerView {
         return menuProgetti;
     }
     
+    /**
+     * Cambia il progetto dell'attività attualmente monitorata
+     */
     private void cambiaProgettoCorrente(IProgetto progetto) {
     	this.boxProgetto.getChildren().clear(); 
     	IProgetto progettoDefault = TimeTracker.getInstance().progettoDefault;
@@ -844,6 +890,9 @@ public class TimeTrackerView implements ITimeTrackerView {
     	}
     }
     
+    /**
+     * Imposta le opzioni di tempo del timer
+     */
     @FXML 
     private void impostaTimer() throws IOException {
         

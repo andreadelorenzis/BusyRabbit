@@ -189,7 +189,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     }
     
     /**
-     * Crea a view di un singolo obiettivo.
+     * Crea la view di un generico Obiettivo
      */
     private BorderPane creaViewObiettivo(IObiettivo o) {
     	
@@ -229,7 +229,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         label.getStyleClass().add("data");
         vBox.getChildren().add(label);
 
-        HBox btnAggiunta;
         HBox boxBtns = new HBox();
         boxBtns.setAlignment(Pos.CENTER_RIGHT);
         
@@ -240,70 +239,12 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         
         // se è un obiettivo scomponibile
     	if(o instanceof ObiettivoScomponibile) {
-    		
-    		// crea pulsante di aggiunta sotto-obiettivi
-    		btnAggiunta = ViewHelper.creaBtnAggiunta("Sotto-obiettivo");
-            
-            // collega evento per aggiunta di un sotto-obiettivo.
-    		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent t) {
-                    try {
-                    	t.consume();
-                        aggiungiSottoObiettivo(o);
-                    } catch (IOException ex) {
-                        Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
-    		
-    		// se è presente almeno un sotto-obiettivo
-    		if(((ObiettivoScomponibile) o).getSottoObiettivi().size() > 0) {
-            	IObiettivoScomponibile os = (IObiettivoScomponibile) o;
-            	center.setCursor(Cursor.HAND);
-            	
-            	// crea label numero sotto-obiettivi
-            	HBox btnSottoObiettivi = ViewHelperGM.creaSottoObiettiviBtn(os.getSottoObiettivi().size(), center);
-            	boxBtns.getChildren().add(btnSottoObiettivi);
-                
-                // aggiungo container per sotto-obiettivi
-                VBox boxSottoObiettivi = new VBox();
-                boxSottoObiettivi.getStyleClass().add("box-sotto-obiettivi");
-                boxSottoObiettivi.setAlignment(Pos.TOP_RIGHT);
-                pane.setBottom(boxSottoObiettivi);
-                
-                // collega eventi per apertura sotto obiettivi.
-                EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent t) {
-                    	t.consume();
-                    	apriPaginaInfo(o);
-                        toggleSottoObiettivi(os, boxSottoObiettivi);
-                    }
-                };
-                btnSottoObiettivi.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
-                center.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
-                
-                // aggiunge obiettivo alla mappa sotto-obiettivi aperti
-                obiettiviAperti.put(os.getId(), false);
-                
-    		}
+    		IObiettivoScomponibile obiettivoScomponibile = (IObiettivoScomponibile) o;
+    		this.creaViewObiettivoScomponibile(vBox, center, obiettivoScomponibile, boxBtns, pane);
     	} else {
-
-    		// crea pulsante di aggiunta azioni
-    		btnAggiunta = ViewHelper.creaBtnAggiunta("Azione");
-    		
-            // collega evento per aggiunta di un'azione.
-    		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent t) {
-                    try {
-                    	t.consume();
-                    	apriEditorAzione(null, o, true);
-                    } catch (IOException ex) {
-                        Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
+    		IObiettivoAzione obiettivoAzione = (IObiettivoAzione) o;
+    		this.creaViewObiettivoAzione(vBox, obiettivoAzione);
     	}
-        vBox.getChildren().add(btnAggiunta);
         
         center.setCursor(Cursor.HAND);
 		// collega evento visualizzazione azioni obiettivo
@@ -329,6 +270,88 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         pane.setRight(boxBtns);
         
         return pane;
+    }
+    
+    /**
+     * Crea la view di un generico Obiettivo
+     * 
+     * @param vBox
+     * @param o obiettivo
+     */
+    private void creaViewObiettivoAzione(VBox vBox, IObiettivoAzione o) {
+		// crea pulsante di aggiunta azioni
+		HBox btnAggiunta = ViewHelper.creaBtnAggiunta("Azione");
+		vBox.getChildren().add(btnAggiunta);
+		
+        // collega evento per aggiunta di un'azione.
+		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                try {
+                	t.consume();
+                	apriEditorAzione(null, o, true);
+                } catch (IOException ex) {
+                    Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+    
+    /**
+     * Crea la view di un ObiettivoScomponibile
+     * 
+     * @param vBox
+     * @param center
+     * @param o
+     * @param boxBtns
+     * @param pane
+     */
+    private void creaViewObiettivoScomponibile(VBox vBox, HBox center, IObiettivoScomponibile o, HBox boxBtns, BorderPane pane) {
+		// crea pulsante di aggiunta sotto-obiettivi
+		HBox btnAggiunta = ViewHelper.creaBtnAggiunta("Sotto-obiettivo");
+		vBox.getChildren().add(btnAggiunta);
+        
+        // collega evento per aggiunta di un sotto-obiettivo.
+		btnAggiunta.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                try {
+                	t.consume();
+                    aggiungiSottoObiettivo(o);
+                } catch (IOException ex) {
+                    Logger.getLogger(GoalManagerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+		
+		// se è presente almeno un sotto-obiettivo
+		if(o.getSottoObiettivi().size() > 0) {
+        	IObiettivoScomponibile os = (IObiettivoScomponibile) o;
+        	center.setCursor(Cursor.HAND);
+        	
+        	// crea label numero sotto-obiettivi
+        	HBox btnSottoObiettivi = ViewHelperGM.creaSottoObiettiviBtn(os.getSottoObiettivi().size(), center);
+        	boxBtns.getChildren().add(btnSottoObiettivi);
+            
+            // aggiungo container per sotto-obiettivi
+            VBox boxSottoObiettivi = new VBox();
+            boxSottoObiettivi.getStyleClass().add("box-sotto-obiettivi");
+            boxSottoObiettivi.setAlignment(Pos.TOP_RIGHT);
+            pane.setBottom(boxSottoObiettivi);
+            
+            // collega eventi per apertura sotto obiettivi.
+            EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent t) {
+                	t.consume();
+                	apriPaginaInfo(o);
+                    toggleSottoObiettivi(os, boxSottoObiettivi);
+                }
+            };
+            btnSottoObiettivi.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+            center.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+            
+            // aggiunge obiettivo alla mappa sotto-obiettivi aperti
+            obiettiviAperti.put(os.getId(), false);
+            
+		}
     }
     
     /**
@@ -910,7 +933,11 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     }
     
     /**
-     * Crea la view di una singola azione.
+     * Crea la view di una singola Azione
+     * 
+     * @param azione
+     * @param todo
+     * @return BorderPane
      */
     private BorderPane creaViewAzione(IAzione azione, boolean todo) {
     	
@@ -937,107 +964,11 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         	
         	if(azione instanceof AzioneScomponibile) {
         		IAzioneScomponibile azioneScomponibile = (IAzioneScomponibile) azione;
-                
-                // crea container per gli item
-                VBox itemContainer = new VBox();
-                itemContainer.getStyleClass().add("item-container");
-            	container.getChildren().add(itemContainer);
-            	
-            	// crea pulsante aggiunta item
-            	HBox hBox = ViewHelper.creaBtnAggiunta("Item");
-            	hBox.getStyleClass().add("aggiunta-item");
-            	itemContainer.getChildren().add(hBox);
-            	pane.setBottom(itemContainer);
-            	
-            	// collega evento aggiunta item
-                hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent t) {
-                    	try {
-							apriEditorItem((AzioneScomponibile) azione);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-                    }
-                });
-            	
-                // aggiunge gli item dell'azione scomponibile
-                if(azioneScomponibile.getItems().size() > 0) { 
-                	for(IItem item : azioneScomponibile.getItems()) {
-                		
-                		// crea pane item
-                		BorderPane itemPane = new BorderPane();
-                		itemPane.setPadding(new Insets(0, 10, 0, 0));
-                		itemContainer.getChildren().add(itemPane);
-                		
-                		// crea checkbox item
-                		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
-                		itemCheck.getStyleClass().add("item-checkbox");
-                		itemPane.setLeft(itemCheck);
-                		
-                		// collega evento click checkbox azione
-                		itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                			public void handle(ActionEvent t) {
-                				t.consume();
-                				controller.completaItem((Item) item);
-                			}
-                		});
-                		
-                		// se l'azione è completata, completa anche l'item
-                		if(azioneScomponibile.getCompletata())
-                			itemCheck.setSelected(true);
-                		
-                		// aggiunge immagine eliminazione
-                		HBox trashImg = ViewHelper.creaBtn(LoaderRisorse.getImg("trash.png"), 16);
-                		itemPane.setRight(trashImg);
-                		
-                		// collega evento eliminazione
-                		trashImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                            public void handle(MouseEvent t) {
-                                eliminaItem(azioneScomponibile, (Item) item);
-                            }
-                        });
-                	}
-                }
+        		this.creaViewAzioneScomponibile(container, pane, azioneScomponibile);
                 
         	} else if(azione instanceof AzioneSessione) {
         		IAzioneSessione azioneSessione = (IAzioneSessione) azione;
-        		
-        		// aggiunge i controlli del timer all'azione sessione
-        		TimerSemplice timer = new TimerSemplice(azioneSessione.getDurata(), this);
-        		HBox timerContainer = new HBox();
-        		timerContainer.getStyleClass().add("session-container");
-        		timerContainer.setAlignment(Pos.CENTER_LEFT);
-        		String durata = ViewHelperTT.formattaOrologio(azioneSessione.getDurata()*60);
-        		Label tempo = new Label(durata);
-        		tempo.getStyleClass().add("session-tempo");
-        		Button timerBtn = new Button("AVVIA");
-        		timerBtn.getStyleClass().add("session-btn");
-        		timerContainer.getChildren().addAll(timerBtn, tempo);
-        		pane.setBottom(timerContainer);
-        		
-        		// se l'azione è completate, disabilita il timer
-        		if(azioneSessione.getCompletata()) 
-        			timerBtn.setDisable(true);
-        		
-        		// evento timer
-        		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent t) {
-                    	t.consume();
-                    	labelSessioneCorrente = tempo;
-                    	btnSessioneCorrente = timerBtn;
-                        if(azioneSessione.getAvviato()) {
-                        	controller.terminaAzioneSessione(azioneSessione);
-                        	timer.termina();
-                        	timerBtn.setText("AVVIA");
-                        	timerBtn.setStyle("-fx-background-color: #1ABC9C");
-                        } else {
-                        	azioneSessione.avviaSessione();
-                        	timer.avvia();
-                        	timerBtn.setText("STOP");
-                        	timerBtn.setStyle("-fx-background-color: #E7515A");
-                        }
-                    }
-                });
+        		this.creaViewAzioneSessione(pane, azioneSessione);
         	}
         } else {
         	pane.setLeft(ViewHelper.creaElementoLista(azione.getNome()));
@@ -1050,6 +981,134 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         return pane;
     }
     
+    /**
+     * Crea la view di un AzioneSessione
+     * 
+     * @param pane
+     * @param azioneSessione
+     */
+    private void creaViewAzioneSessione(BorderPane pane, IAzioneSessione azioneSessione) {
+		// aggiunge i controlli del timer all'azione sessione
+		TimerSemplice timer = new TimerSemplice(azioneSessione.getDurata(), this);
+		HBox timerContainer = new HBox();
+		timerContainer.getStyleClass().add("session-container");
+		timerContainer.setAlignment(Pos.CENTER_LEFT);
+		String durata = ViewHelperTT.formattaOrologio(azioneSessione.getDurata()*60);
+		Label tempo = new Label(durata);
+		tempo.getStyleClass().add("session-tempo");
+		Button timerBtn = new Button("AVVIA");
+		timerBtn.getStyleClass().add("session-btn");
+		timerContainer.getChildren().addAll(timerBtn, tempo);
+		pane.setBottom(timerContainer);
+		
+		// se l'azione è completate, disabilita il timer
+		if(azioneSessione.getCompletata()) 
+			timerBtn.setDisable(true);
+		
+		// evento timer
+		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+            	t.consume();
+            	labelSessioneCorrente = tempo;
+            	btnSessioneCorrente = timerBtn;
+                if(azioneSessione.getAvviato()) {
+                	controller.terminaAzioneSessione(azioneSessione);
+                	timer.termina();
+                	timerBtn.setText("AVVIA");
+                	timerBtn.setStyle("-fx-background-color: #1ABC9C");
+                } else {
+                	azioneSessione.avviaSessione();
+                	timer.avvia();
+                	timerBtn.setText("STOP");
+                	timerBtn.setStyle("-fx-background-color: #E7515A");
+                }
+            }
+        });
+    }
+    
+    /**
+     * Crea la view di un AzioneScomponibile
+     * 
+     * @param container
+     * @param pane
+     * @param azioneScomponibile
+     */
+    private void creaViewAzioneScomponibile(VBox container, BorderPane pane, IAzioneScomponibile azioneScomponibile) {
+        // crea container per gli item
+        VBox itemContainer = new VBox();
+        itemContainer.getStyleClass().add("item-container");
+    	container.getChildren().add(itemContainer);
+    	
+    	// crea pulsante aggiunta item
+    	HBox hBox = ViewHelper.creaBtnAggiunta("Item");
+    	hBox.getStyleClass().add("aggiunta-item");
+    	itemContainer.getChildren().add(hBox);
+    	pane.setBottom(itemContainer);
+    	
+    	// collega evento aggiunta item
+        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	try {
+					apriEditorItem(azioneScomponibile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+            }
+        });
+    	
+        // aggiunge gli item dell'azione scomponibile
+        if(azioneScomponibile.getItems().size() > 0) { 
+        	for(IItem item : azioneScomponibile.getItems()) {
+        		this.creaViewItem(itemContainer, azioneScomponibile, item);
+        	}
+        }
+    }
+    
+    /**
+     * Crea la view di un Item
+     * 
+     * @param itemContainer
+     * @param azioneScomponibile
+     * @param item
+     */
+    private void creaViewItem(VBox itemContainer, IAzioneScomponibile azioneScomponibile, IItem item) {
+		// crea pane item
+		BorderPane itemPane = new BorderPane();
+		itemPane.setPadding(new Insets(0, 10, 0, 0));
+		itemContainer.getChildren().add(itemPane);
+		
+		// crea checkbox item
+		CheckBox itemCheck = ViewHelperGM.creaCheckbox(item.getNome(), item.getCompletato());
+		itemCheck.getStyleClass().add("item-checkbox");
+		itemPane.setLeft(itemCheck);
+		
+		// collega evento click checkbox azione
+		itemCheck.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent t) {
+				t.consume();
+				controller.completaItem((Item) item);
+			}
+		});
+		
+		// se l'azione è completata, completa anche l'item
+		if(azioneScomponibile.getCompletata())
+			itemCheck.setSelected(true);
+		
+		// aggiunge immagine eliminazione
+		HBox trashImg = ViewHelper.creaBtn(LoaderRisorse.getImg("trash.png"), 16);
+		itemPane.setRight(trashImg);
+		
+		// collega evento eliminazione
+		trashImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+                eliminaItem(azioneScomponibile, (Item) item);
+            }
+        });
+    }
+    
+    /**
+     * Completa un'azione
+     */
     private void completaAzione(IAzione a) {
     	
     	// comunica con il modello
@@ -1082,6 +1141,9 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	apriEditorObiettivo(obiettivo, true, true);
     }
 	
+    /**
+     * Modifica l'orologio dell'AzioneSessione in corso
+     */
 	private void visualizzaOrologio(int o, int m, int s) {
 		String ore = ViewHelperTT.formattaDurata(o);
 		String minuti = ViewHelperTT.formattaDurata(m);

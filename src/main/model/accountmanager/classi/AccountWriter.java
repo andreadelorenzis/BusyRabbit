@@ -33,32 +33,149 @@ import main.model.timetracker.interfacce.ITimeTracker;
  */
 public class AccountWriter {
 	
-	/*
-	 * Istanza di TimeTracker
-	 */
-	private ITimeTracker tt;
-	
-	/*
-	 * Istanza di HabitTracker
-	 */
-	private IHabitTracker ht;
-	
-	//----------------------------- COSTRUTTORI --------------------------------
+	//---------------------------- METODI PRIVATI ------------------------------
 	/**
-	 * @param tt istanza di TimeTracker
-	 * @param gm istanza di GoalManager
-	 * @param ht istanza di HabitTracker
+	 * Scrive un ObiettivoScomponibile
 	 */
-	public AccountWriter(ITimeTracker tt, IGoalManager gm, IHabitTracker ht) {
-		this.tt = tt;
-		this.ht = ht;
+	private void scriviObiettivoScomponibile(BufferedWriter writer, IObiettivo o) throws IOException {
+		IObiettivoScomponibile os = (IObiettivoScomponibile) o;
+		String stringaObiettivo = "";
+		
+		// se il seguente obiettivo è un sotto-obiettivo
+		if(o.getObiettivoPadre() != null) {
+			String idPadre = o.getObiettivoPadre().getId();
+			stringaObiettivo = "obiettivo-scomponibile" + "," + true + "," + idPadre
+			+ "," + os.getNome() + "," + os.getDescrizione() + "," + os.getData().getDayOfMonth() 
+			+ "," + os.getData().getMonthValue() + "," + os.getData().getYear() + "," + os.getId() + "\n";
+		} else {
+			stringaObiettivo = "obiettivo-scomponibile" + "," + false + "," + os.getNome() 
+			+ "," + os.getDescrizione() + "," + os.getData().getDayOfMonth() + "," + os.getData().getMonthValue() 
+			+ "," + os.getData().getYear() + "," + os.getId() + "\n";
+		}
+		
+		writer.write(stringaObiettivo);
+		
+		// scrivo i sotto-obiettivi del seguente ObiettivoScomponibile
+		scriviObiettivi(writer, os.getSottoObiettivi());
 	}
-    
+	
+	/**
+	 * Scrive un ObiettivoAzione
+	 */
+	private void scriviObiettivoAzione(BufferedWriter writer, IObiettivo o) throws IOException {
+		IObiettivoAzione oa = (IObiettivoAzione) o;
+		String stringaObiettivo = "";
+		
+		// se il seguente obiettivo è un sotto-obiettivo
+		if(o.getObiettivoPadre() != null) {
+			String idPadre =  o.getObiettivoPadre().getId();
+			stringaObiettivo = "obiettivo-azione" + "," + true + "," + idPadre
+			+ "," + oa.getNome() + "," + oa.getDescrizione() + "," + oa.getData().getDayOfMonth()
+			+ "," + oa.getData().getMonthValue() + "," + oa.getData().getYear() 
+			+ "," + oa.getValoreTotale() + "," + oa.getUnità() + "," + oa.getId() + "\n";
+		} else {
+			stringaObiettivo = "obiettivo-azione" + "," + false + "," + oa.getNome() + 
+					"," + oa.getDescrizione() + "," + oa.getData().getDayOfMonth()
+					+ "," + oa.getData().getMonthValue() + "," + oa.getData().getYear() 
+					+ "," + oa.getValoreTotale() + "," + oa.getUnità() + "," + oa.getId() + "\n";
+		}
+		
+		writer.write(stringaObiettivo);
+		
+		// scrivo le azioni del seguente ObiettivoAzione
+		for(IAzione a : oa.getAzioni()) {
+			String stringaGiorni = "";
+			int i = 0;
+			for(DayOfWeek g : a.getGiorniRipetizione()) {
+				if(i == a.getGiorniRipetizione().size() - 1) {
+					stringaGiorni += g;
+				} else {
+					stringaGiorni += g + "-";
+				}
+				i++;
+			}
+			if(a instanceof AzioneScomponibile) {
+				this.scriviAzioneScomponibile(writer, a, stringaGiorni);
+			} else if(a instanceof AzioneSessione) {
+				this.scriviAzioneSessione(writer, a, stringaGiorni);
+			}
+		}
+	}
+	
+	/**
+	 * Scrive un AzioneScomponibile
+	 */
+	private void scriviAzioneScomponibile(BufferedWriter writer, IAzione a, String stringaGiorni) throws IOException {
+		String stringaAzione = "";
+		
+		IAzioneScomponibile as = (IAzioneScomponibile) a;
+		stringaAzione = "azione-scomponibile" + "," + as.getObiettivo().getId() 
+		+ "," + as.getNome() + "," + as.getIncremento() + "," + as.getDataInizio().getDayOfMonth()
+		+ "," + as.getDataInizio().getMonthValue() + "," + as.getDataInizio().getYear() 
+		+ "," + stringaGiorni + "," + as.getId() + "\n";
+		writer.write(stringaAzione);
+		
+		// scrivi gli item della seguente AzioneScomponibile
+		for(IItem it : as.getItems()) {
+			IAzioneScomponibile padre = (IAzioneScomponibile) it.getPadre();
+			String stringaItem = "item-azione" + "," + padre.getId() 
+			+ "," + it.getNome() + "," + it.getId() + "\n";
+			writer.write(stringaItem);
+		}
+	}
+	
+	/**
+	 * Scrive un AzioneSessione
+	 */
+	private void scriviAzioneSessione(BufferedWriter writer, IAzione a, String stringaGiorni) throws IOException {
+		String stringaAzione = "";
+		IAzioneSessione as = (IAzioneSessione) a;
+		stringaAzione = "azione-sessione" + "," + as.getObiettivo().getId() 
+				+ "," + as.getNome() + "," + as.getIncremento() + "," + as.getDataInizio().getDayOfMonth()
+				+ "," + as.getDataInizio().getMonthValue() + "," + as.getDataInizio().getYear() 
+				+ "," + stringaGiorni + "," + as.getDurata() + "," + as.getId() + "\n";
+		writer.write(stringaAzione);
+	}
+	
+	/**
+	 * Scrive un AbitudineScomponibile
+	 */
+	private void scriviAbitudineScomponibile(BufferedWriter writer, IAbitudine h, String stringaGiorni) throws IOException {
+		String stringaAbitudine = "";
+		String stringaItem = "";
+		IAbitudineScomponibile s = (IAbitudineScomponibile) h;
+		stringaAbitudine = "abitudine-semplice" + "," + s.getName() + "," + s.getDescription()
+		+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
+		+ "," + s.getStartDate().getYear() + "," + stringaGiorni + "," + s.getId() + "\n";
+		writer.write(stringaAbitudine);
+		
+		// scrive gli item della seguente abitudine semplice
+		for(IItem it : s.getItems()) {
+			IAbitudineScomponibile padre = (IAbitudineScomponibile) it.getPadre();
+			stringaItem = "item-abitudine" + "," + padre.getId() 
+					+ "," + it.getNome() + "," + it.getId() + "\n";
+			writer.write(stringaItem);
+		}
+	}
+	
+	/**
+	 * Scrive un AbitudineSessione
+	 */
+	private void scriviAbitudineSessione(BufferedWriter writer, IAbitudine h, String stringaGiorni) throws IOException {
+		String stringaAbitudine = "";
+		IAbitudineSessione s = (IAbitudineSessione) h;
+		stringaAbitudine = "abitudine-sessione" + "," + s.getName() + "," + s.getDescription()
+		+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
+		+ "," + s.getStartDate().getYear() + "," + stringaGiorni 
+		+ "," + s.getDuration() + "," + s.getId() + "\n"; 
+		writer.write(stringaAbitudine);
+	}
+	
 	//--------------------------- METODI PUBBLICI ------------------------------
 	/**
 	 * Scrive tutti i progetti sul file di testo
 	 */
-    public void scriviProgetti(BufferedWriter writer) {
+    public void scriviProgetti(BufferedWriter writer, ITimeTracker tt) {
 		try {
 			int i = 0;
 			for(IProgetto p : tt.getProgetti()) {
@@ -77,7 +194,7 @@ public class AccountWriter {
     /**
 	 * Scrive tutte le attività sul file di testo
 	 */
-    public void scriviAttività(BufferedWriter writer) {
+    public void scriviAttività(BufferedWriter writer, ITimeTracker tt) {
 		try {
 			for(IAttività a : tt.getAttività()) {
 				String idProgetto = "null";
@@ -102,83 +219,10 @@ public class AccountWriter {
 		try {
 			if(!obiettivi.isEmpty()) {
 				for(IObiettivo o : obiettivi) {
-					String stringaObiettivo = "";
 					if(o instanceof ObiettivoScomponibile) {
-						IObiettivoScomponibile os = (IObiettivoScomponibile) o;
-						
-						// se il seguente obiettivo è un sotto-obiettivo
-						if(o.getObiettivoPadre() != null) {
-							String idPadre = o.getObiettivoPadre().getId();
-							stringaObiettivo = "obiettivo-scomponibile" + "," + true + "," + idPadre
-							+ "," + os.getNome() + "," + os.getDescrizione() + "," + os.getData().getDayOfMonth() 
-							+ "," + os.getData().getMonthValue() + "," + os.getData().getYear() + "," + os.getId() + "\n";
-						} else {
-							stringaObiettivo = "obiettivo-scomponibile" + "," + false + "," + os.getNome() 
-							+ "," + os.getDescrizione() + "," + os.getData().getDayOfMonth() + "," + os.getData().getMonthValue() 
-							+ "," + os.getData().getYear() + "," + os.getId() + "\n";
-						}
-						
-						writer.write(stringaObiettivo);
-						
-						// scrivo i sotto-obiettivi del seguente ObiettivoScomponibile
-						scriviObiettivi(writer, os.getSottoObiettivi());
-						
+						this.scriviObiettivoScomponibile(writer, o);
 					} else if (o instanceof ObiettivoAzione) {
-						IObiettivoAzione oa = (IObiettivoAzione) o;
-						
-						// se il seguente obiettivo è un sotto-obiettivo
-						if(o.getObiettivoPadre() != null) {
-							String idPadre =  o.getObiettivoPadre().getId();
-							stringaObiettivo = "obiettivo-azione" + "," + true + "," + idPadre
-							+ "," + oa.getNome() + "," + oa.getDescrizione() + "," + oa.getData().getDayOfMonth()
-							+ "," + oa.getData().getMonthValue() + "," + oa.getData().getYear() 
-							+ "," + oa.getValoreTotale() + "," + oa.getUnità() + "," + oa.getId() + "\n";
-						} else {
-							stringaObiettivo = "obiettivo-azione" + "," + false + "," + oa.getNome() + 
-									"," + oa.getDescrizione() + "," + oa.getData().getDayOfMonth()
-									+ "," + oa.getData().getMonthValue() + "," + oa.getData().getYear() 
-									+ "," + oa.getValoreTotale() + "," + oa.getUnità() + "," + oa.getId() + "\n";
-						}
-						
-						writer.write(stringaObiettivo);
-						
-						// scrivo le azioni del seguente ObiettivoAzione
-						for(IAzione a : oa.getAzioni()) {
-							String stringaAzione = "";
-							String stringaGiorni = "";
-							int i = 0;
-							for(DayOfWeek g : a.getGiorniRipetizione()) {
-								if(i == a.getGiorniRipetizione().size() - 1) {
-									stringaGiorni += g;
-								} else {
-									stringaGiorni += g + "-";
-								}
-								i++;
-							}
-							if(a instanceof AzioneScomponibile) {
-								IAzioneScomponibile as = (IAzioneScomponibile) a;
-								stringaAzione = "azione-scomponibile" + "," + as.getObiettivo().getId() 
-								+ "," + as.getNome() + "," + as.getIncremento() + "," + as.getDataInizio().getDayOfMonth()
-								+ "," + as.getDataInizio().getMonthValue() + "," + as.getDataInizio().getYear() 
-								+ "," + stringaGiorni + "," + as.getId() + "\n";
-								writer.write(stringaAzione);
-								
-								// scrivi gli item della seguente AzioneScomponibile
-								for(IItem it : as.getItems()) {
-									IAzioneScomponibile padre = (IAzioneScomponibile) it.getPadre();
-									String stringaItem = "item-azione" + "," + padre.getId() 
-									+ "," + it.getNome() + "," + it.getId() + "\n";
-									writer.write(stringaItem);
-								}
-							} else if(a instanceof AzioneSessione) {
-								IAzioneSessione as = (IAzioneSessione) a;
-								stringaAzione = "azione-sessione" + "," + as.getObiettivo().getId() 
-										+ "," + as.getNome() + "," + as.getIncremento() + "," + as.getDataInizio().getDayOfMonth()
-										+ "," + as.getDataInizio().getMonthValue() + "," + as.getDataInizio().getYear() 
-										+ "," + stringaGiorni + "," + as.getDurata() + "," + as.getId() + "\n";
-								writer.write(stringaAzione);
-							}
-						}
+						this.scriviObiettivoAzione(writer, o);
 					}
 				}
 			}
@@ -190,11 +234,9 @@ public class AccountWriter {
 	/**
 	 * Scrive tutte le abitudini sul file di testo
 	 */
-	public void scriviAbitudini(BufferedWriter writer) {
+	public void scriviAbitudini(BufferedWriter writer, IHabitTracker ht) {
 		try {
 			for(IAbitudine h : ht.getHabits()) {
-				String stringaAbitudine = "";
-				String stringaItem = "";
 				String stringaGiorni = "";
 				int i = 0;
 				for(DayOfWeek g : h.getDays()) {
@@ -206,28 +248,10 @@ public class AccountWriter {
 					i++;
 				}
 				if(h instanceof AbitudineScomponibile) {
-					IAbitudineScomponibile s = (IAbitudineScomponibile) h;
-					stringaAbitudine = "abitudine-semplice" + "," + s.getName() + "," + s.getDescription()
-					+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
-					+ "," + s.getStartDate().getYear() + "," + stringaGiorni + "," + s.getId() + "\n";
-					
-					// scrive gli item della seguente abitudine semplice
-					for(IItem it : s.getItems()) {
-						IAbitudineScomponibile padre = (IAbitudineScomponibile) it.getPadre();
-						stringaItem = "item-abitudine" + "," + padre.getId() 
-								+ "," + it.getNome() + "," + it.getId() + "\n";
-						writer.write(stringaItem);
-					}
+					this.scriviAbitudineScomponibile(writer, h, stringaGiorni);
 				} else if (h instanceof AbitudineSessione) {
-					IAbitudineSessione s = (IAbitudineSessione) h;
-					stringaAbitudine = "abitudine-sessione" + "," + s.getName() + "," + s.getDescription()
-					+ "," + s.getStartDate().getDayOfMonth() + "," + s.getStartDate().getMonthValue()
-					+ "," + s.getStartDate().getYear() + "," + stringaGiorni 
-					+ "," + s.getDuration() + "," + s.getId() + "\n"; 
+					this.scriviAbitudineSessione(writer, h, stringaGiorni);
 				}
-				writer.write(stringaAbitudine);
-				if(h instanceof AbitudineScomponibile)
-					writer.write(stringaItem);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -237,7 +261,7 @@ public class AccountWriter {
 	/**
 	 * Scrive tutte le informazioni di completamento storiche delle abitudini sul file di testo
 	 */
-	public void scriviStoricoAbitudini(BufferedWriter writer) {
+	public void scriviStoricoAbitudini(BufferedWriter writer, IHabitTracker ht) {
 		try {
 			for(IAbitudine h : ht.getHabits()) {
 				String stringaAbitudine = "";

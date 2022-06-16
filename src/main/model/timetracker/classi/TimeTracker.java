@@ -64,6 +64,9 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	 */
 	private int nGiorni = 0;
 	
+	/*
+	 * SINGLETONE
+	 */
 	private static TimeTracker timeTracker = null;
 	
     //---------------------------- COSTRUTTORI -------------------------------

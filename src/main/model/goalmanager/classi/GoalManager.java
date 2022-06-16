@@ -15,7 +15,7 @@ import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 public class GoalManager implements IGoalManager {
 	//-------------------------------- CAMPI -----------------------------------
 	/*
-	 * istanza SINGLETONE
+	 * SINGLETONE
 	 */
     private static GoalManager goalManager = null;
     
