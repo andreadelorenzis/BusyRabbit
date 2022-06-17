@@ -41,7 +41,8 @@ public class HabitTracker implements IHabitTracker {
 	public List<IAbitudine> calculateTodayHabits(LocalDate date) {
 		List<IAbitudine> habitsToday = new ArrayList<>();
 		for(IAbitudine h : habits) {
-			if(h.getDays().contains(date.getDayOfWeek())) {
+			if(h.getDays().contains(date.getDayOfWeek()) &&
+		      (h.getStartDate().isBefore(date) || h.getStartDate().isEqual(date))) {
 				habitsToday.add(h);
 			  }
 		}

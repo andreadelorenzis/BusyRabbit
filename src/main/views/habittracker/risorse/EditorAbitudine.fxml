@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="AnchorPane" minHeight="345.0" prefHeight="454.0" prefWidth="600.0" style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.habittracker.classi.EditorAbitudine">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="24.0" layoutY="52.0" prefHeight="59.0" prefWidth="562.0">
@@ -182,7 +181,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Spinner fx:id="durataSpinner" />
+            <Spinner fx:id="durataSpinner" editable="true" />
          </children>
       </HBox>
    </children>

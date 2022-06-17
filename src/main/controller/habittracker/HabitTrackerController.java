@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import main.model.goalmanager.classi.Item;
+import main.model.habittracker.classi.AbitudineSessione;
 import main.model.habittracker.classi.HabitTracker;
 import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
@@ -39,11 +40,17 @@ public class HabitTrackerController implements IHabitTrackerController {
 		String descrizione = h2.getDescription();
 		LocalDate data = h2.getStartDate();
 		List<DayOfWeek> giorni = h2.getDays();
-		String id = h2.getId();
 		h1.setName(nome);
 		h1.setDescription(descrizione);
 		h1.setStartDate(data);
 		h1.setDays(giorni);
+		
+		if(h1 instanceof AbitudineSessione && h2 instanceof AbitudineSessione) {
+			IAbitudineSessione hSessione1 = (IAbitudineSessione) h1;
+			IAbitudineSessione hSessione2 = (IAbitudineSessione) h2;
+			
+			hSessione1.setDuration(hSessione2.getDuration());
+		}
 	}
 	
 	@Override

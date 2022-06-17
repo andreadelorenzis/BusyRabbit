@@ -12,7 +12,7 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	
     //------------------------------- CAMPI ----------------------------------
 	/*
-	 * Duration of timer
+	 * Duration of timer in minutes
 	 */
 	private int duration;
 	
@@ -34,7 +34,7 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, LocalDate startDate, List<DayOfWeek> days, int duration) {
 		super(name, "", startDate, days);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration);
+		this.timer = new TimerSemplice(duration * 60);
 		this.timer.registraAscoltatore(this);
 	}
 	
@@ -49,7 +49,7 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
 		super(name, "", startDate, days, id);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration);
+		this.timer = new TimerSemplice(duration * 60);
 		this.timer.registraAscoltatore(this);
 	}
 	
@@ -64,7 +64,7 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration) {
 		super(name, description, startDate, days);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration);
+		this.timer = new TimerSemplice(duration * 60);
 		this.timer.registraAscoltatore(this);
 	}
 	
@@ -80,17 +80,11 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	public AbitudineSessione(String name, String description, LocalDate startDate, List<DayOfWeek> days, int duration, String id) {
 		super(name, description, startDate, days, id);
 		this.duration = duration;
-		this.timer = new TimerSemplice(duration);
+		this.timer = new TimerSemplice(duration * 60);
 		this.timer.registraAscoltatore(this);
 	}
 
 	//---------------------------- METODI PUBBLICI -----------------------------
-	@Override
-	public void timerTerminato(long tempo) {
-		complete();
-		isStarted = false;
-	}
-
 	@Override
 	public void startSession() {
 		timer.avvia();
@@ -119,8 +113,30 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 	}
 	
 	@Override
+	public void timerTerminato(long tempo) {
+		complete();
+		isStarted = false;
+	}
+	
+	@Override
+	public TimerSemplice newTimer(int duration) {
+		this.duration = duration;
+		this.timer = new TimerSemplice(duration * 60);
+		timer.registraAscoltatore(this);
+		return timer;
+	}
+	
+	@Override
 	public boolean isStarted() {
 		return this.isStarted;
+	}
+	
+	/**
+	 * Metodo per usato per il testing di AzioneSessione
+	 */
+	public void impostaTimerInSecondi(int secondi) {
+		this.timer = new TimerSemplice(secondi);
+		timer.registraAscoltatore(this);
 	}
 	
 }

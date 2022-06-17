@@ -1,11 +1,10 @@
 package main.views.habittracker.classi;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,14 +23,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import main.Main;
 import main.controller.habittracker.IHabitTrackerController;
 import main.controller.IController;
 import main.controller.habittracker.HabitTrackerController;
-import main.model.goalmanager.classi.AzioneScomponibile;
-import main.model.goalmanager.classi.AzioneSessione;
 import main.model.goalmanager.classi.Item;
-import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.goalmanager.interfacce.IItem;
 import main.model.habittracker.classi.AbitudineScomponibile;
@@ -44,6 +39,7 @@ import main.model.timetracker.classi.TimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
 import main.views.ViewHelper;
 import main.views.LoaderRisorse;
+import main.views.goalmanager.classi.EditorAzioni;
 import main.views.goalmanager.classi.EditorItem;
 import main.views.goalmanager.classi.ViewHelperGM;
 import main.views.habittracker.interfacce.IHabitTrackerView;
@@ -75,9 +71,10 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
     /*
      * Usate per il funzionamento delle abitudini sessione
      */
-    private IAzioneSessione sessioneCorrente; 
-    private Label labelSessioneCorrente;
-    private Button btnSessioneCorrente;
+    private Label orologioSessioneInCorso;
+    private boolean sessioneInCorso = false;
+    private int numAscoltatori = 0;
+    private List<Button> listTimerBtns = new ArrayList<>(); 
   
     @FXML
     private void initialize() {
@@ -233,7 +230,6 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
 	@Override
 	public void timerTerminato(long tempo) {
 		Platform.runLater(() -> {
-			this.labelSessioneCorrente.setText("00:00:00");
 	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
 	    	this.aggiornaAbitudini();
 		});
@@ -268,7 +264,7 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
     
     //---------------------------- METODI PRIVATI ------------------------------
     /**
-     * Apre l'editor delle azioni in aggiunta/modifica.
+     * Apre l'editor degli Item
      */
     private void apriEditorItem(IAbitudineScomponibile abitudine) throws IOException {
     	
@@ -436,19 +432,21 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
      * @param abitudineSessione
      */
     private void creaViewAbitudineSessione(BorderPane pane, IAbitudineSessione abitudineSessione) {
-		// aggiunge i controlli del timer all'azione sessione
-		TimerSemplice timer = new TimerSemplice(abitudineSessione.getDuration());
+		// associa timer
+		TimerSemplice timer = abitudineSessione.newTimer(abitudineSessione.getDuration());
 		timer.registraAscoltatore(this);
+		
 		HBox timerContainer = new HBox();
 		timerContainer.getStyleClass().add("session-container");
 		timerContainer.setAlignment(Pos.CENTER_LEFT);
 		String durata = ViewHelperTT.formattaOrologio(abitudineSessione.getDuration()*60);
-		Label tempo = new Label(durata);
-		tempo.getStyleClass().add("session-tempo");
+		Label orologio = new Label(durata);
+		orologio.getStyleClass().add("session-tempo");
 		Button timerBtn = new Button("AVVIA");
 		timerBtn.getStyleClass().add("session-btn");
-		timerContainer.getChildren().addAll(timerBtn, tempo);
+		timerContainer.getChildren().addAll(timerBtn, orologio);
 		pane.setBottom(timerContainer);
+		this.listTimerBtns.add(timerBtn);
 		
 		// se l'azione è completate, disabilita il timer
 		if(abitudineSessione.isCompleted()) 
@@ -458,18 +456,37 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
 		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
             	t.consume();
-            	labelSessioneCorrente = tempo;
-            	btnSessioneCorrente = timerBtn;
+            	orologioSessioneInCorso = orologio;
                 if(abitudineSessione.isStarted()) {
+                	
+                	// termina sessione
                 	controller.terminaAzioneSessione(abitudineSessione);
-                	timer.termina();
                 	timerBtn.setText("AVVIA");
                 	timerBtn.setStyle("-fx-background-color: #1ABC9C");
+                	sessioneInCorso = false;
+                	
+                	// abilita tutti i timer
+                	for(Button timerBtn : listTimerBtns) {
+                		timerBtn.setDisable(false);
+                	}
+                	if(abitudineSessione.isCompleted()) 
+                		timerBtn.setDisable(true);
+                	
                 } else {
+                	
+                	// avvia sessione
                 	abitudineSessione.startSession();;
-                	timer.avvia();
                 	timerBtn.setText("STOP");
                 	timerBtn.setStyle("-fx-background-color: #E7515A");
+                	sessioneInCorso = true;
+                	
+                	// disabilita tutti gli altri timer
+                	for(Button timerBtn : listTimerBtns) {
+                		timerBtn.setDisable(true);
+                	}
+                	
+                	// abilita questo timer
+                	timerBtn.setDisable(false);
                 }
             }
         });
@@ -587,7 +604,12 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
         editor.getStylesheets().add(LoaderRisorse.getCSS(LoaderRisorse.HT, "HabitTracker"));
         editor.getStylesheets().add(LoaderRisorse.globalCss);  
     	Modal modal = new Modal(editor, "");
+    	
+        // Ottiene il controller e imposta l'abitudine se in modifica
     	EditorAbitudine controller = fxmlLoader.getController();
+    	if(!nuovo) {
+    		controller.setAbitudine(abitudine);
+    	}
         
         // imposta il titolo del dialog
         if(nuovo) {
@@ -596,7 +618,7 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
         	modal.setTitolo("Modifica abitudine");
         }
         
-        // validazioen  degli input
+        // validazione degli input
         final HBox btnOk = modal.getBtnLookup(ButtonType.OK);
     	btnOk.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
     		if(controller.getNome().isBlank() 	||
@@ -677,7 +699,7 @@ public class HabitTrackerView implements IHabitTrackerView, ITrackable {
 		String ore = ViewHelperTT.formattaDurata(o);
 		String minuti = ViewHelperTT.formattaDurata(m);
 		String secondi = ViewHelperTT.formattaDurata(s);
-		this.labelSessioneCorrente.setText(ore + ":" + minuti + ":" + secondi);
+		this.orologioSessioneInCorso.setText(ore + ":" + minuti + ":" + secondi);
 	}
     
 }

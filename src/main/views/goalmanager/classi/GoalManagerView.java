@@ -50,9 +50,7 @@ import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 import main.model.timetracker.classi.TimerSemplice;
-import main.model.timetracker.interfacce.ITimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
-import main.model.timetracker.interfacce.ITracker;
 import main.model.goalmanager.interfacce.IItem;
 import main.views.ViewHelper;
 import main.views.LoaderRisorse;
@@ -1003,7 +1001,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
      */
     private void creaViewAzioneSessione(BorderPane pane, IAzioneSessione azioneSessione) {
 		// associare il timer
-		TimerSemplice timer = azioneSessione.nuovoTimer(azioneSessione.getDurata() * 60);
+		TimerSemplice timer = azioneSessione.nuovoTimer(azioneSessione.getDurata());
 		timer.registraAscoltatore(this);
 		
 		HBox timerContainer = new HBox();
@@ -1019,7 +1017,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
 		this.listTimerBtns.add(timerBtn);
 		
 		// se l'azione è completata, disabilita il timer
-		// se vi è già una sessione in corso, disabilita il timer
 		if(azioneSessione.getCompletata()) 
 			timerBtn.setDisable(true);
 		

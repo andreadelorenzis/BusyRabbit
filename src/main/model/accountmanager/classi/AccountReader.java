@@ -256,6 +256,7 @@ public class AccountReader {
 		List<DayOfWeek> giorni = new ArrayList<>();
 		String[] stringheGiorni = params[6].split("-");
 		for(int i = 0; i < stringheGiorni.length; i++) {
+			System.out.println(stringheGiorni);
 			giorni.add(DayOfWeek.valueOf(stringheGiorni[i]));
 		}
 		if(tipo.equals("abitudine-semplice")) {

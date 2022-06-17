@@ -1,5 +1,6 @@
 package main.model.habittracker.interfacce;
 
+import main.model.timetracker.classi.TimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
 
 /**
@@ -34,4 +35,9 @@ public interface IAbitudineSessione extends IAbitudine {
      * @return se la sessione è iniziata
      */
     public boolean isStarted();
+    
+    /**
+     * Create a new instance of TimerSemplice
+     */
+    public TimerSemplice newTimer(int duration);
 }

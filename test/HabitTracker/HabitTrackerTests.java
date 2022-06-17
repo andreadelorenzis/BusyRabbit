@@ -34,12 +34,12 @@ public class HabitTrackerTests {
 		// add a SimpleHabit
 		h.addHabit(new AbitudineScomponibile("Morning routine",
 								   "Doing my morning routine",
-								   	LocalDate.now(),
+								    LocalDate.of(2021, Month.JANUARY, 14),
 								   	new ArrayList<>(List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY))));
 		// add a SessionHabit
 		h.addHabit(new AbitudineSessione("Studying",
 									"Studying for 2 hours",
-									LocalDate.now(),
+									LocalDate.of(2021, Month.JANUARY, 14),
 									new ArrayList<>(List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
 															DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY, 
 															DayOfWeek.THURSDAY)),
@@ -228,10 +228,10 @@ public class HabitTrackerTests {
 	public void testSessionHabit() {
 		h = HabitTracker.getInstance();
 		initialize(h);
-		IAbitudineSessione habit = (IAbitudineSessione) h.getHabits().get(1);
+		AbitudineSessione habit = (AbitudineSessione) h.getHabits().get(1);
 		
-		// set SessionHabit duration to 2 seconds
-		habit.setDuration(1);
+		// Imposto il timer a 1 secondo
+        habit.impostaTimerInSecondi(1);
 		
 		// start the session
 		habit.startSession();

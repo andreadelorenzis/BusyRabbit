@@ -63,13 +63,15 @@ public class EditorAbitudine {
         dataPicker.setValue(LocalDate.now());
     }
     
-    private void toggleBtn(Label label, boolean giorno) {
+    private void toggleBtn(Label label, boolean giorno, DayOfWeek giornoEnum) {
         if(giorno) {
         	// deselezionare
             label.setStyle("-fx-background-color: transparent; -fx-text-fill: #4361EE; -fx-border-color: #4361EE;");
+            giorni.remove(giornoEnum);
         } else {
         	// selezionare
             label.setStyle("-fx-background-color: #4361EE; -fx-text-fill: #ffffff;");
+            giorni.add(giornoEnum);
         }
     }
     
@@ -78,39 +80,32 @@ public class EditorAbitudine {
         String btnGiornoCliccato = ((Label) event.getSource()).getId();
         switch(btnGiornoCliccato) {
             case "lunBtn": 
-                toggleBtn(lunBtn, lun);
+                toggleBtn(lunBtn, lun, DayOfWeek.MONDAY);
                 lun = !lun;
-                giorni.add(DayOfWeek.MONDAY);
                 break;
             case "marBtn": 
-            	toggleBtn(marBtn, mar);
+            	toggleBtn(marBtn, mar, DayOfWeek.TUESDAY);
             	mar = !mar;
-            	giorni.add(DayOfWeek.TUESDAY);
             	break;
             case "merBtn": 
-            	toggleBtn(merBtn, mer);
+            	toggleBtn(merBtn, mer, DayOfWeek.WEDNESDAY);
             	mer = !mer;
-            	giorni.add(DayOfWeek.WEDNESDAY);
             	break;
             case "gioBtn": 
-            	toggleBtn(gioBtn, gio);
+            	toggleBtn(gioBtn, gio, DayOfWeek.THURSDAY);
             	gio = !gio;
-            	giorni.add(DayOfWeek.THURSDAY);
             	break;
             case "venBtn": 
-            	toggleBtn(venBtn, ven);
+            	toggleBtn(venBtn, ven, DayOfWeek.FRIDAY);
             	ven = !ven;
-            	giorni.add(DayOfWeek.FRIDAY);
             	break;
             case "sabBtn": 
-            	toggleBtn(sabBtn, sab);
+            	toggleBtn(sabBtn, sab, DayOfWeek.SATURDAY);
             	sab = !sab;
-            	giorni.add(DayOfWeek.SATURDAY);
             	break;
             case "domBtn": 
-            	toggleBtn(domBtn, dom);
+            	toggleBtn(domBtn, dom, DayOfWeek.SUNDAY);
             	dom = !dom;
-            	giorni.add(DayOfWeek.SUNDAY);
             	break;
         }
     }
@@ -125,38 +120,45 @@ public class EditorAbitudine {
     }
     public void setAbitudine(IAbitudine abitudine) {
         abitudineField.setText(abitudine.getName());
-        List<DayOfWeek> giorni = abitudine.getDays();
-        for(int i = 0; i < giorni.size(); i++) {
-            switch(giorni.get(i)) {
+        this.dataPicker.setValue(abitudine.getStartDate());
+        for(DayOfWeek giorno : abitudine.getDays()) {
+            switch(giorno) {
                 case MONDAY: 
-                    toggleBtn(lunBtn, lun);
+                    toggleBtn(lunBtn, lun, giorno);
+                    lun = true;
                     break;
                 case TUESDAY:
-                    toggleBtn(marBtn, mar);
+                    toggleBtn(marBtn, mar, giorno);
+                    mar = true;
                     break;
                 case WEDNESDAY:
-                    toggleBtn(merBtn, mer);
+                    toggleBtn(merBtn, mer, giorno);
+                    mer = true;
                     break;
                 case THURSDAY:
-                    toggleBtn(gioBtn, gio);
+                    toggleBtn(gioBtn, gio, giorno);
+                    gio = true;
                     break;
                 case FRIDAY:
-                    toggleBtn(venBtn, ven);
+                    toggleBtn(venBtn, ven, giorno);
+                    ven = true;
                     break;
                 case SATURDAY:
-                    toggleBtn(sabBtn, sab);
+                    toggleBtn(sabBtn, sab, giorno);
+                    sab = true;
                     break;
                 case SUNDAY:
-                    toggleBtn(domBtn, dom);
+                    toggleBtn(domBtn, dom, giorno);
+                    dom = true;
                     break;
             }      
         }
         if(abitudine instanceof AbitudineSessione) {
         	IAbitudineSessione abitudineSessione = (IAbitudineSessione) abitudine;
         	tipoRadio2.setSelected(true);
+        	formSessione.setVisible(true);
         	tipoRadio1.setDisable(true);
         	durataSpinner.getValueFactory().setValue(abitudineSessione.getDuration());
-        	formSessione.setVisible(true);
         } else {
         	tipoRadio2.setDisable(true);
         }
