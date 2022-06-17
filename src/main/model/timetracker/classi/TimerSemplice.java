@@ -12,8 +12,10 @@ public class TimerSemplice extends Tracker implements ITimerSemplice {
 	
 	//-------------------------------- CAMPI -----------------------------------
 	/*
-	 * Durata del timer
+	 * Durata del timer variabile
 	 */
+	private int tempoRimanente;
+	
 	private int durataTimer;
 	
 	//----------------------------- COSTRUTTORI --------------------------------
@@ -23,19 +25,19 @@ public class TimerSemplice extends Tracker implements ITimerSemplice {
 	 * @param ascoltatore
 	 */
 	public TimerSemplice(int durata) {
-		this.durataTimer = durata * 1000;
+		this.durataTimer = durata;
+		this.tempoRimanente = durata * 1000;
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(durataTimer > 0) {
+				if(tempoRimanente > 0) {
 					tempoPassato += 1000;
-					durataTimer -= 1000;
-					ore = (durataTimer / 3600000);
-					minuti = (durataTimer / 60000) % 60;
-					secondi = (durataTimer / 1000) % 60;
-					ascoltatore.secondoPassato(ore, minuti, secondi);
+					tempoRimanente -= 1000;
+					ore = (tempoRimanente / 3600000);
+					minuti = (tempoRimanente / 60000) % 60;
+					secondi = (tempoRimanente / 1000) % 60;
+					notificaAscoltatoriSecondoPassato();
 				} else {
-					long durata = tempoPassato / 1000;
-					ascoltatore.timerTerminato(durata);
+					notificaAscoltatoriTrackerTerminato();
 					termina();
 				}
 			};
@@ -46,7 +48,14 @@ public class TimerSemplice extends Tracker implements ITimerSemplice {
 	
 	@Override
 	public void setDurata(int durata) {
-		this.durataTimer = durata * 1000;
+		this.tempoRimanente = durata;
+	}
+	
+	@Override
+	public void notificaAscoltatoriTrackerTerminato() {
+		for(ITrackable ascoltatore : ascoltatori) {
+			ascoltatore.timerTerminato(durataTimer);
+		}
 	}
 
 }

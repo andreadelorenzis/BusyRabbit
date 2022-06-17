@@ -134,8 +134,11 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	@Override
 	public void terminaTracker() {
 		Long durata = tracker.termina();
-		attivit‡Corrente.setDurata(durata);
-		aggiungiAttivit‡(attivit‡Corrente);
+		if(!(this.tracker instanceof PomodoroTimer && 
+			!((IPomodoroTimer) tracker).getInSessione())) {
+			attivit‡Corrente.setDurata(durata);
+			aggiungiAttivit‡(attivit‡Corrente);
+		}
 	}
 
 	@Override
@@ -296,6 +299,11 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	@Override
 	public void secondoPassato(int o, int m, int s) {
 		
+	}
+
+	@Override
+	public IAttivit‡ getAttivit‡Corrente() {
+		return this.attivit‡Corrente;
 	}
 
 }

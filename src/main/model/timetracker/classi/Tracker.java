@@ -1,5 +1,8 @@
 package main.model.timetracker.classi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.Timer;
 
 import main.model.timetracker.interfacce.ITrackable;
@@ -34,19 +37,11 @@ public abstract class Tracker implements ITracker {
 	public boolean avviato = false;
 	
 	/*
-	 * Se il tracker è in pausa o no
-	 */
-	public boolean sospeso = false;
-	
-	/*
 	 * Timer semplice
 	 */
 	Timer timer;
 	
-	/*
-	 * L'oggetto che è in ascolto di questo tracker
-	 */
-	protected ITrackable ascoltatore;
+	protected List<ITrackable> ascoltatori = new ArrayList<>();
 
     //-------------------------- METODI PUBBLICI ----------------------------
 	@Override
@@ -62,7 +57,6 @@ public abstract class Tracker implements ITracker {
 		long durata = tempoPassato / 1000;
 		if(avviato) {
 			avviato = false;
-			sospeso = false;
 			timer.stop();
 			tempoPassato = 0;
 			secondi = 0;
@@ -79,7 +73,21 @@ public abstract class Tracker implements ITracker {
 	
 	@Override
 	public void registraAscoltatore(ITrackable ascoltatore) {
-		this.ascoltatore = ascoltatore;
+		this.ascoltatori.add(ascoltatore);
 	}
+	
+	@Override
+	public void cancellaAscoltatore(ITrackable ascoltatore) {
+		this.ascoltatori.remove(ascoltatore);
+	}
+	
+	@Override
+	public void notificaAscoltatoriSecondoPassato() {
+		for(ITrackable ascoltatore : ascoltatori) {
+			ascoltatore.secondoPassato(ore, minuti, secondi);
+		}
+	}
+	
+	public abstract void notificaAscoltatoriTrackerTerminato();
 
 }

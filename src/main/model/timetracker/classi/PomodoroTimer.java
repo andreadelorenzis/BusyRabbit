@@ -13,32 +13,42 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 	/*
 	 * Durata sessione in secondi (default: 30M)
 	 */
-	int durataSessione = 1800;
+	private int durataSessione = 1800;
 	
 	/*
 	 * Durata pausa breve in secondi (default: 5M)
 	 */
-	int durataPausaBreve = 300;
+	private int durataPausaBreve = 300;
 	
 	/*
 	 * Durata pausa lunga in secondi (default: 10M)
 	 */
-	int durataPausaLunga = 600;
+	private int durataPausaLunga = 600;
 	
 	/*
 	 * Numero di cicli prima della pausa lunga
 	 */
-	int nCicli = 3;
+	private int nCicli = 3;
 	
 	/*
 	 * Durata attuale del timer in millisecondi
 	 */
-	int durataTimer = durataSessione * 1000;
+	private int durataTimer = durataSessione * 1000;
 	
 	/*
-	 * Se attualmente vi è una sessione o una pausa breve
+	 * Se attualmente vi è una sessione
 	 */
-	private boolean sessione = false;
+	private boolean sessione = true;
+	
+	/*
+	 * Se attualmente ci deve essere una pausa breve
+	 */
+	private boolean pausaBreve = false;
+	
+	/*
+	 * Se attualmente ci deve essere una pausa lunga 
+	 */
+	private boolean pausaLunga = false;
 	
 	/*
 	 * Numero di cicli sessione-pausaBreve svolti
@@ -55,11 +65,24 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 					ore = (durataTimer / 3600000);
 					minuti = (durataTimer / 60000) % 60;
 					secondi = (durataTimer / 1000) % 60;
-					ascoltatore.secondoPassato(ore, minuti, secondi);
+					notificaAscoltatoriSecondoPassato();
 				} else {
 					if(sessione) {
 						sessioneTerminata();
+						pausaBreve = true;
+						sessione = false;
+					} else if(pausaBreve) {
+						pausaBreve = false;
+						if(cicloCorrente < nCicli)
+							sessione = true;
+						else 	
+							pausaLunga = true;
+					} else {
+						pausaLunga = false;
+						pausaBreve = false;
+						sessione = true;
 					}
+					
 					faseSuccessiva(); 
 				}
 			};
@@ -71,11 +94,6 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 	 * Permette di andare alla fase successiva programmata per il pomodoro timer
 	 */
 	private void faseSuccessiva() {
-		if(sospeso) {
-			sospeso = false;
-		} else {
-			sessione = !sessione;
-		}
 		tempoPassato = 0;
 		
 		// se ci sono ancora cicli prima della pausa lunga
@@ -89,7 +107,6 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 				cicloCorrente++;
 			}
 		} else {
-			sessione = false;
 			durataTimer = durataPausaLunga * 1000;
 			timer.start();
 			cicloCorrente = 0;
@@ -99,6 +116,9 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 	//---------------------------- METODI PUBBLICI -----------------------------
 	@Override 
 	public void avvia() {
+		sessione = true;
+		pausaBreve = false;
+		pausaLunga = false;
 		if(!avviato) {
 			avviato = true;
 			faseSuccessiva();
@@ -107,7 +127,7 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 	
 	@Override
 	public void sessioneTerminata() {
-		ascoltatore.timerTerminato(tempoPassato / 1000);
+		this.notificaAscoltatoriTrackerTerminato();
 	}
 	
 	@Override
@@ -149,5 +169,16 @@ public class PomodoroTimer extends Tracker implements IPomodoroTimer {
 	public int getCicli() {
 		return nCicli;
 	}
+	
+	@Override
+	public void notificaAscoltatoriTrackerTerminato() {
+		for(ITrackable ascoltatore : ascoltatori) {
+			ascoltatore.timerTerminato(durataSessione);
+		}
+	}
 
+	@Override
+	public boolean getInSessione() {
+		return this.sessione;
+	}
 }

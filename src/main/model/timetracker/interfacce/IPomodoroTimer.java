@@ -67,5 +67,11 @@ public interface IPomodoroTimer extends ITracker {
      * @return cicli prima di una pausa lunga
      */
     public int getCicli();
+    
+    /**
+     * 
+     * @return se il timer è in sessione oppure in pausa
+     */
+    public boolean getInSessione();
      
 }

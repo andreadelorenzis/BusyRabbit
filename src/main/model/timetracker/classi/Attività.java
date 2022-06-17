@@ -56,6 +56,14 @@ public class Attività implements IAttività {
 		this.progetto = TimeTracker.progettoDefault;
 	}
 	
+	/**
+	 * 
+	 * @param nome
+	 * @param data
+	 * @param ora
+	 * @param durata
+	 * @param id
+	 */
 	public Attività(String nome, LocalDate data, LocalTime ora, Long durata, String id) {
 		this(nome, data, ora, durata);
 		this.id = id;

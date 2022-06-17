@@ -37,12 +37,14 @@ import main.controller.IController;
 import main.controller.timetracker.ITimeTrackerController;
 import main.controller.timetracker.TimeTrackerController;
 import main.model.timetracker.classi.Attività;
+import main.model.timetracker.classi.Cronometro;
 import main.model.timetracker.classi.PomodoroTimer;
 import main.model.timetracker.classi.Progetto;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.interfacce.IAttività;
 import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
+import main.model.timetracker.interfacce.ITracker;
 import main.views.Colore;
 import main.views.ViewHelper;
 import main.views.LoaderRisorse;
@@ -144,6 +146,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         // imposta il controller
         ITimeTrackerController controller = new TimeTrackerController();
         setController(controller);
+        this.controller.scegliCronometro();
     }
     
     //--------------------------- METODI PUBBLICI ------------------------------
@@ -197,10 +200,19 @@ public class TimeTrackerView implements ITimeTrackerView {
 		// cambia i pulsanti
 		togglePulsantiTracker();
 		
-		// resetta view durata
-		oreLabel.setText("00");
-		minutiLabel.setText("00"); 
-		secondiLabel.setText("00");
+		ITracker tracker = TimeTracker.getInstance().getTracker();
+		
+		if(tracker instanceof PomodoroTimer) {
+			IPomodoroTimer pTimer = (IPomodoroTimer) tracker;
+			int[] params = ViewHelperTT.scomponiDurata(pTimer.getSessione());
+			this.visualizzaOrologio(params[0], params[1], params[2]);
+			
+		} else if (tracker instanceof Cronometro) {
+			oreLabel.setText("00");
+			minutiLabel.setText("00"); 
+			secondiLabel.setText("00");
+		}
+		
 	}
 	
 	@Override
@@ -915,7 +927,6 @@ public class TimeTrackerView implements ITimeTrackerView {
         	this.controller.impostaPomodoroTimer(sessione, pausaBreve, pausaLunga);
         	int[] params = ViewHelperTT.scomponiDurata(controller.getSessione());
         	this.visualizzaOrologio(params[0], params[1], params[2]);
-        	new Notification("Pomodoro timer modificato", NotificationType.SUCCESS).show();
         }
     }
     

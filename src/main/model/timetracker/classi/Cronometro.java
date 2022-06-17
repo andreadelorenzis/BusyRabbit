@@ -5,24 +5,9 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import main.model.timetracker.interfacce.ICronometro;
+import main.model.timetracker.interfacce.ITrackable;
 
 public class Cronometro extends Tracker implements ICronometro {
-	
-    //------------------------------- CAMPI ----------------------------------	
-	/*
-	 * Secondi passati
-	 */
-	private int secondi = 0;
-	
-	/*
-	 * Minuti passati 
-	 */
-	private int minuti = 0;
-	
-	/*
-	 * Ore passate 
-	 */
-	private int ore = 0;
 	
     //----------------------------- COSTRUTTORI --------------------------------
 	public Cronometro() {
@@ -32,7 +17,7 @@ public class Cronometro extends Tracker implements ICronometro {
 					ore = (int)(tempoPassato / 3600000);
 					minuti = (int)(tempoPassato / 60000) % 60;
 					secondi = (int)(tempoPassato / 1000) % 60;
-					ascoltatore.secondoPassato(ore, minuti, secondi);
+					notificaAscoltatoriSecondoPassato();
 				};
 			});
 	}
@@ -42,6 +27,13 @@ public class Cronometro extends Tracker implements ICronometro {
 	@Override
 	public long getTempoAttuale() {
 		return tempoPassato / 1000;
+	}
+	
+	@Override
+	public void notificaAscoltatoriTrackerTerminato() {
+		for(ITrackable ascoltatore : ascoltatori) {
+			ascoltatore.timerTerminato(tempoPassato);
+		}
 	}
 
 }

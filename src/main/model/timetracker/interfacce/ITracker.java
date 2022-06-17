@@ -27,8 +27,24 @@ public interface ITracker {
 	
     /**
      * 
-     * @param ascoltatore che verrà informato degli eventi del Tracker
+     * @param ascoltatore
      */
     public void registraAscoltatore(ITrackable ascoltatore);
+    
+    /**
+     * 
+     * @param ascoltatore
+     */
+    public void cancellaAscoltatore(ITrackable ascoltatore);
+   
+    /**
+     * Notifica tutti gli ascoltatori dell'evento di passaggio di un secondo
+     */
+	public abstract void notificaAscoltatoriSecondoPassato();
+	
+	/**
+     * Notifica tutti gli ascoltatori dell'evento di terminazione
+     */
+	public abstract void notificaAscoltatoriTrackerTerminato();
 	
 }

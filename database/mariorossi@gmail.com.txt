@@ -2,8 +2,9 @@ password,password123
 ---progetti---
 Analisi matematica,Blu,idP1
 Programmazione ad oggetti,Giallo,idP2
-Fisica generale,Verde,idP4
+Fisica,Verde,idP4
 Sistemi operativi,Viola,idP5
+Nuovo progetto,Blu,b1cc0849-3ddd-4319-84fa-3ab116054c7c
 ---attivita---
 Fare esercizi analisi,1,1,2022,12,0,3800,idP1,idA1
 Studiare teoria,3,1,2022,14,0,7200,idP1,idA2
@@ -39,7 +40,7 @@ Studiare teoria di sistemi operativi,18,6,2022,13,0,5000,idP5,idA36
 Programmare un videogioco,18,6,2022,18,0,5000,null,idA36
 Studiare teoria di fisica,19,6,2022,12,0,4000,idP4,idA37
 Lavorare al progetto di PMO,19,6,2022,17,0,3600,idP4,idA37
-Leggere un libro,19,6,2022,19,0,3600,null,idA37
+Leggere un libro,19,6,2022,19,0,3600,b1cc0849-3ddd-4319-84fa-3ab116054c7c,idA37
 Fare esercizi di fisica,20,6,2022,12,0,2300,idP4,idA38
 Studiare teoria di fisica,20,6,2022,14,0,3600,idP4,idA39
 Studiare teoria di sistemi operativi,20,6,2022,17,0,5000,idP5,idA40
@@ -50,8 +51,38 @@ sdf,18,6,2022,0,24,1,idP1,93c3a0a7-0dfe-4647-b400-61649b7389f2
 sfasdfasdf,18,6,2022,0,24,1,null,93c3a0a7-0dfe-4647-b400-61649b7389f2
 sfasdfasdf,17,6,2022,0,24,1,null,717ae09f-9874-411b-a7ba-8d708e6e1ff8
 sfasdfasdf,19,6,2022,12,50,1,null,d440a963-eb47-4120-ac38-3416cb338b7f
-sfasdfasdf,19,6,2022,12,50,3601,null,c1fc2171-160c-46d4-aa3d-8d33391aca35
-sfasdfasdf,19,6,2022,12,50,6629,null,01b3e24f-02de-477f-a515-c93ce0346ae9
+sfasdfasdf,19,6,2022,12,50,3601,b1cc0849-3ddd-4319-84fa-3ab116054c7c,c1fc2171-160c-46d4-aa3d-8d33391aca35
+sfasdfasdf,19,6,2022,12,50,6629,b1cc0849-3ddd-4319-84fa-3ab116054c7c,01b3e24f-02de-477f-a515-c93ce0346ae9
+sfasdfasdf,19,6,2022,12,50,57601,null,1fa39508-7351-43b1-baec-5a2ca64f0781
+sdfs,17,6,2022,8,38,9,null,ce99a486-368d-4c0e-a056-e5e1e878fa65
+Attività monitorata con timer,17,6,2022,8,39,25,idP2,45284bd8-0c36-4fe9-9770-833f098c872c
+attività con timer,17,6,2022,8,45,60,null,fc27f54c-5ad1-43ad-be6c-13f949b020a6
+attività con timer,17,6,2022,8,47,0,idP2,1d526fd2-1041-4466-9c3d-76e38852b381
+Attività con timer 2,17,6,2022,8,56,0,idP2,fa65f396-3a97-4a2c-b1a6-67188e540225
+csdf,17,6,2022,8,58,0,idP4,66c51c85-15da-432d-9554-39e18f58b9a2
+sfsdf,17,6,2022,9,9,5,null,72d44780-8aaa-43e8-bb25-400fa8153df7
+fsdfs,17,6,2022,9,11,0,null,b3f1e052-4de6-4e11-b226-1a7d5a70c348
+asdsdfs,17,6,2022,9,18,0,null,6a9ac6df-ce93-49c1-909f-1350e9f8341f
+sdfsd,17,6,2022,9,20,31,null,f00634cc-19cd-4b32-8ac7-bf38a4943bdb
+zasad,17,6,2022,9,44,15,null,72009b9d-5bd5-4eb6-a221-0bf73d14982a
+zasad,17,6,2022,9,44,15,null,72009b9d-5bd5-4eb6-a221-0bf73d14982a
+ajdfaksdjflkasjdlfkjaslfka,17,6,2022,9,51,60,null,50ce4d6a-f8cd-4728-85ed-04b45974366d
+ajdfaksdjflkasjdlfkjaslfka,17,6,2022,9,51,60,null,50ce4d6a-f8cd-4728-85ed-04b45974366d
+sdfsdfsdfsdf,17,6,2022,9,55,51,null,cdc55bcb-606f-48cf-b9db-beb47f0a87ab
+jhscjhskdjhskd,17,6,2022,9,56,60,null,bef1fde5-e772-414b-8eb1-49a0aeb0b288
+sdfsdfsd,17,6,2022,10,3,60,null,7174f4d9-0ae4-490d-81f0-47e921163b14
+sdjkskdjflskdskdflsdkflskdjlfkdlskfjdl,17,6,2022,10,7,4,null,cc54e4e4-0c89-4230-a249-d94923e89c27
+sdjkskdjflskdskdflsdkflskdjlfkdlskfjdl,17,6,2022,10,7,60,null,780f84ef-8a09-45c3-8b55-b6bdef96cdb5
+sdjkskdjflskdskdflsdkflskdjlfkdlskfjdl,17,6,2022,10,8,60,null,367142f4-f011-4762-968f-ef6e48c560ec
+sjhkajshdkasj,17,6,2022,10,10,4,null,d3181d03-1cad-404e-b2e4-8f9cf5557f8f
+sjhkajshdkasj,17,6,2022,10,13,2,null,b920b925-045f-4bf6-9934-72f3d273a8ee
+sjhkajshdkasj,17,6,2022,10,13,2,null,9878e2f9-7d8b-484e-a4dd-47b2d00baaa4
+sdfsdf,17,6,2022,10,13,2,null,4f9a0958-7087-4bf2-a181-be8d9eb73fc2
+dssdsfs,17,6,2022,10,14,2,null,b3d389ee-09f1-44f4-b08d-f57f9189b351
+dssdsfs,17,6,2022,10,14,1,null,4537e1c0-d28b-41d7-9f12-e0ccefb56485
+dssdsfs,17,6,2022,11,14,7200,null,80eec465-6238-48ab-8319-15ef0f6bcb2f
+dssdsfs,17,6,2022,11,14,7380,null,40cabae2-f5f1-40f7-a162-242a55619e7e
+dssdsfs,18,6,2022,11,14,7380,null,0cbc43fa-bfaf-40b3-83bd-f562a28dfc55
 ---obiettivi---
 obiettivo-scomponibile,false,Dare tutti gli esami,Dare tutti gli esami del secondo anno entro Luglio,11,7,2022,idOb1
 obiettivo-scomponibile,true,idOb1,Dare analisi matematica,Dare l'esame di analisi matematica,5,6,2022,idOb2

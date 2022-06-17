@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import javafx.application.Platform;
 import main.model.timetracker.classi.Attivit‡;
+import main.model.timetracker.classi.PomodoroTimer;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.classi.TrackerType;
 import main.model.timetracker.interfacce.IAttivit‡;
@@ -11,6 +12,7 @@ import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
 import main.model.timetracker.interfacce.ITrackable;
+import main.model.timetracker.interfacce.ITracker;
 import main.views.IView;
 import main.views.timetracker.interfacce.ITimeTrackerView;
 
@@ -47,8 +49,12 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
     
 	@Override
 	public void timerTerminato(long tempo) {
-		view.trackerTerminato();
-		view.successo("Attivit‡ aggiunta");
+		Platform.runLater(() -> {			
+//			IAttivit‡ a = tt.getAttivit‡Corrente();
+//			a.setDurata(tempo);
+			view.successo("Attivit‡ aggiunta");
+			aggiornaView();
+		});
 	}
 
 	@Override
@@ -143,24 +149,29 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	public void avviaTracker(String nome, IProgetto p) {
 		IAttivit‡ a = new Attivit‡(nome, LocalDate.now(), LocalTime.now(), 0L, p);
 		tt.avviaTracker(a);
-		tt.getTracker().registraAscoltatore(this);
 	}
 
 	@Override
 	public void terminaTracker() {
 		tt.terminaTracker();
-		view.aggiornaView(tt.getGiorniAttivit‡(pagina), pagina);
-		view.successo("Attivit‡ aggiunta");
+		ITracker tracker = tt.getTracker();
+		if(!(tracker instanceof PomodoroTimer && 
+			 !((IPomodoroTimer) tracker).getInSessione())) {			
+			view.aggiornaView(tt.getGiorniAttivit‡(pagina), pagina);
+			view.successo("Attivit‡ aggiunta");
+		}
 	}
 
 	@Override
 	public void scegliCronometro() {
 		tt.scegliTracker(TrackerType.CRONOMETRO);
+		tt.getTracker().registraAscoltatore(this);
 	}
 
 	@Override
 	public void scegliPomodoro() {
 		tt.scegliTracker(TrackerType.POMODOROTIMER);
+		tt.getTracker().registraAscoltatore(this);
 	}
 
 	@Override
@@ -169,7 +180,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 		pt.setSessione(sessione);
 		pt.setPausaBreve(pausaBreve);
 		pt.setPausaLunga(pausaLunga);
-		view.successo("Timer modificato");
+		view.successo("Pomodoro timer modificato");
 		aggiornaView();
 	}
     

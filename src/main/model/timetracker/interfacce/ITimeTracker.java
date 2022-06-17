@@ -91,4 +91,10 @@ public interface ITimeTracker {
      * @return il time tracker attualmente utilizzato
      */
     public ITracker getTracker();
+    
+    /**
+     * 
+     * @return l'attivit‡ attualmente monitorata
+     */
+    public IAttivit‡ getAttivit‡Corrente();
 }
