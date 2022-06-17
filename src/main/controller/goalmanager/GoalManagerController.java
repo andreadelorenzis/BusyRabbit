@@ -1,7 +1,9 @@
 package main.controller.goalmanager;
 
+import main.model.goalmanager.classi.AzioneSessione;
 import main.model.goalmanager.classi.GoalManager;
 import main.model.goalmanager.classi.Item;
+import main.model.goalmanager.classi.ObiettivoAzione;
 import main.model.goalmanager.interfacce.IAzione;
 import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IAzioneSessione;
@@ -54,6 +56,15 @@ public class GoalManagerController implements IGoalManagerController {
 		o1.setDescrizione(o2.getDescrizione());
 		o1.setData(o2.getData());
 		o1.setObiettivoPadre(o2.getObiettivoPadre());
+		
+		if(o1 instanceof ObiettivoAzione && o2 instanceof ObiettivoAzione) {
+			IObiettivoAzione oAzione1 = (IObiettivoAzione) o1;
+			IObiettivoAzione oAzione2 = (IObiettivoAzione) o2;
+			
+			oAzione1.setUnita(oAzione2.getUnità());
+			oAzione1.setValoreTotale(oAzione2.getValoreTotale());
+		}
+		
 		view.successo("Obiettivo modificato");
 		view.aggiornaObiettivi(gm.getObiettivi());
 	}
@@ -80,9 +91,14 @@ public class GoalManagerController implements IGoalManagerController {
 		a1.setDataInizio(a2.getDataInizio());
 		a1.setGiorniRipetizione(a2.getGiorniRipetizione());
 		a1.setIncremento(a2.getIncremento());
-		a1.setObiettivo(a2.getObiettivo());
+		
+		if(a1 instanceof AzioneSessione & a2 instanceof AzioneSessione) {
+			IAzioneSessione aSessione1 = (IAzioneSessione) a1;
+			IAzioneSessione aSessione2 = (IAzioneSessione) a2;
+			aSessione1.setDurata(aSessione2.getDurata());
+		}
+		
 		view.successo("Azione modificata");
-		view.aggiornaObiettivi(gm.getObiettivi());
 	}
 
 	@Override

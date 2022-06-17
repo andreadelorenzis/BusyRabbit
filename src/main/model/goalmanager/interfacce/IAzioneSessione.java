@@ -32,7 +32,7 @@ public interface IAzioneSessione extends IAzione {
     
     /**
      * 
-     * @param durata durata del timer
+     * @param durata durata del timer in minuti
      */
     public void setDurata(int durata);
     
@@ -41,5 +41,10 @@ public interface IAzioneSessione extends IAzione {
      * @return se il timer è avviato o meno
      */
     public boolean getAvviato();
+    
+    /**
+     * Crea un nuovo TimerSemplice
+     */
+    public TimerSemplice nuovoTimer(int durata);
     
 }

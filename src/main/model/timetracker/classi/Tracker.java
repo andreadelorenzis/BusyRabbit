@@ -77,8 +77,8 @@ public abstract class Tracker implements ITracker {
 	}
 	
 	@Override
-	public void cancellaAscoltatore(ITrackable ascoltatore) {
-		this.ascoltatori.remove(ascoltatore);
+	public void cancellaAscoltatore(int indice) {
+		this.ascoltatori.remove(indice);
 	}
 	
 	@Override
@@ -86,6 +86,10 @@ public abstract class Tracker implements ITracker {
 		for(ITrackable ascoltatore : ascoltatori) {
 			ascoltatore.secondoPassato(ore, minuti, secondi);
 		}
+	}
+	
+	public int getNumAscoltatori() {
+		return this.ascoltatori.size();
 	}
 	
 	public abstract void notificaAscoltatoriTrackerTerminato();

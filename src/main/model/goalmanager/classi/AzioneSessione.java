@@ -11,7 +11,7 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
     
     //-------------------------------- CAMPI -----------------------------------
     /**
-     * La durata della sessione
+     * La durata della sessione in minuti
      */
     private int durata;
 
@@ -37,7 +37,7 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
     public AzioneSessione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, int durata) {
         super(nome, incremento, dataInizio, giorni);
         this.durata = durata;
-        this.timer = new TimerSemplice(durata);
+        this.timer = new TimerSemplice(durata * 60);
 		this.timer.registraAscoltatore(this);
     }
     
@@ -53,14 +53,13 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
     public AzioneSessione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, int durata, String id) {
         super(nome, incremento, dataInizio, giorni, id);
         this.durata = durata;
-        this.timer = new TimerSemplice(durata);
+        this.timer = new TimerSemplice(durata * 60);
 		this.timer.registraAscoltatore(this);
     }
 
     //--------------------------- METODI PUBBLICI ------------------------------
     @Override
     public void avviaSessione() {
-    	timer.setDurata(durata);
     	timer.avvia();
     	this.avviato = true;
     }
@@ -97,8 +96,25 @@ public class AzioneSessione extends Azione implements IAzioneSessione, ITrackabl
     	this.avviato = false;
 	}
 	
+	@Override
+	public TimerSemplice nuovoTimer(int durata) {
+		this.durata = durata;
+		this.timer = new TimerSemplice(durata * 60);
+		timer.registraAscoltatore(this);
+		return timer;
+	}
+	
+	@Override
 	public boolean getAvviato() {
 		return this.avviato;
+	}
+	
+	/**
+	 * Metodo per usato per il testing di AzioneSessione
+	 */
+	public void impostaTimerInSecondi(int secondi) {
+		this.timer = new TimerSemplice(secondi);
+		timer.registraAscoltatore(this);
 	}
     
 }

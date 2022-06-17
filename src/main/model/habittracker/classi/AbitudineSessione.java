@@ -93,7 +93,6 @@ public class AbitudineSessione extends Abitudine implements IAbitudineSessione, 
 
 	@Override
 	public void startSession() {
-		timer.setDurata(duration);
 		timer.avvia();
 		isStarted = true;
 	}

@@ -21,6 +21,7 @@ import main.model.goalmanager.interfacce.IAzioneScomponibile;
 import main.model.goalmanager.interfacce.IAzioneSessione;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
+import main.model.timetracker.classi.TimerSemplice;
 
 public class GoalManagerTests {
     GoalManager g = null; 
@@ -239,18 +240,18 @@ public class GoalManagerTests {
     
     // Verifica il completamento di un'AzioneSessione
     @Test
-    public void testAzioneSessione() throws InterruptedException {
+    public void testAzioneSessione() throws InterruptedException, NoSuchFieldException, SecurityException {
     	g = GoalManager.getInstance();
         inizializzaGoalManager(g);
         aggiungiAzioni(g);
         IObiettivoAzione obiettivo = (IObiettivoAzione) g.getObiettivi().get(1);
-        IAzioneSessione azione = (IAzioneSessione) obiettivo.getAzioni().get(1);
+        AzioneSessione azione = (AzioneSessione) obiettivo.getAzioni().get(1);
         
         // l'azione non è completata
         assertFalse(azione.getCompletata());
         
-        // Imposto la durata a 1 secondo
-        azione.setDurata(1);
+        // Imposto il timer a 1 secondo
+        azione.impostaTimerInSecondi(1);
         
         // faccio partire la sessione
         azione.avviaSessione();

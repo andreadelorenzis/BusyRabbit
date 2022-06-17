@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,9 @@ import main.model.goalmanager.interfacce.IObiettivo;
 import main.model.goalmanager.interfacce.IObiettivoAzione;
 import main.model.goalmanager.interfacce.IObiettivoScomponibile;
 import main.model.timetracker.classi.TimerSemplice;
+import main.model.timetracker.interfacce.ITimerSemplice;
 import main.model.timetracker.interfacce.ITrackable;
+import main.model.timetracker.interfacce.ITracker;
 import main.model.goalmanager.interfacce.IItem;
 import main.views.ViewHelper;
 import main.views.LoaderRisorse;
@@ -99,9 +102,10 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     /*
      * Usate per il funzionamento delle azioni sessione
      */
-    private IAzioneSessione sessioneCorrente; 
-    private Label labelSessioneCorrente;
-    private Button btnSessioneCorrente;
+    private Label orologioSessioneCorrente;
+    private boolean sessioneInCorso = false;
+    private int numAscoltatori = 0;
+    private List<Button> listTimerBtns = new ArrayList<>(); 
     
     @FXML
     private void initialize() {
@@ -147,7 +151,6 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
 	@Override
 	public void timerTerminato(long tempo) {
 		Platform.runLater(() -> {
-			this.labelSessioneCorrente.setText("00:00:00");
 	    	new Notification("Azione completata", NotificationType.SUCCESS).show();
 	    	this.visualizzaAzioniGiornaliere();
 		});
@@ -576,8 +579,11 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         		this.controller.collegaAzione(o, nuovaAzione);
         		
         		// aggiorno la view
-        		this.obiettivoCliccato = o;
-        		apriPaginaInfo(o);
+        		if(obiettivoCliccato != null) {
+            		this.apriPaginaInfo(o);
+        		} else {
+        			this.visualizzaAzioniGiornaliere();
+        		}
         	} else {
         		
         		// modifico l'azione
@@ -588,9 +594,14 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         			modificata = new AzioneSessione(nome, valore, data, giorni, durata);
         		}
         		this.controller.modificaAzione(azione, modificata);
+        		this.obiettivoCliccato = o;
         		
         		// aggiorno la view
-        		apriPaginaInfo(azione.getObiettivo());
+        		if(obiettivoCliccato != null) {
+            		this.apriPaginaInfo(o);
+        		} else {
+        			this.visualizzaAzioniGiornaliere();
+        		}
         	}
             
         }
@@ -628,7 +639,12 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
         	String nome = controller.getNome();
         	Item nuovoItem = new Item(nome);
         	this.controller.creaItem(azione, nuovoItem);
-        	this.apriPaginaInfo(obiettivoCliccato);
+        	
+        	if(this.obiettivoCliccato != null) {
+        		this.apriPaginaInfo(obiettivoCliccato);
+        	} else {
+        		this.visualizzaAzioniGiornaliere();
+        	}
         }
     }
     
@@ -639,10 +655,8 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
     	if(sottoObiettivo) { 
     		IObiettivoScomponibile obPadre = (IObiettivoScomponibile) obiettivo.getObiettivoPadre();
     		obPadre.eliminaSottoObiettivo(obiettivo.getId());
-    		new Notification("Sotto-obiettivo eliminato.", NotificationType.INFO).show();
     	} else {
         	this.controller.eliminaObiettivo(obiettivo);
-        	new Notification("Obiettivo eliminato.", NotificationType.INFO).show();
     	}
     	
     }
@@ -988,21 +1002,24 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
      * @param azioneSessione
      */
     private void creaViewAzioneSessione(BorderPane pane, IAzioneSessione azioneSessione) {
-		// aggiunge i controlli del timer all'azione sessione
-		TimerSemplice timer = new TimerSemplice(azioneSessione.getDurata());
+		// associare il timer
+		TimerSemplice timer = azioneSessione.nuovoTimer(azioneSessione.getDurata() * 60);
 		timer.registraAscoltatore(this);
+		
 		HBox timerContainer = new HBox();
 		timerContainer.getStyleClass().add("session-container");
 		timerContainer.setAlignment(Pos.CENTER_LEFT);
-		String durata = ViewHelperTT.formattaOrologio(azioneSessione.getDurata()*60);
-		Label tempo = new Label(durata);
-		tempo.getStyleClass().add("session-tempo");
+		String durataString = ViewHelperTT.formattaOrologio(azioneSessione.getDurata() * 60);
+		Label orologio = new Label(durataString);
+		orologio.getStyleClass().add("session-tempo");
 		Button timerBtn = new Button("AVVIA");
 		timerBtn.getStyleClass().add("session-btn");
-		timerContainer.getChildren().addAll(timerBtn, tempo);
+		timerContainer.getChildren().addAll(timerBtn, orologio);
 		pane.setBottom(timerContainer);
+		this.listTimerBtns.add(timerBtn);
 		
-		// se l'azione è completate, disabilita il timer
+		// se l'azione è completata, disabilita il timer
+		// se vi è già una sessione in corso, disabilita il timer
 		if(azioneSessione.getCompletata()) 
 			timerBtn.setDisable(true);
 		
@@ -1010,18 +1027,36 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
 		timerBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
             	t.consume();
-            	labelSessioneCorrente = tempo;
-            	btnSessioneCorrente = timerBtn;
+            	orologioSessioneCorrente = orologio;
                 if(azioneSessione.getAvviato()) {
+                	
+                	// termina sessione
                 	controller.terminaAzioneSessione(azioneSessione);
-                	timer.termina();
                 	timerBtn.setText("AVVIA");
                 	timerBtn.setStyle("-fx-background-color: #1ABC9C");
+                	sessioneInCorso = false;
+                	
+                	// abilita tutti i timer
+                	for(Button timerBtn : listTimerBtns) {
+                		timerBtn.setDisable(false);
+                	}
+                	if(azioneSessione.getCompletata()) 
+                		timerBtn.setDisable(true);
                 } else {
-                	azioneSessione.avviaSessione();
-                	timer.avvia();
+                	
+                	// avvia sessione
+                	controller.avviaAzioneSessione(azioneSessione);
                 	timerBtn.setText("STOP");
                 	timerBtn.setStyle("-fx-background-color: #E7515A");
+                	sessioneInCorso = true;
+                	
+                	// disabilita tutti gli altri timer
+                	for(Button timerBtn : listTimerBtns) {
+                		timerBtn.setDisable(true);
+                	}
+                	
+                	// abilita questo timer
+                	timerBtn.setDisable(false);
                 }
             }
         });
@@ -1149,7 +1184,7 @@ public class GoalManagerView implements IGoalManagerView, ITrackable {
 		String ore = ViewHelperTT.formattaDurata(o);
 		String minuti = ViewHelperTT.formattaDurata(m);
 		String secondi = ViewHelperTT.formattaDurata(s);
-		this.labelSessioneCorrente.setText(ore + ":" + minuti + ":" + secondi);
+		this.orologioSessioneCorrente.setText(ore + ":" + minuti + ":" + secondi);
 	}
     
 }

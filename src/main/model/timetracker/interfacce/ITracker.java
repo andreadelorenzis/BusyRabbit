@@ -33,9 +33,9 @@ public interface ITracker {
     
     /**
      * 
-     * @param ascoltatore
+     * @param indice ascoltatore
      */
-    public void cancellaAscoltatore(ITrackable ascoltatore);
+    public void cancellaAscoltatore(int i);
    
     /**
      * Notifica tutti gli ascoltatori dell'evento di passaggio di un secondo
@@ -46,5 +46,11 @@ public interface ITracker {
      * Notifica tutti gli ascoltatori dell'evento di terminazione
      */
 	public abstract void notificaAscoltatoriTrackerTerminato();
+	
+	/**
+	 * 
+	 * @return numero di ascoltatori collegati
+	 */
+	public int getNumAscoltatori();
 	
 }

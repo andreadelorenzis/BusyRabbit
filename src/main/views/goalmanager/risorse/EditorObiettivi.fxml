@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane style="-fx-background-color: #0E1726;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.views.goalmanager.classi.EditorObiettivi">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #0E1726;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -54,7 +53,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </Label>
-                  <RadioButton fx:id="tipoBtn1" mnemonicParsing="false" onAction="#cambiaTipo" selected="true" text="Semplice" textFill="WHITE">
+                  <RadioButton fx:id="tipoBtn1" mnemonicParsing="false" onAction="#cambiaTipo" selected="true" text="Scomponibile" textFill="WHITE">
                      <toggleGroup>
                         <ToggleGroup fx:id="tipo" />
                      </toggleGroup>
