@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
@@ -45,16 +46,17 @@ import main.views.notification.NotificationType;
 
 public class ImpostazioniView implements IImpostazioniView {
 	
+	//-------------------------------- CAMPI ----------------------------------- 
 	@FXML
-	private TextField oldPassField;
+	private PasswordField oldPassField;
 	@FXML
-	private TextField newPassField;
+	private PasswordField newPassField;
 	@FXML
 	private TextField newEmailField;
 	@FXML
-	private TextField passField1;
+	private PasswordField passField1;
 	@FXML
-	private TextField passField2;
+	private PasswordField passField2;
 	@FXML
 	private Button changeBtn1;
 	@FXML
@@ -70,6 +72,7 @@ public class ImpostazioniView implements IImpostazioniView {
         setController(controller);
 	}
 
+	//--------------------------- METODI PUBBLICI ------------------------------
 	@Override
 	public void setController(IController c) {
 		this.controller = (IImpostazioniController) c;
@@ -102,7 +105,31 @@ public class ImpostazioniView implements IImpostazioniView {
         PageView.stage.setY(dimSchermo.getMaxY()/2 - 300);
         PageView.stage.show();
 	}
+	
+	@Override
+	public void successo(String m) {
+		new Notification(m, NotificationType.SUCCESS).show();
+	}
+	
+	@Override
+	public void errore(String s) {
+		new Notification(s, NotificationType.ERROR).show();
+	}
 
+	@Override
+	public void info(String m) {
+		new Notification(m, NotificationType.INFO).show();
+	}
+	
+	//---------------------------- METODI PRIVATI ------------------------------
+	private void pulisciCampi() {
+		this.oldPassField.setText("");
+		this.newEmailField.setText("");
+		this.passField1.setText("");
+		this.passField2.setText("");
+		this.newPassField.setText("");
+	}
+	
 	@FXML
 	private void cambiaEmail() {
 		String email = newEmailField.getText();
@@ -117,6 +144,7 @@ public class ImpostazioniView implements IImpostazioniView {
 			return;
 		}
 		controller.cambiaEmail(email, password);
+		this.pulisciCampi();
 	}
 	
 	@FXML
@@ -133,6 +161,7 @@ public class ImpostazioniView implements IImpostazioniView {
 			return;
 		}
 		controller.cambiaPassword(vecchia, nuova);
+		this.pulisciCampi();
 	}
 	
 	@FXML
@@ -159,21 +188,6 @@ public class ImpostazioniView implements IImpostazioniView {
 				this.controller.eliminaAccount(password);
 			}
 		}
-	}
-
-	@Override
-	public void successo(String m) {
-		new Notification(m, NotificationType.SUCCESS).show();
-	}
-	
-	@Override
-	public void errore(String s) {
-		new Notification(s, NotificationType.ERROR).show();
-	}
-
-	@Override
-	public void info(String m) {
-		new Notification(m, NotificationType.INFO).show();
 	}
 	
 }

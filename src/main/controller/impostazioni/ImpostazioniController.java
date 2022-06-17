@@ -2,6 +2,7 @@ package main.controller.impostazioni;
 
 import main.model.accountmanager.classi.AccountManager;
 import main.model.accountmanager.classi.ExistingAccountException;
+import main.model.accountmanager.classi.InvalidEmailException;
 import main.model.accountmanager.classi.WrongCredentialsException;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.views.IView;
@@ -28,11 +29,13 @@ public class ImpostazioniController implements IImpostazioniController {
 		try {
 			app.cambiaEmail(email, pass);
 			view.successo("Email cambiata con successo");
-		} catch (ExistingAccountException | WrongCredentialsException e) {
+		} catch (ExistingAccountException | WrongCredentialsException | InvalidEmailException e) {
 			if(e instanceof ExistingAccountException) {
-				view.errore("E' già presente un'altro account con questa email.");
+				view.errore("E' già presente un'altro account con questa email");
 			} else if(e instanceof WrongCredentialsException) {
-				view.errore("La password non è corretta.");
+				view.errore("La password non è corretta");
+			} else if(e instanceof InvalidEmailException) {
+				view.errore("L'email non è valida");
 			}
 		}
 	}
@@ -43,7 +46,7 @@ public class ImpostazioniController implements IImpostazioniController {
 			app.cambiaPassword(vecchia, nuova);
 			view.successo("Password cambiata con successo");
 		} catch (WrongCredentialsException e) {
-			view.errore("La password non è corretta.");
+			view.errore("La password non è corretta");
 		}
 	}
 
@@ -54,9 +57,9 @@ public class ImpostazioniController implements IImpostazioniController {
 			if(eliminato)
 				view.accountEliminato();
 			else 
-				view.errore("Non è stato possibile elimare l'account.");
+				view.errore("Non è stato possibile elimare l'account");
 		} catch (WrongCredentialsException e) {
-			view.errore("La password non è corretta.");
+			view.errore("La password non è corretta");
 		}
 	}	
 	

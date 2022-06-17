@@ -26,8 +26,8 @@ public class AccessController implements IAccessController {
     public boolean accedi(String email, String password) {
 		IView pageView = view;
 		try {
-			app.accedi("mariorossi@gmail.com", "password123");
-			//app.accedi(email, password);
+			app.accedi(email, password);
+			view.successo("Accesso effettuato con successo");
 			return true;
 		} catch (WrongCredentialsException e) {
 			pageView.errore("Email o password non sono corrette");
@@ -40,6 +40,7 @@ public class AccessController implements IAccessController {
 		IView pageView = view;
 		try {
 			app.registraAccount(nome, email, password, confirmation);
+			view.successo("Account registrato con successo");
 			return true;
 		} catch (WrongCredentialsException | ExistingAccountException | InvalidEmailException e) {
 			if(e instanceof WrongCredentialsException) {

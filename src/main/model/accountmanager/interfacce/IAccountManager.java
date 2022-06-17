@@ -35,7 +35,9 @@ public interface IAccountManager {
     /**
      * Cambia l'email associata all'account
      */
-    public void cambiaEmail(String nuovaEmail, String password) throws ExistingAccountException, WrongCredentialsException;
+    public void cambiaEmail(String nuovaEmail, String password) throws ExistingAccountException, 
+    																   WrongCredentialsException,
+    																   InvalidEmailException;
     
     /**
      * Cambia la password dell'account

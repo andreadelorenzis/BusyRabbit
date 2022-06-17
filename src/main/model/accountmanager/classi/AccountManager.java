@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import main.Main;
 import main.model.accountmanager.interfacce.IAccountManager;
 import main.model.goalmanager.classi.GoalManager;
 import main.model.goalmanager.interfacce.IGoalManager;
@@ -75,6 +77,18 @@ public class AccountManager implements IAccountManager {
     	this.password = password;
     }
     
+    /**
+     * Permette di validare il formato di un email
+     */
+    private void validaEmail(String email) throws InvalidEmailException {
+		String regex = "^(.+)@(.+)$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(email); 
+		if(!matcher.matches()) {
+			throw new InvalidEmailException("Email non valida");
+		}
+    }
+    
     //--------------------------- METODI PUBBLICI ------------------------------
     public static AccountManager getInstance() {
     	if(accountManager == null) {
@@ -88,12 +102,7 @@ public class AccountManager implements IAccountManager {
 		  																							   ExistingAccountException, 
 		  																							   InvalidEmailException {
 		// valida email
-		String regex = "^(.+)@(.+)$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(email); 
-		if(!matcher.matches()) {
-			throw new InvalidEmailException("Email non valida");
-		}
+		this.validaEmail(email);
 	
 		// fai ricerca in database
 		File f = new File("database/" + email + ".txt");
@@ -110,7 +119,6 @@ public class AccountManager implements IAccountManager {
 					writer.write("---abitudini---\n");
 					writer.write("---storico-abitudini---\n");
 					writer.close();
-					System.out.println("Registrazione effettuata.");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -167,6 +175,7 @@ public class AccountManager implements IAccountManager {
 			if(this.password.equals(password)) {
 				File f = new File("database/" + email + ".txt");
 				if(f.delete()) {
+					Main.accountEliminato = true;
 					return true;
 				}
 			} else {
@@ -240,17 +249,21 @@ public class AccountManager implements IAccountManager {
 	}
 	
 	@Override
-	public void cambiaEmail(String nuova, String password) throws ExistingAccountException, WrongCredentialsException {
+	public void cambiaEmail(String nuova, String password) throws ExistingAccountException, WrongCredentialsException, InvalidEmailException {
 		if(accessoEffettuato) {
+			
+			// valida email
+			this.validaEmail(nuova);
+			
+			// controlla che la password sia corretta
 			if(this.password.equals(password)) {
 				File file = new File("database/" + this.email + ".txt");
 				File nuovo = new File("database/" + nuova + ".txt");
 				if(!nuovo.exists()) {
-					if(file.renameTo(nuovo)) {
-						System.out.println("Email cambiata.");
-					}
+					file.renameTo(nuovo);
+					this.email = nuova;
 				} else {
-					throw new ExistingAccountException("Email giï¿½ usata in un altro account.");
+					throw new ExistingAccountException("Email già usata in un altro account.");
 				}
 			} else {
 				throw new WrongCredentialsException("Password non corretta.");
@@ -264,6 +277,7 @@ public class AccountManager implements IAccountManager {
 			if(this.password.equals(vecchia)) {
 				try {
 					BufferedReader reader = new BufferedReader(new FileReader("database/" + email + ".txt"));
+					
 					// leggo il contenuto del file in una stringa
 					String vecchioContenuto = "";
 					String line = reader.readLine();
@@ -281,8 +295,9 @@ public class AccountManager implements IAccountManager {
 					writer.write(nuovoContenuto);
 					writer.close();
 					
+					// aggiorno lo stato
 					this.password = nuova;
-					System.out.println("Password cambiata.");
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

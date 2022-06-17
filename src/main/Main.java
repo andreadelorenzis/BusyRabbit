@@ -27,6 +27,11 @@ public class Main extends Application {
     public static LocalDate dataUltimoAccesso;
     
     /*
+     * Se l'account è stato eliminato, nel qual caso non salvare i dati 
+     */
+    public static boolean accountEliminato = false;
+    
+    /*
      * Istanza dell'AccountManager
      */
     public IAccountManager app = AccountManager.getInstance();
@@ -54,7 +59,8 @@ public class Main extends Application {
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent arg0) {
-					app.salvaDati();
+					if(!accountEliminato) 
+						app.salvaDati();
 				}
             });
         } catch (IOException ex) {

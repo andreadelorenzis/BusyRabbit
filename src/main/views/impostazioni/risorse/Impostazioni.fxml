@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -35,7 +36,7 @@
                                           <Insets right="20.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="oldPassField" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci vecchia password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                    <PasswordField fx:id="oldPassField" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci vecchia password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="15.0" />
@@ -51,7 +52,7 @@
                                           <Insets right="20.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="newPassField" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci nuova password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                    <PasswordField fx:id="newPassField" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci nuova password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="15.0" />
@@ -101,7 +102,7 @@
                                           <Insets right="20.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="passField1" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci la tua password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                    <PasswordField fx:id="passField1" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci la tua password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <padding>
                                     <Insets bottom="15.0" />
@@ -135,7 +136,7 @@
                                           <Insets right="20.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="passField2" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci la tua password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14;" HBox.hgrow="ALWAYS" />
+                                    <PasswordField fx:id="passField2" prefHeight="26.0" prefWidth="322.0" promptText="Inserisci la tua password" style="-fx-background-color: #1B2E4B; -fx-text-fill: #ffffff; -fx-font-size: 14px;" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />

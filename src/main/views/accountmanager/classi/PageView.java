@@ -82,7 +82,7 @@ public class PageView implements IView {
     	AccessController accessController = (AccessController) controller;
     	String email = emailLogField.getText();
     	String password = passLogField.getText();
-    	if(/*!email.isBlank() && !password.isBlank()*/true) {
+    	if(!email.isBlank() && !password.isBlank()) {
 	    	boolean result = accessController.accedi(email, password);
 	    	if(result) {
 	    		apriSchermataPrincipale(event);	
@@ -112,6 +112,16 @@ public class PageView implements IView {
     @FXML
     private void apriPaginaRegistrazione(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Registrazione"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(LoaderRisorse.globalCss);
+        stage.setScene(scene);
+        stage.show();
+    } 
+    
+    @FXML
+    private void apriPaginaLogin(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(LoaderRisorse.getFXML(LoaderRisorse.AM, "Login"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(LoaderRisorse.globalCss);
