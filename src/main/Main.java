@@ -27,7 +27,7 @@ public class Main extends Application {
     public static LocalDate dataUltimoAccesso;
     
     /*
-     * Se l'account è stato eliminato, nel qual caso non salvare i dati 
+     * Se l'account Ã¨ stato eliminato, nel qual caso non salvare i dati 
      */
     public static boolean accountEliminato = false;
     
@@ -66,6 +66,15 @@ public class Main extends Application {
         } catch (IOException ex) {
             Logger.getLogger(FXML.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+	
+	
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Main.dataUltimoAccesso = LocalDate.now();
+        launch(args);
     }
     
 }
