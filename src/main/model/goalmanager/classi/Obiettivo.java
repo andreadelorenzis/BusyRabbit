@@ -49,7 +49,7 @@ public abstract class Obiettivo implements IObiettivo {
      * @param nome
      * @param data 
      */
-    public Obiettivo(String nome, LocalDate data) {
+    protected Obiettivo(String nome, LocalDate data) {
         this.nome = nome;
         this.data = data;
         this.id = UUID.randomUUID().toString();
@@ -61,7 +61,7 @@ public abstract class Obiettivo implements IObiettivo {
      * @param descrizione
      * @param data 
      */
-    public Obiettivo(String nome, String descrizione, LocalDate data) {
+    protected Obiettivo(String nome, String descrizione, LocalDate data) {
         this(nome, data);
         this.descrizione = descrizione;
     }
@@ -73,7 +73,7 @@ public abstract class Obiettivo implements IObiettivo {
      * @param data
      * @param id
      */
-    public Obiettivo(String nome, String descrizione, LocalDate data, String id) {
+    protected Obiettivo(String nome, String descrizione, LocalDate data, String id) {
         this(nome, data);
         this.descrizione = descrizione;
         this.id = id;

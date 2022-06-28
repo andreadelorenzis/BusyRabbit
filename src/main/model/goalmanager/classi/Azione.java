@@ -53,7 +53,7 @@ public abstract class Azione implements IAzione {
      * @param incremento
      * @param dataInizio 
      */
-    public Azione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni) {
+    protected Azione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni) {
         this.nome = nome;
         this.incremento = incremento;
         this.dataInizio = dataInizio;
@@ -61,7 +61,7 @@ public abstract class Azione implements IAzione {
         this.id = UUID.randomUUID().toString();
     }
     
-    public Azione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, String id) {
+    protected Azione(String nome, int incremento, LocalDate dataInizio, List<DayOfWeek> giorni, String id) {
         this(nome, incremento, dataInizio, giorni);
         this.id = id;
     }

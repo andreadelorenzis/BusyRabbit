@@ -78,7 +78,7 @@ public class Abitudine implements IAbitudine {
 	 * @param startDate
 	 * @param days
 	 */
-	public Abitudine(String name, String description, LocalDate startDate, List<DayOfWeek> days) {
+	protected Abitudine(String name, String description, LocalDate startDate, List<DayOfWeek> days) {
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;
@@ -86,7 +86,15 @@ public class Abitudine implements IAbitudine {
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public Abitudine(String name, String description, LocalDate startDate, List<DayOfWeek> days, String id) {
+	/**
+	 * 
+	 * @param name
+	 * @param description
+	 * @param startDate
+	 * @param days
+	 * @param id
+	 */
+	protected Abitudine(String name, String description, LocalDate startDate, List<DayOfWeek> days, String id) {
 		this(name, description, startDate, days);
 		this.id = id;
 	}
