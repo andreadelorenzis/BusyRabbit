@@ -8,7 +8,7 @@ import java.time.LocalTime;
  * Attività monitorata dall'utente. Ogni attività deve fare parte di un progetto.
  *
  */
-public interface IAttività {
+public interface IActivity {
     
 	/**
 	 * 

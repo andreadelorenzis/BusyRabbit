@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 
 /**
  * 
  * Contiene la lista di attività in un dato giorno.
  *
  */
-public class GiornoAttività {
+public class GiornoTracking {
 	
     //------------------------------- CAMPI ----------------------------------
 	/*
@@ -22,19 +22,19 @@ public class GiornoAttività {
 	/*
 	 * Lista di attività svolte in questo giorno
 	 */
-	private List<IAttività> attività = new ArrayList<>();
+	private List<IActivity> attività = new ArrayList<>();
 	
     //----------------------------- COSTRUTTORI --------------------------------
 	/**
 	 * 
 	 * @param giorno
 	 */
-	public GiornoAttività(int giorno) {
+	public GiornoTracking(int giorno) {
 		this.giorno = giorno;
 	}
 	
     //---------------------------- METODI PUBBLICI------------------------------
-	public void aggiungiAttività(IAttività a) {
+	public void aggiungiAttività(IActivity a) {
 		this.attività.add(a);
 	}
 	
@@ -48,7 +48,7 @@ public class GiornoAttività {
 		return this.giorno;
 	}
 	
-	public List<IAttività> getAttività() {
+	public List<IActivity> getAttività() {
 		return this.attività;
 	}
 }

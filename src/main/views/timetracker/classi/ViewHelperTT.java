@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.LoaderRisorse;
 
@@ -54,7 +54,7 @@ public class ViewHelperTT {
     /**
      * Crea l'header di un giorno di attività.
      */
-    public static BorderPane creaHeaderGiorno(List<IAttività> giorno) {
+    public static BorderPane creaHeaderGiorno(List<IActivity> giorno) {
     	
     	// data e durata totale del giorno
     	String durata = formattaOrologio((int) calcolaTotaleGiorno(giorno));
@@ -93,9 +93,9 @@ public class ViewHelperTT {
     /**
      * Calcola il tempo totale misurato in un giorno.
      */
-    public static long calcolaTotaleGiorno(List<IAttività> giorno) {
+    public static long calcolaTotaleGiorno(List<IActivity> giorno) {
     	long durata = 0;
-    	for(IAttività a : giorno) {
+    	for(IActivity a : giorno) {
     		durata += a.getDurata();
     	}
     	return durata;

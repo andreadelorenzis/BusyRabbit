@@ -17,14 +17,14 @@ public interface IProgetto {
 	 * 
 	 * @param attività 
 	 */
-    public void aggiungiAttività(IAttività attività);
+    public void aggiungiAttività(IActivity attività);
     
     /**
      * Rimuove la durata dell'attività dai tempi del progetto
      * 
      * @param attività
      */
-    public void eliminaAttività(IAttività attività);
+    public void eliminaAttività(IActivity attività);
     
     /**
      * Ottiene il tempo totale del progetto (somme delle durate delle attività) per ogni mese in un anno specifico.

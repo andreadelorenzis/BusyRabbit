@@ -4,7 +4,7 @@ import java.time.Month;
 import java.util.Map;
 import java.util.TreeMap;
 
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 
 /**
  * 
@@ -35,7 +35,7 @@ public class MeseProgetto {
 	}
 	
     //---------------------------- METODI PUBBLICI------------------------------
-	public void aggiungiDurata(IAttività a) {
+	public void aggiungiDurata(IActivity a) {
 		int giorno = a.getData().getDayOfMonth();
 		
 		// se il giorno esiste
@@ -46,7 +46,7 @@ public class MeseProgetto {
 		}
 	}
 	
-	public void eliminaDurata(IAttività a) {
+	public void eliminaDurata(IActivity a) {
 		int giorno = a.getData().getDayOfMonth();
 		
 		if(tempiMese.containsKey(giorno)) {

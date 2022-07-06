@@ -4,7 +4,7 @@ import java.time.Month;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IProgetto;
 import main.views.Colore;
 
@@ -56,7 +56,7 @@ public class Progetto implements IProgetto {
 
     //---------------------------- METODI PUBBLICI -----------------------------
 	@Override
-	public void aggiungiAttività(IAttività a) {
+	public void aggiungiAttività(IActivity a) {
 		
 		// aggiungo la durata al giusto AnnoProgetto
 		int anno = a.getData().getYear();
@@ -83,7 +83,7 @@ public class Progetto implements IProgetto {
 	}
 
 	@Override
-	public void eliminaAttività(IAttività a) {
+	public void eliminaAttività(IActivity a) {
 		int anno = a.getData().getYear();
 	
 		AnnoProgetto aProgetto = anniProgetto.get(anno);

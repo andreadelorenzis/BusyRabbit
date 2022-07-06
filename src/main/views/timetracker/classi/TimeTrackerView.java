@@ -36,12 +36,12 @@ import javafx.stage.StageStyle;
 import main.controller.IController;
 import main.controller.timetracker.ITimeTrackerController;
 import main.controller.timetracker.TimeTrackerController;
-import main.model.timetracker.classi.Attivit‡;
+import main.model.timetracker.classi.Activity;
 import main.model.timetracker.classi.Cronometro;
 import main.model.timetracker.classi.PomodoroTimer;
 import main.model.timetracker.classi.Progetto;
 import main.model.timetracker.classi.TimeTracker;
-import main.model.timetracker.interfacce.IAttivit‡;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITracker;
@@ -162,7 +162,7 @@ public class TimeTrackerView implements ITimeTrackerView {
 	}
 	
 	@Override
-	public void aggiornaView(List<List<IAttivit‡>> giorni, int pagina) {
+	public void aggiornaView(List<List<IActivity>> giorni, int pagina) {
         creaCronologiaAttivit‡(giorni, pagina);
 	}
 
@@ -256,9 +256,9 @@ public class TimeTrackerView implements ITimeTrackerView {
         MenuItem menuItem2 = new MenuItem("Elimina");
         menuItem1.setOnAction((ActionEvent e) -> {
         	try {
-        		if(obj instanceof Attivit‡) {
+        		if(obj instanceof Activity) {
         			List<IProgetto> progetti = TimeTracker.getInstance().getProgetti();
-        			apriEditorAttivit‡((IAttivit‡) obj, progetti);
+        			apriEditorAttivit‡((IActivity) obj, progetti);
         		} else if(obj instanceof Progetto) {
         			apriEditorProgetto((IProgetto) obj, false);
         		}
@@ -267,8 +267,8 @@ public class TimeTrackerView implements ITimeTrackerView {
 			}
         });
         menuItem2.setOnAction((ActionEvent e) -> {
-        	if(obj instanceof Attivit‡) {
-    			this.controller.eliminaAttivit‡((IAttivit‡) obj);
+        	if(obj instanceof Activity) {
+    			this.controller.eliminaAttivit‡((IActivity) obj);
     		} else if(obj instanceof Progetto) {
     			this.controller.eliminaProgetto((IProgetto) obj);
     		}
@@ -294,7 +294,7 @@ public class TimeTrackerView implements ITimeTrackerView {
      * @param progetti
      * @throws IOException
      */
-    private void apriEditorAttivit‡(IAttivit‡ attivit‡, List<IProgetto> progetti) throws IOException {
+    private void apriEditorAttivit‡(IActivity attivit‡, List<IProgetto> progetti) throws IOException {
     	
     	// crea il modal
     	FXMLLoader fxmlLoader = new FXMLLoader();
@@ -305,7 +305,7 @@ public class TimeTrackerView implements ITimeTrackerView {
     	Modal modal = new Modal(editor, "");
         
         // ottiene il controller e imposta l'attivit‡ da modificare
-        EditorAttivit‡ controller = fxmlLoader.getController();
+        EditorActivity controller = fxmlLoader.getController();
         controller.setAttivit‡(attivit‡);
          
         // imposta il titolo del modal
@@ -338,7 +338,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         	long durata = controller.getDurata();
             
         	// modifica l'attivit‡
-        	IAttivit‡ attivit‡Modificata = new Attivit‡(nome, data, ora, durata);
+        	IActivity attivit‡Modificata = new Activity(nome, data, ora, durata);
         	this.controller.modificaAttivit‡(attivit‡, attivit‡Modificata);
         }
     }
@@ -415,7 +415,7 @@ public class TimeTrackerView implements ITimeTrackerView {
      * @param giorni
      * @param pagina
      */
-    private void creaCronologiaAttivit‡(List<List<IAttivit‡>> giorni, int pagina) {
+    private void creaCronologiaAttivit‡(List<List<IActivity>> giorni, int pagina) {
     	
     	// resetto la view 
     	listaGiorniAttivit‡.getChildren().clear();
@@ -493,7 +493,7 @@ public class TimeTrackerView implements ITimeTrackerView {
      * 
      * @param giorno
      */
-    private void creaViewGiorno(List<IAttivit‡> giorno) {
+    private void creaViewGiorno(List<IActivity> giorno) {
         
         // crea un border pane
         BorderPane pane = new BorderPane();
@@ -513,7 +513,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         // crea il box con la lista di attivit‡
         VBox box2 = new VBox();
         for(int i = 0; i < giorno.size(); i++) {
-            IAttivit‡ attivit‡ = giorno.get(i);          
+            IActivity attivit‡ = giorno.get(i);          
             box2.getChildren().add(creaViewAttivit‡(attivit‡));
         }
         box.getChildren().add(box2);
@@ -522,11 +522,11 @@ public class TimeTrackerView implements ITimeTrackerView {
         this.listaGiorniAttivit‡.getChildren().add(pane);
     }        
     
-    private void toggleTextField(TextField field, Label label, IAttivit‡ a) {
+    private void toggleTextField(TextField field, Label label, IActivity a) {
 		field.setVisible(false);
         label.setVisible(true);
         if(!field.getText().isBlank() && !(field.getText().equals(a.getNome()))) {
-        	IAttivit‡ copia = this.getCopiaAttivit‡(a);
+        	IActivity copia = this.getCopiaAttivit‡(a);
         	copia.setNome(field.getText());
         	this.controller.modificaAttivit‡(a, copia);
         }
@@ -538,7 +538,7 @@ public class TimeTrackerView implements ITimeTrackerView {
      * @param attivit‡
      * @return
      */
-    private BorderPane creaViewAttivit‡(IAttivit‡ attivit‡) {
+    private BorderPane creaViewAttivit‡(IActivity attivit‡) {
         // crea un BorderPane.
         BorderPane pane = new BorderPane();
         pane.getStyleClass().add("attivita");
@@ -636,7 +636,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         return pane;
     }
     
-    private void toggleMenuProgetti(MouseEvent t, IAttivit‡ a, boolean menuForm) {
+    private void toggleMenuProgetti(MouseEvent t, IActivity a, boolean menuForm) {
     	if(!menuProgettiAperto) {
     		BorderPane menu = creaMenuProgetti(t, a, menuForm);
     		menuProgettiAperto = true;
@@ -646,14 +646,14 @@ public class TimeTrackerView implements ITimeTrackerView {
     	}
     }
     
-    private IAttivit‡ getCopiaAttivit‡(IAttivit‡ a) {
-    	return new Attivit‡(a.getNome(), a.getData(), a.getOraInizio(), a.getDurata(), a.getProgetto(), a.getId());
+    private IActivity getCopiaAttivit‡(IActivity a) {
+    	return new Activity(a.getNome(), a.getData(), a.getOraInizio(), a.getDurata(), a.getProgetto(), a.getId());
     }
     
     /**
      * Crea il men˘ contenente la lista di tutti i progetti
      */
-    private BorderPane creaMenuProgetti(MouseEvent t, IAttivit‡ a, boolean menuForm) {
+    private BorderPane creaMenuProgetti(MouseEvent t, IActivity a, boolean menuForm) {
     	List<IProgetto> progetti = TimeTracker.getInstance().getProgetti();
     	
 		// crea il men˘ dropdown
@@ -744,7 +744,7 @@ public class TimeTrackerView implements ITimeTrackerView {
                 if(menuForm) {
                 	cambiaProgettoCorrente(TimeTracker.progettoDefault);
                 } else {
-                	IAttivit‡ copia = getCopiaAttivit‡(a);
+                	IActivity copia = getCopiaAttivit‡(a);
                 	copia.setProgettoPadre(TimeTracker.progettoDefault);
                 	controller.modificaAttivit‡(a, copia);
                 }
@@ -977,7 +977,7 @@ public class TimeTrackerView implements ITimeTrackerView {
         }
         long durata = ore * 3600 + minuti * 60 + secondi;
         LocalTime ora = LocalTime.of(ora1, ora2);
-        Attivit‡ a = new Attivit‡(nome, data, ora, durata); 
+        Activity a = new Activity(nome, data, ora, durata); 
         if(this.progetto != null) {
         	a.setProgettoPadre(this.progetto);
         }

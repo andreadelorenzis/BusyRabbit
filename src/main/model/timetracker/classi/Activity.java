@@ -4,10 +4,10 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IProgetto;
 
-public class Attività implements IAttività {
+public class Activity implements IActivity {
 	
     //------------------------------- CAMPI ----------------------------------	
 	/*
@@ -47,7 +47,7 @@ public class Attività implements IAttività {
 	 * @param data
 	 * @param durata
 	 */
-	public Attività(String nome, LocalDate data, LocalTime ora, Long durata) {
+	public Activity(String nome, LocalDate data, LocalTime ora, Long durata) {
 		this.nome = nome;
 		this.data = data;
 		this.ora = ora;
@@ -64,7 +64,7 @@ public class Attività implements IAttività {
 	 * @param durata
 	 * @param id
 	 */
-	public Attività(String nome, LocalDate data, LocalTime ora, Long durata, String id) {
+	public Activity(String nome, LocalDate data, LocalTime ora, Long durata, String id) {
 		this(nome, data, ora, durata);
 		this.id = id;
 	}
@@ -76,7 +76,7 @@ public class Attività implements IAttività {
 	 * @param durata
 	 * @param progetto
 	 */
-	public Attività(String nome, LocalDate data, LocalTime ora, Long durata, IProgetto progetto) {
+	public Activity(String nome, LocalDate data, LocalTime ora, Long durata, IProgetto progetto) {
 		this(nome, data, ora, durata);
 		this.progetto = progetto;
 	}
@@ -89,7 +89,7 @@ public class Attività implements IAttività {
 	 * @param progetto
 	 * @param id
 	 */
-	public Attività(String nome, LocalDate data, LocalTime ora, Long durata, IProgetto progetto, String id) {
+	public Activity(String nome, LocalDate data, LocalTime ora, Long durata, IProgetto progetto, String id) {
 		this(nome, data, ora, durata, progetto);
 		this.id = id;
 	}
@@ -160,10 +160,10 @@ public class Attività implements IAttività {
   	      if (obj == this) {
   	         return true;
   	      }
-  	      if (!(obj instanceof Attività)) {
+  	      if (!(obj instanceof Activity)) {
   	         return false;
   	      }
-  	      IAttività o = (IAttività) obj;
+  	      IActivity o = (IActivity) obj;
   	      return this.id.equals(o.getId());
    }
 

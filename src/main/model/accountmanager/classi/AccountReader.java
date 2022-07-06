@@ -27,9 +27,9 @@ import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineSessione;
 import main.model.habittracker.interfacce.IHabitTracker;
-import main.model.timetracker.classi.Attività;
+import main.model.timetracker.classi.Activity;
 import main.model.timetracker.classi.Progetto;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
 import main.views.Colore;
@@ -322,12 +322,12 @@ public class AccountReader {
 			String idProgetto = params[7];
 			String id = params[8];
 			IProgetto progetto;
-			IAttività a;
+			IActivity a;
 			if(!idProgetto.equals("null")) {
 				progetto = trovaProgetto(idProgetto, tt);
-				a = new Attività(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, progetto, id);
+				a = new Activity(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, progetto, id);
 			} else {
-				a = new Attività(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, id);
+				a = new Activity(nome, LocalDate.of(anno, mese, giorno), LocalTime.of(ore, minuti), durata, id);
 			}
 			tt.aggiungiAttività(a);
 			line = reader.readLine();

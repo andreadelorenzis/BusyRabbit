@@ -3,7 +3,7 @@ package main.model.timetracker.classi;
 import java.util.Map;
 import java.util.TreeMap;
 
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 
 /**
  * 
@@ -38,7 +38,7 @@ public class AnnoProgetto {
 	}
 	
     //-------------------------- METODI PUBBLICI ----------------------------
-	public void aggiungiDurata(IAttività a) {
+	public void aggiungiDurata(IActivity a) {
 		int mese = a.getData().getMonth().getValue();
 		// se il mese esiste
 		if(tempiAnno.containsKey(mese)) {
@@ -48,7 +48,7 @@ public class AnnoProgetto {
 		}
 	}
 	
-	public void eliminaDurata(IAttività a) {
+	public void eliminaDurata(IActivity a) {
 		int mese = a.getData().getMonth().getValue();
 		if(tempiAnno.containsKey(mese)) {
 			tempiAnno.put(mese, tempiAnno.get(mese) - a.getDurata());

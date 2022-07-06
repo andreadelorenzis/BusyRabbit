@@ -19,7 +19,7 @@ public interface ITimeTracker {
 	/**
 	 * Fa partire il tracker (PomodoroTimer o Cronometro)
 	 */
-	public void avviaTracker(IAttivit‡ a);
+	public void avviaTracker(IActivity a);
 	
 	/**
 	 * Termina il tracker, aggiungendo l'attivit‡ con la durata giusta
@@ -39,13 +39,13 @@ public interface ITimeTracker {
 	 * 
 	 * @param attivit‡
 	 */
-    public void aggiungiAttivit‡(IAttivit‡ attivit‡);
+    public void aggiungiAttivit‡(IActivity attivit‡);
     
     /**
      * 
      * @param idAttivit‡
      */
-    public void eliminaAttivit‡(IAttivit‡ a);
+    public void eliminaAttivit‡(IActivity a);
     
     /**
      * 
@@ -67,7 +67,7 @@ public interface ITimeTracker {
      * @param indice di paginazione
      * @return lista di giorni
      */
-    public List<List<IAttivit‡>> getGiorniAttivit‡(int pagina);
+    public List<List<IActivity>> getGiorniAttivit‡(int pagina);
     
     /**
      * Restituisce il totale di tutti i giorni salvati
@@ -84,7 +84,7 @@ public interface ITimeTracker {
      * 
      * @return la lista di tutte le attivit‡
      */
-    public List<IAttivit‡> getAttivit‡();
+    public List<IActivity> getAttivit‡();
     
     /**
      * 
@@ -96,5 +96,5 @@ public interface ITimeTracker {
      * 
      * @return l'attivit‡ attualmente monitorata
      */
-    public IAttivit‡ getAttivit‡Corrente();
+    public IActivity getAttivit‡Corrente();
 }

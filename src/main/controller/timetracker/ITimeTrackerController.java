@@ -1,7 +1,7 @@
 package main.controller.timetracker;
 
 import main.controller.IController;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITrackable;
 
@@ -16,11 +16,11 @@ public interface ITimeTrackerController extends ITrackable, IController {
 	
 	public void eliminaProgetto(IProgetto p);
 	
-	public void aggiungiAttività(IAttività a);
+	public void aggiungiAttività(IActivity a);
 	
-	public void modificaAttività(IAttività a1, IAttività a2);
+	public void modificaAttività(IActivity a1, IActivity a2);
 	
-	public void eliminaAttività(IAttività a);
+	public void eliminaAttività(IActivity a);
 
 	public void incrementaPagina();
 	

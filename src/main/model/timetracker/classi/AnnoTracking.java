@@ -9,7 +9,7 @@ import java.util.TreeMap;
  * Anno di monitoraggio attività
  *
  */
-public class AnnoAttività {
+public class AnnoTracking {
 	
     //------------------------------- CAMPI ----------------------------------	
 	/*
@@ -21,19 +21,19 @@ public class AnnoAttività {
 	 * Chiave: mese (1-12)
 	 * Valore: MeseAttività
 	 */
-	private Map<Integer, MeseAttività> mesi = new TreeMap<>(Collections.reverseOrder());
+	private Map<Integer, MeseTracking> mesi = new TreeMap<>(Collections.reverseOrder());
 	
     //----------------------------- COSTRUTTORI --------------------------------
 	/**
 	 * 
 	 * @param anno
 	 */
-	public AnnoAttività(int anno) {
+	public AnnoTracking(int anno) {
 		this.anno = anno;
 	}
 	
     //-------------------------- METODI PUBBLICI ----------------------------
-	public void aggiungiMese(MeseAttività m) {
+	public void aggiungiMese(MeseTracking m) {
 		mesi.put(m.getMese().getValue(), m);
 	}
 	
@@ -45,7 +45,7 @@ public class AnnoAttività {
 		return anno;
 	}
 	
-	public Map<Integer, MeseAttività> getMesi() {
+	public Map<Integer, MeseTracking> getMesi() {
 		return mesi;
 	}
 }

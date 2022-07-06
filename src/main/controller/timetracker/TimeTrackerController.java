@@ -3,11 +3,11 @@ package main.controller.timetracker;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javafx.application.Platform;
-import main.model.timetracker.classi.Attività;
+import main.model.timetracker.classi.Activity;
 import main.model.timetracker.classi.PomodoroTimer;
 import main.model.timetracker.classi.TimeTracker;
 import main.model.timetracker.classi.TrackerType;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
@@ -87,14 +87,14 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	}
 
 	@Override
-	public void aggiungiAttività(IAttività a) {
+	public void aggiungiAttività(IActivity a) {
 		tt.aggiungiAttività(a);
 		view.successo("Attività aggiunta");
 		aggiornaView();
 	}
 
 	@Override
-	public void modificaAttività(IAttività a1, IAttività a2) {
+	public void modificaAttività(IActivity a1, IActivity a2) {
 		IProgetto nuovoProgetto = a2.getProgetto();
 		IProgetto vecchioProgetto = a1.getProgetto();
 
@@ -117,7 +117,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 	}
 
 	@Override
-	public void eliminaAttività(IAttività a) {
+	public void eliminaAttività(IActivity a) {
 		a.getProgetto().eliminaAttività(a);
 		tt.eliminaAttività(a);
 		view.info("Attività eliminata");
@@ -147,7 +147,7 @@ public class TimeTrackerController implements ITimeTrackerController, ITrackable
 
 	@Override
 	public void avviaTracker(String nome, IProgetto p) {
-		IAttività a = new Attività(nome, LocalDate.now(), LocalTime.now(), 0L, p);
+		IActivity a = new Activity(nome, LocalDate.now(), LocalTime.now(), 0L, p);
 		tt.avviaTracker(a);
 	}
 

@@ -24,7 +24,7 @@ import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IAbitudineSessione;
 import main.model.habittracker.interfacce.IHabitTracker;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
 
@@ -196,7 +196,7 @@ public class AccountWriter {
 	 */
     public void scriviAttività(BufferedWriter writer, ITimeTracker tt) {
 		try {
-			for(IAttività a : tt.getAttività()) {
+			for(IActivity a : tt.getAttività()) {
 				String idProgetto = "null";
 				if(!(a.getProgetto().getId().equals(tt.getProgetti().get(0).getId()))) {
 					idProgetto = a.getProgetto().getId();

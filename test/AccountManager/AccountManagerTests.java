@@ -24,7 +24,7 @@ import main.model.habittracker.interfacce.IAbitudine;
 import main.model.habittracker.interfacce.IAbitudineScomponibile;
 import main.model.habittracker.interfacce.IHabitTracker;
 import main.model.timetracker.classi.TimeTracker;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.IProgetto;
 import main.model.timetracker.interfacce.ITimeTracker;
 import main.views.Colore;
@@ -158,7 +158,7 @@ class AccountManagerTests {
 		// sono presenti 2 attività
 		assertEquals(2, tt.getAttività().size());
 		// controlla prima attività
-		IAttività a = tt.getAttività().get(0);
+		IActivity a = tt.getAttività().get(0);
 		assertEquals("Studiare analisi", a.getNome());
 		assertEquals(25, a.getData().getDayOfMonth());
 		assertEquals(5, a.getData().getMonthValue());

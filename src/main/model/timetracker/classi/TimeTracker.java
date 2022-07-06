@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import main.model.timetracker.interfacce.IAttivit‡;
+import main.model.timetracker.interfacce.IActivity;
 import main.model.timetracker.interfacce.ICronometro;
 import main.model.timetracker.interfacce.IPomodoroTimer;
 import main.model.timetracker.interfacce.IProgetto;
@@ -32,12 +32,12 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	/*
 	 * Lista di attivit‡
 	 */
-	private List<IAttivit‡> attivit‡ = new ArrayList<>();
+	private List<IActivity> attivit‡ = new ArrayList<>();
 	
 	/*
 	 * Lista degli anni di monitoraggio.
 	 */
-	private Map<Integer, AnnoAttivit‡> anniAttivit‡ = new TreeMap<>(Collections.reverseOrder());
+	private Map<Integer, AnnoTracking> anniAttivit‡ = new TreeMap<>(Collections.reverseOrder());
 	
 	/*
 	 * Istanza di Cronometro
@@ -57,7 +57,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	/*
 	 * Attivit‡ attualmente monitorata
 	 */
-	private IAttivit‡ attivit‡Corrente = null;
+	private IActivity attivit‡Corrente = null;
 	
 	/*
 	 * Numero totale di giorni monitorati
@@ -81,9 +81,9 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	/*
 	 * Crea un GiornoAttivit‡ inserendovi l'attivit‡
 	 */
-	private GiornoAttivit‡ creaGiorno(IAttivit‡ a) {
+	private GiornoTracking creaGiorno(IActivity a) {
 		// creo il giorno e vi aggiungo l'attivit‡
-		GiornoAttivit‡ g = new GiornoAttivit‡(a.getData().getDayOfMonth());
+		GiornoTracking g = new GiornoTracking(a.getData().getDayOfMonth());
 		g.aggiungiAttivit‡(a);
 		this.attivit‡.add(a);
 		a.getProgetto().aggiungiAttivit‡(a);
@@ -94,12 +94,12 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	/*
 	 * Crea un MeseAttivit‡ inserendovi l'attivit‡
 	 */
-	private MeseAttivit‡ creaMese(IAttivit‡ a) {
+	private MeseTracking creaMese(IActivity a) {
 		// creo il giorno
-		GiornoAttivit‡ g = creaGiorno(a);
+		GiornoTracking g = creaGiorno(a);
 		
 		// creo il mese e vi aggiungo il giorno
-		MeseAttivit‡ m = new MeseAttivit‡(a.getData().getMonth());
+		MeseTracking m = new MeseTracking(a.getData().getMonth());
 		m.aggiungiGiorno(g);
 		return m;
 	}
@@ -107,12 +107,12 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	/*
 	 * Crea un AnnoAttivit‡ inserendovi l'attivit‡
 	 */
-	private AnnoAttivit‡ creaAnno(IAttivit‡ a) {
+	private AnnoTracking creaAnno(IActivity a) {
 		// creo il mese
-		MeseAttivit‡ m = creaMese(a);
+		MeseTracking m = creaMese(a);
 		
 		// creo l'anno e vi aggiungo il mese
-		AnnoAttivit‡ anno = new AnnoAttivit‡(a.getData().getYear());
+		AnnoTracking anno = new AnnoTracking(a.getData().getYear());
 		anno.aggiungiMese(m);
 		return anno;
 	}
@@ -126,7 +126,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 	
 	@Override
-	public void avviaTracker(IAttivit‡ a) {
+	public void avviaTracker(IActivity a) {
 		attivit‡Corrente = a;
 		tracker.avvia();	
 	}
@@ -160,21 +160,21 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 
 	@Override
-	public void aggiungiAttivit‡(IAttivit‡ attivit‡) {
+	public void aggiungiAttivit‡(IActivity attivit‡) {
 		int anno = attivit‡.getData().getYear();
 		
 		// se l'anno esiste
 		if(anniAttivit‡.containsKey(anno)) {
-			AnnoAttivit‡ annoAttivit‡ = anniAttivit‡.get(anno);
+			AnnoTracking annoAttivit‡ = anniAttivit‡.get(anno);
 			int mese = attivit‡.getData().getMonthValue();
 			// se l'anno contiene il mese
 			if(annoAttivit‡.getMesi().containsKey(mese)) {
-				MeseAttivit‡ meseAttivit‡ = annoAttivit‡.getMesi().get(mese);
+				MeseTracking meseAttivit‡ = annoAttivit‡.getMesi().get(mese);
 				int giorno = attivit‡.getData().getDayOfMonth();
 				
 				// se il mese contiene il giorno
 				if(meseAttivit‡.getGiorni().containsKey(giorno)) {
-					GiornoAttivit‡ giornoAttivit‡ = meseAttivit‡.getGiorni().get(giorno);
+					GiornoTracking giornoAttivit‡ = meseAttivit‡.getGiorni().get(giorno);
 					
 					// aggiungi attivit‡ al giorno
 					giornoAttivit‡.aggiungiAttivit‡(attivit‡);
@@ -197,14 +197,14 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 
 	@Override
-	public void eliminaAttivit‡(IAttivit‡ a) {
+	public void eliminaAttivit‡(IActivity a) {
 		int anno = a.getData().getYear();
 		int mese = a.getData().getMonthValue();
 		int giorno = a.getData().getDayOfMonth();
 		
-		AnnoAttivit‡ aAttivit‡ = anniAttivit‡.get(anno);
-		MeseAttivit‡ mAttivit‡ = aAttivit‡.getMesi().get(mese);
-		GiornoAttivit‡ gAttivit‡ = mAttivit‡.getGiorni().get(giorno);
+		AnnoTracking aAttivit‡ = anniAttivit‡.get(anno);
+		MeseTracking mAttivit‡ = aAttivit‡.getMesi().get(mese);
+		GiornoTracking gAttivit‡ = mAttivit‡.getGiorni().get(giorno);
 		
 		// rimuove attivit‡ dal GiornoAttivit‡
 		gAttivit‡.rimuoviAttivit‡(a.getId());
@@ -241,17 +241,17 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 
 	@Override
-	public List<List<IAttivit‡>> getGiorniAttivit‡(int pagina) {
-		List<List<IAttivit‡>> listaGiorni = new ArrayList<>();
+	public List<List<IActivity>> getGiorniAttivit‡(int pagina) {
+		List<List<IActivity>> listaGiorni = new ArrayList<>();
 		int conteggioGiorni = 0;	
 		for(int anno : anniAttivit‡.keySet()) {
-			AnnoAttivit‡ aAttivit‡ = anniAttivit‡.get(anno);
+			AnnoTracking aAttivit‡ = anniAttivit‡.get(anno);
 			for(int mese : aAttivit‡.getMesi().keySet()) {
-				MeseAttivit‡ mAttivit‡ = aAttivit‡.getMesi().get(mese);
+				MeseTracking mAttivit‡ = aAttivit‡.getMesi().get(mese);
 				for(int giorno : mAttivit‡.getGiorni().keySet()) {
-					GiornoAttivit‡ gAttivit‡ = mAttivit‡.getGiorni().get(giorno);
+					GiornoTracking gAttivit‡ = mAttivit‡.getGiorni().get(giorno);
 					if(conteggioGiorni >= (pagina * 10) - 10 && conteggioGiorni < pagina * 10) {
-						List<IAttivit‡> listaAttivit‡ = new ArrayList<>(gAttivit‡.getAttivit‡());
+						List<IActivity> listaAttivit‡ = new ArrayList<>(gAttivit‡.getAttivit‡());
 						listaGiorni.add(listaAttivit‡);
 					}
 					conteggioGiorni++;
@@ -270,9 +270,9 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	public int getNumGiorni() {
 		int numGiorni = 0;
 		for(int anno : anniAttivit‡.keySet()) {
-			AnnoAttivit‡ aAttivit‡ = anniAttivit‡.get(anno);
+			AnnoTracking aAttivit‡ = anniAttivit‡.get(anno);
 			for(int mese : aAttivit‡.getMesi().keySet()) {
-				MeseAttivit‡ mAttivit‡ = aAttivit‡.getMesi().get(mese);
+				MeseTracking mAttivit‡ = aAttivit‡.getMesi().get(mese);
 				for(int giorno : mAttivit‡.getGiorni().keySet()) {
 					numGiorni++;
 				}
@@ -287,7 +287,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 	
 	@Override
-	public List<IAttivit‡> getAttivit‡() {
+	public List<IActivity> getAttivit‡() {
 		return attivit‡;
 	}
 	
@@ -302,7 +302,7 @@ public class TimeTracker implements ITimeTracker, ITrackable {
 	}
 
 	@Override
-	public IAttivit‡ getAttivit‡Corrente() {
+	public IActivity getAttivit‡Corrente() {
 		return this.attivit‡Corrente;
 	}
 

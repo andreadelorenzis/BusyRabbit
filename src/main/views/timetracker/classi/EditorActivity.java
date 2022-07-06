@@ -5,11 +5,11 @@ import java.time.LocalTime;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.views.notification.Notification;
 import main.views.notification.NotificationType;
 
-public class EditorAttività {
+public class EditorActivity {
     
     @FXML
     private TextField nameField;
@@ -26,7 +26,7 @@ public class EditorAttività {
     @FXML
     private TextField durataField3;
 
-    public void setAttività(IAttività a) {
+    public void setAttività(IActivity a) {
     	nameField.setText(a.getNome());
         datePicker.setValue(a.getData());
         oraField1.setText("" + a.getOraInizio().getHour());

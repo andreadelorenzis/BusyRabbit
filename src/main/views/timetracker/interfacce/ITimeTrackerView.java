@@ -1,7 +1,7 @@
 package main.views.timetracker.interfacce;
 
 import java.util.List;
-import main.model.timetracker.interfacce.IAttività;
+import main.model.timetracker.interfacce.IActivity;
 import main.views.IView;
 
 /**
@@ -9,7 +9,7 @@ import main.views.IView;
  */
 public interface ITimeTrackerView extends IView {
 	
-	public void aggiornaView(List<List<IAttività>> giorni, int pagina);
+	public void aggiornaView(List<List<IActivity>> giorni, int pagina);
 	
 	public void progettoAggiunto();
 	
